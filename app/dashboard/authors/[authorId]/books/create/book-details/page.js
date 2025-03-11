@@ -1,9 +1,15 @@
 "use client"
 
 import React, { useState } from 'react'
+import { useRouter } from "next/navigation";
+
+import { useForm } from "@/context/FormContext";
 
 const BookDetails = () => {
+  const { formData, updateFormData } = useForm();
   const [selectedOption, setSelectedOption] = useState("option1");
+  const router = useRouter();
+
   return (
     <div>
         <h3>Book Title</h3>
@@ -15,13 +21,15 @@ const BookDetails = () => {
         <input 
           type='text' 
           required
-          id='title'
+          value={formData.title}
+          onChange={(e) => updateFormData({ title: e.target.value })}
           />
         <p>Subtitle (Optional)</p>
         <input 
           type='text' 
           required
-          id='subtitle'
+          value={formData.subtitle}
+          onChange={(e) => updateFormData({ subtitle: e.target.value })}
           />
 
           <h3>Author</h3>
@@ -74,7 +82,9 @@ const BookDetails = () => {
               product description on itan, so readers/listeners 
               can learn more about your book.
             </p>
-            <textarea id="description"></textarea>
+            <textarea 
+               value={formData.description}
+               onChange={(e) => updateFormData({ description: e.target.value })}></textarea>
 
             <h3>Publishing Rights</h3>
             <p>Publishing rights: control 
@@ -87,46 +97,47 @@ const BookDetails = () => {
             <div className="flex flex-col space-y-2 p-4">
 
       <label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="radio"
-          name="choice"
-          value="option1"
-          checked={selectedOption === "option1"}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="hidden"
-        />
-        <div
-          className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-            selectedOption === "option1" ? "bg-blue-500" : "bg-white"
-          }`}
-        >
-          {selectedOption === "option1" && (
-            <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-          )}
-        </div>
-        <span className="text-gray-700">I own the rights</span>
-      </label>
+  <input
+    type="radio"
+    name="publishing_rights"
+    value="true"
+    checked={formData.publishing_rights === true}
+    onChange={() => updateFormData({ publishing_rights: true })}
+    className="hidden"
+  />
+  <div
+    className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+      formData.publishing_rights === true ? "bg-blue-500" : "bg-white"
+    }`}
+  >
+    {formData.publishing_rights === true && (
+      <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+    )}
+  </div>
+  <span className="text-gray-700">I own the rights</span>
+</label>
 
-      <label className="flex items-center space-x-2 cursor-pointer">
-        <input
-          type="radio"
-          name="choice"
-          value="option2"
-          checked={selectedOption === "option2"}
-          onChange={(e) => setSelectedOption(e.target.value)}
-          className="hidden"
-        />
-        <div
-          className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-            selectedOption === "option2" ? "bg-blue-500" : "bg-white"
-          }`}
-        >
-          {selectedOption === "option2" && (
-            <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-          )}
-        </div>
-        <span className="text-gray-700">Its public content</span>
-      </label>
+<label className="flex items-center space-x-2 cursor-pointer">
+  <input
+    type="radio"
+    name="publishing_rights"
+    value="false"
+    checked={formData.publishing_rights === false}
+    onChange={() => updateFormData({ publishing_rights: false })}
+    className="hidden"
+  />
+  <div
+    className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+      formData.publishing_rights === false ? "bg-blue-500" : "bg-white"
+    }`}
+  >
+    {formData.publishing_rights === false && (
+      <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+    )}
+  </div>
+  <span className="text-gray-700">Public content</span>
+</label>
+
     </div>
 
     <h3>Primary Audience</h3>
