@@ -30,16 +30,20 @@ export const registerAuthor = async (email, password) => {
 
 // Sign in an author
 export const signInAuthor = async (email, password) => {
-    try {
-      const response = await api.post("/authors/sign_in", {
-        author: { email, password },
-      });
-      return response.data;
-    } catch (error) {
-      console.error("Sign-in failed:", error.response?.data || error);
-      throw error;
-    }
-  };
+  try {
+    const response = await api.post("/authors/sign_in", {
+      author: { email, password },
+    });
+    console.log("Sign-in successful:", response.data);
+    return response.data;
+  } catch (error) {
+    const errorMessage =
+      error.response?.data?.message || "Sign-in failed. Please try again.";
+    console.error("Sign-in failed:", errorMessage);
+    throw new Error(errorMessage);
+  }
+};
+
 
 // Sign out an author
 export const signOutAuthor = async () => {
