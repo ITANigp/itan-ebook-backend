@@ -147,18 +147,14 @@ const BookDetails = () => {
     <p>Choose Age</p>
 
   <div>
-    <select className="w-full border border-gray-300 p-2 rounded-md">
-                  <option value="">Minimum</option>
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
-    </select>
-
-    <select className="w-full border border-gray-300 p-2 rounded-md">
-                  <option value="">Maximum</option>
-                  <option value="option1">Option 1</option>
-                  <option value="option2">Option 2</option>
-                  <option value="option3">Option 3</option>
+    <select 
+      className="w-full border border-gray-300 p-2 rounded-md"
+      value={formData.primary_audience}
+      onChange={(e) => updateFormData({ primary_audience: e.target.value })}>
+                  <option value="">Select age group</option>
+                  <option value="18">18</option>
+                  <option value="30">30</option>
+                  <option value="50">50</option>
     </select>
   </div>
 
@@ -183,8 +179,7 @@ const BookDetails = () => {
         --- ---
         --- --- */}
         <div>
-        <button>Save as Draft</button>
-        <button>Save and Continue</button>
+        <button onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}>Next</button>
         </div>
 
     </div>

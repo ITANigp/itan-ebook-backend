@@ -12,8 +12,11 @@ export const FormProvider = ({ children }) => {
     ebook_price: "",
     audiobook_price: "",
     primary_audience: "",
-    publishing_rights: "true",
-    terms_and_conditions: "true",
+    publishing_rights: false,
+    terms_and_conditions: false,
+    primary_audience:"",
+    cover_image: null,  // For image upload
+    ebook_file: null,    // For PDF or EPUB
   });
 
   const updateFormData = (newData) => {

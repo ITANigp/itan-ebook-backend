@@ -1,9 +1,20 @@
 "use client"
 
 import React, { useState } from 'react'
+import { useRouter } from "next/navigation";
+
+import { useForm } from "@/context/FormContext";
 
 const BookContent = () => {
-  const [selectedOption, setSelectedOption] = useState("option1");
+  const { formData, updateFormData } = useForm();
+  const router = useRouter();
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    updateFormData({ [e.target.name]: file });
+  };
+
+  
   return (
     <div>
       <h3>Manuscript</h3>
@@ -23,11 +34,26 @@ const BookContent = () => {
       </label>
 
       <button>Upload manuscript</button>
+       <input
+        type="file"
+        name="ebook_file"
+        accept=".pdf,.epub"
+        onChange={handleFileChange}
+        className="border p-2 w-full"
+      />
       <h3>Book Cover</h3>
       <p>
         Make a lasting impression! Upload a captivating front cover that
         showcases your book's personality and draws readers in.
       </p>
+
+      <input
+        type="file"
+        name="cover_image"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="border p-2 w-full"
+      />
 
       <h3>AI Content Generated</h3>
       <p>
@@ -89,9 +115,8 @@ const BookContent = () => {
       <input type="text" />
 
       <div>
-        <button>Back to details</button>
-        <button>Save as Draft</button>
-        <button>Save and continue</button>
+        <button onClick={() => router.push("/dashboard/authors/1/books/create/book-details")}>Back to details</button>
+        <button onClick={() => router.push("/dashboard/authors/1/books/create/book-pricing")}>Next</button>
       </div>
     </div>
   );
