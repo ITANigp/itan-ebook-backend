@@ -8,6 +8,7 @@ import { useForm } from "@/context/FormContext";
 const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
+  const [selectedOption, setSelectedOption] = useState("")
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];

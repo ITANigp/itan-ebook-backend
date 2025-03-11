@@ -1,9 +1,52 @@
 "use client"
 
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"
+import axios from "axios";
+
+import { useForm } from "@/context/FormContext"
 
 const BookPricing = () => {
-      const [selectedOption, setSelectedOption] = useState("option1");
+  const { formData, updateFormData } = useForm();
+  const router = useRouter()
+  const [selectedOption, setSelectedOption] = useState("option1");
+
+
+const handleSubmit = async () => {
+  const formDataToSend = new FormData();
+
+    formDataToSend.append("title", formData.title);
+    formDataToSend.append("description", formData.description);
+    formDataToSend.append("subtitle", formData.subtitle);
+    formDataToSend.append("ebook_price", formData.ebook_price);
+    formDataToSend.append("audiobook_price", formData.audiobook_price);
+    formDataToSend.append("primary_audience", formData.primary_audience);
+    formDataToSend.append("publishing_rights", formData.publishing_rights);
+    formDataToSend.append("terms_and_conditions", formData.terms_and_conditions);
+    formDataToSend.append("primary_audience", formData.ebook_price);
+    formDataToSend.append("cover_image", formData.cover_image);
+    formDataToSend.append("ebook_file", formData.ebook_file);
+
+
+  try {
+    const res = await axios.post("http://localhost:3000/api/v1/books", formDataToSend, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    if (res.status === 200) {
+      alert("Book uploaded successfully!");
+    } else {
+      alert("Error uploading book.");
+    }
+  } catch (error) {
+    console.error("Upload error:", error.response?.data || error.message);
+    alert("Something went wrong. Please try again.");
+  }
+};
+
+
   return (
     <div>
       <h3>Price</h3>
@@ -11,7 +54,11 @@ const BookPricing = () => {
       <p>Book Price</p>
       <div>
         <img src={null} alt="" />
-        <input type="text" />
+        <input 
+         type="text"
+         value={formData.ebook_price}
+         onChange={(e) => updateFormData({ ebook_price: e.target.value })}
+          />
       </div>
 
       <h3>Terms and Conditions</h3>
@@ -23,53 +70,52 @@ const BookPricing = () => {
       </p>
       <p>I Agree</p>
       <div className="flex flex-col space-y-2 p-4">
-        <label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="choice"
-            value="option1"
-            checked={selectedOption === "option1"}
-            onChange={(e) => setSelectedOption(e.target.value)}
-            className="hidden"
-          />
-          <div
-            className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-              selectedOption === "option1" ? "bg-blue-500" : "bg-white"
-            }`}
-          >
-            {selectedOption === "option1" && (
-              <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-            )}
-          </div>
-          <span className="text-gray-700">Yes</span>
-        </label>
+         <label className="flex items-center space-x-2 cursor-pointer">
+  <input
+    type="radio"
+    name="terms_and_conditions"
+    value="true"
+    checked={formData.terms_and_conditions === true}
+    onChange={() => updateFormData({ terms_and_conditions: true })}
+    className="hidden"
+  />
+  <div
+    className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+      formData.terms_and_conditions === true ? "bg-blue-500" : "bg-white"
+    }`}
+  >
+    {formData.terms_and_conditions === true && (
+      <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+    )}
+  </div>
+  <span className="text-gray-700">Yes</span>
+</label>
 
-        <label className="flex items-center space-x-2 cursor-pointer">
-          <input
-            type="radio"
-            name="choice"
-            value="option2"
-            checked={selectedOption === "option2"}
-            onChange={(e) => setSelectedOption(e.target.value)}
-            className="hidden"
-          />
-          <div
-            className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-              selectedOption === "option2" ? "bg-blue-500" : "bg-white"
-            }`}
-          >
-            {selectedOption === "option2" && (
-              <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-            )}
-          </div>
-          <span className="text-gray-700">No</span>
-        </label>
+<label className="flex items-center space-x-2 cursor-pointer">
+  <input
+    type="radio"
+    name="terms_and_conditions"
+    value="false"
+    checked={formData.terms_and_conditions === false}
+    onChange={() => updateFormData({ terms_and_conditions: false })}
+    className="hidden"
+  />
+  <div
+    className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+      formData.terms_and_conditions === false ? "bg-blue-500" : "bg-white"
+    }`}
+  >
+    {formData.terms_and_conditions === false && (
+      <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+    )}
+  </div>
+  <span className="text-gray-700">No</span>
+</label>
       </div>
 
       <div>
-        <button>Back to details</button>
-        <button>Save as Draft</button>
-        <button>Save and continue</button>
+        <button onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}>Back to Content</button>
+        <button onClick={handleSubmit}>Publish</button>
       </div>
     </div>
   );
