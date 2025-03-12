@@ -94,7 +94,7 @@ const signUp = () => {
               onChange={(e) => setPassword(e.target.value)}/>
         </div>
          <div>
-         <button type="submit" className="h-14 text-2xl font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:bg-gradient-to-l focus:ring-4 focus:outline-none focus:ring-purple-200 dark:focus:ring-purple-800 rounded-lg  px-5 py-2.5 text-center me-2 mb-2 w-full">Sign Up</button>
+         <button type="submit" className="h-14 text-2xl font-bold bg-[#E50913] rounded-lg  px-5 py-2.5 text-center me-2 mb-2 w-full">Sign Up</button>
          <button type="button" className="h-14 hover:text-white text-[#4e4c4c] space-x-5 flex w-full  px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-4 focus:outline-none focus:ring-blue-300">
 <img src='/images/google.png' className='w-6 h-6'/>
 <p className=''>Continue with Google</p>
