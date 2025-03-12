@@ -1,50 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-
 import { signOutAdmin } from "@/utils/api"; 
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const [error, setError] = useState("");
+
   const router = useRouter();
 
   const handleSignOut = async () => {
     setLoading(true);
-    setError(null);
+    setError(""); // Reset error before making a new request
+
     try {
       await signOutAdmin();
       router.push("/admin");
     } catch (err) {
-      if (!error.response) {
-        return {
-          success: false,
-          message: setError(
-            "Cannot connect to the server. Please try again later."
-          ),
-        };
+      if (!err.response) {
+        setError("Cannot connect to the server. Please try again later.");
       } else {
-        return {
-          success: false,
-          message: setError(
-            error.response?.data.error || "Sign-out failed. Please try again."
-          ),
-        };
+        setError(err.response?.data?.error || "Sign-out failed. Please try again.");
       }
     } finally {
       setLoading(false);
     }
   };
 
+  // **Clear error message after 2 seconds**
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(""); // Reset error state
+      }, 3000);
+
+      return () => clearTimeout(timer); // Cleanup timeout on re-render
+    }
+  }, [error]);
+
   return (
     <div>
       <h1>Welcome to Admin Dashboard</h1>
-      {error && <p className="text-red-500">{error}</p>}
+      
+      {/* Show error message only when there is an error */}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
+
       <button
         onClick={handleSignOut}
-        className="w-24 h-14 mt-4 bg-red-500 text-white p-2 rounded"
+        className="w-44 h-14 mt-4 bg-red-500 text-white p-2 rounded"
         disabled={loading}
       >
         {loading ? "Signing out..." : "Sign Out"}

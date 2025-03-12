@@ -37,8 +37,7 @@ export const signInAuthor = async (email, password) => {
     console.log("Sign-in successful:", response.data);
     return response.data;
   } catch (error) {
-    const errorMessage =
-      error.response?.data?.message || "Sign-in failed. Please try again.";
+    const errorMessage = error.response?.data?.message || "Sign-in failed. Please try again.";
     console.error("Sign-in failed:", errorMessage);
     throw new Error(errorMessage);
   }

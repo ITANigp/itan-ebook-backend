@@ -43,7 +43,7 @@ const SignIn = () => {
       <div className="bg-white rounded-2xl p-10 my-24 w-[500px] mx-auto">
         <div className="relative">
           <div className="absolute left-28 -top-12">
-          <p className="text-2xl font-bold ">Welcome!</p>
+          <p className="text-2xl font-bold ">Welcome Back</p>
           <p className="text-sm mb-4">
             Don’t have an account?{" "}
             <Link
@@ -67,7 +67,7 @@ const SignIn = () => {
             <input
               type="email"
               id="email"
-              className="h-[50px] bg-gray-50 border-0 border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
               placeholder="Johndoe@gmail.com"
               required
               value={email}

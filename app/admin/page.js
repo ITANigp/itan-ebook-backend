@@ -1,46 +1,54 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import axios from "axios";
-
-import { signInAdmin } from "@/utils/api"; 
+import { signInAdmin } from "@/utils/api";
 
 export default function AdminAuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [error, setError] = useState("");
+
   const router = useRouter();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setError(""); // Reset error before making a new request
+
     try {
       await signInAdmin(email, password);
       router.push("/admin/dashboard");
-    } catch (error) {
-        if(!error.response) {
-          return {
-            success: false,
-            message: setError(
-              "Cannot connect to the server. Please try again later."
-            ),
-          };
-        } else {
-          return {success: false, message: setError(error.response?.data.error || "Sign-in failed. Please check your credentials.")}
-        }
+    } catch (err) {
+      if (!err.response) {
+        setError("Cannot connect to the server. Please try again later.");
+      } else {
+        setError(err.response?.data?.error || "Sign-in failed. Please check your credentials.");
+      }
     } finally {
       setLoading(false);
     }
   };
 
+  // **Clear error message after 2 seconds**
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => {
+        setError(""); // Reset error state
+      }, 2000);
+
+      return () => clearTimeout(timer); // Cleanup timeout on re-render
+    }
+  }, [error]);
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white shadow-md rounded-lg">
       <h2 className="text-xl font-semibold mb-4">Admin Sign In</h2>
+
+      {/* Show error message only when there is an error */}
       {error && <p className="text-red-500">{error}</p>}
+
       <form onSubmit={handleSignIn} className="space-y-4">
         <input
           type="email"
