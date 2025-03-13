@@ -199,7 +199,7 @@ const BookDetails = () => {
             </div>
         <button 
           onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}
-          className='bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-6 py-[5px] mb-10 rounded-md'>Next</button>
+          className='bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-8 py-[5px] mb-10 rounded-md'>Next</button>
 
     </div>
   )
