@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Link from "next/link";
 import { Geist, Geist_Mono } from "next/font/google";
 
 import { signOutAuthor } from "@/utils/api";
@@ -69,16 +70,25 @@ export default function RootLayout({ children }) {
             className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
             aria-label="Sidebar"
           >
-            <div className="h-full px-4 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-              <img src="/images/logo.png" className="w-16 mt-9 mb-12 ml-3" />
+            <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
+              <Link href='/'><img src="/images/logo.png" className="w-16 mb-6 ml-3" /></Link>
               <ul className="space-y-2 font-medium">
                 <li>
                   <a
                     href="#"
-                    className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                    className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
                     <img src="/images/chart-pie.png" className="w-7" />
                     <span className="ml-2 text-[#E50913]">Overview</span>
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="#"
+                    className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                  >
+                    <img src="/images/upload_icon.png" className="w-7" />
+                    <span className="ml-2 text-[#C5C5C5]">Make an Upload</span>
                   </a>
                 </li>
                 <li>
@@ -122,7 +132,7 @@ export default function RootLayout({ children }) {
                     href="#"
                     className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
-                    <img src="/images/profile.png " className="w-7" />
+                    <img src="/images/logout.png " className="w-7" />
                     <span
                       className="ml-2 text-[#C5C5C5]"
                       onClick={handleSignOut}

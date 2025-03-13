@@ -47,7 +47,7 @@ export default function AdminAuthPage() {
       <h2 className="text-xl font-semibold mb-4">Admin Sign In</h2>
 
       {/* Show error message only when there is an error */}
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 text-sm my-2">{error}</p>}
 
       <form onSubmit={handleSignIn} className="space-y-4">
         <input
