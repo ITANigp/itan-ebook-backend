@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export default function ConfirmEmail() {
 
-  const BASE_API_URL = process.env.BASE_API_URL    
+  const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL    
   const router = useRouter();
   const searchParams = useSearchParams(); 
   const confirmation_token = searchParams.get("confirmation_token");

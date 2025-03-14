@@ -2,14 +2,17 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation"
+
 import axios from "axios";
 
 import { useForm } from "@/context/FormContext"
+import Modal from "@/components/Modal";
 
 const BookPricing = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter()
   const [selectedOption, setSelectedOption] = useState("option1");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
 
 const handleSubmit = async () => {
@@ -145,9 +148,10 @@ const handleSubmit = async () => {
           onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}
           className='border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md'>Back to Content</button>
         <button 
-          // onClick={}
+          onClick={() => setIsModalOpen(true)}
           className='bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md'>Publish</button>
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };
