@@ -49,27 +49,54 @@ const handleSubmit = async () => {
 
   return (
     <div>
-      <h3>Price</h3>
-      <p>Enter the price you want customers to pay for your book.</p>
+      <h3 className="font-bold text-lg mt-5">Price</h3>
+      <p className="my-1">Enter the book price</p>
       <p>Book Price</p>
-      <div>
-        <img src={null} alt="" />
+      <div className="relative flex items-center border border-gray-600 rounded-md w-96 h-9">
+        <img 
+          src="/images/dollar.png" 
+          alt="dollar"
+          className="h-3 w-2 ml-2 absolute" />
         <input 
          type="text"
          value={formData.ebook_price}
          onChange={(e) => updateFormData({ ebook_price: e.target.value })}
+         className="border-none outline-none focus:ring-0 w-full h-full rounded-md py-[1px] px-[19px] bg-gray-50 "
           />
       </div>
 
-      <h3>Terms and Conditions</h3>
+      <h3 className="font-bold text-lg mt-4 mb-1">Account Details</h3>
       <p>
-        By using itan, you agree to these terms. Use the service legally. You're
-        responsible for your content. We provide the service "as is" and aren't
-        liable for damages. We may update these terms; continued use means
-        acceptance.
+       Enter your bank details
       </p>
-      <p>I Agree</p>
-      <div className="flex flex-col space-y-2 p-4">
+      <div className="my-2">
+        <label htmlFor="bankName" className=" font-semibold">Bank Name</label>
+      <input 
+              type='text' 
+              id='bankName'
+              className='block h-9 w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]'/>
+      </div>
+
+              <div>
+                <label htmlFor="AccountNo" className="mb-1 mt-3 font-semibold">Account Number</label>
+              <input 
+              type='text' 
+              id='AccountNo'
+              className='block h-9 w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]'/>
+              </div>
+<div className="mt-2">
+  
+              <label htmlFor="accountName" className="font-semibold mb-1 mt-3 ">Account Name</label>
+              <input 
+              type='text' 
+              id='accountName'
+              className='block h-9 w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]'/>
+</div>
+
+      <h3 className="font-bold text-lg mt-5 mb-2">Terms and Conditions</h3>
+      <p className="text-sm w-[700px]">By using itan, you agree to these terms. Use the service legally. You're responsible for your content. We provide the service "as is" and aren't liable for damages. We may update these terms; continued use means acceptance.</p>
+      <p className="mt-4 font-bold">I Agree</p>
+      <div className="flex flex-col space-y-2 mt-3">
          <label className="flex items-center space-x-2 cursor-pointer">
   <input
     type="radio"
@@ -113,9 +140,13 @@ const handleSubmit = async () => {
 </label>
       </div>
 
-      <div>
-        <button onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}>Back to Content</button>
-        <button onClick={handleSubmit}>Publish</button>
+    <div className='flex justify-between mb-10 mt-24'>
+        <button 
+          onClick={() => router.push("/dashboard/authors/1/books/create/book-content")}
+          className='border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md'>Back to Content</button>
+        <button 
+          // onClick={}
+          className='bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md'>Publish</button>
       </div>
     </div>
   );
