@@ -153,7 +153,7 @@ const BookContent = () => {
         <button
           onClick={() =>
             router.push(
-              "/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
+              "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
             )
           }
           className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md"
@@ -163,7 +163,7 @@ const BookContent = () => {
         <button
           onClick={() =>
             router.push(
-              "/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-pricing"
+              "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-pricing"
             )
           }
           className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"

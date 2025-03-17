@@ -240,7 +240,7 @@ const BookDetails = () => {
       <button
         onClick={() =>
           router.push(
-            "/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-content"
+            "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-content"
           )
         }
         className="bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-8 py-[5px] mb-10 rounded-md"

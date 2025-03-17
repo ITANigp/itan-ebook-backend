@@ -1,7 +1,9 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useRef } from "react";
 import Link from "next/link";
+import { usePathname} from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -15,10 +17,29 @@ import {
 
 import { signOutAuthor } from "@/utils/api";
 
+// // Dynamically import FontAwesomeIcon to avoid SSR issues
+// const FontAwesomeIcon = dynamic(
+//   () => import("@fortawesome/react-fontawesome").then((mod) => mod.FontAwesomeIcon),
+//   { ssr: false }
+// );
 
 
 
 export default function RootLayout({ children }) {
+  const pathName = usePathname();
+
+  // Define active states based on different paths
+  const isDashboard = pathName.startsWith("/dashboard/author/")
+    ? "text-[#E50913]"
+    : "text-gray-300";
+  const isBookDetails = pathName.endsWith("/books/create/book-details");
+  const isBookContent = pathName.endsWith("/books/create/book-content");
+  const isBookPricing = pathName.endsWith("/books/create/book-pricing");
+
+  const textColor =
+    isBookDetails || isBookContent || isBookPricing
+      ? "text-[#E50913]"
+      : "text-gray-300";
 
   const inputRef = useRef(null);
 
@@ -26,16 +47,15 @@ export default function RootLayout({ children }) {
     inputRef.current?.focus();
   };
 
-   const handleSignOut = async () => {
-     try {
-       await signOutAuthor();
-       alert("Logged out successfully!");
-       // You can also redirect the user to the login page after logout
-       window.location.href = "/"; // Adjust the URL as needed
-     } catch (error) {
-       alert("Failed to log out. Please try again.");
-     }
-   };
+  const handleSignOut = async () => {
+    try {
+      await signOutAuthor();
+      alert("Logged out successfully!");
+      window.location.href = "/";
+    } catch (error) {
+      alert("Failed to log out. Please try again.");
+    }
+  };
 
   return (
     <>
@@ -74,42 +94,48 @@ export default function RootLayout({ children }) {
           <ul className="space-y-2 font-medium">
             <li>
               <a
-                href="#"
+                href="/dashboard/author/1"
                 className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faChartPie}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                  className={`text-lg group-hover:text-[#E50913] ${isDashboard}`}
                 />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                <span
+                  className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${isDashboard}`}
+                >
                   Overview
                 </span>
               </a>
             </li>
             <li>
               <a
-                href="/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
+                href="/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faUpload}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                  className={`text-lg group-hover:text-[#E50913] ${textColor}`}
                 />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                <span
+                  className={`ml-2 text-[#C5C5C5] text-lg group-hover:text-[#E50913] ${textColor}`}
+                >
                   Make an Upload
                 </span>
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="/author/1/books"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faClipboard}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                  className={`text-lg group-hover:text-[#E50913] ${pathName.endsWith("/books") ? "text-[#E50913]" : "text-gray-300"}`}
                 />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                <span
+                  className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${pathName.endsWith("/books") ? "text-[#E50913]" : "text-gray-300"}`}
+                >
                   Book Shelf
                 </span>
               </a>
