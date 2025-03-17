@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInAuthor } from "@/utils/api";
+
+import {signInAuthor} from "@/utils/api"; // Ensure api is properly imported
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -19,41 +20,62 @@ const SignIn = () => {
     setMessage("");
 
     try {
-      await signInAuthor(email, password);
-      setMessage("Login successful! Redirecting...");
-      router.push("/dashboard/authors/:authorId"); // Adjust this path as needed
+      const author = await signInAuthor(email, password);
+
+      if (author && author.data && author.data.id) {
+        // Save the author info as a string in localStorage
+        localStorage.setItem("authorInfo", JSON.stringify(author.data));
+        console.log("Author Info saved:", author.data);
+
+        // Retrieve and parse the stored data
+        const storedAuthorInfo = JSON.parse(localStorage.getItem("authorInfo"));
+        console.log("Stored Author Info:", storedAuthorInfo);
+
+        // Extract the ID and navigate
+        const { id } = storedAuthorInfo;
+        router.push(`/dashboard/authors/${id}`);
+      }
     } catch (error) {
-      if(!error.response) {
-         return {
-           success: false,
-           message: setError(
-             "Cannot connect to the server. Please try again later."
-           ),
-         };
+      if (!error.response) {
+        setMessage("Cannot connect to the server. Please try again later.");
       } else {
-        return { success: false, message: setMessage(error.response?.data?.message || "Invalid Email or password.")}
+        setMessage(
+          error.response?.data?.error ||
+            "Sign-in failed. Please check your credentials."
+        );
       }
     } finally {
       setLoading(false);
     }
   };
 
+  //**Clear error message after 2 seconds**
+    useEffect(() => {
+      if (message) {
+        const timer = setTimeout(() => {
+          setMessage(""); // Reset error state
+        }, 2000);
+  
+        return () => clearTimeout(timer); // Cleanup timeout on re-render
+      }
+    }, [message]);
+
   return (
     <div className="w-full">
       <div className="bg-white rounded-2xl p-10 my-24 w-[500px] mx-auto">
         <div className="relative">
           <div className="absolute left-28 -top-12">
-          <p className="text-2xl font-bold ">Welcome Back</p>
-          <p className="text-sm mb-4">
-            Don’t have an account?{" "}
-            <Link
-              href="/authors/sign_up"
-              className="font-bold cursor-pointer hover:text-blue-700"
-            >
-              <span>Create One</span>
-            </Link>
-          </p>
-        </div>
+            <p className="text-2xl font-bold ">Welcome Back</p>
+            <p className="text-sm mb-4">
+              Don’t have an account?{" "}
+              <Link
+                href="/authors/sign_up"
+                className="font-bold cursor-pointer hover:text-blue-700"
+              >
+                <span>Create One</span>
+              </Link>
+            </p>
+          </div>
         </div>
 
         <form onSubmit={handleSignIn}>
@@ -123,7 +145,6 @@ const SignIn = () => {
           )}
         </form>
       </div>
-      
     </div>
   );
 };

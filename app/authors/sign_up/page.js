@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { registerAuthor } from "@/utils/api";
 
 const SignUp = () => {
@@ -10,20 +11,30 @@ const SignUp = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+   const router = useRouter();
+
   const handleSignup = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
 
     try {
-      await registerAuthor(email, password);
-      setMessage("Registration successful! You can now log in.");
+      const author = await registerAuthor(email, password);
+      if (author && author.data && author.data.id) {
+        setMessage("Registration successful! You can now log in.");
+        router.push("/authors/sign_in");
+        
+      }
+      console.log("error message0: ", message);
     } catch (error) {
       if (!error.response) {
         setMessage("Cannot connect to the server. Please try again later.");
+        console.log("error message1: ", message);
       } else {
+        console.log("error message2: ", message);
         setMessage(error.response?.data?.message || "Registration failed. Try again.");
       }
+      console.log("error message3: ", message)
     } finally {
       setLoading(false);
     }

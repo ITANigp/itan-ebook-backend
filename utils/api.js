@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-const api = axios.create({
+export const api = axios.create({
     baseURL: API_BASE_URL,
     withCredentials: true,
     headers: {
@@ -29,17 +29,44 @@ export const registerAuthor = async (email, password) => {
 };
 
 // Sign in an author
+// export const signInAuthor = async (email, password) => {
+//   try {
+//     const response = await api.post("/authors/sign_in", {
+//       author: { email, password },
+//     });
+//     console.log("Sign-in successful:", response.data);
+//     return response.data;
+//   } catch (error) {
+//     const errorMessage = error.response?.data?.message || "Sign-in failed. Please try again.";
+//     console.error("Sign-in failed:", errorMessage);
+//     throw new Error(errorMessage);
+//   }
+// };
+
+// Define signInAuthor outside the component
 export const signInAuthor = async (email, password) => {
   try {
     const response = await api.post("/authors/sign_in", {
       author: { email, password },
     });
-    console.log("Sign-in successful:", response.data);
+
     return response.data;
+     
+    // const { author } = response.data;
+    // if (!author || !author.id) {
+    //   throw new Error("Invalid response from server");
+    // }
+
+    // if (typeof window !== "undefined") {
+    //   localStorage.setItem("authorId", author.id);
+    // }
+
+    // console.log("Sign-in successful:", response.data);
+    // return author;
   } catch (error) {
-    const errorMessage = error.response?.data?.message || "Sign-in failed. Please try again.";
-    console.error("Sign-in failed:", errorMessage);
-    throw new Error(errorMessage);
+    // const errorMessage = error.response?.data?.message || "Sign-in failed. Please try again.";
+    // console.error("Sign-in failed:", error.response?.data || error);
+    throw error;
   }
 };
 

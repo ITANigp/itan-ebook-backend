@@ -37,10 +37,6 @@ export default function RootLayout({ children }) {
    };
 
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
         <>
           <div className="flex items-center justify-between fixed top-0 left-0 w-full  py-2 shadow-md z-10 bg-white">
             <div></div>
@@ -71,7 +67,9 @@ export default function RootLayout({ children }) {
             aria-label="Sidebar"
           >
             <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
-              <Link href='/'><img src="/images/logo.png" className="w-16 mb-6 ml-3" /></Link>
+              <Link href="/">
+                <img src="/images/logo.png" className="w-16 mb-6 ml-3" />
+              </Link>
               <ul className="space-y-2 font-medium">
                 <li>
                   <a
@@ -84,7 +82,7 @@ export default function RootLayout({ children }) {
                 </li>
                 <li>
                   <a
-                    href="#"
+                    href="/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
                     className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                   >
                     <img src="/images/upload_icon.png" className="w-7" />
@@ -144,9 +142,7 @@ export default function RootLayout({ children }) {
               </ul>
             </div>
           </aside>
+          {children}
         </>
-        {children}
-      </body>
-    </html>
   );
 }

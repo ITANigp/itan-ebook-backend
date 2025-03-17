@@ -18,9 +18,10 @@ const BookContent = () => {
   
   return (
     <div>
-      <h3 className='font-bold text-lg mt-7 mb-3'>Manuscript</h3>
+      <h3 className="font-bold text-lg mt-7 mb-3">Manuscript</h3>
       <p>
-        Upload your manuscript [i.e. your book’s interior content]. We recommend using a PDF file.
+        Upload your manuscript [i.e. your book’s interior content]. We recommend
+        using a PDF file.
       </p>
 
       <label className="flex items-center space-x-1 cursor-pointer">
@@ -30,25 +31,32 @@ const BookContent = () => {
           // onChange={(e) => setChecked(e.target.checked)}
           className="w-2 h-2"
         />
-        <span className="text-gray-700 text-xs">Enable Digital Rights Management (DRM) to secure your digital content. Warning: DRM settings are permanent and cannot be altered after publication.</span>
+        <span className="text-gray-700 text-xs">
+          Enable Digital Rights Management (DRM) to secure your digital content.
+          Warning: DRM settings are permanent and cannot be altered after
+          publication.
+        </span>
       </label>
 
-      <div >
-        <div className='bg-[#E50913] hover:bg-[#b70911] w-48 flex items-center justify-center mx-auto h-10 rounded-md mt-6'>
-        <img src="/images/upload-book.png" alt="upload book" className='w-4 h-4 mx-2' />
-        <button className='text-white mr-2'>Upload manuscript</button>
+      <div>
+        <div className="bg-[#E50913] hover:bg-[#b70911] w-48 flex items-center justify-center mx-auto h-10 rounded-md mt-6">
+          <img
+            src="/images/upload-book.png"
+            alt="upload book"
+            className="w-4 h-4 mx-2"
+          />
+          <button className="text-white mr-2">Upload manuscript</button>
         </div>
-        </div>
-       <input
+      </div>
+      <input
         type="file"
         name="ebook_file"
         accept=".pdf,.epub"
         onChange={handleFileChange}
-        className="border p-2 w-full hidden"
-
+        className="border p-2 w-full"
       />
-      <h3 className='my-2 font-bold text-lg'>Book Cover</h3>
-      <p className='w-full'>
+      <h3 className="my-2 font-bold text-lg">Book Cover</h3>
+      <p className="w-full">
         Make a lasting impression! Upload a captivating front cover that
         showcases your book's personality and draws readers in.
       </p>
@@ -58,23 +66,28 @@ const BookContent = () => {
         name="cover_image"
         accept="image/*"
         onChange={handleFileChange}
-        className="border p-2 w-full hidden"
-
+        className="border p-2 w-full"
       />
 
-       <div >
-        <div className='w-48 flex items-center justify-center mx-auto h-10 rounded-md mt-6 border-2 border-gray-300 hover:bg-gray-100'>
-        <img src="/images/upload-cover.png" alt="upload book" className='w-4 h-4 mx-2' />
-        <button className='text-gray-800 mr-2 text-sm'>Upload Book Cover</button>
+      <div>
+        <div className="w-48 flex items-center justify-center mx-auto h-10 rounded-md mt-6 border-2 border-gray-300 hover:bg-gray-100">
+          <img
+            src="/images/upload-cover.png"
+            alt="upload book"
+            className="w-4 h-4 mx-2"
+          />
+          <button className="text-gray-800 mr-2 text-sm">
+            Upload Book Cover
+          </button>
         </div>
-        </div>
+      </div>
 
-      <h3 className='font-bold text-lg mb-2 mt-6'>AI Content Generated</h3>
-      <p className='w-full'>
+      <h3 className="font-bold text-lg mb-2 mt-6">AI Content Generated</h3>
+      <p className="w-full">
         Itan is collecting information about the use of Artificial Intelligence
         (AI) tools in creating content
       </p>
-      <p className='text-sm font-semibold my-2'> 
+      <p className="text-sm font-semibold my-2">
         Did you use AI tools in creating texts, images, and/or translations in
         your book?
       </p>
@@ -122,23 +135,41 @@ const BookContent = () => {
         </label>
       </div>
 
-      <h3 className='font-bold text-lg mt-5 mb-2'>Book ISBN</h3>
-      <p className='mb-1'>ISBN (Optional) </p>
-      <input 
+      <h3 className="font-bold text-lg mt-5 mb-2">Book ISBN</h3>
+      <p className="mb-1">ISBN (Optional) </p>
+      <input
         type="text"
-        className='h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]' />
-      <p className='mt-3 mb-1'>Publisher (Optional) </p>
-      <input 
+        className="h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        value={formData.book_isbn}
+        onChange={(e) => updateFormData({ book_isbn: e.target.value })}
+      />
+      <p className="mt-3 mb-1">Publisher (Optional) </p>
+      <input
         type="text"
-        className='h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]' />
+        className="h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+      />
 
-      <div className='flex justify-between mb-10 mt-24'>
-        <button 
-          onClick={() => router.push("/dashboard/authors/1/books/create/book-details")}
-          className='border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md'>Back to details</button>
-        <button 
-          onClick={() => router.push("/dashboard/authors/1/books/create/book-pricing")}
-          className='bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md'>Next</button>
+      <div className="flex justify-between mb-10 mt-24">
+        <button
+          onClick={() =>
+            router.push(
+              "/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
+            )
+          }
+          className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md"
+        >
+          Back to details
+        </button>
+        <button
+          onClick={() =>
+            router.push(
+              "/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-pricing"
+            )
+          }
+          className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"
+        >
+          Next
+        </button>
       </div>
     </div>
   );
