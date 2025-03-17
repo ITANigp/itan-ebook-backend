@@ -38,7 +38,7 @@ const SignUp = () => {
     } finally {
       setLoading(false);
     }
-  }; // ✅ Closing brace added here
+  }; 
 
   return (
     <div className="w-full">
