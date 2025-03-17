@@ -79,21 +79,25 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faChartPie}
-                  className="text-red-500 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#E50913]">Overview</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Overview
+                </span>
               </a>
             </li>
             <li>
               <a
                 href="/dashboard/authors/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
-                className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faUpload}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]">Make an Upload</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Make an Upload
+                </span>
               </a>
             </li>
             <li>
@@ -103,9 +107,11 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faClipboard}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]">Book Shelf</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Book Shelf
+                </span>
               </a>
             </li>
             <li>
@@ -115,9 +121,11 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]">Sales</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Sales
+                </span>
               </a>
             </li>
             <li>
@@ -127,9 +135,11 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]">Help</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Help
+                </span>
               </a>
             </li>
             <li>
@@ -139,9 +149,11 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faUser}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]">Profile</span>
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Profile
+                </span>
               </a>
             </li>
             <li>
@@ -151,9 +163,12 @@ export default function RootLayout({ children }) {
               >
                 <FontAwesomeIcon
                   icon={faSignOut}
-                  className="text-gray-300 text-lg"
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span className="ml-2 text-[#C5C5C5]" onClick={handleSignOut}>
+                <span
+                  className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]"
+                  onClick={handleSignOut}
+                >
                   Sign Out
                 </span>
               </a>
