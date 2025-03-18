@@ -33,7 +33,7 @@ const SignIn = () => {
 
         // Extract the ID and navigate
         const { id } = storedAuthorInfo;
-        router.push(`/dashboard/authors/${id}`);
+        router.push(`/dashboard/author/${id}`);
       }
     } catch (error) {
       if (!error.response) {

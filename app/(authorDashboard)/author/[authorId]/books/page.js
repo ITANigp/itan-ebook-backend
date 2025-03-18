@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { api } from "@/utils/api";
 import Link from "next/link";
 
 const ViewBooks = () => {
@@ -9,7 +9,7 @@ const ViewBooks = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
+    api
       .get("http://localhost:3000/api/v1/books/")
       .then((response) => {
         setBooks(response.data);
@@ -33,7 +33,7 @@ const ViewBooks = () => {
               key={book.id}
               className="shadow-md p-4 bg-white rounded-lg flex flex-col items-center"
             >
-              <Link href={`/book/${book.id}/ebook-preview`} className="w-full">
+              <Link href={`/books/${book.id}/ebook-preview`} className="w-full">
                 <img
                   className="h-60 object-cover w-full rounded-lg cursor-pointer"
                   src={book.book_cover || "/images/default-book.png"}

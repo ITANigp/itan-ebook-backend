@@ -22,7 +22,7 @@ const SignUp = () => {
       const author = await registerAuthor(email, password);
       if (author && author.data && author.data.id) {
         setMessage("Registration successful! You can now log in.");
-        router.push("/authors/sign_in");
+        router.push("/author/sign_in");
         
       }
       console.log("error message0: ", message);
