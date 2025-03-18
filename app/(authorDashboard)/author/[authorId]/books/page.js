@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Link from "next/link";
 
 const ViewBooks = () => {
   const [books, setBooks] = useState([]);
@@ -32,11 +33,13 @@ const ViewBooks = () => {
               key={book.id}
               className="shadow-md p-4 bg-white rounded-lg flex flex-col items-center"
             >
-              <img
-                className="h-60 object-cover"
-                src={book.book_cover || "/images/default-book.png"}
-                alt={book.title}
-              />
+              <Link href={`/book/${book.id}/ebook-preview`} className="w-full">
+                <img
+                  className="h-60 object-cover w-full rounded-lg cursor-pointer"
+                  src={book.book_cover || "/images/default-book.png"}
+                  alt={book.title}
+                />
+              </Link>
               <h2 className="text-lg font-semibold mt-2">{book.title}</h2>
               <p className="text-gray-600">{book.author}</p>
               <div className="flex justify-between items-center w-full mt-2">

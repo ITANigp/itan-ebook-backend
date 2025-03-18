@@ -32,7 +32,7 @@ const handleSubmit = async () => {
   formDataToSend.append("book[contributors]", formData.contributors);
   formDataToSend.append("book[bio]", formData.bio);
   formDataToSend.append("book[categories]", formData.categories);
-  formDataToSend.append("book[Keywords]", formData.Keywords);
+  formDataToSend.append("book[keywords]", formData.Keywords);
   formDataToSend.append("book[book_isbn]", formData.book_isbn);
 
   // Append files correctly
