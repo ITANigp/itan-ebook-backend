@@ -60,7 +60,7 @@ const BookDetails = () => {
         className="h-[210px] w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         placeholder="Not more than 500 characters"
         value={formData.bio}
-        onChange={(e) => updateFormData({ Bio: e.target.value })}
+        onChange={(e) => updateFormData({ bio: e.target.value })}
       ></textarea>
 
       <h3 className="font-bold">Edition Number</h3>

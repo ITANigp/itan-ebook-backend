@@ -6,17 +6,21 @@ const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    subtitle: "",
-    ebook_price: "",
     audiobook_price: "",
+    bio: "",
+    contributors: "",
+    cover_image: null,  // For image upload
+    description: "",
+    edition_number: 0,
+    title: "",
+    subtitle: "",
+    ebook_file: null,    // For PDF or EPUB
+    ebook_price: "",
+    keywords:"",
+    book_isbn: "",
     primary_audience: "",
     publishing_rights: false,
     terms_and_conditions: false,
-    primary_audience:"",
-    cover_image: null,  // For image upload
-    ebook_file: null,    // For PDF or EPUB
   });
 
   const updateFormData = (newData) => {

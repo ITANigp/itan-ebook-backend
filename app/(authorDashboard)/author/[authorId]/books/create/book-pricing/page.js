@@ -4,63 +4,97 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "@/context/FormContext";
 import Modal from "@/components/Modal";
+// import axios from "axios";
 import { api } from "@/utils/api";
 
 const BookPricing = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploading, setUploading] = useState(false);
+
+  // Compute SHA-256 checksum
+  async function computeSHA256(file) {
+    const arrayBuffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-256", arrayBuffer);
+    return Array.from(new Uint8Array(hashBuffer))
+      .map((b) => b.toString(16).padStart(2, "0"))
+      .join("");
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-
-    // Append book details
-    formDataToSend.append("book[title]", formData.title);
-    formDataToSend.append("book[description]", formData.description);
-    formDataToSend.append("book[subtitle]", formData.subtitle);
-    formDataToSend.append("book[ebook_price]", formData.ebook_price);
-    formDataToSend.append("book[audiobook_price]", formData.audiobook_price);
-    formDataToSend.append("book[primary_audience]", formData.primary_audience);
-    formDataToSend.append(
-      "book[publishing_rights]",
-      formData.publishing_rights
-    );
-    formDataToSend.append(
-      "book[terms_and_conditions]",
-      formData.terms_and_conditions
-    );
-    formDataToSend.append("book[edition_number]", formData.edition_number);
-    formDataToSend.append("book[contributors]", formData.contributors);
-    formDataToSend.append("book[bio]", formData.bio);
-    formDataToSend.append("book[categories]", formData.categories);
-    formDataToSend.append("book[keywords]", formData.Keywords);
-    formDataToSend.append("book[book_isbn]", formData.book_isbn);
-
-    // Append files
-    if (formData.cover_image) {
-      formDataToSend.append("book[cover_image]", formData.cover_image);
-    }
-    if (formData.ebook_file) {
-      formDataToSend.append("book[ebook_file]", formData.ebook_file);
-    }
+    setUploading(true);
 
     try {
-      const res = await api.post("/api/v1/books", formDataToSend, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      let signed_id = null;
+
+      // Step 1: Upload ebook to AWS S3 using a pre-signed URL
+      if (formData.ebook_file) {
+        const file = formData.ebook_file;
+        const checksum = await computeSHA256(file);
+
+        // Request pre-signed URL from the backend
+        const uploadResponse = await api.post(
+          "http://localhost:3000/upload",
+          {
+            blob: {
+              filename: file.name,
+              byte_size: file.size,
+              checksum: checksum,
+              content_type: file.type,
+            },
+          }
+        );
+
+        const {
+          signed_id: newSignedId,
+          direct_upload_url,
+          headers,
+        } = uploadResponse.data;
+
+        // Upload file to AWS S3
+        await api.put(direct_upload_url, file, {
+          headers: { ...headers, "Content-Type": file.type },
+        });
+
+        signed_id = newSignedId; // Store signed_id for later use
+      }
+
+      // Step 2: Submit book data to API
+      const formDataToSend = {
+        book: {
+          title: formData.title,
+          description: formData.description,
+          subtitle: formData.subtitle,
+          ebook_price: formData.ebook_price,
+          audiobook_price: formData.audiobook_price,
+          primary_audience: formData.primary_audience,
+          publishing_rights: formData.publishing_rights,
+          terms_and_conditions: formData.terms_and_conditions,
+          edition_number: formData.edition_number,
+          contributors: formData.contributors,
+          bio: formData.bio,
+          categories: formData.categories,
+          keywords: formData.keywords,
+          book_isbn: formData.book_isbn,
+          ebook_file_id: signed_id, // Send the signed_id, NOT the file itself
         },
-      });
+      };
+
+      const res = await api.post("/api/v1/books", formDataToSend);
 
       if (res.status === 200) {
         alert("Book uploaded successfully!");
-         setIsModalOpen(true);
+        setIsModalOpen(true);
       } else {
         alert("Error uploading book.");
       }
     } catch (error) {
       console.error("Upload error:", error.response?.data || error.message);
       alert("Something went wrong. Please try again.");
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -127,10 +161,14 @@ const BookPricing = () => {
           </button>
           <button
             type="submit"
-            onClick={() => setIsModalOpen(true)}
-            className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md"
+            disabled={uploading}
+            className={`px-8 py-2 rounded-md text-white ${
+              uploading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[#E50913] hover:bg-[#cd3f46]"
+            }`}
           >
-            Publish
+            {uploading ? "Uploading..." : "Publish"}
           </button>
         </div>
       </form>
