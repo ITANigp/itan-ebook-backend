@@ -2,7 +2,7 @@ import React from 'react'
 
 const layout = ({ children }) => {
   return (
-    <div className='ml-72 mr-8  mt-20'>
+    <div className='ml-72 mr-8  mt-20 '>
       <h3>Add Ebook</h3>
 
 

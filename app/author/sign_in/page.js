@@ -62,14 +62,14 @@ const SignIn = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-2xl p-10 my-24 w-[500px] mx-auto">
-        <div className="relative">
+      <div className="bg-white rounded-2xl p-10 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913] ">
+        <div className="relative mt-8">
           <div className="absolute left-28 -top-12">
             <p className="text-2xl font-bold ">Welcome Back</p>
             <p className="text-sm mb-4">
               Don’t have an account?{" "}
               <Link
-                href="/authors/sign_up"
+                href="/author/sign_up"
                 className="font-bold cursor-pointer hover:text-blue-700"
               >
                 <span>Create One</span>

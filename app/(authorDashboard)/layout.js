@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useRef } from "react";
 import Link from "next/link";
 import { usePathname} from "next/navigation";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -25,7 +26,7 @@ import { signOutAuthor } from "@/utils/api";
 
 
 
-export default function RootLayout({ children }) {
+export default function AuthorDashboardLayout({ children }) {
   const pathName = usePathname();
 
   // Define active states based on different paths
@@ -35,7 +36,12 @@ export default function RootLayout({ children }) {
   const isBookDetails = pathName.endsWith("/books/create/book-details");
   const isBookContent = pathName.endsWith("/books/create/book-content");
   const isBookPricing = pathName.endsWith("/books/create/book-pricing");
+  
+  const isSignIn = pathName.endsWith("/author/sign_in");
+  const isSignUp = pathName.endsWith("/author/sign_up");
+  const isRegPage = isSignIn || isSignUp;
 
+  
   const textColor =
     isBookDetails || isBookContent || isBookPricing
       ? "text-[#E50913]"
@@ -59,7 +65,7 @@ export default function RootLayout({ children }) {
 
   return (
     <>
-      <div className="flex items-center justify-between fixed top-0 left-0 w-full  py-2 shadow-md z-10 bg-white">
+      <div className={`flex items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full  py-2 shadow-md z-10 bg-white`}>
         <div></div>
         <div className="flex space-x-8 mr-8">
           <div
