@@ -1,3 +1,4 @@
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -71,16 +72,29 @@ export const signInAuthor = async (email, password) => {
 };
 
 
+
 // Sign out an author
 export const signOutAuthor = async () => {
-    try {
-      await api.delete("/authors/sign_out");
-      return { success: true };
-    } catch (error) {
-      console.error("Sign-out failed:", error.response?.data || error);
-      throw error;
-    }
+  try {
+    await api.delete("/authors/sign_out");
+    localStorage.removeItem("authorInfo");
+
+    // Redirect user after sign-out
+    const router = useRouter();
+    router.push("/author/sign_in");
+
+    return { success: true };
+  } catch (error) {
+    console.error("Sign-out failed:", error.response?.data || error);
+
+    // return {
+    //   success: false,
+    //   message:
+    //     error.response?.data?.message || "An error occurred while signing out.",
+    // };
+  }
 };
+
 
 // Sign in an admin
 export const signInAdmin = async (email, password) => {

@@ -4,11 +4,14 @@ import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
+import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
 
 const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("")
+
+  const { id: authorId } = storedAuthorInfo;
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -152,9 +155,7 @@ const BookContent = () => {
       <div className="flex justify-between mb-10 mt-24">
         <button
           onClick={() =>
-            router.push(
-              "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
-            )
+            router.push(`/author/${authorId}/books/create/book-details`)
           }
           className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md"
         >
@@ -162,9 +163,7 @@ const BookContent = () => {
         </button>
         <button
           onClick={() =>
-            router.push(
-              "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-pricing"
-            )
+            router.push(`/author/${authorId}/books/create/book-pricing`)
           }
           className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"
         >

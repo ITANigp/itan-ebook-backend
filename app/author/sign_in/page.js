@@ -61,28 +61,31 @@ const SignIn = () => {
     }, [message]);
 
   return (
-    <div className="w-full">
-      <div className="bg-white rounded-2xl p-10 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913] ">
-        <div className="relative mt-8">
-          <div className="absolute left-28 -top-12">
-            <p className="text-2xl font-bold ">Welcome Back</p>
-            <p className="text-sm mb-4">
+    <div className="w-full mb-9">
+      <div className="bg-white rounded-2xl p-5 md:p-10 md:w-[500px] mt-24 mx-7 sm:mx-24 md:mx-auto border border-[#E50913] ">
+        <Link href="/">
+          <img src="/images/logo2.png" alt="logo" className="w-10 h-6 cursor-pointer" />
+        </Link>
+        <div className="">
+          <div className="text-center">
+            <p className="md:text-2xl font-bold ">Welcome Back</p>
+            <p className="text-xs md:text-sm mb-4">
               Don’t have an account?{" "}
               <Link
                 href="/author/sign_up"
                 className="font-bold cursor-pointer hover:text-blue-700"
               >
-                <span>Create One</span>
+                <span className="text-xs md:text-sm">Create One</span>
               </Link>
             </p>
           </div>
         </div>
 
         <form onSubmit={handleSignIn}>
-          <div className="mt-4">
+          <div className="">
             <label
               htmlFor="email"
-              className="block mb-2 text-sm font-medium text-gray-900"
+              className="block mb-2 text-sm font-medium text-gray-900 mt-7 sm:mt-0"
             >
               Email Address
             </label>

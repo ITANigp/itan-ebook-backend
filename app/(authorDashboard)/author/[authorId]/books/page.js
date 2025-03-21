@@ -2,30 +2,41 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"
+
 import { api } from "@/utils/api"; // Ensure this imports your API client
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter()
 
-  useEffect(() => {
-    api
-      .get("http://localhost:3000/api/v1/books/")
-      .then((response) => {
-        console.log("Fetch All Books: ", response.data);
-        if (Array.isArray(response.data.data)) {
-          setBooks(response.data.data); // ✅ Correct way to access books
-        } else {
-          console.error("Unexpected API response format", response.data);
+  const { id: authorId } = storedAuthorInfo;
+
+  if ( !authorId ) {
+    alert("Sign in to continue!");
+    router.push("/author/sign_in");
+    return
+  }
+    useEffect(() => {
+      api
+        .get("http://localhost:3000/api/v1/books/")
+        .then((response) => {
+          console.log("Fetch All Books: ", response.data);
+          if (Array.isArray(response.data.data)) {
+            setBooks(response.data.data); // ✅ Correct way to access books
+          } else {
+            console.error("Unexpected API response format", response.data);
+            setBooks([]);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching books:", error);
           setBooks([]);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching books:", error);
-        setBooks([]);
-      })
-      .finally(() => setLoading(false));
-  }, []);
+        })
+        .finally(() => setLoading(false));
+    }, []);
 
   const handleDelete = (bookId) => {
     api
@@ -64,7 +75,10 @@ export default function AuthorBooks() {
               key={book.id}
               className="shadow-md p-4 bg-white rounded-lg flex flex-col items-center"
             >
-              <Link href={`/author/1/books/${book.id}/ebook-preview`} className="w-full">
+              <Link
+                href={`/author/${authorId}/books/${book.id}/ebook-preview`}
+                className="w-full"
+              >
                 <img
                   className="h-60 object-cover w-full rounded-lg cursor-pointer"
                   src={book.cover_image_url || "/images/default-book.png"}

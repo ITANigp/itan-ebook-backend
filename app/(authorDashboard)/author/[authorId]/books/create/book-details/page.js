@@ -4,11 +4,14 @@ import React, { useState } from 'react'
 import { useRouter } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
+import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
 
 const BookDetails = () => {
   const { formData, updateFormData } = useForm();
   const [selectedOption, setSelectedOption] = useState("option1");
   const router = useRouter();
+
+  const { id: authorId } = storedAuthorInfo;
 
   return (
     <div>
@@ -37,16 +40,24 @@ const BookDetails = () => {
       />
 
       <h3 className="mt-3 font-bold ">Author's Bio</h3>
-      <p>
-        Enter the author's name. Include middle names in the 'First Name' field.
+      <p className="text-sm w-[650px]">
+        Enter the author's name exactly as it appears on the book cover,
+        including any middle names in the <br />'First Name' field.
       </p>
       <h3 className="mt-3 font-bold">Author Name</h3>
 
       <div className="w-[650px] flex">
         <input
           type="text"
-          placeholder="First Name"
-          className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] mr-3"
+          title="First Name (Optional: Include your middle name here as well)"
+          placeholder="First Name (Include your middle name)"
+          className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] mr-3 placeholder:text-ellipsis placeholder:overflow-hidden placeholder:whitespace-nowrap placeholder:w-full"
+          onFocus={(e) =>
+            (e.target.placeholder = "(Include your middle name here as well)")
+          }
+          onBlur={(e) =>
+            (e.target.placeholder = "First Name (Include your middle name)")
+          }
         />
         <input
           type="text"
@@ -239,9 +250,7 @@ const BookDetails = () => {
       </div>
       <button
         onClick={() =>
-          router.push(
-            "/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-content"
-          )
+          router.push(`/author/${authorId}/books/create/book-content`)
         }
         className="bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-8 py-[5px] mb-10 rounded-md"
       >

@@ -41,10 +41,17 @@ const SignUp = () => {
   }; 
 
   return (
-    <div className="w-full">
-      <div className="bg-white rounded-2xl p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913]">
-        <div className="relative mt-8">
-          <div className="absolute left-24 -top-12">
+    <div className="w-full mb-9">
+      <div className="bg-white rounded-2xl p-5 md:p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913]">
+        <Link href="/">
+          <img
+            src="/images/logo2.png"
+            alt="logo"
+            className="w-10 h-6 cursor-pointer"
+          />
+        </Link>
+        <div className="">
+          <div className="text-center">
             <p className="text-2xl font-bold">Welcome!</p>
             <p className="text-sm mb-4">
               Already have an account?{" "}
@@ -59,7 +66,6 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSignup}>
-
           <div className="mt-4">
             <label
               htmlFor="email"

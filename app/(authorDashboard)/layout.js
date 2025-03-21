@@ -1,9 +1,11 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname} from "next/navigation";
+import { useRouter } from "next/navigation";
+
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +19,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { signOutAuthor } from "@/utils/api";
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 
 // // Dynamically import FontAwesomeIcon to avoid SSR issues
 // const FontAwesomeIcon = dynamic(
@@ -28,6 +31,23 @@ import { signOutAuthor } from "@/utils/api";
 
 export default function AuthorDashboardLayout({ children }) {
   const pathName = usePathname();
+  const router = useRouter();
+  // Retrieve author info from localStorage
+  const storedAuthorInfo = JSON.parse(
+    localStorage.getItem("authorInfo") || "{}"
+  );
+  const authorId = storedAuthorInfo?.id;
+
+  useEffect(() => {
+    if (!authorId) {
+      alert("Sign in to continue!");
+      router.push("/author/sign_in");
+    }
+  }, [authorId, router]); // Runs only after first render
+
+  if (!authorId) {
+    return null; // Prevents rendering while redirecting
+  }
 
   // Define active states based on different paths
   const isDashboard = pathName.startsWith("/dashboard/author/")
@@ -36,12 +56,11 @@ export default function AuthorDashboardLayout({ children }) {
   const isBookDetails = pathName.endsWith("/books/create/book-details");
   const isBookContent = pathName.endsWith("/books/create/book-content");
   const isBookPricing = pathName.endsWith("/books/create/book-pricing");
-  
+
   const isSignIn = pathName.endsWith("/author/sign_in");
   const isSignUp = pathName.endsWith("/author/sign_up");
   const isRegPage = isSignIn || isSignUp;
 
-  
   const textColor =
     isBookDetails || isBookContent || isBookPricing
       ? "text-[#E50913]"
@@ -65,7 +84,9 @@ export default function AuthorDashboardLayout({ children }) {
 
   return (
     <>
-      <div className={`flex items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full  py-2 shadow-md z-10 bg-white`}>
+      <div
+        className={`flex items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full  py-2 shadow-md z-10 bg-white`}
+      >
         <div></div>
         <div className="flex space-x-8 mr-8">
           <div
@@ -132,7 +153,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <a
-                href="/author/1/books"
+                href={`/author/${authorId}/books`}
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

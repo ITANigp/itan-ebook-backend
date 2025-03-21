@@ -7,6 +7,8 @@ import Modal from "@/components/Modal";
 import CryptoJS from "crypto-js";
 import { api } from "@/utils/api";
 
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo"
+
 // MD5 checksum calculation function (Base64 format as S3 requires)
 async function computeChecksum(file) {
   return new Promise((resolve, reject) => {
@@ -74,7 +76,8 @@ export default function BookPricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({});
-
+   
+  const { id: authorId } = storedAuthorInfo
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
@@ -241,7 +244,9 @@ export default function BookPricing() {
         {/* Action Buttons */}
         <div className="flex justify-between mt-10">
           <button
-            onClick={() => router.push("/author/books/create/book-content")}
+            onClick={() =>
+              router.push(`/author/${authorId}/books/create/book-content`)
+            }
             className="border border-[#E50913] px-5 py-2 rounded-md hover:bg-[#cd3f46] hover:text-white"
             type="button"
           >
