@@ -1,53 +1,62 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { api } from "@/utils/api";
 import Link from "next/link";
+import { api } from "@/utils/api"; // Ensure this imports your API client
 
-const ViewBooks = () => {
+export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchBooks();
-  }, []);
-
-  const fetchBooks = () => {
     api
       .get("http://localhost:3000/api/v1/books/")
       .then((response) => {
         console.log("Fetch All Books: ", response.data);
-        setBooks(response.data);
-        setLoading(false);
+        if (Array.isArray(response.data.data)) {
+          setBooks(response.data.data); // ✅ Correct way to access books
+        } else {
+          console.error("Unexpected API response format", response.data);
+          setBooks([]);
+        }
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
-        setLoading(false);
+        setBooks([]);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const handleDelete = (bookId) => {
+    api
+      .delete(`/api/v1/books/${bookId}`)
+      .then((response) => {
+        if (response.status === 200) {
+          alert("Book deleted successfully!");
+          // Update the state to remove the deleted book
+          setBooks((prevBooks) =>
+            prevBooks.filter((book) => book.id !== bookId)
+          );
+        }
+      })
+      .catch((error) => {
+        if (error.response?.status === 403) {
+          alert("You are not authorized to delete this book.");
+        } else {
+          console.error("Error deleting book:", error);
+          alert("An error occurred while deleting the book. Please try again.");
+        }
       });
   };
 
-  const handleDelete = async (bookId) => {
-    if (!confirm("Are you sure you want to delete this book?")) return;
-
-    try {
-      const response = await api.delete(
-        `http://localhost:3000/api/v1/books/${bookId}`
-      );
-      if (response.status === 200) {
-        alert("Book deleted successfully.");
-        setBooks(books.filter((book) => book.id !== bookId));
-      }
-    } catch (error) {
-      console.error("Error deleting book:", error);
-      alert("Failed to delete book.");
-    }
-  };
+  if (loading) {
+    return <p>Loading books...</p>;
+  }
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Available Books</h1>
-      {loading ? (
-        <p>Loading books...</p>
+    <div>
+      {books.length === 0 ? (
+        <p>No books available.</p>
       ) : (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {books.map((book) => (
@@ -55,10 +64,10 @@ const ViewBooks = () => {
               key={book.id}
               className="shadow-md p-4 bg-white rounded-lg flex flex-col items-center"
             >
-              <Link href={`/books/${book.id}/ebook-preview`} className="w-full">
+              <Link href={`/author/1/books/${book.id}/ebook-preview`} className="w-full">
                 <img
                   className="h-60 object-cover w-full rounded-lg cursor-pointer"
-                  src={book.book_cover || "/images/default-book.png"}
+                  src={book.cover_image_url || "/images/default-book.png"}
                   alt={book.title}
                 />
               </Link>
@@ -82,6 +91,4 @@ const ViewBooks = () => {
       )}
     </div>
   );
-};
-
-export default ViewBooks;
+}
