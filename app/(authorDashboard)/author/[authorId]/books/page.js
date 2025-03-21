@@ -9,9 +9,14 @@ const ViewBooks = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    fetchBooks();
+  }, []);
+
+  const fetchBooks = () => {
     api
       .get("http://localhost:3000/api/v1/books/")
       .then((response) => {
+        console.log("Fetch All Books: ", response.data);
         setBooks(response.data);
         setLoading(false);
       })
@@ -19,7 +24,24 @@ const ViewBooks = () => {
         console.error("Error fetching books:", error);
         setLoading(false);
       });
-  }, []);
+  };
+
+  const handleDelete = async (bookId) => {
+    if (!confirm("Are you sure you want to delete this book?")) return;
+
+    try {
+      const response = await api.delete(
+        `http://localhost:3000/api/v1/books/${bookId}`
+      );
+      if (response.status === 200) {
+        alert("Book deleted successfully.");
+        setBooks(books.filter((book) => book.id !== bookId));
+      }
+    } catch (error) {
+      console.error("Error deleting book:", error);
+      alert("Failed to delete book.");
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -48,6 +70,12 @@ const ViewBooks = () => {
                   Buy Now
                 </button>
               </div>
+              <button
+                className="bg-red-500 text-white px-4 py-2 mt-2 rounded hover:bg-red-600"
+                onClick={() => handleDelete(book.id)}
+              >
+                Delete
+              </button>
             </li>
           ))}
         </ul>

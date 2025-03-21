@@ -42,13 +42,16 @@ const SignUp = () => {
 
   return (
     <div className="w-full">
-      <div className="bg-white rounded-2xl p-10 my-24 w-[500px] mx-auto">
-        <div className="relative">
+      <div className="bg-white rounded-2xl p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913]">
+        <div className="relative mt-8">
           <div className="absolute left-24 -top-12">
             <p className="text-2xl font-bold">Welcome!</p>
             <p className="text-sm mb-4">
               Already have an account?{" "}
-              <Link href="/authors/sign_in" className="font-bold cursor-pointer hover:text-blue-700">
+              <Link
+                href="/author/sign_in"
+                className="font-bold cursor-pointer hover:text-blue-700"
+              >
                 <span>Log In</span>
               </Link>
             </p>
@@ -56,20 +59,12 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSignup}>
-          <div className="mt-4">
-            <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900">
-              Full Name
-            </label>
-            <input
-              type="text"
-              id="name"
-              className="h-[50px] bg-gray-50 border-0 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-              placeholder="John Doe"
-            />
-          </div>
 
           <div className="mt-4">
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900">
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Email Address
             </label>
             <input
@@ -84,7 +79,10 @@ const SignUp = () => {
           </div>
 
           <div className="my-4">
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-gray-900"
+            >
               Password
             </label>
             <input
@@ -105,12 +103,14 @@ const SignUp = () => {
             >
               {loading ? "Loading..." : "Sign Up"}
             </button>
-     
-<div className="inline-flex items-center justify-center w-full my-5">
-   
-    <p className="ml-10 h-[1px] w-full bg-gray-300"/><span className="px-3 font-extralight text-sm text-gray-300">OR</span> <p className="h-[1px] w-full bg-gray-300 mr-10"/>
-</div>
 
+            <div className="inline-flex items-center justify-center w-full my-5">
+              <p className="ml-10 h-[1px] w-full bg-gray-300" />
+              <span className="px-3 font-extralight text-sm text-gray-300">
+                OR
+              </span>{" "}
+              <p className="h-[1px] w-full bg-gray-300 mr-10" />
+            </div>
 
             <button
               type="button"
@@ -121,7 +121,9 @@ const SignUp = () => {
             </button>
           </div>
 
-          {message && <p className="mt-4 text-center text-sm text-[#E50913]">{message}</p>}
+          {message && (
+            <p className="mt-4 text-center text-sm text-[#E50913]">{message}</p>
+          )}
         </form>
       </div>
     </div>
