@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "@/context/FormContext";
 import Modal from "@/components/Modal";
 import CryptoJS from "crypto-js";
@@ -76,8 +76,24 @@ export default function BookPricing() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState({});
-   
-  const { id: authorId } = storedAuthorInfo
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    if (id) {
+      api
+        .get(`http://localhost:3000/api/v1/books/${id}`)
+        .then((response) => {
+          updateFormData({...response.data.data});
+        })
+        .catch((error) => {
+          console.error("Error fetching book:", error);
+        })
+    }
+  }, [id]);
+
+  const { id: authorId } = storedAuthorInfo;
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
@@ -124,7 +140,11 @@ export default function BookPricing() {
       formDataToSend.append("book[cover_image]", coverImageSignedId);
 
       // Submit to the Rails API
-      const response = await api.post("/api/v1/books", formDataToSend);
+      const response = await api({
+        data: formDataToSend,
+        method: id ? "PUT" : "POST",
+        url: id ? `/api/v1/books/${id}` : "/api/v1/books",
+      });
 
       if (response.status >= 200 && response.status < 300) {
         setIsModalOpen(true);
@@ -245,7 +265,7 @@ export default function BookPricing() {
         <div className="flex justify-between mt-10">
           <button
             onClick={() =>
-              router.push(`/author/${authorId}/books/create/book-content`)
+              router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
             }
             className="border border-[#E50913] px-5 py-2 rounded-md hover:bg-[#cd3f46] hover:text-white"
             type="button"

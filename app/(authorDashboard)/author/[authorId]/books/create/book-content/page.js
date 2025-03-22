@@ -1,15 +1,34 @@
 "use client"
 
-import React, { useState } from 'react'
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from 'react'
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
+import { api } from "@/utils/api";
+
 
 const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("")
+
+  const searchParams = useSearchParams();
+    const id = searchParams.get("id");
+  
+    useEffect(() => {
+      if (id && !formData.title) {
+        // Prevent refetching if data already exists
+        api
+          .get(`/api/v1/books/${id}`)
+          .then((response) => {
+            updateFormData(response.data.data); // Update the form context
+          })
+          .catch((error) => {
+            console.error("Error fetching book:", error);
+          });
+      }
+    }, [id]);
 
   const { id: authorId } = storedAuthorInfo;
 
@@ -54,6 +73,7 @@ const BookContent = () => {
       <input
         type="file"
         name="ebook_file"
+        // value={formData.ebook_file ?? ""}
         accept=".pdf,.epub"
         onChange={handleFileChange}
         className="border p-2 w-full"
@@ -68,6 +88,7 @@ const BookContent = () => {
         type="file"
         name="cover_image"
         accept="image/*"
+        // value={formData.cover_image ?? ""}
         onChange={handleFileChange}
         className="border p-2 w-full"
       />
@@ -155,7 +176,9 @@ const BookContent = () => {
       <div className="flex justify-between mb-10 mt-24">
         <button
           onClick={() =>
-            router.push(`/author/${authorId}/books/create/book-details`)
+            router.push(
+              `/author/${authorId}/books/create/book-details?id=${id}`
+            )
           }
           className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md"
         >
@@ -163,7 +186,9 @@ const BookContent = () => {
         </button>
         <button
           onClick={() =>
-            router.push(`/author/${authorId}/books/create/book-pricing`)
+            router.push(
+              `/author/${authorId}/books/create/book-pricing?id=${id}`
+            )
           }
           className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"
         >

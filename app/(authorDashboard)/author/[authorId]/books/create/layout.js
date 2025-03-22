@@ -24,13 +24,13 @@ const layout = ({ children }) => {
             </p>
                 <img src="/icons/check-mark.png" className={`w-5 h-5 ${isPage1 ? "hidden" : ""}`} />
           </div>
-          <div className="ml-2 flex justify-between items-center bg-gray-200 h-16 w-56 pr-2 rounded-md">
-            <p className="flex-1 text-center text-lg">Book Content</p>
-            <img src="/icons/check-mark.png" className="w-5 h-5" />
+          <div className={`ml-2 flex justify-between items-center h-16 w-56 pr-2 rounded-md ${isPage2 ? "shadow-lg bg-white" : "bg-gray-200"}`}>
+            <p className={`flex-1 text-center text-lg ${isPage2 ? "font-bold" : ""}`}>Book Content</p>
+            <img src="/icons/check-mark.png" className={`w-5 h-5 ${(isPage1 || isPage2) ? "hidden" : ""}`} />
           </div>
-          <div className="ml-2 flex justify-between items-center bg-gray-200 h-16 w-56 pr-2 rounded-md">
-            <p className="flex-1 text-center text-lg">Book Pricing</p>
-            <img src="/icons/check-mark.png" className="w-5 h-5" />
+          <div className={`ml-2 flex justify-between items-center h-16 w-56 pr-2 rounded-md ${isPage3 ? "shadow-lg bg-white" : "bg-gray-200"}`}>
+            <p className={`flex-1 text-center text-lg ${isPage3 ? "font-bold" : ""}`}>Book Pricing</p>
+            {/* <img src="/icons/check-mark.png" className="w-5 h-5" /> */}
           </div>
         </div>
       </div>

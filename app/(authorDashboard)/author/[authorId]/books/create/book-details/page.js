@@ -1,15 +1,33 @@
 "use client"
 
-import React, { useState } from 'react'
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
+import { api } from "@/utils/api"
 
 const BookDetails = () => {
   const { formData, updateFormData } = useForm();
   const [selectedOption, setSelectedOption] = useState("option1");
   const router = useRouter();
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
+
+  useEffect(() => {
+    if (id && !formData.title) {
+      // Prevent refetching if data already exists
+      api
+        .get(`/api/v1/books/${id}`)
+        .then((response) => {
+          updateFormData(response.data.data); // Update the form context
+        })
+        .catch((error) => {
+          console.error("Error fetching book:", error);
+        });
+    }
+  }, [id]);
 
   const { id: authorId } = storedAuthorInfo;
 
@@ -250,7 +268,7 @@ const BookDetails = () => {
       </div>
       <button
         onClick={() =>
-          router.push(`/author/${authorId}/books/create/book-content`)
+          router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
         }
         className="bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-8 py-[5px] mb-10 rounded-md"
       >

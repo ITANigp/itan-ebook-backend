@@ -17,7 +17,7 @@ export default function AuthorBooks() {
   if ( !authorId ) {
     alert("Sign in to continue!");
     router.push("/author/sign_in");
-    return
+    
   }
     useEffect(() => {
       api
@@ -60,12 +60,18 @@ export default function AuthorBooks() {
       });
   };
 
+   const handleEdit = (book) => {
+     router.push(
+       `/author/${authorId}/books/create/book-details?id=${book.id}`
+     );
+   };
+
   if (loading) {
     return <p>Loading books...</p>;
   }
 
   return (
-    <div>
+    <div className="ml-72 mr-8  mt-24">
       {books.length === 0 ? (
         <p>No books available.</p>
       ) : (
@@ -88,17 +94,22 @@ export default function AuthorBooks() {
               <h2 className="text-lg font-semibold mt-2">{book.title}</h2>
               <p className="text-gray-600">{book.author}</p>
               <div className="flex justify-between items-center w-full mt-2">
-                <p className="text-green-600 font-bold">${book.price}</p>
-                <button className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
-                  Buy Now
+                <p className="text-green-600 font-bold">${book?.ebook_price}</p>
+                <button
+                  className="bg-red-500 text-white px-4 py-2 mt-2 rounded hover:bg-red-600"
+                  onClick={() => handleDelete(book.id)}
+                >
+                  Delete
                 </button>
+                <Link
+                  href={`${book.ebook_file_url}`}
+                  target="_blank"
+                  className="bg-blue-500 text-white px-4 py-2 mt-2 rounded hover:bg-blue-300"
+                >
+                  Read
+                </Link>
               </div>
-              <button
-                className="bg-red-500 text-white px-4 py-2 mt-2 rounded hover:bg-red-600"
-                onClick={() => handleDelete(book.id)}
-              >
-                Delete
-              </button>
+              <button onClick={() => handleEdit(book)}>Edit</button>
             </li>
           ))}
         </ul>
