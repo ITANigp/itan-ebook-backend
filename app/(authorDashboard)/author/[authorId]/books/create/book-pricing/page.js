@@ -24,51 +24,48 @@ async function computeChecksum(file) {
 }
 
 // File upload function to handle the direct upload process
-async function directUploadFile(file) {
-  try {
-    const checksum = await computeChecksum(file);
-    console.log(
-      `File: ${file.name}, Size: ${file.size}, Checksum: ${checksum}`
-    );
+  async function directUploadFile(file) {
+    try {
+      const checksum = await computeChecksum(file);
+      
+      const response = await api.post("/direct_uploads", {
+        blob: {
+          filename: file.name,
+          byte_size: file.size,
+          checksum: checksum,
+          content_type: file.type,
+        },
+      });
 
-    const response = await api.post("/direct_uploads", {
-      blob: {
-        filename: file.name,
-        byte_size: file.size,
-        checksum: checksum,
-        content_type: file.type,
-      },
-    });
+      const { signed_id, direct_upload } = response.data;
 
-    const { signed_id, direct_upload } = response.data;
+      if (!direct_upload?.url) {
+        throw new Error("Invalid direct upload response");
+      }
 
-    if (!direct_upload?.url) {
-      throw new Error("Invalid direct upload response");
+      const uploadResponse = await fetch(direct_upload.url, {
+        method: "PUT",
+        headers: {
+          ...direct_upload.headers,
+          "Content-Type": file.type,
+          "Content-Length": file.size.toString(),
+          "Content-MD5": checksum,
+        },
+        body: file,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(`S3 upload failed: ${uploadResponse.status}`);
+      }
+
+      console.log(`✅ Successfully uploaded ${file.name} to S3`);
+      return signed_id;
+    } catch (error) {
+      console.error("Direct upload failed:", error);
+      throw error;
     }
-
-    const uploadResponse = await fetch(direct_upload.url, {
-      method: "PUT",
-      headers: {
-        ...direct_upload.headers,
-        "Content-Type": file.type,
-        "Content-Length": file.size.toString(),
-        "Content-MD5": checksum,
-      },
-      body: file,
-    });
-
-    if (!uploadResponse.ok) {
-      const errorText = await uploadResponse.text();
-      throw new Error(`S3 upload failed: ${uploadResponse.status}`);
-    }
-
-    console.log(`✅ Successfully uploaded ${file.name} to S3`);
-    return signed_id;
-  } catch (error) {
-    console.error("Direct upload failed:", error);
-    throw error;
   }
-}
 
 export default function BookPricing() {
   const { formData, updateFormData } = useForm();
@@ -81,15 +78,15 @@ export default function BookPricing() {
   const id = searchParams.get("id");
 
   useEffect(() => {
-    if (id) {
+    if (id && id !== "null" && id !== "undefined") {
       api
         .get(`http://localhost:3000/api/v1/books/${id}`)
         .then((response) => {
-          updateFormData({...response.data.data});
+          updateFormData({ ...response.data.data });
         })
         .catch((error) => {
           console.error("Error fetching book:", error);
-        })
+        });
     }
   }, [id]);
 
@@ -139,11 +136,14 @@ export default function BookPricing() {
       formDataToSend.append("book[ebook_file]", ebookSignedId);
       formDataToSend.append("book[cover_image]", coverImageSignedId);
 
+      // Add this check to handle both null and "null"
+      const isValidId = id && id !== "null" && id !== "undefined";
+
       // Submit to the Rails API
       const response = await api({
         data: formDataToSend,
-        method: id ? "PUT" : "POST",
-        url: id ? `/api/v1/books/${id}` : "/api/v1/books",
+        method: isValidId ? "PUT" : "POST",
+        url: isValidId ? `/api/v1/books/${id}` : "/api/v1/books",
       });
 
       if (response.status >= 200 && response.status < 300) {
