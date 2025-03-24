@@ -62,7 +62,7 @@ const SignIn = () => {
 
   return (
     <div className="w-full mb-9">
-      <div className="bg-white rounded-2xl p-5 md:p-10 md:w-[500px] mt-24 mx-7 sm:mx-24 md:mx-auto border border-[#E50913] ">
+      <div className="bg-white rounded-2xl p-5 md:p-10 md:w-[500px] mt-24 mx-7 sm:mx-24 md:mx-auto border ">
         <Link href="/">
           <img src="/images/logo2.png" alt="logo" className="w-10 h-6 cursor-pointer" />
         </Link>

@@ -42,7 +42,7 @@ const SignUp = () => {
 
   return (
     <div className="w-full mb-9">
-      <div className="bg-white rounded-2xl p-5 md:p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border border-[#E50913]">
+      <div className="bg-white rounded-2xl p-5 md:p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border">
         <Link href="/">
           <img
             src="/images/logo2.png"
