@@ -1,5 +1,3 @@
-import { Alert } from "flowbite-react";
-
 export default function Demo() {
   return <>
   <h2>
