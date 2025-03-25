@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
@@ -12,6 +12,9 @@ const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("")
+
+  const ebookInputRef = useRef()
+  const coverInputRef = useRef()
 
   const searchParams = useSearchParams();
     const id = searchParams.get("id");
@@ -35,6 +38,13 @@ const BookContent = () => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     updateFormData({ [e.target.name]: file });
+  };
+
+  const handleEbookButtonClick = () => {
+    ebookInputRef.current?.click(); 
+  };
+  const handleCoverButtonClick = () => {
+    coverInputRef.current?.click(); 
   };
 
   
@@ -67,16 +77,19 @@ const BookContent = () => {
             alt="upload book"
             className="w-4 h-4 mx-2"
           />
-          <button className="text-white mr-2">Upload manuscript</button>
+          <button className="text-white mr-2" onClick={handleEbookButtonClick}>
+            Upload manuscript
+          </button>
         </div>
       </div>
       <input
         type="file"
         name="ebook_file"
         // value={formData.ebook_file ?? ""}
+        ref={ebookInputRef}
         accept=".pdf,.epub"
         onChange={handleFileChange}
-        className="border p-2 w-full"
+        className="border p-2 w-full hidden"
       />
       <h3 className="my-2 font-bold text-lg">Book Cover</h3>
       <p className="w-full">
@@ -88,9 +101,10 @@ const BookContent = () => {
         type="file"
         name="cover_image"
         accept="image/*"
+        ref={coverInputRef}
         // value={formData.cover_image ?? ""}
         onChange={handleFileChange}
-        className="border p-2 w-full"
+        className="border p-2 w-full hidden"
       />
 
       <div>
@@ -100,7 +114,10 @@ const BookContent = () => {
             alt="upload book"
             className="w-4 h-4 mx-2"
           />
-          <button className="text-gray-800 mr-2 text-sm">
+          <button
+            className="text-gray-800 mr-2 text-sm"
+            onClick={handleCoverButtonClick}
+          >
             Upload Book Cover
           </button>
         </div>

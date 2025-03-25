@@ -5,12 +5,12 @@
 @tailwind utilities;
 
 :root {
-  --background: #ededed;
+  --background: #FAFAFA;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #ededed;
+    /* --background: #fcfefd; */
   }
 }
 
