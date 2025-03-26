@@ -1,12 +1,12 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "@/app/globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // Prevent fontawesome from adding styles automatically
 import { usePathname } from "next/navigation";
 
-import { FormProvider } from "../context/FormContext";
+import { FormProvider } from "../../context/FormContext";
 
 config.autoAddCss = false;
 

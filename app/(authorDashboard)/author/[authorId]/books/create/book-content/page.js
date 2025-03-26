@@ -12,15 +12,48 @@ const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState("")
+  const [errors, setErrors] = useState({});
+
+  const searchParams = useSearchParams();
+  const id = searchParams.get("id");
 
   const ebookInputRef = useRef()
   const coverInputRef = useRef()
 
-  const searchParams = useSearchParams();
-    const id = searchParams.get("id");
+  useEffect(() => {
+      const savedData = localStorage.getItem("bookFormData");
+      if (savedData) {
+        updateFormData(JSON.parse(savedData));
+      }
+    }, []);
+  
+     useEffect(() => {
+       localStorage.setItem("bookFormData", JSON.stringify(formData));
+     }, [formData]);
+  
+  
+     const validateForm = () => {
+       let newErrors = {};
+
+       console.log("book id @ form2: ", id)
+  
+       if (id == "null"){
+        if (!formData.ebook_file) {
+          newErrors.ebook_file = "Ebook file is required.";
+        }
+
+        if (!formData.cover_image) {
+          newErrors.cover_image = "Ebook file is required.";
+        }
+  
+       }
+       setErrors(newErrors);
+       return Object.keys(newErrors).length === 0;
+     };
+
   
     useEffect(() => {
-      if (id && !formData.title) {
+      if (id && id !== "null" && id !== "undefined") {
         // Prevent refetching if data already exists
         api
           .get(`/api/v1/books/${id}`)
@@ -36,8 +69,10 @@ const BookContent = () => {
   const { id: authorId } = storedAuthorInfo;
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.target.files?.[0];
+          if (!file) return;
     updateFormData({ [e.target.name]: file });
+  
   };
 
   const handleEbookButtonClick = () => {
@@ -46,7 +81,15 @@ const BookContent = () => {
   const handleCoverButtonClick = () => {
     coverInputRef.current?.click(); 
   };
+  
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log("Form2 is valid, submitting data...", formData);
+      router.push(`/author/${authorId}/books/create/book-pricing?id=${id}`);
+    }
+  };
   
   return (
     <div>
@@ -81,10 +124,14 @@ const BookContent = () => {
             Upload manuscript
           </button>
         </div>
+        {errors.ebook_file && (
+          <p className="text-red-500">{errors.ebook_file}</p>
+        )}
       </div>
       <input
         type="file"
         name="ebook_file"
+        // required={id ? false : true}
         // value={formData.ebook_file ?? ""}
         ref={ebookInputRef}
         accept=".pdf,.epub"
@@ -121,6 +168,9 @@ const BookContent = () => {
             Upload Book Cover
           </button>
         </div>
+        {errors.cover_image && (
+          <p className="text-red-500">{errors.cover_image}</p>
+        )}
       </div>
 
       <h3 className="font-bold text-lg mb-2 mt-6">AI Content Generated</h3>
@@ -202,11 +252,7 @@ const BookContent = () => {
           Back to details
         </button>
         <button
-          onClick={() =>
-            router.push(
-              `/author/${authorId}/books/create/book-pricing?id=${id}`
-            )
-          }
+          onClick={handleSubmit}
           className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"
         >
           Next

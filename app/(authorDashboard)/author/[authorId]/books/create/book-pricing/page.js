@@ -97,12 +97,12 @@ export default function BookPricing() {
 
     try {
       // Validate required fields
-      if (!formData.title?.trim()) {
-        throw new Error("Title is required");
-      }
-      if (!formData.ebook_file || !formData.cover_image) {
-        throw new Error("Ebook file and cover image are required");
-      }
+      // if (!id && !formData.title?.trim()) {
+      //   throw new Error("Title is required");
+      // }
+      // if (!id && !formData.ebook_file) {
+      //   throw new Error("Ebook file and cover image are required");
+      // }
 
       // Upload files directly to S3
       const uploadPromises = {};
@@ -155,6 +155,9 @@ export default function BookPricing() {
     } finally {
       setUploading(false);
     }
+
+    // Clear stored form data after submission
+    localStorage.removeItem("bookFormData");
   };
 
   return (
@@ -170,7 +173,7 @@ export default function BookPricing() {
           placeholder="Ebook Price"
         />
 
-        {/* Account Details and other fields */}
+        {/* Account Details and other fields
         <h3 className="font-bold text-lg mt-4 mb-1">Account Details</h3>
         <input
           type="text"
@@ -189,7 +192,7 @@ export default function BookPricing() {
           id="accountName"
           className="block h-9 w-96 border rounded-lg px-3 mt-2"
           placeholder="Account Name"
-        />
+        /> */}
 
         {/* Terms and Conditions */}
         <h3 className="font-bold text-lg mt-5">Terms and Conditions</h3>
@@ -262,10 +265,12 @@ export default function BookPricing() {
         )}
 
         {/* Action Buttons */}
-        <div className="flex justify-between mt-10">
+        <div className="flex justify-between mt-10 mb-10">
           <button
             onClick={() =>
-              router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
+              router.push(
+                `/author/${authorId}/books/create/book-content?id=${id}`
+              )
             }
             className="border border-[#E50913] px-5 py-2 rounded-md hover:bg-[#cd3f46] hover:text-white"
             type="button"

@@ -65,8 +65,6 @@ export const signInAuthor = async (email, password) => {
     // console.log("Sign-in successful:", response.data);
     // return author;
   } catch (error) {
-    // const errorMessage = error.response?.data?.message || "Sign-in failed. Please try again.";
-    // console.error("Sign-in failed:", error.response?.data || error);
     throw error;
   }
 };
@@ -86,12 +84,6 @@ export const signOutAuthor = async () => {
     return { success: true };
   } catch (error) {
     console.error("Sign-out failed:", error.response?.data || error);
-
-    // return {
-    //   success: false,
-    //   message:
-    //     error.response?.data?.message || "An error occurred while signing out.",
-    // };
   }
 };
 

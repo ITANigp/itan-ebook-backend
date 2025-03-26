@@ -4,6 +4,8 @@
 
 let storedAuthorInfo = null;
 
+if (typeof window !== "undefined") {
+
 try {
   const authorInfo = localStorage.getItem("authorInfo");
 //   storedAuthorInfo = JSON.parse(localStorage.getItem("authorInfo") || "{}");
@@ -11,6 +13,8 @@ try {
 } catch (error) {
   console.error("Error parsing authorInfo from localStorage:", error);
   localStorage.removeItem("authorInfo"); // Clear corrupted data
+}
+
 }
 
 console.log("Stored Author Info:", storedAuthorInfo);

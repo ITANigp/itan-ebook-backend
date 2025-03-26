@@ -9,14 +9,58 @@ import { api } from "@/utils/api"
 
 const BookDetails = () => {
   const { formData, updateFormData } = useForm();
-  const [selectedOption, setSelectedOption] = useState("option1");
+  // const [selectedOption, setSelectedOption] = useState("option1");
+  const [errors, setErrors] = useState({});
+
   const router = useRouter();
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
   useEffect(() => {
-    if (id && !formData.title) {
+    const savedData = localStorage.getItem("bookFormData");
+    if (savedData) {
+      updateFormData(JSON.parse(savedData));
+    }
+  }, []);
+
+   useEffect(() => {
+     localStorage.setItem("bookFormData", JSON.stringify(formData));
+   }, [formData]);
+
+
+   const validateForm = () => {
+     let newErrors = {};
+
+     if (!id && (!formData.title || formData.title.trim() === "")) {
+       newErrors.title = "Book title is required.";
+     }
+
+    //  if (id && (formData.subtitle && formData.subtitle.length > 200)) {
+    //    newErrors.subtitle = "Subtitle must be less than 200 characters.";
+    //  }
+
+
+     if (id && (formData.edition_number && isNaN(formData.edition_number))) {
+       newErrors.edition_number = "Edition number must be a number.";
+     }
+
+    //  if (!formData.description || formData.description.trim() === "") {
+    //    newErrors.description = "Description is required.";
+    //  if (formData.description.length > 1000) {
+    //    newErrors.description = "Description must be under 1000 characters.";
+    //  }
+
+     if (!id && (!formData.categories || formData.categories.trim() === "")) {
+       newErrors.categories = "Category is required.";
+     }
+
+     setErrors(newErrors);
+     return Object.keys(newErrors).length === 0;
+   };
+
+  useEffect(() => {
+    if (id && id !== "null" && id !== "undefined") {
       // Prevent refetching if data already exists
       api
         .get(`/api/v1/books/${id}`)
@@ -31,6 +75,14 @@ const BookDetails = () => {
 
   const { id: authorId } = storedAuthorInfo;
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (validateForm()) {
+      console.log("Form1 is valid, submitting data...", formData);
+      router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
+    }
+  };
+
   return (
     <div>
       <h3 className="mt-7 font-bold">Book Title</h3>
@@ -43,15 +95,17 @@ const BookDetails = () => {
       <p>Book Title</p>
       <input
         type="text"
-        required
+        // required={!id}
         value={formData.title}
+        required
         onChange={(e) => updateFormData({ title: e.target.value })}
         className="h-[35px] w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
+      {errors.title && <p className="text-red-500">{errors.title}</p>}
       <p className="mt-3">Subtitle (Optional)</p>
       <input
         type="text"
-        required
+        // required={id ? false : true}
         value={formData.subtitle}
         onChange={(e) => updateFormData({ subtitle: e.target.value })}
         className="h-[35px] w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
@@ -60,7 +114,8 @@ const BookDetails = () => {
       <h3 className="mt-3 font-bold ">Author's Bio</h3>
       <p className="text-sm w-[650px]">
         Enter the author's name exactly as it appears on the book cover,
-        including any middle names in the <br />'First Name' field.
+        including any middle names in the <br />
+        'First Name' field.
       </p>
       <h3 className="mt-3 font-bold">Author Name</h3>
 
@@ -85,12 +140,12 @@ const BookDetails = () => {
       </div>
 
       <h3 className="font-bold mt-8">Bio</h3>
-      <textarea
+      {/* <textarea
         className="h-[210px] w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         placeholder="Not more than 500 characters"
         value={formData.bio}
         onChange={(e) => updateFormData({ bio: e.target.value })}
-      ></textarea>
+      ></textarea> */}
 
       <h3 className="font-bold">Edition Number</h3>
       <p className="my-3 w-[670px]">
@@ -103,7 +158,7 @@ const BookDetails = () => {
       </p>
       <input
         type="text"
-        id="editionNo"
+        // id="editionNo"
         value={formData.edition_number}
         onChange={(e) => updateFormData({ edition_number: e.target.value })}
         className="h-[35px] w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
@@ -204,6 +259,7 @@ const BookDetails = () => {
         <option value="option2">Option 2</option>
         <option value="option3">Option 3</option>
       </select>
+      {errors.categories && <p className="text-red-500">{errors.categories}</p>}
 
       <h3 className="font-bold text-lg mt-7 mb-3">Keywords</h3>
       <p className="w-[650px] my-3">
@@ -267,9 +323,7 @@ const BookDetails = () => {
         />
       </div>
       <button
-        onClick={() =>
-          router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
-        }
+        onClick={handleSubmit}
         className="bg-[#E50913] hover:bg-[#cd3f46] float-right text-white px-8 py-[5px] mb-10 rounded-md"
       >
         Next
