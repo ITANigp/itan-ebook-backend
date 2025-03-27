@@ -71,8 +71,8 @@ export default function AuthorBooks() {
   }
 
   return (
-    <div className="ml-72 mr-8  mt-24">
-      {books.length === 0 ? (
+    <section className="ml-72 mr-8  mt-24 mb-8">
+      {/* {books.length === 0 ? (
         <p>No books available.</p>
       ) : (
         <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -113,7 +113,65 @@ export default function AuthorBooks() {
             </li>
           ))}
         </ul>
+      )} */}
+
+      {books.length === 0 ? (
+        <p>No books available.</p>
+      ) : (
+        books.map((book) => (
+          <div
+            key={book.id}
+            className="flex rounded-lg justify-between mx-auto shadow-md"
+          >
+            <div className="flex items-center border-r border-r-gray-600 mb-2 mt-3 pr-9">
+              <Link href={`/author/${authorId}/books/${book.id}/ebook-preview`}>
+                <img
+                  src={book.cover_image_url || "/images/book-shelf.png"}
+                  alt={book.title}
+                  className="w-36 h-44 ml-3 rounded-lg mr-2"
+                />
+              </Link>
+              <div>
+                <p className="font-semibold w-32">{book.title}</p>
+                <p className="text-sm">By {book.author || "Oluyemi Paul"}</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col justify-between my-3 ml-6">
+              <div className="flex items-center">
+                <p>
+                  Book Status:{" "}
+                  <span className="text-[#FF9A6C] font-semibold">
+                    IN REVIEW
+                  </span>
+                </p>
+                <img
+                  src="/images/status.png"
+                  alt="status"
+                  className="w-3 h-3 ml-1"
+                />
+              </div>
+
+              <p>
+                Last Updated on <span>March 9, 2025</span>
+              </p>
+            </div>
+
+            <div className="flex-1 relative">
+              <div className="absolute right-0 flex flex-col justify-between items-end h-full mr-3">
+                <img
+                  src="/images/book-menu.png"
+                  alt="book menu"
+                  className="h-1 w-5 mt-3"
+                />
+                <p className="mb-3">
+                  Book Type: <span>Ebook</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        ))
       )}
-    </div>
+    </section>
   );
 }
