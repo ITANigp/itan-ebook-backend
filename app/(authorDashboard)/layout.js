@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname} from "next/navigation";
 import { useRouter } from "next/navigation";
@@ -16,20 +16,17 @@ import {
   faQuestionCircle,
   faUser,
   faSignOut,
+  faBars,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { signOutAuthor } from "@/utils/api";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 
-// // Dynamically import FontAwesomeIcon to avoid SSR issues
-// const FontAwesomeIcon = dynamic(
-//   () => import("@fortawesome/react-fontawesome").then((mod) => mod.FontAwesomeIcon),
-//   { ssr: false }
-// );
-
-
 
 export default function AuthorDashboardLayout({ children }) {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const sidebarRef = useRef(null);
   const pathName = usePathname();
   const router = useRouter();
   // Retrieve author info from localStorage
@@ -68,6 +65,11 @@ export default function AuthorDashboardLayout({ children }) {
 
   const inputRef = useRef(null);
 
+   const toggleSidebar = () => {
+     setIsSidebarOpen(!isSidebarOpen);
+   };
+
+
   const handleFocus = () => {
     inputRef.current?.focus();
   };
@@ -82,12 +84,35 @@ export default function AuthorDashboardLayout({ children }) {
     }
   };
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    if (isSidebarOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [isSidebarOpen]);
+
+
   return (
     <>
       <div
         className={`flex items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full  py-2 shadow-md z-10 bg-white`}
       >
-        <div></div>
+        <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+          <FontAwesomeIcon
+            icon={isSidebarOpen ? "" : faBars}
+            size="lg"
+            className="bg-red-500 right-0 top-0"
+          />
+        </button>
         <div className="flex space-x-8 mr-8">
           <div
             className="flex items-center bg-[#F1F1F1] px-3 py-2 rounded-md cursor-pointer h-12"
@@ -109,11 +134,27 @@ export default function AuthorDashboardLayout({ children }) {
           <img src="/images/picture.png" className="w-12" />
         </div>
       </div>
+
+      {isSidebarOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-10 sm:hidden"></div> // Click outside to close
+      )}
+
       <aside
+        ref={sidebarRef}
         id="default-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-gray-900 text-white transition-transform ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0 sm:block`}
         aria-label="Sidebar"
       >
+        <div className="w-full relative">
+          <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+            <FontAwesomeIcon
+              icon={isSidebarOpen ? faTimes : ""}
+              className="hover:bg-red-100 hover:border-2 w-4 h-4 rounded-full hover:border-red-600 text-red-600 absolute right-3 top-2"
+            />
+          </button>
+        </div>
         <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
           <Link href="/">
             <img src="/images/logo.png" className="w-16 mb-6 ml-3" />
@@ -121,7 +162,7 @@ export default function AuthorDashboardLayout({ children }) {
           <ul className="space-y-2 font-medium">
             <li>
               <a
-                href="/dashboard/author/1"
+                href={`/dashboard/author/${authorId}`}
                 className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

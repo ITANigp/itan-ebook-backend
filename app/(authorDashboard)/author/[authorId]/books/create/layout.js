@@ -9,7 +9,7 @@ const layout = ({ children }) => {
   const isPage2 = pathname.endsWith("/books/create/book-content");
   const isPage3 = pathname.endsWith("/books/create/book-pricing");
   return (
-    <div className="ml-72 mr-8  mt-24 ">
+    <div className="md:ml-72 mr-8  mt-24 ">
       <h3>Add Ebook</h3>
 
       <div className="w-full">
