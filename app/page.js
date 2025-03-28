@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export default function Demo() {
   return (
     <>
@@ -9,8 +11,18 @@ export default function Demo() {
             audiobooks to expand your reach and connect with new readers.
           </p>
           <div>
-            <button>Sign In</button>
-            <button>Join Itan</button>
+            <Link
+              href="/author/sign_in"
+              className="text-[#EF5353] border border-[#EF5353] cursor-pointer"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/author/sign_up"
+              className="bg-[#EF5353] text-white cursor-pointer"
+            >
+              Join Itan
+            </Link>
           </div>
         </div>
         <img

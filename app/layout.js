@@ -5,6 +5,7 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // Prevent fontawesome from adding styles automatically
 import { usePathname } from "next/navigation";
+import Link from "next/link";
 
 import { FormProvider } from "../context/FormContext";
 
@@ -30,21 +31,39 @@ export default function RootLayout({ children }) {
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
         <nav className={`${authorPages ? "hidden" : ""}`}>
           <div>
-            <div>
+            <Link href="/">
               <img src="/images/logo.png" alt="logo" />
               <p className="text-red-700">Global Publishing</p>
-            </div>
+            </Link>
             <div>
-              <button>Sign</button>
-              <button>Join Itan</button>
+              <Link
+                href="/author/sign_in"
+                className="bg-slate-700 text-white cursor-pointer"
+              >
+                Sign in
+              </Link>
+              <Link
+                href="/author/sign_up"
+                className="bg-[#EF5353] text-white cursor-pointer"
+              >
+                Join Itan
+              </Link>
             </div>
           </div>
 
           <ul>
-            <li>About Itan</li>
-            <li>liublish</li>
-            <li>Monetize</li>
-            <li>Helli</li>
+            <Link href="/" className="hover:text-[#EF5353] cursor-pointer">
+              <li>About Itan</li>
+            </Link>
+            <Link href="/publish" className="hover:text-[#EF5353] cursor-pointer">
+              <li>Publish</li>
+            </Link>
+            <Link href="/monetize" className="hover:text-[#EF5353] cursor-pointer">
+              <li className="hover:text-[#EF5353] cursor-pointer">Monetize</li>
+            </Link>
+            <Link href="#" className="hover:text-[#EF5353] cursor-pointer">
+              <li>Help</li>
+            </Link>
           </ul>
         </nav>
         <FormProvider>{children}</FormProvider>
@@ -62,7 +81,9 @@ export default function RootLayout({ children }) {
 
           <section>
             <div>
-              <img src="/images/logo.png" alt="logo" />
+              <Link href="/">
+                <img src="/images/logo.png" alt="logo" />
+              </Link>
               <p>
                 Itan is a revolutionary publishing platform designed
                 specifically for writers like you. Seamlessly publish your work
