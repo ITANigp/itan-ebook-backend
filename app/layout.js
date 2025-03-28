@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
         <nav className={`${authorPages ? "hidden" : ""}`}>
           <div>
             <div>
-              <img src="" alt="" />
+              <img src="/images/logo.png" alt="logo" />
               <p className="text-red-700">Global Publishing</p>
             </div>
             <div>
@@ -62,7 +62,7 @@ export default function RootLayout({ children }) {
 
           <section>
             <div>
-              <img src="" alt="" />
+              <img src="/images/logo.png" alt="logo" />
               <p>
                 Itan is a revolutionary publishing platform designed
                 specifically for writers like you. Seamlessly publish your work
@@ -97,10 +97,26 @@ export default function RootLayout({ children }) {
               <h3>Contact</h3>
               <p>Contact</p>
               <p>234-8161-7963-71</p>
-              <img src="" alt="" />
-              <img src="" alt="" />
-              <img src="" alt="" />
-              <img src="" alt="" />
+              <img
+                src="/images/twitter-logo.png"
+                alt="twitter"
+                className="bg-slate-800"
+              />
+              <img
+                src="/images/facebook-logo.png"
+                alt="facebook"
+                className="bg-slate-800"
+              />
+              <img
+                src="images/linkedin-logo.png"
+                alt="linkedin"
+                className="bg-slate-800"
+              />
+              <img
+                src="/images/whatsapp-logo.png"
+                alt="whatsapp"
+                className="bg-slate-800"
+              />
             </div>
           </section>
         </footer>

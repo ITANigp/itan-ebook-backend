@@ -15,7 +15,10 @@ const Monetize = () => {
             <button>Join Itan</button>
           </div>
         </div>
-        <img src="" alt="" />
+        <img
+          src="/images/books-with-headphone.png"
+          alt="books with headphone"
+        />
       </section>
 
       <section>
