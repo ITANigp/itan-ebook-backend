@@ -1,37 +1,58 @@
+import Link from 'next/link';
 import React from 'react'
 
 const Publish = () => {
   return (
     <div>
-      <section>
+      <section className="mx-3">
         <div>
-          <h1>Publish With Itan Global Publishing (IGP)</h1>
-          <p>
+          <h1 className="text-2xl font-semibold">
+            Publish With Itan Global Publishing (IGP)
+          </h1>
+          <p className="my-2">
             With Itan Global Publishing (IGP), publish your books and reach
             millions of readers around the world
           </p>
           <div>
-            <button>Sign In</button>
-            <button>Join Itan</button>
+            <Link
+              href="/author/sign_in"
+              className="h-5 border border-[#EF5353] text-[#EF5353] rounded-sm py-1 px-4 mr-2"
+            >
+              Sign In
+            </Link>
+            <Link
+              href="/author/sign_up"
+              className="h-5 bg-[#EF5353] text-white rounded-sm py-1 px-4"
+            >
+              Join Itan
+            </Link>
           </div>
         </div>
         <img
           src="/images/books-with-headphone.png"
           alt="books with headphone"
+          className="hidden"
         />
       </section>
 
-      <section>
-        <h2>Start your publishing journey with two easy steps</h2>
-        <h3>Step 1: Get your manuscript and cover ready</h3>
-        <p>
+      <section
+        className="z-30 relative bg-cover bg-center bg-no-repeat h-[450px] flex flex-col items-center justify-center text-center px-3 "
+        style={{ backgroundImage: "url('/images/bg-img-publish.png')" }}
+      >
+        <h2 className="text-3xl font-bold">
+          Start your publishing journey with two easy steps
+        </h2>
+        <h3 className="text-xl font-semibold text-white mt-4">
+          Step 1: Get your manuscript and cover ready
+        </h3>
+        <p className="text-white mt-2 max-w-2xl">
           Ensure your manuscript is properly formatted, including the cover
-          page, front section, title page and author biography.
+          page, front section, title page, and author biography.
         </p>
-        <p>
+        <p className="text-white mt-2 max-w-2xl">
           We recommend hiring a desktop publisher to format your book for
-          publishing. Use Canva to crate a stunning and eye-catching cover, or
-          work ith a graphic artist for a professionally designed cover.
+          publishing. Use Canva to create a stunning and eye-catching cover, or
+          work with a graphic artist for a professionally designed cover.
         </p>
       </section>
 
