@@ -1,14 +1,17 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation"
 
 import { api } from "@/utils/api"; // Ensure this imports your API client
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
+import BookMenu from "@/components/BookMenu";
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
+  const [isBookMenuOpen, setBookMenuOpen] = useState(false);
+  const bookMenuRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter()
 
@@ -66,12 +69,28 @@ export default function AuthorBooks() {
      );
    };
 
+   useEffect(() => {
+     const handleClickOutside = (event) => {
+       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+         setBookMenuOpen(false);
+       }
+     };
+
+     if (isBookMenuOpen) {
+       document.addEventListener("mousedown", handleClickOutside);
+     } else {
+       document.removeEventListener("mousedown", handleClickOutside);
+     }
+
+     return () => document.removeEventListener("mousedown", handleClickOutside);
+   }, [isBookMenuOpen]);
+
   if (loading) {
     return <p>Loading books...</p>;
   }
 
   return (
-    <section className="ml-72 mr-8  mt-24 mb-8">
+    <section className="sm:ml-72 sm:mr-8  sm:mt-24 mb-8">
       {/* {books.length === 0 ? (
         <p>No books available.</p>
       ) : (
@@ -158,6 +177,8 @@ export default function AuthorBooks() {
             </div>
 
             <div className="flex-1 relative">
+              <BookMenu ref={bookMenuRef} className="hidden"/>
+
               <div className="absolute right-0 flex flex-col justify-between items-end h-full mr-3">
                 <img
                   src="/images/book-menu.png"

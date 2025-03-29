@@ -55,10 +55,16 @@ export default function RootLayout({ children }) {
             <Link href="/" className="hover:text-[#EF5353] cursor-pointer">
               <li>About Itan</li>
             </Link>
-            <Link href="/publish" className="hover:text-[#EF5353] cursor-pointer">
+            <Link
+              href="/publish"
+              className="hover:text-[#EF5353] cursor-pointer"
+            >
               <li>Publish</li>
             </Link>
-            <Link href="/monetize" className="hover:text-[#EF5353] cursor-pointer">
+            <Link
+              href="/monetize"
+              className="hover:text-[#EF5353] cursor-pointer"
+            >
               <li className="hover:text-[#EF5353] cursor-pointer">Monetize</li>
             </Link>
             <Link href="#" className="hover:text-[#EF5353] cursor-pointer">
@@ -129,7 +135,7 @@ export default function RootLayout({ children }) {
                 className="bg-slate-800"
               />
               <img
-                src="images/linkedin-logo.png"
+                src="/images/linkedin.png"
                 alt="linkedin"
                 className="bg-slate-800"
               />

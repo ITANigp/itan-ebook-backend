@@ -30,9 +30,9 @@ export default function AuthorDashboardLayout({ children }) {
   const pathName = usePathname();
   const router = useRouter();
   // Retrieve author info from localStorage
-  const storedAuthorInfo = JSON.parse(
-    localStorage.getItem("authorInfo") || "{}"
-  );
+  // const storedAuthorInfo = JSON.parse(
+  //   localStorage.getItem("authorInfo") || "{}"
+  // );
   const authorId = storedAuthorInfo?.id;
 
   useEffect(() => {
@@ -103,18 +103,18 @@ export default function AuthorDashboardLayout({ children }) {
 
   return (
     <>
+      <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+        <FontAwesomeIcon
+          icon={isSidebarOpen ? faTimes : faBars}
+          size="sm"
+          className="right-0 top-0 ml-3 mt-2 p-1 cursor-pointer text-white bg-slate-700 rounded-full"
+        />
+      </button>
       <div
-        className={`flex items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full  py-2 shadow-md z-10 bg-white`}
+        className={`sm:flex hidden items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full h-16  py-2 shadow-md z-10 bg-white`}
       >
-        <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
-          <FontAwesomeIcon
-            icon={isSidebarOpen ? "" : faBars}
-            size="lg"
-            className="bg-red-500 right-0 top-0"
-          />
-        </button>
-        <div className="flex space-x-8 mr-8">
-          <div
+        <div className="flex-1 relative mr-8">
+          {/* <div
             className="flex items-center bg-[#F1F1F1] px-3 py-2 rounded-md cursor-pointer h-12"
             onClick={handleFocus}
           >
@@ -129,9 +129,12 @@ export default function AuthorDashboardLayout({ children }) {
               placeholder="Search"
               className="outline-none border-none focus:ring-0 bg-[#F1F1F1] ml-2 w-full"
             />
-          </div>
+          </div> */}
 
-          <img src="/images/picture.png" className="w-12" />
+          <img
+            src="/images/picture.png"
+            className="w-12 absolute right-0 -top-6"
+          />
         </div>
       </div>
 
@@ -142,7 +145,7 @@ export default function AuthorDashboardLayout({ children }) {
       <aside
         ref={sidebarRef}
         id="default-sidebar"
-        className={`fixed top-0 left-0 z-40 w-64 h-screen bg-gray-900 text-white transition-transform ${
+        className={`fixed top-0 left-0 z-40 w-64 h-full bg-gray-900 text-white transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0 sm:block`}
         aria-label="Sidebar"
@@ -150,7 +153,7 @@ export default function AuthorDashboardLayout({ children }) {
         <div className="w-full relative">
           <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
             <FontAwesomeIcon
-              icon={isSidebarOpen ? faTimes : ""}
+              icon={isSidebarOpen ? faTimes : faBars}
               className="hover:bg-red-100 hover:border-2 w-4 h-4 rounded-full hover:border-red-600 text-red-600 absolute right-3 top-2"
             />
           </button>
@@ -178,7 +181,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <a
-                href="/author/4b0f4db7-aebf-4ba2-b5a8-10eb6ff93832/books/create/book-details"
+                href={`/author/${authorId}/books/create/book-details`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

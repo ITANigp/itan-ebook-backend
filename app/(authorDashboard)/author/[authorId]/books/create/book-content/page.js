@@ -174,7 +174,7 @@ const BookContent = () => {
       </div>
 
       <h3 className="font-bold text-lg mb-2 mt-6">AI Content Generated</h3>
-      <p className="w-full">
+      <p className="w-72 sm:w-full">
         Itan is collecting information about the use of Artificial Intelligence
         (AI) tools in creating content
       </p>
@@ -230,17 +230,17 @@ const BookContent = () => {
       <p className="mb-1">ISBN (Optional) </p>
       <input
         type="text"
-        className="h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-[35px] w-72 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         value={formData.book_isbn}
         onChange={(e) => updateFormData({ book_isbn: e.target.value })}
       />
       <p className="mt-3 mb-1">Publisher (Optional) </p>
       <input
         type="text"
-        className="h-[35px] w-96 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-[35px] w-72 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 
-      <div className="flex justify-between mb-10 mt-24">
+      <div className="flex flex-col-reverse sm:justify-between mb-10 mt-24">
         <button
           onClick={() =>
             router.push(
@@ -253,7 +253,7 @@ const BookContent = () => {
         </button>
         <button
           onClick={handleSubmit}
-          className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md"
+          className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md mb-3 sm:mb-0"
         >
           Next
         </button>

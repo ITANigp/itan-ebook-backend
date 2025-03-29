@@ -169,7 +169,7 @@ export default function BookPricing() {
           type="text"
           value={formData.ebook_price || ""}
           onChange={(e) => updateFormData({ ebook_price: e.target.value })}
-          className="border border-gray-600 rounded-md w-96 h-9 px-3"
+          className="border border-gray-600 rounded-md w-72 sm:w-96 h-9 px-3"
           placeholder="Ebook Price"
         />
 
@@ -196,7 +196,7 @@ export default function BookPricing() {
 
         {/* Terms and Conditions */}
         <h3 className="font-bold text-lg mt-5">Terms and Conditions</h3>
-        <p className="text-sm w-[700px]">
+        <p className="text-sm sm:w-[700px] w-72">
           By using itan, you agree to these terms. Use the service legally.
           You're responsible for your content. We provide the service "as is"
           and aren't liable for damages. We may update these terms; continued
@@ -265,7 +265,7 @@ export default function BookPricing() {
         )}
 
         {/* Action Buttons */}
-        <div className="flex justify-between mt-10 mb-10">
+        <div className="flex flex-col-reverse  sm:flex sm:justify-between mt-10 mb-10">
           <button
             onClick={() =>
               router.push(
@@ -280,7 +280,7 @@ export default function BookPricing() {
           <button
             type="submit"
             disabled={uploading}
-            className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md"
+            className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md mb-3 sm:mb-0"
           >
             {uploading ? "Uploading..." : "Publish"}
           </button>
