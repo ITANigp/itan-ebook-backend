@@ -3,7 +3,15 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
-import "@fortawesome/fontawesome-svg-core/styles.css"; // Prevent fontawesome from adding styles automatically
+import "@fortawesome/fontawesome-svg-core/styles.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faXTwitter,
+  faFacebookF,
+  faLinkedinIn,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
@@ -74,76 +82,124 @@ export default function RootLayout({ children }) {
         </nav>
         <FormProvider>{children}</FormProvider>
 
-        <footer className={`${authorPages ? "hidden" : ""}`}>
-          <h2>Get in touch with us</h2>
-          <p>
-            You can subscribe to our daily newsletter and be updated with itan
-          </p>
+        <footer className={`${authorPages ? "hidden" : ""} mt-10`}>
+          <section className="relative z-30 h-[170px] flex flex-col items-center justify-center text-center">
+            {/* Background image */}
+            <div
+              className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+              style={{ backgroundImage: "url('/images/footer-bg-img.jpeg')" }}
+            ></div>
 
-          <div>
-            <input type="email" placeholder="Enter email address" />
-            <button>Subscribe</button>
-          </div>
+            {/* Full-screen backdrop to reduce image sharpness */}
+            <div className="absolute inset-0 bg-black/70 "></div>
 
-          <section>
-            <div>
-              <Link href="/">
-                <img src="/images/logo.png" alt="logo" />
-              </Link>
-              <p>
-                Itan is a revolutionary publishing platform designed
-                specifically for writers like you. Seamlessly publish your work
-                to a global audience, retaining creative control and ownership
-                every step of the way.
+            <div className="relative z-10 w-full text-white mb-3 ">
+              <h2 className="mx-auto text-center text-lg font-semibold">
+                Get in touch with us
+              </h2>
+              <p className="mx-auto text-center mt-1 text-xs">
+                You can subscribe to our daily newsletter and be updated with
+                itan
               </p>
             </div>
 
-            <div>
-              <h3>Menu</h3>
-              <p>Sign In</p>
-              <p>Sign Up</p>
-              <p>Services</p>
-              <p>How it works</p>
-              <p>Testimonial</p>
+            <div className="relative z-10 flex justify-center p-1 bg-white backdrop-blur-md rounded-md">
+              <input
+                type="email"
+                placeholder="Enter email address"
+                className="flex-1 border-0 outline-none ring-0 focus:ring-0"
+              />
+              <button className="text-white bg-[#EF5353] px-6 py-2 rounded-md cursor-pointer">
+                Subscribe
+              </button>
+            </div>
+          </section>
+
+          <section className="bg-[#111928]">
+            <div className="mx-3 pt-8">
+              <Link href="/">
+                <img src="/images/logo.png" alt="logo" className="h-8 w-12" />
+              </Link>
             </div>
 
-            <div>
-              <h3>Resources</h3>
-              <p>New update</p>
-              <p>Documentation</p>
-              <p>Blog</p>
-            </div>
+            <div className="text-white flex flex-col-reverse">
+              <div className="flex mx-3 mt-3">
+                <p className="hidden sm:block">
+                  Itan is a revolutionary publishing platform designed
+                  specifically for writers like you. Seamlessly publish your
+                  work to a global audience, retaining creative control and
+                  ownership every step of the way.
+                </p>
+                <div className="hidden sm:block">
+                  <h3>Menu</h3>
+                  <p>Sign In</p>
+                  <p>Sign Up</p>
+                  <p>Services</p>
+                  <p>How it works</p>
+                  <p>Testimonial</p>
+                </div>
 
-            <div>
-              <h3>About</h3>
-              <p>Contact</p>
-              <p>About</p>
-            </div>
+                <div className="mr-10 ">
+                  <h3 className="text-lg font-semibold">Resources</h3>
+                  <p>New update</p>
+                  <p>Documentation</p>
+                  <p>Blog</p>
+                </div>
 
-            <div>
-              <h3>Contact</h3>
-              <p>Contact</p>
-              <p>234-8161-7963-71</p>
+                <div>
+                  <h3 className="text-lg font-semibold">About</h3>
+                  <p>Contact</p>
+                  <p>About</p>
+                </div>
+
+                <div className="hidden sm:block">
+                  <h3>Contact</h3>
+                  <p>Contact</p>
+                  <p>234-8161-7963-71</p>
+                </div>
+              </div>
+
+              <div className="mx-3 mt-6 flex justify-between w-48">
+                <Link href="#">
+                  <FontAwesomeIcon
+                    icon={faLinkedinIn}
+                    className="w-4 h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+                <Link href="https://x.com/ItanGlobal">
+                  <FontAwesomeIcon
+                    icon={faXTwitter}
+                    className="w-4 h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+
+                {/* <Link></Link> */}
+                <Link href="https://web.facebook.com/itanglobalpublishing/">
+                  <FontAwesomeIcon
+                    icon={faFacebookF}
+                    className="w-4 h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+
+                <Link href="https://www.instagram.com/itanglobalpublishing">
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    className="w-4 h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+              </div>
+            </div>
+            <div className="text-white flex items-center ml-3 mt-4">
+              <p className="mr-4">Terms & Conditions</p>
+              <p>Privacy Policy</p>
+            </div>
+            <div className="text-white flex items-center ml-3 pb-10">
               <img
-                src="/images/twitter-logo.png"
-                alt="twitter"
-                className="bg-slate-800"
+                src="/images/copy-right.png"
+                alt="copy right"
+                className="h-4 w-4 mr-1"
               />
-              <img
-                src="/images/facebook-logo.png"
-                alt="facebook"
-                className="bg-slate-800"
-              />
-              <img
-                src="/images/linkedin.png"
-                alt="linkedin"
-                className="bg-slate-800"
-              />
-              <img
-                src="/images/whatsapp-logo.png"
-                alt="whatsapp"
-                className="bg-slate-800"
-              />
+              <p>Copyright 2025 itan. All Rights Reserved.</p>
             </div>
           </section>
         </footer>
