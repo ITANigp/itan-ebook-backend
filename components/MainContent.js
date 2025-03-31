@@ -35,11 +35,16 @@ const MainContent = () => {
         </div>
       </section>
 
-      <article className="">
-        <div className="relative h-64 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
+      <article className="w-full">
+        <div className="relative h-[50vh] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
           {/* Centered text with light background for readability */}
           <div className="flex items-center justify-center h-full">
-            <p className="text-black text-center max-w-md large:max-w-lg p-4 font-medium text-lg md:text-xl leading-relaxed bg-white bg-opacity-80 rounded-md">
+            <p
+              className="text-black text-center w-[90%] max-w-sm xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
+        p-4 xs:p-5 medium:p-6 large:p-8 xl:p-10 
+        font-medium text-lg xs:text-xl medium:text-2xl large:text-3xl xl:text-4xl 
+        leading-relaxed bg-white bg-opacity-80 rounded-md"
+            >
               ITAN makes self-publishing simple, allowing you to release books
               in different formats and engage new readers worldwide.
             </p>
