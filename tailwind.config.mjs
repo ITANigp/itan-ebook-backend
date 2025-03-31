@@ -1,4 +1,3 @@
-const flowbite = require("flowbite-react/tailwind");
 /** @type {import('tailwindcss').Config} */
 
 export default {
@@ -6,7 +5,6 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    flowbite.content(),
   ],
   theme: {
     extend: {
@@ -17,7 +15,13 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
+      screens: {  
+        xs: { min: "390px", max: "490px"},
+        medium: { min: "500px", max: "900px" },
+        large: { min: "900px", max: "1280px" },
+        xl: { min: "1280px" },
+      },
     },
   },
-  plugins: [flowbite.plugin()],
+  plugins: [],
 };
