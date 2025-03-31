@@ -5,9 +5,11 @@ import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // Prevent fontawesome from adding styles automatically
 import { usePathname } from "next/navigation";
+import TopNav from "../components/TopNav";
+import SubMenuNav from "../components/SubMenuNav";
 import Link from "next/link";
-
 import { FormProvider } from "../context/FormContext";
+import MainContent from "@/components/MainContent";
 
 config.autoAddCss = false;
 
@@ -28,125 +30,19 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
-        <nav className={`${authorPages ? "hidden" : ""}`}>
-          <div>
-            <Link href="/">
-              <img src="/images/logo.png" alt="logo" />
-              <p className="text-red-700">Global Publishing</p>
-            </Link>
-            <div>
-              <Link
-                href="/author/sign_in"
-                className="bg-slate-700 text-white cursor-pointer"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/author/sign_up"
-                className="bg-[#EF5353] text-white cursor-pointer"
-              >
-                Join Itan
-              </Link>
+      <body
+        className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}
+      >
+        <main className="w-full min-h-screen">
+          <nav className={`${authorPages ? "hidden" : ""}`}>
+            <div className="">
+              <TopNav />
+              <SubMenuNav />
             </div>
-          </div>
-
-          <ul>
-            <Link href="/" className="hover:text-[#EF5353] cursor-pointer">
-              <li>About Itan</li>
-            </Link>
-            <Link
-              href="/publish"
-              className="hover:text-[#EF5353] cursor-pointer"
-            >
-              <li>Publish</li>
-            </Link>
-            <Link
-              href="/monetize"
-              className="hover:text-[#EF5353] cursor-pointer"
-            >
-              <li className="hover:text-[#EF5353] cursor-pointer">Monetize</li>
-            </Link>
-            <Link href="#" className="hover:text-[#EF5353] cursor-pointer">
-              <li>Help</li>
-            </Link>
-          </ul>
-        </nav>
-        <FormProvider>{children}</FormProvider>
-
-        <footer className={`${authorPages ? "hidden" : ""}`}>
-          <h2>Get in touch with us</h2>
-          <p>
-            You can subscribe to our daily newsletter and be updated with itan
-          </p>
-
-          <div>
-            <input type="email" placeholder="Enter email address" />
-            <button>Subscribe</button>
-          </div>
-
-          <section>
-            <div>
-              <Link href="/">
-                <img src="/images/logo.png" alt="logo" />
-              </Link>
-              <p>
-                Itan is a revolutionary publishing platform designed
-                specifically for writers like you. Seamlessly publish your work
-                to a global audience, retaining creative control and ownership
-                every step of the way.
-              </p>
-            </div>
-
-            <div>
-              <h3>Menu</h3>
-              <p>Sign In</p>
-              <p>Sign Up</p>
-              <p>Services</p>
-              <p>How it works</p>
-              <p>Testimonial</p>
-            </div>
-
-            <div>
-              <h3>Resources</h3>
-              <p>New update</p>
-              <p>Documentation</p>
-              <p>Blog</p>
-            </div>
-
-            <div>
-              <h3>About</h3>
-              <p>Contact</p>
-              <p>About</p>
-            </div>
-
-            <div>
-              <h3>Contact</h3>
-              <p>Contact</p>
-              <p>234-8161-7963-71</p>
-              <img
-                src="/images/twitter-logo.png"
-                alt="twitter"
-                className="bg-slate-800"
-              />
-              <img
-                src="/images/facebook-logo.png"
-                alt="facebook"
-                className="bg-slate-800"
-              />
-              <img
-                src="/images/linkedin.png"
-                alt="linkedin"
-                className="bg-slate-800"
-              />
-              <img
-                src="/images/whatsapp-logo.png"
-                alt="whatsapp"
-                className="bg-slate-800"
-              />
-            </div>
-          </section>
-        </footer>
+          </nav>
+          <MainContent />          
+        </main>
+        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
       </body>
     </html>
   );
