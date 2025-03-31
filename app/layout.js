@@ -82,8 +82,8 @@ export default function RootLayout({ children }) {
         </nav>
         <FormProvider>{children}</FormProvider>
 
-        <footer className={`${authorPages ? "hidden" : ""} mt-10`}>
-          <section className="relative z-30 h-[170px] flex flex-col items-center justify-center text-center">
+        <footer className={`${authorPages ? "hidden" : ""} mt-10 sm:mt-0`}>
+          <section className="relative z-30 h-[170px] sm:h-[250px] flex flex-col items-center justify-center text-center">
             {/* Background image */}
             <div
               className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -91,19 +91,19 @@ export default function RootLayout({ children }) {
             ></div>
 
             {/* Full-screen backdrop to reduce image sharpness */}
-            <div className="absolute inset-0 bg-black/70 "></div>
+            <div className="absolute inset-0 bg-black/70"></div>
 
             <div className="relative z-10 w-full text-white mb-3 ">
-              <h2 className="mx-auto text-center text-lg font-semibold">
+              <h2 className="mx-auto text-center text-lg font-semibold sm:text-2xl">
                 Get in touch with us
               </h2>
-              <p className="mx-auto text-center mt-1 text-xs">
+              <p className="mx-auto text-center sm:text-lg mt-1 text-xs">
                 You can subscribe to our daily newsletter and be updated with
                 itan
               </p>
             </div>
 
-            <div className="relative z-10 flex justify-center p-1 bg-white backdrop-blur-md rounded-md">
+            <div className="relative z-10 flex justify-center p-1 bg-white backdrop-blur-md rounded-md sm:w-[500px]">
               <input
                 type="email"
                 placeholder="Enter email address"
@@ -116,22 +116,22 @@ export default function RootLayout({ children }) {
           </section>
 
           <section className="bg-[#111928]">
-            <div className="mx-3 pt-8">
+            <div className="mx-3 sm:ml-20 pt-8">
               <Link href="/">
                 <img src="/images/logo.png" alt="logo" className="h-8 w-12" />
               </Link>
             </div>
 
-            <div className="text-white flex flex-col-reverse">
-              <div className="flex mx-3 mt-3">
-                <p className="hidden sm:block">
+            <div className="text-white flex flex-col-reverse sm:flex-col">
+              <div className="flex mx-3 sm:mx-20 mt-3 sm:justify-between">
+                <p className="hidden sm:block sm:w-[300px] text-lg">
                   Itan is a revolutionary publishing platform designed
                   specifically for writers like you. Seamlessly publish your
                   work to a global audience, retaining creative control and
                   ownership every step of the way.
                 </p>
                 <div className="hidden sm:block">
-                  <h3>Menu</h3>
+                  <h3 className="text-lg font-semibold">Menu</h3>
                   <p>Sign In</p>
                   <p>Sign Up</p>
                   <p>Services</p>
@@ -153,13 +153,13 @@ export default function RootLayout({ children }) {
                 </div>
 
                 <div className="hidden sm:block">
-                  <h3>Contact</h3>
+                  <h3 className="text-lg font-semibold">Contact</h3>
                   <p>Contact</p>
                   <p>234-8161-7963-71</p>
                 </div>
               </div>
 
-              <div className="mx-3 mt-6 flex justify-between w-48">
+              <div className="mx-3 sm:ml-20 mt-6 flex justify-between w-48">
                 <Link href="#">
                   <FontAwesomeIcon
                     icon={faLinkedinIn}
@@ -189,11 +189,11 @@ export default function RootLayout({ children }) {
                 </Link>
               </div>
             </div>
-            <div className="text-white flex items-center ml-3 mt-4">
+            <div className="text-white flex items-center ml-3 mt-4 sm:ml-20">
               <p className="mr-4">Terms & Conditions</p>
               <p>Privacy Policy</p>
             </div>
-            <div className="text-white flex items-center ml-3 pb-10">
+            <div className="text-white flex items-center ml-3 pb-10 sm:ml-20">
               <img
                 src="/images/copy-right.png"
                 alt="copy right"

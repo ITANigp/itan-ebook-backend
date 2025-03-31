@@ -4,8 +4,8 @@ import React from 'react'
 const Publish = () => {
   return (
     <div>
-      <section className="sm:flex sm:justify-between sm:mx-20 sm:mb-10">
-        <div className="sm:mt-32">
+      <section className="sm:flex sm:justify-between sm:px-20 sm:pb-10">
+        <div className="sm:pt-28">
           <h1 className="text-2xl sm:text-4xl font-semibold">
             Publish With Itan <br /> Global Publishing (IGP)
           </h1>
@@ -13,10 +13,10 @@ const Publish = () => {
             With Itan Global Publishing (IGP), publish your books and reach
             millions of readers around the world
           </p>
-          <div className="sm:mt-6 bg-amber-200">
+          <div className="sm:mt-6">
             <Link
               href="/author/sign_in"
-              className="h-9 sm:h-44 sm:w-80 bg-slate-500 border border-[#EF5353] text-[#EF5353] rounded-sm py-1 px-4 mr-2"
+              className="h-9 border border-[#EF5353] text-[#EF5353] rounded-sm py-1 px-4 mr-2"
             >
               Sign In
             </Link>
@@ -87,7 +87,7 @@ const Publish = () => {
         </div>
       </section>
 
-      <section className="mx-3 mt-10 bg-[#DADADA] sm:flex sm:justify-between sm:px-10 py-10">
+      <section className="px-3 mt-10 bg-[#DADADA] sm:flex sm:justify-between sm:px-10 py-10">
         <img
           src="/images/exposure.png"
           alt="exposure"
