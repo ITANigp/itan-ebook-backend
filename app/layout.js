@@ -9,7 +9,7 @@ import TopNav from "../components/TopNav";
 import SubMenuNav from "../components/SubMenuNav";
 import Link from "next/link";
 import { FormProvider } from "../context/FormContext";
-import MainContent from "@/components/MainContent";
+import AboutUs from "@/components/AboutUs";
 
 config.autoAddCss = false;
 
@@ -30,9 +30,7 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body
-        className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}
-      >
+      <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
         <main className="w-full min-h-screen">
           <nav className={`${authorPages ? "hidden" : ""}`}>
             <div className="">
@@ -40,7 +38,7 @@ export default function RootLayout({ children }) {
               <SubMenuNav />
             </div>
           </nav>
-          <MainContent />          
+          {pathname === "/" ? <AboutUs /> : children}
         </main>
         <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
       </body>
