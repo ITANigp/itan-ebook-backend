@@ -3,7 +3,7 @@ import React from "react";
 const Monetize = () => {
   return (
     <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-      <section className="large:py-4 xl:py-0 flex flex-col items-center text-center large:text-left xl:text-left">
+      <section className="large:py-4 xl:py-0 flex flex-col items-center text-center large:text-left xl:text-left xl:max-w-7xl xl:mx-auto">
         <div className="flex flex-col items-center large:flex-row large:items-center large:gap-6 w-full large:max-w-7xl mx-auto xl:flex-row xl:items-center xl:gap-12 xl:max-w-8xl">
           {/* Left Section: Text */}
           <div className="large:mt-6 xl:mt-5 max-w-2xl">
@@ -35,7 +35,7 @@ const Monetize = () => {
         </div>
       </section>
 
-      <article className="w-full mt-10">
+      <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
         <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30">
           <div className="flex flex-col large:flex-row xl:flex-row">
             {/* Left Side: Text and List */}
@@ -107,7 +107,7 @@ const Monetize = () => {
         </div>
       </article>
 
-      <section className="my-16 flex flex-col large:flex-row xl:flex-row gap-6 max-w-6xl mx-auto">
+      <section className="my-16 flex flex-col large:flex-row xl:flex-row gap-6 xl:max-w-7xl xl:mx-auto">
         {/* Ebook Royalty Card */}
         <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02] mb-6 large:mb-0 xl:mb-0">
           <div className="p-6 flex flex-col items-center text-center">
@@ -147,7 +147,7 @@ const Monetize = () => {
         </div>
       </section>
 
-      <section className="my-16 max-w-6xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+      <section className="my-16 xl:max-w-7xl xl:mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="p-6 medium:p-8 large:p-10 xl:p-12 flex flex-col large:flex-row xl:flex-row gap-8 large:gap-12 xl:gap-16">
           <div className="w-full large:w-1/2 xl:w-1/2">
             <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
