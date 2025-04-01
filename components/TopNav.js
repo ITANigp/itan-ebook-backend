@@ -19,7 +19,7 @@ const TopNav = () => {
           alt="logo"
           className="w-14 h-10 medium:w-10 medium:h-8"
         />
-        <h1 className="text-white hidden large:hidden xl:block xl:text-4xl xl:font-semibold">
+        <h1 className="text-white hidden large:block large:text-2xl xl:block xl:text-4xl xl:font-semibold">
           Global Publishing
         </h1>
       </div>
