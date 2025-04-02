@@ -1,39 +1,11 @@
 import React from "react";
+import Header from "@/components/Header";
+import Image from "next/image";
 
 const Monetize = () => {
   return (
     <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-      <section className="large:py-4 xl:py-0 flex flex-col items-center text-center large:text-left xl:text-left xl:max-w-7xl xl:mx-auto">
-        <div className="flex flex-col items-center large:flex-row large:items-center large:gap-6 w-full large:max-w-7xl mx-auto xl:flex-row xl:items-center xl:gap-12 xl:max-w-8xl">
-          {/* Left Section: Text */}
-          <div className="large:mt-6 xl:mt-5 max-w-2xl">
-            <h2 className="xs:px-10 font-bold py-4 large:py-2 xl:py-2 text-3xl md:text-4xl large:text-6xl xl:text-7xl">
-              Monetize With Itan Global Publishing(IGP)
-            </h2>
-            <p className="large:mt-4 text-lg text-gray-700 px-2 large:text-2xl xl:text-3xl">
-              Itan Global Publishing provides free publishing and multiple
-              royalty streams.
-            </p>
-          </div>
-          {/* Right Section: Image */}
-          <figure className="mt-6 large:mt-0 w-full large:max-w-md xl:mt-0 xl:max-w-lg">
-            <img
-              src="/images/books-with-headphone.png"
-              alt="ebooks"
-              className="w-full h-auto object-cover"
-            />
-          </figure>
-        </div>
-        {/* ✅ Buttons (Mobile/Tablet: Below image, Large screens: Below text) */}
-        <div className="mt-6 large:mt-4 flex flex-col large:flex-row xl:flex-row w-full max-w-xs gap-3 large:w-auto xl:self-start large:self-start">
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl text-white bg-red-500 font-bold rounded-md">
-            Join Itan
-          </button>
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl border border-red-400 text-red-500 font-bold rounded-md">
-            Sign In
-          </button>
-        </div>
-      </section>
+      <Header />
 
       <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
         <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30">
@@ -97,10 +69,14 @@ const Monetize = () => {
 
             {/* Right Side: Image */}
             <div className="w-full large:w-1/2 xl:w-1/2 h-[40vh] medium:h-[45vh] large:h-auto xl:h-auto">
-              <img
+              <Image
                 src="/images/monetize.png"
                 alt="monetize"
                 className="w-full h-full object-cover"
+                width={522}
+                height={388}
+                priority={true}
+                quality={85}
               />
             </div>
           </div>
@@ -112,9 +88,13 @@ const Monetize = () => {
         <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02] mb-6 large:mb-0 xl:mb-0">
           <div className="p-6 flex flex-col items-center text-center">
             <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
-              <img
+              <Image
                 src="/images/phone-book.png"
                 alt="phone-book"
+                width={147}
+                height={147}
+                priority={true}
+                quality={80}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -131,9 +111,13 @@ const Monetize = () => {
         <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02]">
           <div className="p-6 flex flex-col items-center text-center">
             <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
-              <img
+              <Image
                 src="/images/audio-book.png"
                 alt="audio-book"
+                width={147} 
+                height={147} 
+                priority={true}
+                quality={80}
                 className="w-full h-full object-contain"
               />
             </div>
@@ -168,9 +152,13 @@ const Monetize = () => {
           </div>
 
           <figure className="w-full large:w-1/2 xl:w-1/2 flex items-center justify-center">
-            <img
+            <Image
               src="/images/graph.png"
               alt="ITAN Unbound revenue graph"
+              width={308}
+              height={308}
+              priority={true}
+              quality={85}
               className="w-full h-auto max-w-md mx-auto object-contain rounded-md"
             />
           </figure>
