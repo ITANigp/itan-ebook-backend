@@ -1,6 +1,7 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
+import "flowbite";
 import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css"; // Prevent fontawesome from adding styles automatically
@@ -9,7 +10,6 @@ import TopNav from "../components/TopNav";
 import SubMenuNav from "../components/SubMenuNav";
 import Link from "next/link";
 import { FormProvider } from "../context/FormContext";
-import AboutUs from "@/components/AboutUs";
 
 config.autoAddCss = false;
 
@@ -38,9 +38,9 @@ export default function RootLayout({ children }) {
               <SubMenuNav />
             </div>
           </nav>
-          {pathname === "/" ? <AboutUs /> : children}
+          {children}
         </main>
-        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
+        
       </body>
     </html>
   );
