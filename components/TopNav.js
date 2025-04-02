@@ -9,7 +9,7 @@ library.add(faBars);
 
 const TopNav = () => {
   return (
-    <nav className="flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:px-16 xl:py-6">
+    <nav className="flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6">
       <div className="flex gap-2 items-center">
         <div className="block medium:hidden large:hidden xl:hidden">
           <FontAwesomeIcon icon={faBars} style={{ color: "#FFFFFF" }} />
