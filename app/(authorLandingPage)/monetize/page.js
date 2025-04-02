@@ -118,7 +118,7 @@ const Monetize = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-lg medium:text-xl large:text-2xl font-semibold text-gray-800 mb-2">
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
               Royalty for eBook Sale
             </p>
             <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
@@ -137,7 +137,7 @@ const Monetize = () => {
                 className="w-full h-full object-contain"
               />
             </div>
-            <p className="text-lg medium:text-xl large:text-2xl font-semibold text-gray-800 mb-2">
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
               Royalty for Audiobook Sale
             </p>
             <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
