@@ -1,6 +1,7 @@
 "use client";
 
 import { Geist, Geist_Mono } from "next/font/google";
+import "flowbite";
 import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -13,8 +14,9 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 import { usePathname } from "next/navigation";
+import TopNav from "../components/TopNav";
+import SubMenuNav from "../components/SubMenuNav";
 import Link from "next/link";
-
 import { FormProvider } from "../context/FormContext";
 
 config.autoAddCss = false;
@@ -37,50 +39,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
-        <nav className={`${authorPages ? "hidden" : ""}`}>
-          <div>
-            <Link href="/">
-              <img src="/images/logo.png" alt="logo" />
-              <p className="text-red-700">Global Publishing</p>
-            </Link>
-            <div>
-              <Link
-                href="/author/sign_in"
-                className="bg-slate-700 text-white cursor-pointer"
-              >
-                Sign in
-              </Link>
-              <Link
-                href="/author/sign_up"
-                className="bg-[#EF5353] text-white cursor-pointer"
-              >
-                Join Itan
-              </Link>
-            </div>
-          </div>
-
-          <ul>
-            <Link href="/" className="hover:text-[#EF5353] cursor-pointer">
-              <li>About Itan</li>
-            </Link>
-            <Link
-              href="/publish"
-              className="hover:text-[#EF5353] cursor-pointer"
-            >
-              <li>Publish</li>
-            </Link>
-            <Link
-              href="/monetize"
-              className="hover:text-[#EF5353] cursor-pointer"
-            >
-              <li className="hover:text-[#EF5353] cursor-pointer">Monetize</li>
-            </Link>
-            <Link href="#" className="hover:text-[#EF5353] cursor-pointer">
-              <li>Help</li>
-            </Link>
-          </ul>
-        </nav>
-        <FormProvider>{children}</FormProvider>
+        <main className="w-full min-h-screen">
+          <nav className={`${authorPages ? "hidden" : ""}`}>
+            <div className="">
+              <TopNav />
+              <SubMenuNav />
 
         <footer className={`${authorPages ? "hidden" : ""} mt-10 sm:mt-0`}>
           <section className="relative z-30 h-[170px] sm:h-[250px] flex flex-col items-center justify-center text-center">
@@ -201,8 +164,10 @@ export default function RootLayout({ children }) {
               />
               <p>Copyright 2025 itan. All Rights Reserved.</p>
             </div>
-          </section>
-        </footer>
+          </nav>
+          {children}
+        </main>
+        
       </body>
     </html>
   );

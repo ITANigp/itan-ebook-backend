@@ -1,36 +1,171 @@
-import React from 'react'
+import React from "react";
+import Header from "@/components/Header";
+import Image from "next/image";
 
 const Monetize = () => {
   return (
-    <div>
-      <section>
-        <div>
-          <h1>Monetize With Itan Global Publishing (IGP)</h1>
-          <p>
-            Itan Global Publishing provides free publishing and multiple royalty
-            streams.
-          </p>
-          <div>
-            <button>Sign In</button>
-            <button>Join Itan</button>
+    <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+      <Header />
+
+      <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
+        <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30">
+          <div className="flex flex-col large:flex-row xl:flex-row">
+            {/* Left Side: Text and List */}
+            <div className="w-full large:w-1/2 xl:w-1/2 p-6 medium:p-8 large:p-10 xl:p-12 flex items-center">
+              <div className="w-full">
+                <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
+                  Maximize your <span className="text-[#EF5353]">Earning</span>{" "}
+                  Through Multiple Revenue Sources
+                </h3>
+                <ul className="list-none space-y-4 medium:space-y-5 large:space-y-6">
+                  <li className="flex items-start">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="flex-shrink-0 mr-3 mt-2 medium:mt-3 large:w-5 large:h-5 xl:w-6 xl:h-6"
+                    >
+                      <rect width="12" height="12" fill="#D78585" />
+                    </svg>
+                    <span className="text-lg medium:text-xl large:text-2xl xl:text-3xl">
+                      Earn up to 60% royalties on your ebooks
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="flex-shrink-0 mr-3 mt-2 medium:mt-3 large:w-5 large:h-5 xl:w-6 xl:h-6"
+                    >
+                      <rect width="12" height="12" fill="#D78585" />
+                    </svg>
+                    <span className="text-lg medium:text-xl large:text-2xl xl:text-3xl">
+                      Earn up to 65% royalties on your audio books
+                    </span>
+                  </li>
+                  <li className="flex items-start">
+                    <svg
+                      width="12"
+                      height="12"
+                      viewBox="0 0 12 12"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="flex-shrink-0 mr-3 mt-2 medium:mt-3 large:w-5 large:h-5 xl:w-6 xl:h-6"
+                    >
+                      <rect width="12" height="12" fill="#D78585" />
+                    </svg>
+                    <span className="text-lg medium:text-xl large:text-2xl xl:text-3xl">
+                      Get paid for every page read with Itan Unbound
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Right Side: Image */}
+            <div className="w-full large:w-1/2 xl:w-1/2 h-[40vh] medium:h-[45vh] large:h-auto xl:h-auto">
+              <Image
+                src="/images/monetize.png"
+                alt="monetize"
+                className="w-full h-full object-cover"
+                width={522}
+                height={388}
+                priority={true}
+                quality={85}
+              />
+            </div>
           </div>
         </div>
-        <img
-          src="/images/books-with-headphone.png"
-          alt="books with headphone"
-        />
+      </article>
+
+      <section className="my-16 flex flex-col large:flex-row xl:flex-row gap-6 xl:max-w-7xl xl:mx-auto">
+        {/* Ebook Royalty Card */}
+        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02] mb-6 large:mb-0 xl:mb-0">
+          <div className="p-6 flex flex-col items-center text-center">
+            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
+              <Image
+                src="/images/phone-book.png"
+                alt="phone-book"
+                width={147}
+                height={147}
+                priority={true}
+                quality={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
+              Royalty for eBook Sale
+            </p>
+            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
+              70%
+            </p>
+          </div>
+        </div>
+
+        {/* Audiobook Royalty Card */}
+        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02]">
+          <div className="p-6 flex flex-col items-center text-center">
+            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
+              <Image
+                src="/images/audio-book.png"
+                alt="audio-book"
+                width={147} 
+                height={147} 
+                priority={true}
+                quality={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
+              Royalty for Audiobook Sale
+            </p>
+            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
+              65%
+            </p>
+          </div>
+        </div>
       </section>
 
-      <section>
-        <h2>Maximize your Earning Through Multiple Revenue Sources</h2>
-        <ul>
-          <li>Earn up to 60% royalties on your ebooks</li>
-          <li>Earn up to 65% royalties on your audio books</li>
-          <li>Get paid for every page read with Itan Unbound</li>
-        </ul>
+      <section className="my-16 xl:max-w-7xl xl:mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="p-6 medium:p-8 large:p-10 xl:p-12 flex flex-col large:flex-row xl:flex-row gap-8 large:gap-12 xl:gap-16">
+          <div className="w-full large:w-1/2 xl:w-1/2">
+            <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
+              Get Paid for Every Page Read on{" "}
+              <span className="text-[#EF5353]">ITAN Unbound</span>
+            </h3>
+
+            <p className="text-lg medium:text-xl large:text-2xl text-gray-700 mb-4">
+              With ITAN Unbound's subscription program, your book reaches a
+              wider audience of eager readers, expanding its reach beyond
+              traditional sales.
+            </p>
+
+            <p className="text-lg medium:text-xl large:text-2xl text-gray-700">
+              Your revenue share is based on the number of pages read by
+              customers in the subscription program.
+            </p>
+          </div>
+
+          <figure className="w-full large:w-1/2 xl:w-1/2 flex items-center justify-center">
+            <Image
+              src="/images/graph.png"
+              alt="ITAN Unbound revenue graph"
+              width={308}
+              height={308}
+              priority={true}
+              quality={85}
+              className="w-full h-auto max-w-md mx-auto object-contain rounded-md"
+            />
+          </figure>
+        </div>
       </section>
     </div>
   );
-}
+};
 
-export default Monetize
+export default Monetize;
