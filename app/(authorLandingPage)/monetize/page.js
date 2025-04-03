@@ -4,7 +4,7 @@ import Image from "next/image";
 
 const Monetize = () => {
   return (
-    <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+    <div className="">
       <Header />
 
       <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
