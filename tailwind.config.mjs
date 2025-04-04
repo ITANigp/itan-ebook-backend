@@ -19,7 +19,7 @@ export default {
         xs: { min: "390px", max: "490px"},
         medium: { min: "500px", max: "900px" },
         large: { min: "900px", max: "1280px" },
-        xl: { min: "1280px", max: "2500px" },
+        xl: { min: "1280px", max: "4000px" },
       },
     },
   },

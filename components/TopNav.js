@@ -1,44 +1,245 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import LandingPgBtn from "./LandingPgBtn";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBars,
+  faTimes,
+  faInfoCircle,
+  faBookOpen,
+  faDollarSign,
+  faQuestionCircle,
+} from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
-library.add(faBars);
+library.add(
+  faBars,
+  faTimes,
+  faInfoCircle,
+  faBookOpen,
+  faDollarSign,
+  faQuestionCircle
+);
 
 const TopNav = () => {
-  return (
-    <nav className="flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6">
-      <div className="flex gap-2 items-center">
-        <div className="block medium:hidden large:hidden xl:hidden">
-          <FontAwesomeIcon icon={faBars} style={{ color: "#FFFFFF" }} />
-        </div>
-        <img
-          src="/images/logo.png"
-          alt="logo"
-          className="w-14 h-10 medium:w-10 medium:h-8"
-        />
-        <h1 className="text-white hidden large:block large:text-2xl xl:block xl:text-4xl xl:font-semibold">
-          Global Publishing
-        </h1>
-      </div>
+  const [menu, setMenu] = useState(false);
+  const [showCloseIcon, setShowCloseIcon] = useState(false);
 
-      <nav className="flex gap-2.5">
-        <LandingPgBtn
-          variant="outlined"
-          className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-        >
-          Sign In
-        </LandingPgBtn>
-        <LandingPgBtn
-          variant="filled"
-          className="px-2 medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-        >
-          Join Itan
-        </LandingPgBtn>
+  // Updated toggle function with better icon transition
+  const toggleMenu = () => {
+    if (!menu) {
+      setMenu(true);
+      // Delay changing the icon until menu is partially visible
+      setTimeout(() => setShowCloseIcon(true), 150);
+    } else {
+      setShowCloseIcon(false);
+      // Delay closing the menu until icon has started changing
+      setTimeout(() => setMenu(false), 50);
+    }
+  };
+
+  // Lock scrolling when menu is open
+  useEffect(() => {
+    if (menu) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [menu]);
+
+  // Menu animation variants
+  const menuVariants = {
+    closed: {
+      x: "-100%",
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        ease: [0.4, 0.0, 0.2, 1],
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+        when: "afterChildren",
+      },
+    },
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: [0.2, 0.0, 0.0, 1.0],
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+        when: "beforeChildren",
+      },
+    },
+  };
+
+  // Menu item animation variants
+  const itemVariants = {
+    closed: {
+      x: -20,
+      opacity: 0,
+      transition: { duration: 0.2 },
+    },
+    open: {
+      x: 0,
+      opacity: 1,
+      transition: { duration: 0.3 },
+    },
+  };
+
+  const menuItems = [
+    { title: "About Itan", href: "/", icon: faInfoCircle },
+    { title: "Publish", href: "/publish", icon: faBookOpen },
+    { title: "Monetize", href: "/monetize", icon: faDollarSign },
+    { title: "Help", href: "/help", icon: faQuestionCircle },
+  ];
+
+  return (
+    <>
+      <nav className="flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20">
+        <div className="flex gap-2 items-center">
+          <button
+            className="relative block medium:hidden large:hidden xl:hidden z-30 p-1"
+            onClick={toggleMenu}
+            aria-label={menu ? "Close menu" : "Open menu"}
+          >
+            <FontAwesomeIcon
+              icon={showCloseIcon ? faTimes : faBars}
+              style={{ color: "#FFFFFF" }}
+              className="text-2xl"
+            />
+          </button>
+
+          <Image
+            src="/images/logo.png"
+            alt="logo"
+            width={30}
+            height={20}
+            priority={true}
+            quality={85}
+            className="w-14 h-10 medium:w-10 medium:h-8"
+          />
+          <h1 className="text-white hidden large:block large:text-2xl xl:block xl:text-4xl xl:font-semibold">
+            Global Publishing
+          </h1>
+        </div>
+
+        <nav className="flex gap-2.5">
+          <LandingPgBtn
+            variant="outlined"
+            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
+          >
+            Sign In
+          </LandingPgBtn>
+          <LandingPgBtn
+            variant="filled"
+            className="px-2 medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
+          >
+            Join Itan
+          </LandingPgBtn>
+        </nav>
       </nav>
-    </nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {menu && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black bg-opacity-50 z-20"
+              onClick={toggleMenu}
+            />
+
+            {/* Slide-in Menu */}
+            <motion.div
+              initial="closed"
+              animate="open"
+              exit="closed"
+              variants={menuVariants}
+              className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6"
+            >
+              {/* Close button positioned at top-right */}
+              <motion.button
+                variants={itemVariants}
+                className="absolute top-4 right-4 text-white p-2"
+                onClick={toggleMenu}
+                aria-label="Close menu"
+              >
+                <FontAwesomeIcon
+                  icon={faTimes}
+                  className="text-2xl hover:text-red-400 transition-colors"
+                />
+              </motion.button>
+
+              <div className="mb-8">
+                <motion.div variants={itemVariants} className="mb-8">
+                  <Image
+                    src="/images/logo.png"
+                    alt="logo"
+                    width={40}
+                    height={32}
+                    priority={true}
+                    quality={85}
+                    className="w-10 h-8"
+                  />
+                </motion.div>
+
+                <nav className="flex flex-col space-y-6">
+                  {menuItems.map((item, index) => (
+                    <motion.div
+                      key={index}
+                      variants={itemVariants}
+                      whileHover={{ x: 5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Link
+                        href={item.href}
+                        className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                        onClick={toggleMenu}
+                      >
+                        <FontAwesomeIcon
+                          icon={item.icon}
+                          className="text-red-400 w-5 h-5"
+                        />
+                        {item.title}
+                      </Link>
+                    </motion.div>
+                  ))}
+                </nav>
+              </div>
+
+              <motion.div variants={itemVariants} className="mt-auto space-y-4">
+                <LandingPgBtn
+                  variant="outlined"
+                  className="w-full py-3"
+                  onClick={toggleMenu}
+                >
+                  Sign In
+                </LandingPgBtn>
+                <LandingPgBtn
+                  variant="filled"
+                  className="w-full py-3"
+                  onClick={toggleMenu}
+                >
+                  Join Itan
+                </LandingPgBtn>
+              </motion.div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 
