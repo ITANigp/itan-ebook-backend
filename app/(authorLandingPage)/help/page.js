@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import dynamic from "next/dynamic"; 
-import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import AccordionFaq from "@/components/AccordionFaq";
 import IgpModal from "@/components/IgpModal";
 import FormatEbook from "@/components/FormatEbook";
@@ -29,7 +29,7 @@ const Help = () => {
 
   return (
     <section className="">
-      <Header />
+      <HeroSection />
 
       <article className="w-full mt-10 px-4 xs:px-5 medium:px-6 large:px-8 xl:max-w-7xl xl:mx-auto">
         <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30 shadow-sm p-6 xs:p-7 medium:p-8 large:p-10 xl:p-12">

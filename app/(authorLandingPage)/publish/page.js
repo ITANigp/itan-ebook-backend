@@ -1,11 +1,11 @@
-import Header from '@/components/Header';
-import Image from 'next/image';
-import React from 'react'
+import HeroSection from "@/components/HeroSection";
+import Image from "next/image";
+import React from "react";
 
 const Publish = () => {
   return (
     <div>
-      <Header />
+      <HeroSection />
 
       <article className="w-full mt-10 px-4 medium:px-6 large:px-0 xl:max-w-7xl xl:mx-auto">
         <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30 shadow-sm">
@@ -307,6 +307,6 @@ const Publish = () => {
       </section>
     </div>
   );
-}
+};
 
 export default Publish;

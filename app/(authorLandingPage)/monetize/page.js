@@ -1,11 +1,11 @@
 import React from "react";
-import Header from "@/components/Header";
+import HeroSection from "@/components/HeroSection";
 import Image from "next/image";
 
 const Monetize = () => {
   return (
     <div className="">
-      <Header />
+      <HeroSection />
 
       <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
         <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30">
@@ -114,8 +114,8 @@ const Monetize = () => {
               <Image
                 src="/images/audio-book.png"
                 alt="audio-book"
-                width={147} 
-                height={147} 
+                width={147}
+                height={147}
                 priority={true}
                 quality={80}
                 className="w-full h-full object-contain"
