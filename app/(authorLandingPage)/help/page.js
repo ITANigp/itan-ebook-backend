@@ -1,10 +1,32 @@
+"use client";
+import { useState } from "react";
+import dynamic from "next/dynamic"; 
 import Header from "@/components/Header";
 import AccordionFaq from "@/components/AccordionFaq";
+import IgpModal from "@/components/IgpModal";
+import FormatEbook from "@/components/FormatEbook";
+import CreateEbook from "@/components/CreateEbook";
 import Image from "next/image";
-import Link from "next/link";
 import React from "react";
 
+// Import with SSR disabled to prevent document not found errors
+const ModalPortal = dynamic(() => import('@/components/ModalPortal'), { 
+  ssr: false 
+});
+
 const Help = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
+
+  const openModal = (content) => {
+    setModalContent(content);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="">
       <Header />
@@ -28,8 +50,8 @@ const Help = () => {
                 Know all about IGP service and how it can help you publish your
                 book.
               </p>
-              <Link
-                href="#"
+              <button
+                onClick={() => openModal("igp")}
                 className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
               >
                 <span>Learn More</span>
@@ -47,7 +69,7 @@ const Help = () => {
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
 
             {/* Arrow for desktop only - IMPROVED */}
@@ -76,8 +98,8 @@ const Help = () => {
                 Format your manuscript and cover to create your book following
                 our guidelines.
               </p>
-              <Link
-                href="#"
+              <button
+                onClick={() => openModal("format")}
                 className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
               >
                 <span>Learn More</span>
@@ -95,7 +117,7 @@ const Help = () => {
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
 
             {/* Arrow for desktop only - IMPROVED */}
@@ -124,8 +146,8 @@ const Help = () => {
                 Follow our step-by-step guide to publish your book with
                 confidence.
               </p>
-              <Link
-                href="#"
+              <button
+                onClick={() => openModal("createEbook")}
                 className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
               >
                 <span>Learn More</span>
@@ -143,7 +165,7 @@ const Help = () => {
                     d="M9 5l7 7-7 7"
                   />
                 </svg>
-              </Link>
+              </button>
             </div>
           </div>
 
@@ -157,6 +179,13 @@ const Help = () => {
       </article>
 
       <AccordionFaq />
+
+      {/* Use the new modal component */}
+      <ModalPortal isOpen={isModalOpen} onClose={closeModal}>
+        {modalContent === "igp" && <IgpModal />}
+        {modalContent === "format" && <FormatEbook />}
+        {modalContent === "createEbook" && <CreateEbook />}
+      </ModalPortal>
     </section>
   );
 };
