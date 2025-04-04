@@ -29,10 +29,13 @@ export default function RootLayout({ children }) {
 
   const isSignIn = pathname.endsWith("/author/sign_in");
   const isSignUp = pathname.endsWith("/author/sign_up");
-  const isRegPage = isSignIn || isSignUp;
+  const isTest = pathname.endsWith("/test/me");
+  const isRegPage = isSignIn || isSignUp || isTest;
 
   const authorPages =
-    pathname.startsWith("/author") || pathname.startsWith("/dashboard");
+    pathname.startsWith("/author") ||
+    pathname.startsWith("/dashboard") ||
+    isTest;
 
   return (
     <html lang="en">

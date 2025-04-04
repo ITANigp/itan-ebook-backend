@@ -18,15 +18,15 @@ const BookDetails = () => {
   const id = searchParams.get("id");
 
   useEffect(() => {
+    localStorage.setItem("bookFormData", JSON.stringify(formData));
+  }, [formData]);
+
+  useEffect(() => {
     const savedData = localStorage.getItem("bookFormData");
     if (savedData) {
       updateFormData(JSON.parse(savedData));
     }
   }, []);
-
-   useEffect(() => {
-     localStorage.setItem("bookFormData", JSON.stringify(formData));
-   }, [formData]);
 
 
    const validateForm = () => {
