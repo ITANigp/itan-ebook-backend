@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import ConfirmEmailContent from "./confirm/confirmEmailContent";
+import ConfirmEmailContent from "./ConfirmEmailContent";
 
 export default function ConfirmPage() {
   return (
