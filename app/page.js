@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import  HeroSection from "@/components/HeroSection"
+import HeroSection from "@/components/HeroSection";
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 
@@ -10,7 +10,7 @@ const Home = () => {
       <HeroSection />
 
       <FadeIn delay={0.4} direction="fade" distance={0} duration={1.2}>
-        <article className="w-full mt-10 px-4 sm:px-6 md:px-8 lg:px-6 xl:px-0 xl:max-w-7xl xl:mx-auto">
+        <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
           <div className="relative h-[50vh] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
             {/* Dark overlay to make background more visible */}
             <div className="absolute inset-0 bg-[#FEE6E6] bg-opacity-40"></div>
@@ -19,10 +19,10 @@ const Home = () => {
             <div className="flex items-center justify-center h-full relative z-10">
               <FadeIn delay={0.6} direction="up" distance={15} duration={1.4}>
                 <p
-                  className="text-black text-center w-[90%] max-w-sm xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
-            p-4 xs:p-5 medium:p-6 large:p-8 xl:p-10 
-            font-medium text-lg xs:text-xl medium:text-2xl large:text-3xl xl:text-4xl 
-            leading-relaxed bg-white bg-opacity-80 rounded-md"
+                  className="text-black text-center mx-auto w-[90%] max-w-sm xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
+                    p-4 xs:p-5 medium:p-6 large:p-8 xl:p-10 
+                    font-medium text-lg xs:text-xl medium:text-2xl large:text-3xl xl:text-4xl 
+                    leading-relaxed bg-white bg-opacity-80 rounded-md"
                 >
                   ITAN makes self-publishing simple, allowing you to release
                   books in different formats and engage new readers worldwide.
