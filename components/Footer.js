@@ -35,7 +35,7 @@ const Footer = () => {
             Get in touch with us
           </h2>
           <p className="mx-auto text-center text-xs xs:text-sm medium:text-base mt-1 large:text-xl xl:text-xl">
-            You can subscribe to our daily newsletter and be updated with itan
+            Subscribe to our daily newsletter and be updated with itan
           </p>
         </div>
 
