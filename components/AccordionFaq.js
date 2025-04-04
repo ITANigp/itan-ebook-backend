@@ -49,7 +49,7 @@ export default function AccordionFaq() {
               onClick={() => toggleAccordion(index)}
               className="flex items-center justify-between w-full p-5 font-medium text-gray-500 hover:bg-gray-100 gap-3"
             >
-              <span className="flex-1 text-left">{item.question}</span>
+              <span className="flex-1 text-left font-semibold">{item.question}</span>
               <div className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 medium:w-8 medium:h-8 rounded-full bg-[#FEE6E6] text-[#EF5353] flex-shrink-0 transition-all duration-300">
                 {activeIndex === index ? (
                   // Minus icon when expanded
