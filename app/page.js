@@ -10,7 +10,7 @@ const Home = () => {
       <HeroSection />
 
       <FadeIn delay={0.4} direction="fade" distance={0} duration={1.2}>
-        <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
+        <article className="w-full mt-10 px-4 sm:px-6 md:px-8 lg:px-6 xl:px-0 xl:max-w-7xl xl:mx-auto">
           <div className="relative h-[50vh] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
             {/* Dark overlay to make background more visible */}
             <div className="absolute inset-0 bg-[#FEE6E6] bg-opacity-40"></div>
