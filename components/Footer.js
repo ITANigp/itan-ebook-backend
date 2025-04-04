@@ -170,7 +170,7 @@ const Footer = () => {
           </div>
         </div>
         {/* Mobile version - only visible on small and medium screens */}
-        <div className="block large:hidden xl:hidden text-white flex flex-col-reverse medium:flex-col">
+        <div className="large:hidden xl:hidden text-white flex flex-col-reverse medium:flex-col">
           {/* Main footer mobile content - simplified for smaller screens */}
           <div className="grid grid-cols-2 gap-y-6 gap-x-4 mx-4 xs:mx-5 medium:mx-10 mt-6 medium:mt-3 medium:grid-cols-3">
             {/* Resources */}
