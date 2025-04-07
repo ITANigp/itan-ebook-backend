@@ -5,6 +5,7 @@ export default {
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./node_modules/flowbite/**/*.js",
   ],
   theme: {
     extend: {
@@ -15,13 +16,13 @@ export default {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
       },
-      screens: {  
-        xs: { min: "390px", max: "490px"},
+      screens: {
+        xs: { min: "390px", max: "490px" },
         medium: { min: "500px", max: "900px" },
         large: { min: "900px", max: "1280px" },
         xl: { min: "1280px", max: "4000px" },
       },
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
