@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const SubMenuNav = () => {
+const SubMenuNav = ({ styles }) => {
   const pathname = usePathname();
 
   return (
-    <nav className="hidden sm:hidden medium:block large:block xl:block p-6 xl:pl-10 medium:pl-10 bg-zinc-300 max-md:p-5">
+    <nav className={`hidden sm:hidden medium:block large:block xl:block p-6 xl:pl-10 medium:pl-10 bg-zinc-300 max-md:p-5 ${styles}`}>
       <ul className="flex gap-10 items-center max-sm:flex-col max-sm:gap-2.5 max-sm:w-full">
         <li>
           <Link

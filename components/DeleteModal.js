@@ -1,8 +1,11 @@
 // components/Modal.js
 import React from "react";
 
-const Modal = ({ isOpen, onClose}) => {
-//   if (!isOpen) return null; // Don't render if modal is closed
+const Modal = ({
+  onHandleDeleteBook,
+  onHandleSetDeleteModalClose,
+}) => {
+  //   if (!isOpen) return null; // Don't render if modal is closed
 
   return (
     <div className=" ml-64 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
@@ -14,7 +17,7 @@ const Modal = ({ isOpen, onClose}) => {
             src="/images/close-btn.png"
             alt="close"
             className="w-5 h-5 m-2 border-2 rounded-full border-amber-300  hover:border-red-200 cursor-pointer"
-            onClick={onClose}
+            onClick={onHandleSetDeleteModalClose}
           />
         </div>
         <div className="flex flex-col items-center mb-4 ">
@@ -26,12 +29,16 @@ const Modal = ({ isOpen, onClose}) => {
             <button
               href="/author/sign_in"
               className="h-8 border border-[#EF5353] text-[#EF5353] hover:bg-[#EF5353] hover:text-white rounded-md py-1 px-4"
+              onClick={onHandleSetDeleteModalClose}
             >
               No
             </button>
             <button
-              href="/author/sign_up"
               className="h-8 bg-[#EF5353] text-white rounded-md py-1 px-4"
+              onClick={() => {
+                onHandleSetDeleteModalClose();
+                onHandleDeleteBook();
+              }}
             >
               Yes
             </button>

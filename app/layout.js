@@ -8,6 +8,7 @@ import SubMenuNav from "../components/SubMenuNav";
 import Footer from "../components/Footer";
 import AnimatedLayout from "@/components/AnimatedLayout";
 import ScrollToTop from "@/components/ScrollToTop";
+import { FormProvider } from "@/context/FormContext";
 
 config.autoAddCss = false;
 
@@ -16,32 +17,36 @@ export default function RootLayout({ children }) {
 
   const isSignIn = pathname.endsWith("/author/sign_in");
   const isSignUp = pathname.endsWith("/author/sign_up");
-  const isTest = pathname.endsWith("/test/me");
-  const isRegPage = isSignIn || isSignUp || isTest;
+  const isRegPage = isSignIn || isSignUp
 
   const authorPages =
     pathname.startsWith("/author") ||
-    pathname.startsWith("/dashboard") ||
-    isTest;
+    pathname.startsWith("/dashboard");
+
+  const hiddenComponentFromAuthorAndDashboard = authorPages ? "hidden" : ""
+
+
 
   return (
     <html lang="en">
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
-        <main className="w-full min-h-screen">
-          <div className={`${authorPages ? "hidden" : ""}`}>
-            <AnimatedLayout>
-              <div className="">
-                <TopNav />
-                <SubMenuNav />
-                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-                  {children}
+        <FormProvider>
+          <main className="w-full min-h-screen">
+            <div>
+              <AnimatedLayout>
+                <div className="">
+                  <TopNav styles={hiddenComponentFromAuthorAndDashboard} />
+                  <SubMenuNav styles={hiddenComponentFromAuthorAndDashboard} />
+                  <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                    {children}
+                  </div>
+                  <Footer />
+                  <ScrollToTop styles={hiddenComponentFromAuthorAndDashboard} />
                 </div>
-                <Footer />
-                <ScrollToTop />
-              </div>
-            </AnimatedLayout>
-          </div>
-        </main>
+              </AnimatedLayout>
+            </div>
+          </main>
+        </FormProvider>
       </body>
     </html>
   );

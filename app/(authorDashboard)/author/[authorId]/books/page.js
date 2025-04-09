@@ -3,12 +3,16 @@
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { api } from "@/utils/api";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import BookMenu from "@/components/BookMenu";
+import DeleteModal from "@/components/DeleteModal"
+import toast from 'react-hot-toast';
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
+  const [deleteBook, setDeleteBook] = useState(false)
   const [openMenuForBookId, setOpenMenuForBookId] = useState(null);
   const bookMenuRef = useRef(null);
   const [loading, setLoading] = useState(true);
@@ -45,8 +49,9 @@ export default function AuthorBooks() {
       .delete(`/api/v1/books/${bookId}`)
       .then((response) => {
         if (response.status === 200) {
-          alert("Book deleted successfully!");
-  
+          setDeleteBook(false)
+          toast.success("Book deleted successfully!");
+         
           setBooks((prevBooks) =>
             prevBooks.filter((book) => book.id !== bookId)
           );
@@ -54,7 +59,7 @@ export default function AuthorBooks() {
       })
       .catch((error) => {
         if (error.response?.status === 403) {
-          alert("You are not authorized to delete this book.");
+          toast.success("You are not authorized to delete this book.");
         } else {
           console.error("Error deleting book:", error);
           alert("An error occurred while deleting the book. Please try again.");
@@ -144,7 +149,13 @@ export default function AuthorBooks() {
                   <BookMenu
                     ref={bookMenuRef}
                     onHandleEdit={handleEdit}
-                    onHandleDelete={() => handleDelete(book.id)}
+                    onHandleSetDeleteModalOpen={() => setDeleteBook(true)}
+                  />
+                )}
+                {openMenuForBookId === book.id && deleteBook && (
+                  <DeleteModal
+                    onHandleSetDeleteModalClose={() => setDeleteBook(false)}
+                    onHandleDeleteBook={() => handleDelete(book.id)}
                   />
                 )}
                 <p className="mb-3">

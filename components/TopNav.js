@@ -24,7 +24,7 @@ library.add(
   faQuestionCircle
 );
 
-const TopNav = () => {
+const TopNav = ({ styles }) => {
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
 
@@ -103,7 +103,7 @@ const TopNav = () => {
 
   return (
     <>
-      <nav className="flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20">
+      <nav className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}>
         <div className="flex gap-2 items-center">
           <button
             className="relative block medium:hidden large:hidden xl:hidden z-30 p-1"

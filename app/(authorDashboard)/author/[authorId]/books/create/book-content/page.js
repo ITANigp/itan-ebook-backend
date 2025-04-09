@@ -240,14 +240,14 @@ const BookContent = () => {
         className="h-[35px] w-72 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 
-      <div className="flex flex-col-reverse sm:justify-between mb-10 mt-24">
+      <div className="flex flex-col-reverse sm:justify-between mb-10 mt-24 md:flex-row">
         <button
           onClick={() =>
             router.push(
               `/author/${authorId}/books/create/book-details?id=${id}`
             )
           }
-          className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md"
+          className="border hover:bg-[#cd3f46] hover:text-white border-[#E50913] px-5 py-[7px] rounded-md "
         >
           Back to details
         </button>
