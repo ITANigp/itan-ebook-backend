@@ -20,27 +20,36 @@ export default function RootLayout({ children }) {
 
   const authorPages =
     pathname.startsWith("/author") || pathname.startsWith("/dashboard");
+  
+  const isRegularAuthorPage = authorPages && !isRegPage;
 
   return (
     <html lang="en">
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
         <main className="w-full min-h-screen">
-          <div className={`${authorPages ? "hidden" : ""}`}>
-            <AnimatedLayout>
-              <div className="">
-                <TopNav />
-                <SubMenuNav />
-                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-                  {children}
+          {isRegPage ? (
+            // Auth pages layout (sign in/sign up)
+            <div className="flex items-center justify-center min-h-screen px-4">
+              {children}
+            </div>
+          ) : (
+            // Regular pages layout
+            <div className={isRegularAuthorPage ? "hidden" : ""}>
+              <AnimatedLayout>
+                <div className="">
+                  <TopNav />
+                  <SubMenuNav />
+                  <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                    {children}
+                  </div>
+                  <Footer />
+                  <ScrollToTop />
                 </div>
-                <Footer />
-                <ScrollToTop />
-              </div>
-            </AnimatedLayout>
-          </div>
+              </AnimatedLayout>
+            </div>
+          )}
         </main>
       </body>
     </html>
   );
 }
-
