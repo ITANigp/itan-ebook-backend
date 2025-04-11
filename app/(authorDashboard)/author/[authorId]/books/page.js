@@ -14,6 +14,7 @@ export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
   const [deleteBook, setDeleteBook] = useState(false)
   const [openMenuForBookId, setOpenMenuForBookId] = useState(null);
+  const [isOpenMenu, setOpenMenu] = useState(false)
   const bookMenuRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -75,6 +76,7 @@ export default function AuthorBooks() {
     const handleClickOutside = (event) => {
       if (bookMenuRef.current && !bookMenuRef.current.contains(event.target)) {
         setOpenMenuForBookId(null);
+        setOpenMenu(false)
       }
     };
 
@@ -143,13 +145,22 @@ export default function AuthorBooks() {
                     setOpenMenuForBookId(
                       openMenuForBookId === book.id ? null : book.id
                     );
+                    setOpenMenu(true);
                   }}
                 />
-                {openMenuForBookId === book.id && (
+                {openMenuForBookId === book.id && isOpenMenu && (
                   <BookMenu
                     ref={bookMenuRef}
-                    onHandleEdit={handleEdit}
-                    onHandleSetDeleteModalOpen={() => setDeleteBook(true)}
+                    book={book}
+                    onHandleEdit={(book) => {
+                      handleEdit(book);
+                      setOpenMenu(false);
+                    }}
+                    onHandleSetDeleteModalOpen={() => {
+                      setDeleteBook(true);
+                      setOpenMenu(false);
+                    }}
+                    onCloseMenu={() => setOpenMenu(false)}
                   />
                 )}
                 {openMenuForBookId === book.id && deleteBook && (

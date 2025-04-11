@@ -3,6 +3,8 @@ import "flowbite";
 import "./globals.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import { usePathname } from "next/navigation";
+import { Toaster } from "react-hot-toast";
+
 import TopNav from "../components/TopNav";
 import SubMenuNav from "../components/SubMenuNav";
 import Footer from "../components/Footer";
@@ -31,6 +33,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
         <FormProvider>
+          <Toaster />
           <main className="w-full min-h-screen">
             <div>
               <AnimatedLayout>

@@ -1,12 +1,8 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname} from "next/navigation";
-import { useRouter } from "next/navigation";
-
-
+import { usePathname, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -19,41 +15,36 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-
 import { signOutAuthor } from "@/utils/api";
-import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
-
 
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [authorId, setAuthorId] = useState(null);
   const sidebarRef = useRef(null);
   const pathName = usePathname();
   const router = useRouter();
-  // Retrieve author info from localStorage
-  // const storedAuthorInfo = JSON.parse(
-  //   localStorage.getItem("authorInfo") || "{}"
-  // );
-  const authorId = storedAuthorInfo?.id;
+  const inputRef = useRef(null);
 
   useEffect(() => {
-    if (!authorId) {
+    const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
+    if (!stored?.id) {
       alert("Sign in to continue!");
       router.push("/author/sign_in");
+    } else {
+      setAuthorId(stored.id);
     }
-  }, [authorId, router]); // Runs only after first render
+  }, [router]);
 
   if (!authorId) {
-    return null; // Prevents rendering while redirecting
+    return null;
   }
 
-  // Define active states based on different paths
   const isDashboard = pathName.startsWith("/dashboard/author/")
     ? "text-[#E50913]"
     : "text-gray-300";
   const isBookDetails = pathName.endsWith("/books/create/book-details");
   const isBookContent = pathName.endsWith("/books/create/book-content");
   const isBookPricing = pathName.endsWith("/books/create/book-pricing");
-
   const isSignIn = pathName.endsWith("/author/sign_in");
   const isSignUp = pathName.endsWith("/author/sign_up");
   const isRegPage = isSignIn || isSignUp;
@@ -63,15 +54,8 @@ export default function AuthorDashboardLayout({ children }) {
       ? "text-[#E50913]"
       : "text-gray-300";
 
-  const inputRef = useRef(null);
-
-   const toggleSidebar = () => {
-     setIsSidebarOpen(!isSidebarOpen);
-   };
-
-
-  const handleFocus = () => {
-    inputRef.current?.focus();
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
   };
 
   const handleSignOut = async () => {
@@ -84,23 +68,6 @@ export default function AuthorDashboardLayout({ children }) {
     }
   };
 
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsSidebarOpen(false);
-      }
-    };
-
-    if (isSidebarOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isSidebarOpen]);
-
-
   return (
     <>
       <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
@@ -110,27 +77,13 @@ export default function AuthorDashboardLayout({ children }) {
           className="right-0 top-0 ml-3 mt-2 p-1 cursor-pointer text-white bg-slate-700 rounded-full"
         />
       </button>
+
       <div
-        className={`sm:flex hidden items-center justify-between ${isRegPage ? "hidden" : "fixed top-0 left-0"} w-full h-16  py-2 shadow-md z-10 bg-white`}
+        className={`sm:flex hidden items-center justify-between ${
+          isRegPage ? "hidden" : "fixed top-0 left-0"
+        } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
         <div className="flex-1 relative mr-8">
-          {/* <div
-            className="flex items-center bg-[#F1F1F1] px-3 py-2 rounded-md cursor-pointer h-12"
-            onClick={handleFocus}
-          >
-            <img
-              src="/images/search.png"
-              alt="Search Icon"
-              className="w-7 cursor-pointer"
-            />
-            <input
-              ref={inputRef}
-              type="text"
-              placeholder="Search"
-              className="outline-none border-none focus:ring-0 bg-[#F1F1F1] ml-2 w-full"
-            />
-          </div> */}
-
           <img
             src="/images/picture.png"
             className="w-12 absolute right-0 -top-6"
@@ -139,12 +92,11 @@ export default function AuthorDashboardLayout({ children }) {
       </div>
 
       {isSidebarOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-10 sm:hidden"></div> // Click outside to close
+        <div className="fixed inset-0 bg-black bg-opacity-50 z-10 sm:hidden"></div>
       )}
 
       <aside
         ref={sidebarRef}
-        id="default-sidebar"
         className={`fixed top-0 left-0 z-40 w-64 h-full bg-gray-900 text-white transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0 sm:block`}
@@ -198,14 +150,22 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <a
                 href={`/author/${authorId}/books`}
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faClipboard}
-                  className={`text-lg group-hover:text-[#E50913] ${pathName.endsWith("/books") ? "text-[#E50913]" : "text-gray-300"}`}
+                  className={`text-lg group-hover:text-[#E50913] ${
+                    pathName.endsWith("/books")
+                      ? "text-[#E50913]"
+                      : "text-gray-300"
+                  }`}
                 />
                 <span
-                  className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${pathName.endsWith("/books") ? "text-[#E50913]" : "text-gray-300"}`}
+                  className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${
+                    pathName.endsWith("/books")
+                      ? "text-[#E50913]"
+                      : "text-gray-300"
+                  }`}
                 >
                   Book Shelf
                 </span>
@@ -214,7 +174,7 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faShoppingCart}
@@ -228,7 +188,7 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faQuestionCircle}
@@ -242,7 +202,7 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faUser}
@@ -254,21 +214,18 @@ export default function AuthorDashboardLayout({ children }) {
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              <button
+                onClick={handleSignOut}
+                className="w-full flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
                   icon={faSignOut}
                   className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
-                <span
-                  className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]"
-                  onClick={handleSignOut}
-                >
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Sign Out
                 </span>
-              </a>
+              </button>
             </li>
           </ul>
         </div>

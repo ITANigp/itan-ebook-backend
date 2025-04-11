@@ -77,18 +77,18 @@ export default function BookPricing() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  useEffect(() => {
-    if (id && id !== "null" && id !== "undefined") {
-      api
-        .get(`http://localhost:3000/api/v1/books/${id}`)
-        .then((response) => {
-          updateFormData({ ...response.data.data });
-        })
-        .catch((error) => {
-          console.error("Error fetching book:", error);
-        });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id && id !== "null" && id !== "undefined") {
+  //     api
+  //       .get(`http://localhost:3000/api/v1/books/${id}`)
+  //       .then((response) => {
+  //         updateFormData({ ...response.data.data });
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching book:", error);
+  //       });
+  //   }
+  // }, [id]);
 
   const { id: authorId } = storedAuthorInfo;
   const handleSubmit = async (e) => {
