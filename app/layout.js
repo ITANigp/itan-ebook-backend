@@ -25,7 +25,7 @@ export default function RootLayout({ children }) {
     pathname.startsWith("/author") ||
     pathname.startsWith("/dashboard");
 
-  const hiddenComponentFromAuthorAndDashboard = authorPages ? "hidden" : ""
+  const hideIfAuthorPage = authorPages ? "hidden" : ""
 
 
 
@@ -36,17 +36,17 @@ export default function RootLayout({ children }) {
           <Toaster />
           <main className="w-full min-h-screen">
             <div>
-              <AnimatedLayout>
+              {/* <AnimatedLayout> */}
                 <div className="">
-                  <TopNav styles={hiddenComponentFromAuthorAndDashboard} />
-                  <SubMenuNav styles={hiddenComponentFromAuthorAndDashboard} />
+                  <TopNav styles={hideIfAuthorPage} />
+                  <SubMenuNav styles={hideIfAuthorPage} />
                   <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
                     {children}
                   </div>
                   <Footer />
-                  <ScrollToTop styles={hiddenComponentFromAuthorAndDashboard} />
+                  {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
                 </div>
-              </AnimatedLayout>
+              {/* </AnimatedLayout> */}
             </div>
           </main>
         </FormProvider>

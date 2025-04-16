@@ -1,16 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import genreData from "@/constants/dataGenres"
+import genreData from "@/constants/dataGenres";
 
 const BookForm = () => {
   // State to track selected genre and sub-categories
   const [genre, setGenre] = useState("");
   const [subCategories, setSubCategories] = useState([]);
-
-  // Sub-categories data for each genre
-  
-
 
   // Handle genre selection
   const handleGenreChange = (e) => {
@@ -26,6 +22,49 @@ const BookForm = () => {
         ? prevState.filter((item) => item !== value)
         : [...prevState, value]
     );
+  };
+
+  // Helper function to render sub-categories
+  const renderSubCategories = (genreData) => {
+    if (Array.isArray(genreData)) {
+      // If the genreData is an array, map directly to sub-categories
+      return genreData.map((subCat, index) => (
+        <label key={index} className="inline-flex items-center space-x-2 mr-3">
+          <input
+            type="checkbox"
+            value={subCat}
+            checked={subCategories.includes(subCat)}
+            onChange={handleSubCategoryChange}
+            className="h-4 w-4"
+          />
+          <span>{subCat}</span>
+        </label>
+      ));
+    } else {
+      // If genreData is an object (e.g., Religious Fiction), loop through nested categories
+      return Object.keys(genreData).map((subCategoryGroup, index) => (
+        <div key={index}>
+          <h3 className="font-semibold">{subCategoryGroup}</h3>
+          <div className="space-y-2 ml-4">
+            {genreData[subCategoryGroup].map((subCat, index) => (
+              <label
+                key={index}
+                className="inline-flex items-center space-x-2 mr-3"
+              >
+                <input
+                  type="checkbox"
+                  value={subCat}
+                  checked={subCategories.includes(subCat)}
+                  onChange={handleSubCategoryChange}
+                  className="h-4 w-4"
+                />
+                <span>{subCat}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+      ));
+    }
   };
 
   return (
@@ -58,21 +97,7 @@ const BookForm = () => {
             Select Sub-categories
           </label>
           <div className="space-y-2">
-            {genreData[genre].map((subCat, index) => (
-              <label
-                key={index}
-                className="inline-flex items-center space-x-2 mr-3"
-              >
-                <input
-                  type="checkbox"
-                  value={subCat}
-                  checked={subCategories.includes(subCat)}
-                  onChange={handleSubCategoryChange}
-                  className="h-4 w-4"
-                />
-                <span>{subCat}</span>
-              </label>
-            ))}
+            {renderSubCategories(genreData[genre])}
           </div>
         </div>
       )}

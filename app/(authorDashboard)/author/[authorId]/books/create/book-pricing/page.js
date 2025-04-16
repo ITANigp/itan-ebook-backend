@@ -143,7 +143,7 @@ export default function BookPricing() {
       const response = await api({
         data: formDataToSend,
         method: isValidId ? "PUT" : "POST",
-        url: isValidId ? `/api/v1/books/${id}` : "/api/v1/books",
+        url: isValidId ? `/books/${id}` : "/books",
       });
 
       if (response.status >= 200 && response.status < 300) {

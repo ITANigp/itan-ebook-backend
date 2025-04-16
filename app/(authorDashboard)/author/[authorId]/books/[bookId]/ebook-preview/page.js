@@ -13,7 +13,7 @@ const BookPage = () => {
   useEffect(() => {
     if (bookId) {
       api
-        .get(`http://localhost:3000/api/v1/books/${bookId}`)
+        .get(`/books/${bookId}`)
         .then((response) => {
           setBook(response.data.data);
           console.log("Single Book: ", response.data.data);

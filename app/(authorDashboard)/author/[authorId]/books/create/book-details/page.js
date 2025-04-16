@@ -63,7 +63,7 @@ const BookDetails = () => {
     if (id && id !== "null" && id !== "undefined") {
       // Prevent refetching if data already exists
       api
-        .get(`/api/v1/books/${id}`)
+        .get(`/books/${id}`)
         .then((response) => {
           updateFormData(response.data.data); // Update the form context
         })

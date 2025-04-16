@@ -28,7 +28,7 @@ export default function AuthorBooks() {
 
   useEffect(() => {
     api
-      .get("http://localhost:3000/api/v1/books/")
+      .get("/books/")
       .then((response) => {
         console.log("Fetch All Books: ", response.data);
         if (Array.isArray(response.data.data)) {
@@ -47,7 +47,7 @@ export default function AuthorBooks() {
 
   const handleDelete = (bookId) => {
     api
-      .delete(`/api/v1/books/${bookId}`)
+      .delete(`/books/${bookId}`)
       .then((response) => {
         if (response.status === 200) {
           setDeleteBook(false)
