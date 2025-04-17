@@ -116,7 +116,7 @@ export default function AuthorDashboardLayout({ children }) {
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
+              <Link
                 href={`/dashboard/author/${authorId}`}
                 className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -129,10 +129,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Overview
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={`/author/${authorId}/books/create/book-details`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -145,10 +145,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Make an Upload
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={`/author/${authorId}/books`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -169,10 +169,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Book Shelf
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -183,10 +183,10 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Sales
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -197,10 +197,10 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Help
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -211,7 +211,7 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Profile
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
               <button
