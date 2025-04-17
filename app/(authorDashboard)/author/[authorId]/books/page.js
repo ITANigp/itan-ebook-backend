@@ -28,7 +28,7 @@ export default function AuthorBooks() {
 
   useEffect(() => {
     api
-      .get("/books/")
+      .get("/books/my_books")
       .then((response) => {
         console.log("Fetch All Books: ", response.data);
         if (Array.isArray(response.data.data)) {
