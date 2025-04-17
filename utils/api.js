@@ -34,6 +34,17 @@ export const registerAuthor = async (email, password) => {
   }
 };
 
+// Forget password reset
+export const resetPassword = async (req, res) => {
+  try {
+    const apiRes = await api.post(`/authors/password`, req.body)
+    res.status(apiRes.status).json(apiRes.data)
+  } catch (error) {
+    res.status(error.response?.status || 500).json(error.response?.data || { errors: ['Server error'] })
+  }
+}
+
+
 // Sign in an author
 export const signInAuthor = async (email, password) => {
   try {
