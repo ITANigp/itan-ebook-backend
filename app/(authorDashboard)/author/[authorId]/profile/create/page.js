@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
+import Image from "next/image";
 import {
   createAuthorProfile,
   getAuthorProfile, 
@@ -220,3 +221,13 @@ export default function AuthorProfilePage() {
     </form>
   );
 }
+
+// import CreateProfileModal from "@/components/CreateProfileModal"
+
+// const Test =()=> {
+//   return (
+//     <CreateProfileModal />
+//   )
+// }
+
+//  export default Test

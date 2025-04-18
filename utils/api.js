@@ -45,6 +45,25 @@ export const resetPassword = async (req, res) => {
 }
 
 
+// Enable 2FA Email Verification
+
+export const enableEmailTwoFactor = async () => {
+  try {
+    const { status } = await api.post("/authors/two_factor/enable_email");
+
+    if (status.code !== 200) {
+      throw new Error(status.message);
+    }
+
+    return true;
+  } catch (error) {
+    throw new Error(`Failed to enable email two-factor: ${error? error.message : String(error)}`);
+  }
+};
+
+
+
+
 // Sign in an author
 export const signInAuthor = async (email, password) => {
   try {
