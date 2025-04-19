@@ -12,7 +12,7 @@ export const api = axios.create({
 });
 
 // Register an author
-export const registerAuthor = async (email, password) => {
+export const registerAuthor = async (name, email, password, password_confirmation) => {
   try {
     const response = await api.post("/authors", {
       author: { email, password },

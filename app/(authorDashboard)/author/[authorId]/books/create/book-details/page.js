@@ -86,7 +86,7 @@ const BookDetails = () => {
   return (
     <div>
       <h3 className="mt-7 font-bold">Book Title</h3>
-      <p className="my-2 sm:w-[650px] w-72 text-sm sm:text-base">
+      <p className="my-2 md:w-[650px] text-sm sm:text-base">
         {" "}
         Enter your book title exactly as it appears on the cover. Subtitles will
         be separated by a colon. Please double-check spelling, as this field
@@ -99,7 +99,7 @@ const BookDetails = () => {
         value={formData.title}
         required
         onChange={(e) => updateFormData({ title: e.target.value })}
-        className="h-[35px] w-72 sm:w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-[35px] w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
       {errors.title && <p className="text-red-500">{errors.title}</p>}
       <p className="mt-3">Subtitle (Optional)</p>
@@ -108,18 +108,18 @@ const BookDetails = () => {
         // required={id ? false : true}
         value={formData.subtitle}
         onChange={(e) => updateFormData({ subtitle: e.target.value })}
-        className="h-[35px] w-72 sm:w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-[35px] w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 
       <h3 className="mt-3 font-bold ">Author's Bio</h3>
-      <p className="text-sm w-72 sm:w-[650px]">
+      <p className="text-sm md:w-[650px]">
         Enter the author's name exactly as it appears on the book cover,
         including any middle names in the <br className="hidden sm:block" />
         'First Name' field.
       </p>
       <h3 className="mt-3 font-bold">Author Name</h3>
 
-      <div className="w-72 sm:w-[650px] flex">
+      <div className="w-full max-w-[650px] flex">
         <input
           type="text"
           title="First Name (Optional: Include your middle name here as well)"
@@ -141,14 +141,14 @@ const BookDetails = () => {
 
       <h3 className="font-bold mt-8">Bio</h3>
       <textarea
-        className="h-40 w-72 sm:w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-40 w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         placeholder="Not more than 500 characters"
         value={formData.bio}
         onChange={(e) => updateFormData({ bio: e.target.value })}
       ></textarea>
 
       <h3 className="font-bold">Edition Number</h3>
-      <p className="my-3 w-72 sm:w-[650px] text-sm sm:text-base">
+      <p className="my-3 w-full max-w-[650px] text-sm sm:text-base">
         The edition number tells readers/listeners whether the book is an
         original or updated version.
         <br /> Note: This cannot be changed after the book is uploaded.
@@ -161,23 +161,23 @@ const BookDetails = () => {
         // id="editionNo"
         value={formData.edition_number}
         onChange={(e) => updateFormData({ edition_number: e.target.value })}
-        className="h-[35px] w-72 sm:w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-[35px] w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 
       <h3 className="font-bold mb-2 mt-3">Description</h3>
-      <p className="w-72 sm:w-[650px] mb-1 text-sm sm:text-base">
+      <p className="w-full max-w-[650px] mb-1 text-sm sm:text-base">
         Summarize your book. This will be your product description on itan, so
         readers/listeners can learn more about your book.
       </p>
       <textarea
         placeholder="Not more than 1,000 characters"
-        className="h-40 w-72 sm:w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+        className="h-40 w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         value={formData.description}
         onChange={(e) => updateFormData({ description: e.target.value })}
       ></textarea>
 
       <h3 className="font-bold mt-3">Publishing Rights</h3>
-      <p className="w-72 sm:w-[650px] my-3">
+      <p className="w-full max-w-[650px] my-3">
         Publishing rights: control your work's use and distribution, or make it
         public domain.
       </p>
@@ -264,13 +264,13 @@ const BookDetails = () => {
       {errors.categories && <p className="text-red-500">{errors.categories}</p>}
 
       <h3 className="font-bold text-lg mt-7 mb-3">Keywords</h3>
-      <p className="w-72 sm:w-[650px] my-3 text-sm sm:text-base">
+      <p className="w-full max-w-[650px] my-3 text-sm sm:text-base">
         Select up to 6 keywords (max 50 characters) that describe your book's
         unique themes, genres, or topics. Examples: 'medieval fantasy', 'romance
         novel', 'sci-fi adventure'
       </p>
       <p className="">Your Keywords</p>
-      <div className="w-72 sm:w-[650px] flex">
+      <div className="w-full max-w-[650px] flex">
         <input
           type="text"
           className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] mr-3"
@@ -280,7 +280,7 @@ const BookDetails = () => {
           className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
         />
       </div>
-      <div className="mt-5 mb-8 flex w-72 sm:w-[650px]">
+      <div className="mt-5 mb-8 flex w-full max-w-[650px]">
         <input
           type="text"
           className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] mr-3"
@@ -292,7 +292,7 @@ const BookDetails = () => {
       </div>
 
       <h3 className="font-bold">Tags</h3>
-      <div className="h-[1px] bg-gray-200 w-72 sm:w-[650px] mb-2" />
+      <div className="h-[1px] bg-gray-200 w-full max-w-[650px] mb-2" />
       <div>
         <div className="justify-between items-center px-[7px] py-[5px] bg-[#121212] inline-flex rounded-md mr-[5px]">
           <p className="text-white">Dark Story</p>{" "}
@@ -312,7 +312,7 @@ const BookDetails = () => {
         </div>
       </div>
 
-      <div className="flex items-center border border-[#929292] w-72 sm:w-[650px] rounded-md my-8">
+      <div className="flex items-center border border-[#929292] w-full max-w-[650px] rounded-md my-8">
         <img
           src="/images/add-icon.png"
           alt=""
@@ -326,7 +326,7 @@ const BookDetails = () => {
       </div>
       <button
         onClick={handleSubmit}
-        className="bg-[#E50913] hover:bg-[#cd3f46]  sm:float-right text-white px-8 py-[5px] mb-10 rounded-md w-72"
+        className="bg-[#E50913] hover:bg-[#cd3f46]  float-right text-white px-8 py-[5px] mb-10 rounded-md w-24"
       >
         Next
       </button>

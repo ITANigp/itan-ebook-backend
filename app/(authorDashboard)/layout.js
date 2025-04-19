@@ -69,8 +69,8 @@ export default function AuthorDashboardLayout({ children }) {
   };
 
   return (
-    <>
-      <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+    <div>
+      <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
         <FontAwesomeIcon
           icon={isSidebarOpen ? faTimes : faBars}
           size="sm"
@@ -79,7 +79,7 @@ export default function AuthorDashboardLayout({ children }) {
       </button>
 
       <div
-        className={`sm:flex hidden items-center justify-between ${
+        className={`lg:flex hidden items-center justify-between ${
           isRegPage ? "hidden" : "fixed top-0 left-0"
         } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
@@ -99,11 +99,11 @@ export default function AuthorDashboardLayout({ children }) {
         ref={sidebarRef}
         className={`fixed top-0 left-0 z-40 w-64 h-full bg-gray-900 text-white transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } sm:translate-x-0 sm:block`}
+        } lg:translate-x-0 sm:block`}
         aria-label="Sidebar"
       >
         <div className="w-full relative">
-          <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+          <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
             <FontAwesomeIcon
               icon={isSidebarOpen ? faTimes : faBars}
               className="hover:bg-red-100 hover:border-2 w-4 h-4 rounded-full hover:border-red-600 text-red-600 absolute right-3 top-2"
@@ -231,6 +231,6 @@ export default function AuthorDashboardLayout({ children }) {
         </div>
       </aside>
       {children}
-    </>
+    </div>
   );
 }
