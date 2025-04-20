@@ -69,7 +69,7 @@ export default function AuthorDashboardLayout({ children }) {
   };
 
   return (
-    <div>
+    <div className="">
       <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
         <FontAwesomeIcon
           icon={isSidebarOpen ? faTimes : faBars}

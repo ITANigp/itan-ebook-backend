@@ -161,8 +161,9 @@ export default function BookPricing() {
   };
 
   return (
-    <div className="w-full">
-      <div className="mx-auto">
+    <>
+    {/* // <div className="w-full flex justify-center">
+    //   <div className="w-full max-w-[800px]"> */}
         <h3 className="font-bold text-lg mt-5">Price</h3>
         <p className="my-1">Enter the book price</p>
         <form onSubmit={handleSubmit}>
@@ -266,7 +267,7 @@ export default function BookPricing() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col-reverse sm:justify-between my-10 sm:flex-row">
+          <div className="flex flex-col-reverse sm:justify-between my-10 sm:flex-row max-w-[650px]">
             <button
               onClick={() =>
                 router.push(
@@ -288,7 +289,8 @@ export default function BookPricing() {
           </div>
         </form>
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-      </div>
-    </div>
+      {/* </div>
+    </div> */}
+    </>
   );
 }
