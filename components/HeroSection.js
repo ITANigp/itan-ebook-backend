@@ -3,6 +3,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
+import Link from "next/link";
 
 const HeroSection = () => {
   const pathname = usePathname();
@@ -58,12 +59,16 @@ const HeroSection = () => {
         </div>
         {/* ✅ Buttons (Mobile/Tablet: Below image, Large screens: Below text) */}
         <div className="mt-6 large:mt-4 flex flex-col large:flex-row xl:flex-row w-full max-w-xs gap-3 large:w-auto xl:self-start large:self-start">
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl text-white bg-red-500 font-bold rounded-md">
+          <Link 
+            className="w-full py-3 large:p-6 text-nowrap text-2xl text-white bg-red-500 font-bold rounded-md"
+            href="/author/sign_up">
             Join Itan
-          </button>
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl border border-red-400 text-red-500 font-bold rounded-md">
+          </Link>
+          <Link 
+            className="w-full py-3 large:p-6 text-nowrap text-2xl border border-red-400 text-red-500 font-bold rounded-md"
+            href="/author/sign_in">
             Sign In
-          </button>
+          </Link>
         </div>
       </section>
     </FadeIn>

@@ -103,7 +103,9 @@ const TopNav = ({ styles }) => {
 
   return (
     <>
-      <nav className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}>
+      <nav
+        className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}
+      >
         <div className="flex gap-2 items-center">
           <button
             className="relative block medium:hidden large:hidden xl:hidden z-30 p-1"
@@ -132,18 +134,23 @@ const TopNav = ({ styles }) => {
         </div>
 
         <nav className="flex gap-2.5">
-          <LandingPgBtn
-            variant="outlined"
-            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-          >
-            Sign In
-          </LandingPgBtn>
-          <LandingPgBtn
-            variant="filled"
-            className="px-2 medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-          >
-            Join Itan
-          </LandingPgBtn>
+          <Link href="/author/sign_in">
+            <LandingPgBtn
+              variant="outlined"
+              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
+            >
+              Sign In
+            </LandingPgBtn>
+          </Link>
+
+          <Link href="/author/sign_up">
+            <LandingPgBtn
+              variant="filled"
+              className="px-2 medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
+            >
+              Join Itan
+            </LandingPgBtn>
+          </Link>
         </nav>
       </nav>
 
@@ -220,20 +227,24 @@ const TopNav = ({ styles }) => {
               </div>
 
               <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <LandingPgBtn
-                  variant="outlined"
-                  className="w-full py-3"
-                  onClick={toggleMenu}
-                >
-                  Sign In
-                </LandingPgBtn>
-                <LandingPgBtn
-                  variant="filled"
-                  className="w-full py-3"
-                  onClick={toggleMenu}
-                >
-                  Join Itan
-                </LandingPgBtn>
+                <Link href="/author/sign_in">
+                  <LandingPgBtn
+                    variant="outlined"
+                    className="w-full py-3"
+                    onClick={toggleMenu}
+                  >
+                    Sign In
+                  </LandingPgBtn>
+                </Link>
+                <Link href="/author/sign_up">
+                  <LandingPgBtn
+                    variant="filled"
+                    className="w-full py-3"
+                    onClick={toggleMenu}
+                  >
+                    Join Itan
+                  </LandingPgBtn>
+                </Link>
               </motion.div>
             </motion.div>
           </>
