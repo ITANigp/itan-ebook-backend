@@ -267,7 +267,7 @@ export default function BookPricing() {
           )}
 
           {/* Action Buttons */}
-          <div className="flex flex-col-reverse sm:justify-between my-10 sm:flex-row max-w-[650px]">
+          <div className="flex flex-col-reverse sm:justify-between my-10 sm:flex-row">
             <button
               onClick={() =>
                 router.push(
