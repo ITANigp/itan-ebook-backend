@@ -10,16 +10,14 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
-const Footer = () => {
+const Footer = ({ styles }) => {
   const pathname = usePathname();
 
   const authorPages =
     pathname.startsWith("/author") || pathname.startsWith("/dashboard");
 
   return (
-    <footer
-      className={`${authorPages ? "hidden" : ""} mt-6 medium:mt-8 large:mt-10 xl:mt-0`}
-    >
+    <footer className={`${styles} mt-6 medium:mt-8 large:mt-10 xl:mt-0`}>
       <section className="relative z-30 h-[150px] xs:h-[170px] medium:h-[200px] large:h-[220px] xl:h-[250px] flex flex-col items-center justify-center text-center">
         {/* Background image */}
         <div
