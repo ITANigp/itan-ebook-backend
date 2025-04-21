@@ -269,10 +269,22 @@ const Footer = () => {
 
         {/* Terms and Policy */}
         <div className="text-white flex flex-wrap items-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-6 medium:mt-8 text-xs xs:text-sm medium:text-base">
-          <p className="mr-4 hover:text-[#EF5353] cursor-pointer">
+          <Link
+            className="mr-4 hover:text-[#EF5353] cursor-pointer"
+            href="/terms&conditions"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Terms & Conditions
-          </p>
-          <p className="hover:text-[#EF5353] cursor-pointer">Privacy Policy</p>
+          </Link>
+          <Link
+            className="hover:text-[#EF5353] cursor-pointer"
+            href="/privacy-policies"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </Link>
         </div>
         {/* Separator line */}
         <div className="mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-4 medium:mt-5 large:mt-6">
