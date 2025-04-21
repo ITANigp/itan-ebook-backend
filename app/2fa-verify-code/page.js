@@ -1,19 +1,24 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { api } from "@/utils/api";
 
 export default function TwoFACode() {
-  const [code, setCode] = useState("");
+  const [verification_code, setCode] = useState("");
+  const router = useRouter();
 
   const handle2FACode = async () => {
-    const author = {
-      code,
+    const code = {
+      verification_code,
     };
 
     try {
-      const response = await api.post("/authors/verify", { author });
+      const response = await api.post("/authors/verify", code );
       console.log("2FA Code:", response);
+      // router.push(`/dashboard/author/${author.data.id}`);
+      router.push(`/dashboard/author/${code.verification_code}`);
     } catch (err) {
       console.error("2FA update error:", err);
     }
@@ -23,7 +28,7 @@ export default function TwoFACode() {
     <div>
       <input
         type="text"
-        value={code}
+        value={verification_code}
         onChange={(e) => setCode(e.target.value)}
         placeholder="Enter your 2FA code"
         className="border px-2 py-1 rounded"

@@ -235,6 +235,7 @@ export default function AuthorProfilePage() {
             width={100}
             height={100}
             className="rounded-full border shadow"
+            priority
           />
         </div>
       )}

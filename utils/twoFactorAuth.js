@@ -1,0 +1,35 @@
+import {api} from "@/utils/api";
+
+// Get 2FA status
+export const getTwoFactorStatus = async () => {
+  const { data } = await api.get("/authors/two_factor/status");
+  return data.data;
+};
+
+// Enable Email 2FA
+export const enableEmail2FA = async () => {
+  const { data } = await api.post("/authors/two_factor/enable_email");
+  return data;
+};
+
+// Set up SMS (register phone)
+export const setupSms2FA = async (phoneNumber) => {
+  const { data } = await api.post("/authors/two_factor/setup_sms", {
+    phone_number: phoneNumber,
+  });
+  return data;
+};
+
+// Verify phone (only needed once)
+export const verifySms2FA = async (code) => {
+  const { data } = await api.post("/authors/two_factor/verify_sms", {
+    verification_code: code,
+  });
+  return data;
+};
+
+//Disable 2FA
+export const disable2FA = async () => {
+  const { data } = await api.delete("/authors/two_factor/disable");
+  return data;
+};
