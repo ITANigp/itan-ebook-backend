@@ -56,13 +56,14 @@ const HeroSection = () => {
             />
           </figure>
         </div>
-        {/* ✅ Buttons (Mobile/Tablet: Below image, Large screens: Below text) */}
-        <div className="mt-6 large:mt-4 flex flex-col large:flex-row xl:flex-row w-full max-w-xs gap-3 large:w-auto xl:self-start large:self-start">
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl text-white bg-red-500 font-bold rounded-md">
-            Join Itan
-          </button>
-          <button className="w-full py-3 large:p-6 text-nowrap text-2xl border border-red-400 text-red-500 font-bold rounded-md">
+        {/* Buttons - Left-aligned with appropriate sizing */}
+        <div className="mt-8 flex flex-col items-center medium:flex-row large:flex-row xl:flex-row gap-4 w-full">
+          <button className="px-10 py-1.5 text-sm medium:px-4 medium:py-2 medium:text-base large:px-10 large:py-2.5 large:text-base xl:px-10 xl:py-3 xl:text-lg font-semibold border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 rounded-md transition-colors duration-300 shadow-sm w-auto">
             Sign In
+          </button>
+
+          <button className="px-4 py-1.5 text-sm medium:px-4 medium:py-2 medium:text-base large:px-4 large:py-2.5 large:text-base xl:px-5 xl:py-3 xl:text-lg font-semibold border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 rounded-md transition-colors duration-300 shadow-sm w-auto">
+            Create Account
           </button>
         </div>
       </section>
