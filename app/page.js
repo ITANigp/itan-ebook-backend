@@ -56,9 +56,7 @@ const Home = () => {
                 staggerChildren={0.15}
               >
                 <h2 className="text-center large:text-start xl:text-start text-2xl font-bold large:text-4xl xl:text-5xl mt-6 large:mt-0 xl:mt-0">
-                  Let the World{" "}
-                  <span className="text-[#EF5353]">Read and Listen</span> to
-                  your Unique Story
+                  Let the World Read and Listen to your Unique Story                  
                 </h2>
                 <h2 className="font-semibold text-2xl mt-6 medium:px-4 large:px-0 large:text-3xl xl:text-4xl xl:mt-8">
                   Make your book the next bestseller
@@ -224,8 +222,7 @@ const Home = () => {
           <div className="xl:max-w-7xl xl:mx-auto">
             <div>
               <p className="mb-8 text-center text-2xl font-semibold mt-6 medium:text-3xl medium:mt-10 large:text-3xl xl:text-4xl">
-                Publish a variety of{" "}
-                <span className="text-[#EF5353]">Genres</span>
+                Publish a variety of Genres
               </p>
               <div className="grid grid-cols-2 xs:grid-cols-2 medium:grid-cols-3 large:grid-cols-6 xl:grid-cols-6 gap-6 medium:gap-4 large:gap-[3px] xl:gap-[3px] p-4 bg-[#FEE6E6]">
                 <FadeIn direction="up" delay={0.1} distance={30}>
