@@ -29,7 +29,7 @@ const BookPage = () => {
   if (!book) return <p>Book not found.</p>;
 
   return (
-    <div className="p-4 lg:ml-64  lg:mt-24 pr-9">
+    <div className="p-4 lg:ml-64  lg:mt-24 ">
       <div className="sm:flex space-x-4">
         <div className="">
           {book.cover_image_url && (

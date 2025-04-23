@@ -17,6 +17,7 @@ export const setupSms2FA = async (phoneNumber) => {
   const { data } = await api.post("/authors/two_factor/setup_sms", {
     phone_number: phoneNumber,
   });
+  console.log("Phone setup Successful: ", data)
   return data;
 };
 

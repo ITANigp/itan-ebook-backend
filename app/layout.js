@@ -28,14 +28,20 @@ export default function RootLayout({ children }) {
   const privacyPages =
     pathname.startsWith("/privacy-policies") ||
     pathname.startsWith("/terms&conditions");
+    
+    const shouldHideHeader = authorPages || privacyPages ? "hidden" : "";
 
-  const shouldHideHeader = authorPages || privacyPages ? "hidden" : "";
+    const ProfilePage = pathname.endsWith('/profile')
+    const ProfileBackground = ProfilePage ? "bg-gray-100" : ""
+
 
 
 
   return (
     <html lang="en">
-      <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
+      <body
+        className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}
+      >
         <FormProvider>
           <Toaster />
           <main className="w-full min-h-screen">

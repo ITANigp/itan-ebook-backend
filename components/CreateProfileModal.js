@@ -1,5 +1,6 @@
-// components/Modal.js
-import React from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 
 const Modal = ({ isOpen, onClose}) => {
 //   if (!isOpen) return null; // Don't render if modal is closed
