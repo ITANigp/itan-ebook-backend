@@ -15,7 +15,6 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { signOutAuthor } from "@/utils/api";
 
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -56,16 +55,6 @@ export default function AuthorDashboardLayout({ children }) {
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
-  };
-
-  const handleSignOut = async () => {
-    try {
-      await signOutAuthor();
-      alert("Logged out successfully!");
-      window.location.href = "/";
-    } catch (error) {
-      alert("Failed to log out. Please try again.");
-    }
   };
 
   return (
@@ -212,20 +201,6 @@ export default function AuthorDashboardLayout({ children }) {
                   Profile
                 </span>
               </Link>
-            </li>
-            <li>
-              <button
-                onClick={handleSignOut}
-                className="w-full flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <FontAwesomeIcon
-                  icon={faSignOut}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
-                />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sign Out
-                </span>
-              </button>
             </li>
           </ul>
         </div>
