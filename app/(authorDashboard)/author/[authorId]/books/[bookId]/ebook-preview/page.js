@@ -29,11 +29,11 @@ const BookPage = () => {
   if (!book) return <p>Book not found.</p>;
 
   return (
-    <div className="p-4 lg:ml-64  lg:mt-24 ">
-      <div className="sm:flex space-x-4">
+    <div className="md:p-4 lg:ml-64  lg:mt-24">
+      <div className="sm:flex sm:space-x-4">
         <div className="">
           {book.cover_image_url && (
-            <>
+            <div className="">
               <h2 className="text-x2l font-bold">Ebook Details</h2>
               <img
                 className="h-60 w-64 object-cover rounded-lg mt-4"
@@ -41,11 +41,11 @@ const BookPage = () => {
                 alt={book.title}
               />
               <p className="mt-2">Book Type: Ebook</p>
-            </>
+            </div>
           )}
         </div>
         <div className="w-full mt-9">
-          <div className="flex justify-between items-center sm:max-w-[300px]  md:max-w-[600px] bg-lime-300">
+          <div className="flex justify-between items-center max-w-[450px] md:max-w-[600px]">
             <div>
               <p className="font-bold">{book?.title}</p>
               <p className="text-gray-600">
