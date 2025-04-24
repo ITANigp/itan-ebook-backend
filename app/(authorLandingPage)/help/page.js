@@ -32,7 +32,7 @@ const Help = () => {
       <HeroSection />
 
       <article className="w-full mt-10 px-4 xs:px-5 medium:px-6 large:px-8 xl:max-w-7xl xl:mx-auto">
-        <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30 shadow-sm p-6 xs:p-7 medium:p-8 large:p-10 xl:p-12">
+        <div className="rounded-lg overflow-hidden shadow-sm p-6 xs:p-7 medium:p-8 large:p-10 xl:p-12">
           <h3 className="text-xl xs:text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6 medium:mb-8 large:mb-10">
             Are you <span className="text-[#EF5353]">New?</span>{" "}
             <span className="block xs:inline mt-2 xs:mt-0">

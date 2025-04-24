@@ -32,10 +32,11 @@ const Footer = () => {
 
         <div className="relative z-10 w-full px-4 text-white mb-2 medium:mb-3">
           <h2 className="mx-auto text-center text-base xs:text-lg medium:text-xl large:text-2xl xl:text-3xl font-semibold">
-            Get in touch with us
+            Stay In The Know
           </h2>
           <p className="mx-auto text-center text-xs xs:text-sm medium:text-base mt-1 large:text-xl xl:text-xl">
-            Subscribe to our daily newsletter and be updated with itan
+            Subscribe to our newsletter and receive IGP updates and special
+            offers
           </p>
         </div>
 
@@ -55,13 +56,13 @@ const Footer = () => {
         <div className="mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 pt-6 medium:pt-8">
           <Link href="/">
             <img
-              src="/images/logo.png"
+              src="/images/logo.svg"
               alt="logo"
               className="h-6 w-9 xs:h-7 xs:w-10 medium:h-8 medium:w-12"
             />
           </Link>
         </div>
-        
+
         {/* This entire section is hidden on mobile, visible only on large/xl screens */}
         <div className="hidden large:block xl:block text-white">
           <div className="flex flex-col medium:flex-col">
@@ -90,7 +91,7 @@ const Footer = () => {
                   Services
                 </p>
                 <p className="mb-2 xl:mb-3 text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
-                  How it works
+                  Help center
                 </p>
                 <p className="mb-2 xl:mb-3 text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
                   Testimonial
@@ -119,22 +120,18 @@ const Footer = () => {
                   About
                 </h3>
                 <p className="mb-2 xl:mb-3 text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
-                  Contact
-                </p>
-                <p className="mb-2 xl:mb-3 text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
-                  About
-                </p>
+                  Find out more
+                </p>               
               </div>
 
-              {/* Contact section */}
+              {/* Blog section */}
               <div className="col-span-1">
                 <h3 className="text-xl xl:text-2xl font-semibold mb-4">
-                  Contact
+                  Blog
                 </h3>
                 <p className="mb-2 xl:mb-3 text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
                   Contact
-                </p>
-                <p className="mb-2 xl:mb-3 text-base">234-8161-7963-71</p>
+                </p>                
               </div>
             </div>
 
@@ -203,12 +200,11 @@ const Footer = () => {
             {/* Contact - only on medium screens */}
             <div className="hidden medium:block col-span-1">
               <h3 className="text-base xs:text-lg font-semibold mb-2">
-                Contact
+                Blog
               </h3>
               <p className="mb-1 text-sm medium:text-base hover:text-[#EF5353] cursor-pointer transition-colors duration-200">
-                Contact
-              </p>
-              <p className="mb-1 text-sm medium:text-base">234-8161-7963-71</p>
+                Content policy
+              </p>              
             </div>
           </div>
 
@@ -242,7 +238,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        
+
         {/* Terms and Policy */}
         <div className="text-white flex flex-wrap items-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-6 medium:mt-8 text-xs xs:text-sm medium:text-base">
           <p className="mr-4 hover:text-[#EF5353] cursor-pointer">
