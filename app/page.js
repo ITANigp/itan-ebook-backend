@@ -1,9 +1,5 @@
 "use client";
 import React from "react";
-<<<<<<< HEAD
-import HeroSection from "@/components/HeroSection";
-=======
->>>>>>> feature/consume-author-api
 import Image from "next/image";
 
 import  HeroSection from "@/components/HeroSection"
