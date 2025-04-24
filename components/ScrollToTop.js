@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export default function ScrollToTop() {
+export default function ScrollToTop({ styles }) {
   const [isVisible, setIsVisible] = useState(false);
 
   // Show button when page is scrolled down
@@ -32,7 +32,7 @@ export default function ScrollToTop() {
   };
 
   return (
-    <AnimatePresence>
+    <AnimatePresence className={styles}>
       {isVisible && (
         <motion.button
           onClick={scrollToTop}
