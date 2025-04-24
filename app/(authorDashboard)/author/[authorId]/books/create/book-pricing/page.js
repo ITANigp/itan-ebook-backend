@@ -161,19 +161,21 @@ export default function BookPricing() {
   };
 
   return (
-    <div>
-      <h3 className="font-bold text-lg mt-5">Price</h3>
-      <p className="my-1">Enter the book price</p>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={formData.ebook_price || ""}
-          onChange={(e) => updateFormData({ ebook_price: e.target.value })}
-          className="border border-gray-600 rounded-md w-72 sm:w-96 h-9 px-3"
-          placeholder="Ebook Price"
-        />
+    <>
+    {/* // <div className="w-full flex justify-center">
+    //   <div className="w-full max-w-[800px]"> */}
+        <h3 className="font-bold text-lg mt-5">Price</h3>
+        <p className="my-1">Enter the book price</p>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            value={formData.ebook_price || ""}
+            onChange={(e) => updateFormData({ ebook_price: e.target.value })}
+            className="border border-gray-600 rounded-md w-full max-w-96 h-9 px-3"
+            placeholder="Ebook Price"
+          />
 
-        {/* Account Details and other fields
+          {/* Account Details and other fields
         <h3 className="font-bold text-lg mt-4 mb-1">Account Details</h3>
         <input
           type="text"
@@ -194,99 +196,101 @@ export default function BookPricing() {
           placeholder="Account Name"
         /> */}
 
-        {/* Terms and Conditions */}
-        <h3 className="font-bold text-lg mt-5">Terms and Conditions</h3>
-        <p className="text-sm sm:w-[700px] w-72">
-          By using itan, you agree to these terms. Use the service legally.
-          You're responsible for your content. We provide the service "as is"
-          and aren't liable for damages. We may update these terms; continued
-          use means acceptance.
-        </p>
-        <p className="mt-4 font-bold">I Agree</p>
-        <div className="flex flex-col space-y-2 mt-3">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="radio"
-              name="terms_and_conditions"
-              value="true"
-              checked={formData.terms_and_conditions === true}
-              onChange={() => updateFormData({ terms_and_conditions: true })}
-              className="hidden"
-            />
-            <div
-              className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-                formData.terms_and_conditions === true
-                  ? "bg-blue-500"
-                  : "bg-white"
-              }`}
-            >
-              {formData.terms_and_conditions === true && (
-                <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-              )}
-            </div>
-            <span className="text-gray-700">Yes</span>
-          </label>
+          {/* Terms and Conditions */}
+          <h3 className="font-bold text-lg mt-5">Terms and Conditions</h3>
+          <p className="text-sm max-w-[700px] w-full">
+            By using itan, you agree to these terms. Use the service legally.
+            You're responsible for your content. We provide the service "as is"
+            and aren't liable for damages. We may update these terms; continued
+            use means acceptance.
+          </p>
+          <p className="mt-4 font-bold">I Agree</p>
+          <div className="flex flex-col space-y-2 mt-3">
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                name="terms_and_conditions"
+                value="true"
+                checked={formData.terms_and_conditions === true}
+                onChange={() => updateFormData({ terms_and_conditions: true })}
+                className="hidden"
+              />
+              <div
+                className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+                  formData.terms_and_conditions === true
+                    ? "bg-blue-500"
+                    : "bg-white"
+                }`}
+              >
+                {formData.terms_and_conditions === true && (
+                  <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+                )}
+              </div>
+              <span className="text-gray-700">Yes</span>
+            </label>
 
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="radio"
-              name="terms_and_conditions"
-              value="false"
-              checked={formData.terms_and_conditions === false}
-              onChange={() => updateFormData({ terms_and_conditions: false })}
-              className="hidden"
-            />
-            <div
-              className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
-                formData.terms_and_conditions === false
-                  ? "bg-blue-500"
-                  : "bg-white"
-              }`}
-            >
-              {formData.terms_and_conditions === false && (
-                <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
-              )}
-            </div>
-            <span className="text-gray-700">No</span>
-          </label>
-        </div>
-
-        {/* Upload status indicators */}
-        {uploadProgress.ebook_file && (
-          <div className="mt-2">
-            E-book: {uploadProgress.ebook_file === "complete" ? "✅" : "⏳"}
+            <label className="flex items-center space-x-2 cursor-pointer">
+              <input
+                type="radio"
+                name="terms_and_conditions"
+                value="false"
+                checked={formData.terms_and_conditions === false}
+                onChange={() => updateFormData({ terms_and_conditions: false })}
+                className="hidden"
+              />
+              <div
+                className={`w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center ${
+                  formData.terms_and_conditions === false
+                    ? "bg-blue-500"
+                    : "bg-white"
+                }`}
+              >
+                {formData.terms_and_conditions === false && (
+                  <div className="w-2.5 h-2.5 bg-white rounded-full"></div>
+                )}
+              </div>
+              <span className="text-gray-700">No</span>
+            </label>
           </div>
-        )}
-        {uploadProgress.cover_image && (
-          <div className="mt-2">
-            Cover Image:{" "}
-            {uploadProgress.cover_image === "complete" ? "✅" : "⏳"}
-          </div>
-        )}
 
-        {/* Action Buttons */}
-        <div className="flex flex-col-reverse  sm:flex sm:justify-between mt-10 mb-10 md:flex-row">
-          <button
-            onClick={() =>
-              router.push(
-                `/author/${authorId}/books/create/book-content?id=${id}`
-              )
-            }
-            className="border border-[#E50913] px-5 py-2 rounded-md hover:bg-[#cd3f46] hover:text-white"
-            type="button"
-          >
-            Back to Content
-          </button>
-          <button
-            type="submit"
-            disabled={uploading}
-            className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md mb-3 sm:mb-0"
-          >
-            {uploading ? "Uploading..." : "Publish"}
-          </button>
-        </div>
-      </form>
-      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-    </div>
+          {/* Upload status indicators */}
+          {uploadProgress.ebook_file && (
+            <div className="mt-2">
+              E-book: {uploadProgress.ebook_file === "complete" ? "✅" : "⏳"}
+            </div>
+          )}
+          {uploadProgress.cover_image && (
+            <div className="mt-2">
+              Cover Image:{" "}
+              {uploadProgress.cover_image === "complete" ? "✅" : "⏳"}
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="flex flex-col-reverse sm:justify-between my-10 sm:flex-row">
+            <button
+              onClick={() =>
+                router.push(
+                  `/author/${authorId}/books/create/book-content?id=${id}`
+                )
+              }
+              className="border border-[#E50913] px-5 py-2 rounded-md hover:bg-[#cd3f46] hover:text-white"
+              type="button"
+            >
+              Back to Content
+            </button>
+            <button
+              type="submit"
+              disabled={uploading}
+              className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md mb-3 sm:mb-0"
+            >
+              {uploading ? "Uploading..." : "Publish"}
+            </button>
+          </div>
+        </form>
+        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+      {/* </div>
+    </div> */}
+    </>
   );
 }

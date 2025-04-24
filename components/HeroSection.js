@@ -3,6 +3,7 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
+import Link from "next/link";
 
 const HeroSection = () => {
   const pathname = usePathname();

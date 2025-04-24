@@ -230,20 +230,24 @@ const TopNav = ({ styles }) => {
               </div>
 
               <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <LandingPgBtn
-                  variant="outlined"
-                  className="w-full py-3"
-                  onClick={toggleMenu}
-                >
-                  Sign In
-                </LandingPgBtn>
-                <LandingPgBtn
-                  variant="filled"
-                  className="w-full py-3"
-                  onClick={toggleMenu}
-                >
-                  Join Itan
-                </LandingPgBtn>
+                <Link href="/author/sign_in">
+                  <LandingPgBtn
+                    variant="outlined"
+                    className="w-full py-3"
+                    onClick={toggleMenu}
+                  >
+                    Sign In
+                  </LandingPgBtn>
+                </Link>
+                <Link href="/author/sign_up">
+                  <LandingPgBtn
+                    variant="filled"
+                    className="w-full py-3"
+                    onClick={toggleMenu}
+                  >
+                    Join Itan
+                  </LandingPgBtn>
+                </Link>
               </motion.div>
             </motion.div>
           </>

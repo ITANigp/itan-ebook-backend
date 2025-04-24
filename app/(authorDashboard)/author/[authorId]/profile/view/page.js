@@ -23,38 +23,49 @@ export default function AuthorProfilePage() {
   }, []);
 
   if (error) {
-    return <div className="text-red-600">{error}</div>;
+    return <div className="text-red-600 text-center mt-6">{error}</div>;
   }
 
   if (!author) {
-    return <div>Loading author profile...</div>;
+    return (
+      <div className="text-center mt-6 text-gray-500">
+        Loading author profile...
+      </div>
+    );
   }
 
   return (
-    <div className="p-6 max-w-xl mx-auto bg-white shadow-md rounded">
-      <h1 className="text-2xl font-bold mb-4">Author Profile</h1>
-      <img
-        src={author.author_profile_image_url}
-        className="h-9 w-9 rounded-full"
-      />
-      <p>
-        <strong>First Name:</strong> {author.first_name}
-      </p>
-      <p>
-        <strong>Last Name:</strong> {author.last_name}
-      </p>
-      <p>
-        <strong>Bio:</strong> {author.bio}
-      </p>
-      <p>
-        <strong>Phone:</strong> {author.phone_number}
-      </p>
-      <p>
-        <strong>Country:</strong> {author.country}
-      </p>
-      <p>
-        <strong>Location:</strong> {author.location}
-      </p>
+    <div
+      className="p-6 mx-auto bg-white rounded-2xl shadow-md mt-10 border my-8 max-w-4xl lg:ml-72 lg:mr-8 lg:mt-24 container"
+    >
+      <div className="flex items-center space-x-4 mb-6">
+        <img
+          src={author.author_profile_image_url}
+          alt="Author"
+          className="w-24 h-24 rounded-full object-cover shadow"
+        />
+        <div>
+          <h1 className="text-3xl font-semibold text-gray-800">
+            {author.first_name} {author.last_name}
+          </h1>
+          <p className="text-gray-500">{author.bio}</p>
+        </div>
+      </div>
+
+      <div className="space-y-3 text-gray-700">
+        <p>
+          <span className="font-medium text-gray-800">Phone:</span>{" "}
+          {author.phone_number}
+        </p>
+        <p>
+          <span className="font-medium text-gray-800">Country:</span>{" "}
+          {author.country}
+        </p>
+        <p>
+          <span className="font-medium text-gray-800">Location:</span>{" "}
+          {author.location}
+        </p>
+      </div>
     </div>
   );
 }

@@ -6,8 +6,10 @@ import { useRouter } from "next/navigation";
 import { registerAuthor } from "@/utils/api";
 
 const SignUp = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [password_confirmation, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -18,7 +20,12 @@ const SignUp = () => {
     setMessage("");
 
     try {
-      const author = await registerAuthor(email, password);
+      const author = await registerAuthor(
+        name,
+        email,
+        password,
+        password_confirmation
+      );
       if (author?.data?.id) {
         setMessage("Registration successful! You can now log in.");
         router.push("/author/sign_in");
@@ -63,6 +70,24 @@ const SignUp = () => {
           <fieldset>
             <div className="mt-4">
               <label
+                htmlFor="name"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Name
+              </label>
+              <input
+                type="text"
+                id="name"
+                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+                placeholder="Enter Your Name"
+                required
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+
+            <div className="mt-4">
+              <label
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
@@ -93,6 +118,23 @@ const SignUp = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+
+            <div className="my-4">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                // id="password"
+                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+                required
+                value={password_confirmation}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </div>
 

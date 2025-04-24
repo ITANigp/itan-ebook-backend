@@ -13,6 +13,7 @@ const Home = () => {
       <section className="">
         <HeroSection />
         <FadeIn delay={0.4} direction="fade" distance={0} duration={1.2}>
+<<<<<<< HEAD
           <article className="w-full mt-6 medium:mt-8 large:mt-10 xl:max-w-7xl xl:mx-auto">
             <div className="relative h-auto min-h-[280px] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[#F6F6F6]">
               {/* Centered text with improved readability */}
@@ -24,6 +25,16 @@ const Home = () => {
                   duration={1.4}
                   className="w-full flex justify-center"
                 >
+=======
+          <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
+            <div className="relative h-[50vh] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
+              {/* Dark overlay to make background more visible */}
+              <div className="absolute inset-0 bg-[#FEE6E6] bg-opacity-40"></div>
+
+              {/* Centered text with light background for readability */}
+              <div className="flex items-center justify-center h-full relative z-10">
+                <FadeIn delay={0.6} direction="up" distance={15} duration={1.4}>
+>>>>>>> develop
                   <p
                     className="text-black text-center mx-auto w-full max-w-[340px] xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
           p-4 medium:p-5 large:p-8 xl:p-10 

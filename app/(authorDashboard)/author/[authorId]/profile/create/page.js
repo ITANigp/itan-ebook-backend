@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
+import Image from "next/image";
 import {
   createAuthorProfile,
   getAuthorProfile, 
@@ -130,93 +131,143 @@ export default function AuthorProfilePage() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>{editing ? "Edit Author's Profile" : "Create Author's Profile"}</h1>
+    <form
+      onSubmit={handleSubmit}
+      className="mx-4 my-8 max-w-4xl lg:ml-72 lg:mr-8 lg:mt-24 container"
+    >
+      <h1 className="text-2xl font-bold mb-6">
+        {editing ? "Edit Author's Profile" : "Create Author's Profile"}
+      </h1>
 
-      <label>
-        First Name:
-        <input
-          type="text"
-          value={profile.first_name || ""}
-          onChange={(e) =>
-            setProfile({ ...profile, first_name: e.target.value })
-          }
-          disabled={!editing}
-        />
-      </label>
-      <label>
-        Last Name:
-        <input
-          type="text"
-          value={profile.last_name || ""}
-          onChange={(e) =>
-            setProfile({ ...profile, last_name: e.target.value })
-          }
-          disabled={!editing}
-        />
-      </label>
-      <label>
-        Bio:
-        <textarea
-          value={profile.bio || ""}
-          onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
-          disabled={!editing}
-        />
-      </label>
-      <label>
-        Phone Number:
-        <input
-          type="text"
-          value={profile.phone_number || ""}
-          onChange={(e) =>
-            setProfile({ ...profile, phone_number: e.target.value })
-          }
-          disabled={!editing}
-        />
-      </label>
-      <label>
-        Country:
-        <input
-          type="text"
-          value={profile.country || ""}
-          onChange={(e) => setProfile({ ...profile, country: e.target.value })}
-          disabled={!editing}
-        />
-      </label>
-      <label>
-        Location:
-        <input
-          type="text"
-          value={profile.location || ""}
-          onChange={(e) => setProfile({ ...profile, location: e.target.value })}
-          disabled={!editing}
-        />
-      </label>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <label className="flex flex-col">
+          First Name:
+          <input
+            type="text"
+            className="mt-1 p-2 border rounded-md"
+            value={profile.first_name || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, first_name: e.target.value })
+            }
+            disabled={!editing}
+          />
+        </label>
 
-      <label>
-        Profile Image:
-        <input type="file" onChange={handleFileImage} disabled={!editing} />
-      </label>
+        <label className="flex flex-col">
+          Last Name:
+          <input
+            type="text"
+            className="mt-1 p-2 border rounded-md"
+            value={profile.last_name || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, last_name: e.target.value })
+            }
+            disabled={!editing}
+          />
+        </label>
+
+        <label className="flex flex-col md:col-span-2">
+          Bio:
+          <textarea
+            className="mt-1 p-2 border rounded-md"
+            value={profile.bio || ""}
+            onChange={(e) => setProfile({ ...profile, bio: e.target.value })}
+            disabled={!editing}
+          />
+        </label>
+
+        <label className="flex flex-col">
+          Phone Number:
+          <input
+            type="text"
+            className="mt-1 p-2 border rounded-md"
+            value={profile.phone_number || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, phone_number: e.target.value })
+            }
+            disabled={!editing}
+          />
+        </label>
+
+        <label className="flex flex-col">
+          Country:
+          <input
+            type="text"
+            className="mt-1 p-2 border rounded-md"
+            value={profile.country || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, country: e.target.value })
+            }
+            disabled={!editing}
+          />
+        </label>
+
+        <label className="flex flex-col md:col-span-2">
+          Location:
+          <input
+            type="text"
+            className="mt-1 p-2 border rounded-md"
+            value={profile.location || ""}
+            onChange={(e) =>
+              setProfile({ ...profile, location: e.target.value })
+            }
+            disabled={!editing}
+          />
+        </label>
+
+        <label className="flex flex-col md:col-span-2">
+          Profile Image:
+          <input
+            type="file"
+            className="mt-1"
+            onChange={handleFileImage}
+            disabled={!editing}
+          />
+        </label>
+      </div>
 
       {profile.author_profile_image_url && !editing && (
-        <div>
-          <h3>Current Profile Image</h3>
+        <div className="mt-6">
+          <h3 className="font-semibold mb-2">Current Profile Image</h3>
           <Image
             src={profile.author_profile_image_url}
             alt="Author Profile"
             width={100}
             height={100}
+            className="rounded-full border shadow"
+            priority
           />
         </div>
       )}
 
-      <button type="submit">{editing ? "Save Changes" : "Submit"}</button>
-
-      {!editing && (
-        <button type="button" onClick={handleEditClick}>
-          Edit Profile
+      <div className="mt-6 flex gap-4">
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+        >
+          {editing ? "Save Changes" : "Submit"}
         </button>
-      )}
+
+        {!editing && (
+          <button
+            type="button"
+            onClick={handleEditClick}
+            className="px-4 py-2 bg-gray-400 text-white rounded-md hover:bg-gray-500 transition"
+          >
+            Edit Profile
+          </button>
+        )}
+      </div>
     </form>
   );
 }
+
+// import CreateProfileModal from "@/components/CreateProfileModal"
+
+// const Test =()=> {
+//   return (
+//     <CreateProfileModal />
+//   )
+// }
+
+//  export default Test

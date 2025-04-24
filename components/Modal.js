@@ -5,7 +5,7 @@ const Modal = ({ isOpen, onClose}) => {
   if (!isOpen) return null; // Don't render if modal is closed
 
   return (
-    <div className=" ml-64 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className=" lg:ml-64 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className='w-96 bg-slate-200 rounded-md shadow-lg'>
         <div className='flex justify-between items-center h-8 bg-slate-300  rounded-t-md'>
             <p/>

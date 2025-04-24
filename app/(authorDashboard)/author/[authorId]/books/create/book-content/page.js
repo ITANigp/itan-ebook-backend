@@ -240,7 +240,7 @@ const BookContent = () => {
         className="h-[35px] w-72 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 
-      <div className="flex flex-col-reverse sm:justify-between mb-10 mt-24 md:flex-row">
+      <div className="flex flex-col-reverse sm:justify-between mb-10 mt-24 sm:flex-row">
         <button
           onClick={() =>
             router.push(

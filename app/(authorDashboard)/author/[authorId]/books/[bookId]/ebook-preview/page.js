@@ -29,30 +29,39 @@ const BookPage = () => {
   if (!book) return <p>Book not found.</p>;
 
   return (
-    <div className="container mx-auto p-4 ml-72 mr-8  mt-24 ">
-      <h1>
-        {book.cover_image_url && (
-          <img
-            className="h-60 w-64 object-cover rounded-lg mt-4"
-            src={book?.cover_image_url}
-            alt={book.title}
-          />
-        )}
-        Title: <span className="font-bold">{book?.title}</span>
-      </h1>
-      <p className="text-gray-600">Ebook Price: {book?.ebook_price}</p>
-      <p className="text-gray-600">ISBN: {book?.book_isbn}</p>
-      <p className="mt-4">
-        Description: {book?.description || "No description available."}
-      </p>
-      {console.log(book.ebook_file_url)}
-      <Link
-        href={`${book.ebook_file_url}`}
-        target="_blank"
-        className="bg-blue-500 text-white px-4 py-2 mt-2 rounded hover:bg-blue-300"
-      >
-        Read
-      </Link>
+    <div className="md:p-4 lg:ml-64  lg:mt-24">
+      <div className="sm:flex sm:space-x-4">
+        <div className="">
+          {book.cover_image_url && (
+            <div className="">
+              <h2 className="text-x2l font-bold">Ebook Details</h2>
+              <img
+                className="h-60 w-64 object-cover rounded-lg mt-4"
+                src={book?.cover_image_url}
+                alt={book.title}
+              />
+              <p className="mt-2">Book Type: Ebook</p>
+            </div>
+          )}
+        </div>
+        <div className="w-full mt-9">
+          <div className="flex justify-between items-center max-w-[450px] md:max-w-[600px]">
+            <div>
+              <p className="font-bold">{book?.title}</p>
+              <p className="text-gray-600">
+                by:{" "}
+                <span className="font-bold">
+                  {book?.author_name || "Author's Name"}
+                </span>
+              </p>
+            </div>
+            <p className="text-2xl font-bold">${book?.ebook_price}</p>
+          </div>
+          <p className="mt-4">
+            {book?.description || "No description available."}
+          </p>
+        </div>
+      </div>
     </div>
   );
 };

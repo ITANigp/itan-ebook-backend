@@ -28,7 +28,7 @@ export default function AuthorBooks() {
 
   useEffect(() => {
     api
-      .get("/books/")
+      .get("/books/my_books")
       .then((response) => {
         console.log("Fetch All Books: ", response.data);
         if (Array.isArray(response.data.data)) {
@@ -92,7 +92,7 @@ export default function AuthorBooks() {
   }
 
   return (
-    <section className="sm:ml-72 sm:mr-8 sm:mt-24 mb-8">
+    <section className="lg:ml-72 sm:mr-8 sm:mt-24 mb-8 lg:container lg:mx-auto">
       {books.length === 0 ? (
         <p>No books available.</p>
       ) : (

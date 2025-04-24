@@ -10,16 +10,14 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 
-const Footer = () => {
+const Footer = ({ styles }) => {
   const pathname = usePathname();
 
   const authorPages =
     pathname.startsWith("/author") || pathname.startsWith("/dashboard");
 
   return (
-    <footer
-      className={`${authorPages ? "hidden" : ""} mt-6 medium:mt-8 large:mt-10 xl:mt-0`}
-    >
+    <footer className={`${styles} mt-6 medium:mt-8 large:mt-10 xl:mt-0`}>
       <section className="relative z-30 h-[150px] xs:h-[170px] medium:h-[200px] large:h-[220px] xl:h-[250px] flex flex-col items-center justify-center text-center">
         {/* Background image */}
         <div
@@ -138,25 +136,37 @@ const Footer = () => {
             {/* Social media icons */}
             <div className="mx-16 xl:mx-20 mt-8 xl:mt-10">
               <div className="flex justify-between w-52 xl:w-60">
-                <Link href="#">
+                <Link href="#" target="_blank" rel="noopener noreferrer">
                   <FontAwesomeIcon
                     icon={faLinkedinIn}
                     className="w-5 h-7 xl:w-6 xl:h-8 p-2.5 xl:p-3 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                   />
                 </Link>
-                <Link href="https://x.com/ItanGlobal">
+                <Link
+                  href="https://x.com/ItanGlobal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FontAwesomeIcon
                     icon={faXTwitter}
                     className="w-5 h-7 xl:w-6 xl:h-8 p-2.5 xl:p-3 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                   />
                 </Link>
-                <Link href="https://web.facebook.com/itanglobalpublishing/">
+                <Link
+                  href="https://web.facebook.com/itanglobalpublishing/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FontAwesomeIcon
                     icon={faFacebookF}
                     className="w-5 h-7 xl:w-6 xl:h-8 p-2.5 xl:p-3 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                   />
                 </Link>
-                <Link href="https://www.instagram.com/itanglobalpublishing">
+                <Link
+                  href="https://www.instagram.com/itanglobalpublishing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   <FontAwesomeIcon
                     icon={faInstagram}
                     className="w-5 h-7 xl:w-6 xl:h-8 p-2.5 xl:p-3 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
@@ -211,25 +221,37 @@ const Footer = () => {
           {/* Social media icons - mobile version */}
           <div className="mx-4 xs:mx-5 medium:mx-10 mt-8 medium:mt-6">
             <div className="flex justify-between w-36 xs:w-40 medium:w-44">
-              <Link href="#">
+              <Link href="#" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon
                   icon={faLinkedinIn}
                   className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                 />
               </Link>
-              <Link href="https://x.com/ItanGlobal">
+              <Link
+                href="https://x.com/ItanGlobal"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon
                   icon={faXTwitter}
                   className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                 />
               </Link>
-              <Link href="https://web.facebook.com/itanglobalpublishing/">
+              <Link
+                href="https://web.facebook.com/itanglobalpublishing/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon
                   icon={faFacebookF}
                   className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                 />
               </Link>
-              <Link href="https://www.instagram.com/itanglobalpublishing">
+              <Link
+                href="https://www.instagram.com/itanglobalpublishing"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <FontAwesomeIcon
                   icon={faInstagram}
                   className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
@@ -241,10 +263,22 @@ const Footer = () => {
 
         {/* Terms and Policy */}
         <div className="text-white flex flex-wrap items-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-6 medium:mt-8 text-xs xs:text-sm medium:text-base">
-          <p className="mr-4 hover:text-[#EF5353] cursor-pointer">
+          <Link
+            className="mr-4 hover:text-[#EF5353] cursor-pointer"
+            href="/terms&conditions"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Terms & Conditions
-          </p>
-          <p className="hover:text-[#EF5353] cursor-pointer">Privacy Policy</p>
+          </Link>
+          <Link
+            className="hover:text-[#EF5353] cursor-pointer"
+            href="/privacy-policies"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Privacy Policy
+          </Link>
         </div>
         {/* Separator line */}
         <div className="mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-4 medium:mt-5 large:mt-6">

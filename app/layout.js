@@ -22,16 +22,21 @@ export default function RootLayout({ children }) {
   const isRegPage = isSignIn || isSignUp
 
   const authorPages =
+<<<<<<< HEAD
     pathname.startsWith("/author") ||
     pathname.startsWith("/dashboard");
 
   const hideIfAuthorPage = authorPages ? "hidden" : ""
 
 
+=======
+    pathname.startsWith("/author") || pathname.startsWith("/dashboard");
+>>>>>>> develop
 
   return (
     <html lang="en">
       <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
+<<<<<<< HEAD
         <FormProvider>
           <Toaster />
           <main className="w-full min-h-screen">
@@ -50,6 +55,23 @@ export default function RootLayout({ children }) {
             </div>
           </main>
         </FormProvider>
+=======
+        <main className="w-full min-h-screen">
+          <div className={`${authorPages ? "hidden" : ""}`}>
+            <AnimatedLayout>
+              <div className="">
+                <TopNav />
+                <SubMenuNav />
+                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                  {children}
+                </div>
+                <Footer />
+                <ScrollToTop />
+              </div>
+            </AnimatedLayout>
+          </div>
+        </main>
+>>>>>>> develop
       </body>
     </html>
   );

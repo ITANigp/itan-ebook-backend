@@ -21,6 +21,7 @@ const SignIn = () => {
 
     try {
       const author = await signInAuthor(email, password);
+      console.log("Author Sign-in Data: ", author)
 
       if (author?.data?.id) {
         localStorage.setItem("authorInfo", JSON.stringify(author.data));

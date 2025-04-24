@@ -15,7 +15,6 @@ import {
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { signOutAuthor } from "@/utils/api";
 
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -58,19 +57,9 @@ export default function AuthorDashboardLayout({ children }) {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleSignOut = async () => {
-    try {
-      await signOutAuthor();
-      alert("Logged out successfully!");
-      window.location.href = "/";
-    } catch (error) {
-      alert("Failed to log out. Please try again.");
-    }
-  };
-
   return (
-    <>
-      <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+    <div className="">
+      <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
         <FontAwesomeIcon
           icon={isSidebarOpen ? faTimes : faBars}
           size="sm"
@@ -79,7 +68,7 @@ export default function AuthorDashboardLayout({ children }) {
       </button>
 
       <div
-        className={`sm:flex hidden items-center justify-between ${
+        className={`lg:flex hidden items-center justify-between ${
           isRegPage ? "hidden" : "fixed top-0 left-0"
         } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
@@ -99,11 +88,11 @@ export default function AuthorDashboardLayout({ children }) {
         ref={sidebarRef}
         className={`fixed top-0 left-0 z-40 w-64 h-full bg-gray-900 text-white transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } sm:translate-x-0 sm:block`}
+        } lg:translate-x-0 sm:block`}
         aria-label="Sidebar"
       >
         <div className="w-full relative">
-          <button onClick={toggleSidebar} className="sm:hidden text-gray-700">
+          <button onClick={toggleSidebar} className="lg:hidden text-gray-700">
             <FontAwesomeIcon
               icon={isSidebarOpen ? faTimes : faBars}
               className="hover:bg-red-100 hover:border-2 w-4 h-4 rounded-full hover:border-red-600 text-red-600 absolute right-3 top-2"
@@ -116,7 +105,7 @@ export default function AuthorDashboardLayout({ children }) {
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
-              <a
+              <Link
                 href={`/dashboard/author/${authorId}`}
                 className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -129,10 +118,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Overview
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={`/author/${authorId}/books/create/book-details`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -145,10 +134,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Make an Upload
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href={`/author/${authorId}/books`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -169,10 +158,10 @@ export default function AuthorDashboardLayout({ children }) {
                 >
                   Book Shelf
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -183,10 +172,10 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Sales
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
+              <Link
                 href="#"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -197,11 +186,11 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Help
                 </span>
-              </a>
+              </Link>
             </li>
             <li>
-              <a
-                href="#"
+              <Link
+                href="/author/1/profile"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
@@ -211,26 +200,12 @@ export default function AuthorDashboardLayout({ children }) {
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
                   Profile
                 </span>
-              </a>
-            </li>
-            <li>
-              <button
-                onClick={handleSignOut}
-                className="w-full flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <FontAwesomeIcon
-                  icon={faSignOut}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
-                />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sign Out
-                </span>
-              </button>
+              </Link>
             </li>
           </ul>
         </div>
       </aside>
       {children}
-    </>
+    </div>
   );
 }
