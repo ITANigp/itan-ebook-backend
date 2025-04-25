@@ -230,24 +230,21 @@ const TopNav = ({ styles }) => {
               </div>
 
               <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <Link href="/author/sign_in">
-                  <LandingPgBtn
-                    variant="outlined"
-                    className="w-full py-3"
-                    onClick={toggleMenu}
-                  >
-                    Sign In
-                  </LandingPgBtn>
-                </Link>
-                <Link href="/author/sign_up">
-                  <LandingPgBtn
-                    variant="filled"
-                    className="w-full py-3"
-                    onClick={toggleMenu}
-                  >
-                    Join Itan
-                  </LandingPgBtn>
-                </Link>
+                <LandingPgBtn
+                  variant="outlined"
+                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
+                  onClick={toggleMenu}
+                >
+                  Sign In
+                </LandingPgBtn>
+
+                <LandingPgBtn
+                  variant="filled"
+                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
+                  onClick={toggleMenu}
+                >
+                  Create Account
+                </LandingPgBtn>
               </motion.div>
             </motion.div>
           </>
