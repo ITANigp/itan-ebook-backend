@@ -112,7 +112,7 @@ const SignIn = () => {
               {loading ? "Logging in..." : "Log In"}
             </button>
             <Link
-              href="#"
+              href="/auth/forget-password"
               className="absolute right-0 -bottom-6 text-sm hover:text-blue-700"
             >
               Forgot Password?

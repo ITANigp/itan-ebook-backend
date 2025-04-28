@@ -28,8 +28,13 @@ export default function RootLayout({ children }) {
   const privacyPages =
     pathname.startsWith("/privacy-policies") ||
     pathname.startsWith("/terms&conditions");
+
+  const PasswordPage =
+    pathname.endsWith("/auth/forget-password") ||
+    pathname.endsWith("/reset-password");
     
-    const shouldHideHeader = authorPages || privacyPages ? "hidden" : "";
+    const shouldHideHeader =
+      authorPages || privacyPages || PasswordPage ? "hidden" : "";
 
     const ProfilePage = pathname.endsWith('/profile')
     const ProfileBackground = ProfilePage ? "bg-gray-100" : ""
