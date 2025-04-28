@@ -44,23 +44,21 @@ export default function RootLayout({ children }) {
 
   return (
     <html lang="en">
-      <body
-        className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}
-      >
+      <body className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
         <FormProvider>
           <Toaster />
           <main className="w-full min-h-screen">
             <div>
               {/* <AnimatedLayout> */}
-              <div className="">
-                <TopNav styles={shouldHideHeader} />
-                <SubMenuNav styles={shouldHideHeader} />
-                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-                  {children}
+                <div className="">
+                  <TopNav styles={shouldHideHeader} />
+                  <SubMenuNav styles={shouldHideHeader} />
+                  <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                    {children}
+                  </div>
+                  <Footer />
+                  {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
                 </div>
-                <Footer styles={shouldHideHeader} />
-                {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
-              </div>
               {/* </AnimatedLayout> */}
             </div>
           </main>
@@ -69,4 +67,3 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
-

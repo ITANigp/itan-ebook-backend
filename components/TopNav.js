@@ -106,9 +106,11 @@ const TopNav = ({ styles }) => {
       <nav
         className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}
       >
-        <div className="flex gap-2 items-center">
+        {/* Left section - force it to take most of the space on larger screens */}
+        <div className="flex items-center justify-between w-full medium:w-auto medium:justify-start medium:gap-4 large:flex-grow large:mr-8 xl:flex-grow xl:mr-10">
+          {/* Hamburger menu - mobile only */}
           <button
-            className="relative block medium:hidden large:hidden xl:hidden z-30 p-1"
+            className="block medium:hidden large:hidden xl:hidden z-30 p-1"
             onClick={toggleMenu}
             aria-label={menu ? "Close menu" : "Open menu"}
           >
@@ -119,38 +121,39 @@ const TopNav = ({ styles }) => {
             />
           </button>
 
-          <Image
-            src="/images/logo.png"
-            alt="logo"
-            width={30}
-            height={20}
-            priority={true}
-            quality={85}
-            className="w-14 h-10 medium:w-10 medium:h-8"
-          />
-          <h1 className="text-white hidden large:block large:text-2xl xl:block xl:text-4xl xl:font-semibold">
-            Global Publishing
-          </h1>
+          {/* Logo container with heading as a group */}
+          <div className="flex items-center">
+            <Image
+              src="/images/logo.svg"
+              alt="logo"
+              width={30}
+              height={20}
+              priority={true}
+              quality={85}
+              className="w-14 h-10 medium:w-10 medium:h-8"
+            />
+
+            {/* Heading - directly after logo with proper spacing */}
+            <h1 className="text-white hidden large:block large:ml-5 large:text-2xl xl:block xl:ml-6 xl:text-4xl xl:font-semibold">
+              Global Publishing
+            </h1>
+          </div>
         </div>
 
-        <nav className="flex gap-2.5">
-          <Link href="/author/sign_in">
-            <LandingPgBtn
-              variant="outlined"
-              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-            >
-              Sign In
-            </LandingPgBtn>
-          </Link>
-
-          <Link href="/author/sign_up">
-            <LandingPgBtn
-              variant="filled"
-              className="px-2 medium:px-3 medium:py-2 medium:text-base large:px-4 large:py-3 xl:px-5 xl:py-4"
-            >
-              Join Itan
-            </LandingPgBtn>
-          </Link>
+        {/* Right section - with improved button sizing */}
+        <nav className="flex gap-3 large:gap-4 xl:gap-5 large:flex-shrink-0 xl:flex-shrink-0">
+          <LandingPgBtn
+            variant="outlined"
+            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
+          >
+            Sign In
+          </LandingPgBtn>
+          <LandingPgBtn
+            variant="filled"
+            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
+          >
+            Create Account
+          </LandingPgBtn>
         </nav>
       </nav>
 
@@ -192,7 +195,7 @@ const TopNav = ({ styles }) => {
               <div className="mb-8">
                 <motion.div variants={itemVariants} className="mb-8">
                   <Image
-                    src="/images/logo.png"
+                    src="/images/logo.svg"
                     alt="logo"
                     width={40}
                     height={32}
@@ -227,24 +230,21 @@ const TopNav = ({ styles }) => {
               </div>
 
               <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <Link href="/author/sign_in">
-                  <LandingPgBtn
-                    variant="outlined"
-                    className="w-full py-3"
-                    onClick={toggleMenu}
-                  >
-                    Sign In
-                  </LandingPgBtn>
-                </Link>
-                <Link href="/author/sign_up">
-                  <LandingPgBtn
-                    variant="filled"
-                    className="w-full py-3"
-                    onClick={toggleMenu}
-                  >
-                    Join Itan
-                  </LandingPgBtn>
-                </Link>
+                <LandingPgBtn
+                  variant="outlined"
+                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
+                  onClick={toggleMenu}
+                >
+                  Sign In
+                </LandingPgBtn>
+
+                <LandingPgBtn
+                  variant="filled"
+                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
+                  onClick={toggleMenu}
+                >
+                  Create Account
+                </LandingPgBtn>
               </motion.div>
             </motion.div>
           </>

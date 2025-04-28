@@ -13,19 +13,22 @@ const Home = () => {
       <section className="">
         <HeroSection />
         <FadeIn delay={0.4} direction="fade" distance={0} duration={1.2}>
-          <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
-            <div className="relative h-[50vh] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[url('/images/placeholder.png')] bg-cover bg-center">
-              {/* Dark overlay to make background more visible */}
-              <div className="absolute inset-0 bg-[#FEE6E6] bg-opacity-40"></div>
-
-              {/* Centered text with light background for readability */}
-              <div className="flex items-center justify-center h-full relative z-10">
-                <FadeIn delay={0.6} direction="up" distance={15} duration={1.4}>
+          <article className="w-full mt-6 medium:mt-8 large:mt-10 xl:max-w-7xl xl:mx-auto">
+            <div className="relative h-auto min-h-[280px] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[#F6F6F6]">
+              {/* Centered text with improved readability */}
+              <div className="flex items-center justify-center h-full w-full px-6 py-8 medium:px-8 large:px-10 relative z-10">
+                <FadeIn
+                  delay={0.6}
+                  direction="up"
+                  distance={15}
+                  duration={1.4}
+                  className="w-full flex justify-center"
+                >
                   <p
-                    className="text-black text-center w-[90%] max-w-sm xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
-            p-4 xs:p-5 medium:p-6 large:p-8 xl:p-10 
-            font-medium text-lg xs:text-xl medium:text-2xl large:text-3xl xl:text-4xl 
-            leading-relaxed bg-white bg-opacity-80 rounded-md"
+                    className="text-black text-center mx-auto w-full max-w-[340px] xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
+          p-4 medium:p-5 large:p-8 xl:p-10 
+          font-semibold text-base xs:text-lg medium:text-2xl large:text-3xl xl:text-4xl 
+          leading-snug xs:leading-relaxed medium:leading-relaxed large:leading-relaxed xl:leading-relaxed"
                   >
                     ITAN makes self-publishing simple, allowing you to release
                     books in different formats and engage new readers worldwide.
@@ -56,11 +59,9 @@ const Home = () => {
                 staggerChildren={0.15}
               >
                 <h2 className="text-center large:text-start xl:text-start text-2xl font-bold large:text-4xl xl:text-5xl mt-6 large:mt-0 xl:mt-0">
-                  Let the World{" "}
-                  <span className="text-[#EF5353]">Read and Listen</span> to
-                  your Unique Story
+                  Let the World Read and Listen to your Unique Story
                 </h2>
-                <h2 className="font-semibold text-2xl mt-6 medium:px-4 large:px-0 large:text-3xl xl:text-4xl xl:mt-8">
+                <h2 className="font-semibold text-2xl mt-6 medium:px-4 large:px-0 large:text-3xl xl:text-3xl xl:mt-8">
                   Make your book the next bestseller
                 </h2>
                 <p className="mt-6 text-gray-600 medium:px-4 large:px-0 large:text-2xl xl:text-3xl">
@@ -134,8 +135,7 @@ const Home = () => {
           <div className="bg-[#E7E7E7] mt-8 p-4 large:p-8 xl:p-10 large:mt-12 xl:mt-16 rounded-lg">
             <FadeIn delay={0.1} direction="up" distance={25}>
               <h3 className="text-2xl font-bold large:text-3xl xl:text-4xl">
-                Increase your <span className="text-[#EF5353]">Earnings</span>{" "}
-                with ITAN – Monetize your Works
+                Increase your Earnings with ITAN – Monetize your Works
               </h3>
             </FadeIn>
 
@@ -224,10 +224,9 @@ const Home = () => {
           <div className="xl:max-w-7xl xl:mx-auto">
             <div>
               <p className="mb-8 text-center text-2xl font-semibold mt-6 medium:text-3xl medium:mt-10 large:text-3xl xl:text-4xl">
-                Publish a variety of{" "}
-                <span className="text-[#EF5353]">Genres</span>
+                Publish a variety of Genres
               </p>
-              <div className="grid grid-cols-2 xs:grid-cols-2 medium:grid-cols-3 large:grid-cols-6 xl:grid-cols-6 gap-6 medium:gap-4 large:gap-[3px] xl:gap-[3px] p-4 bg-[#FEE6E6]">
+              <div className="grid grid-cols-2 xs:grid-cols-2 medium:grid-cols-3 large:grid-cols-6 xl:grid-cols-6 gap-6 medium:gap-4 large:gap-[3px] xl:gap-[3px] p-4">
                 <FadeIn direction="up" delay={0.1} distance={30}>
                   <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
                     <div className="w-full aspect-square flex items-center justify-center mb-3">

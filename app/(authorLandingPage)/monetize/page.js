@@ -10,7 +10,7 @@ const Monetize = () => {
 
       <FadeIn delay={0.1} direction="fade" distance={0} duration={1.0}>
         <article className="w-full mt-10 xl:max-w-7xl xl:mx-auto">
-          <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30">
+          <div className="rounded-lg overflow-hidden bg-opacity-30">
             <div className="flex flex-col large:flex-row xl:flex-row">
               {/* Left Side: Text and List */}
               <div className="w-full large:w-1/2 xl:w-1/2 p-6 medium:p-8 large:p-10 xl:p-12 flex items-center">
@@ -104,7 +104,7 @@ const Monetize = () => {
               {/* Right Side: Image - No animation added to image as requested */}
               <div className="w-full large:w-1/2 xl:w-1/2 h-[40vh] medium:h-[45vh] large:h-auto xl:h-auto">
                 <Image
-                  src="/images/monetize.png"
+                  src="/images/happy-woman.png"
                   alt="monetize"
                   className="w-full h-full object-cover"
                   width={522}
@@ -170,8 +170,7 @@ const Monetize = () => {
         <div className="p-6 medium:p-8 large:p-10 xl:p-12 flex flex-col large:flex-row xl:flex-row gap-8 large:gap-12 xl:gap-16">
           <div className="w-full large:w-1/2 xl:w-1/2">
             <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
-              Get Paid for Every Page Read on{" "}
-              <span className="text-[#EF5353]">ITAN Unbound</span>
+              Get Paid for Every Page Read on ITAN Unbound
             </h3>
 
             <p className="text-lg medium:text-xl large:text-2xl text-gray-700 mb-4">
@@ -188,7 +187,7 @@ const Monetize = () => {
 
           <figure className="w-full large:w-1/2 xl:w-1/2 flex items-center justify-center">
             <Image
-              src="/images/graph.png"
+              src="/images/woman.png"
               alt="ITAN Unbound revenue graph"
               width={308}
               height={308}

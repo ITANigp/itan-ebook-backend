@@ -7,15 +7,22 @@ const LandingPgBtn = ({
   className = "",
   ...props
 }) => {
-  const baseStyles = "px-16 py-4 text-xl font-bold rounded-md max-sm:w-full";
+  const baseStyles =
+    "rounded-md font-semibold transition-colors duration-200 text-center whitespace-nowrap";
+
+  // Wider buttons to prevent text wrapping on "Create Account"
+  const sizeStyles =
+    "w-auto px-4 py-1 text-sm medium:px-5 medium:py-1.5 medium:text-sm large:px-6 large:py-1.5 large:text-base xl:px-7 xl:py-2 xl:text-base";
+
   const variants = {
-    outlined: "text-white border border-red-500 border-solid",
-    filled: "text-white bg-red-500",
+    outlined:
+      "text-white border border-red-500 border-solid hover:bg-red-500/10",
+    filled: "text-white bg-red-500 hover:bg-red-600",
   };
 
   return (
     <button
-      className={`${baseStyles} ${variants[variant]} ${className}`}
+      className={`${baseStyles} ${sizeStyles} ${variants[variant]} ${className}`}
       {...props}
     >
       {children}

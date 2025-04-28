@@ -10,7 +10,7 @@ const Publish = () => {
 
       <FadeIn delay={0.1} direction="fade" distance={0} duration={1.0}>
         <article className="w-full mt-10 px-4 medium:px-6 large:px-0 xl:max-w-7xl xl:mx-auto">
-          <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30 shadow-sm">
+          <div className="rounded-lg overflow-hidden bg-opacity-30 shadow-sm">
             <div className="flex flex-col large:flex-row xl:flex-row large:items-stretch xl:items-stretch">
               <div className="w-full large:w-1/2 xl:w-1/2 p-6 medium:p-8 large:p-10 xl:p-12 flex items-center">
                 <div className="w-full">
@@ -21,9 +21,7 @@ const Publish = () => {
                     duration={0.9}
                   >
                     <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6 large:mb-8 xl:mb-10 large:leading-tight xl:leading-tight">
-                      Start your{" "}
-                      <span className="text-[#EF5353]">publishing</span> journey
-                      with two easy steps
+                      Start your publishing journey with two easy steps
                     </h3>
                   </FadeIn>
 
@@ -130,8 +128,8 @@ const Publish = () => {
 
           <FadeIn delay={0.2} direction="fade" distance={0} duration={0.9}>
             <p className="my-3 xs:my-4 medium:my-5 text-sm xs:text-base medium:text-lg large:text-lg xl:text-xl text-gray-700">
-              You can publish your book as an ebook, an audiobook, or both, and
-              we'll make them available in Itan Global Stores.
+              You can self-publish your book as an ebook, an audiobook, or both,
+              and we'll make them available in Itan Global Stores.
             </p>
           </FadeIn>
 
@@ -283,7 +281,7 @@ const Publish = () => {
             {/* Image - kept exactly as is, no animation added */}
             <figure className="hidden large:flex xl:flex w-full large:w-1/2 xl:w-1/2 justify-center items-center">
               <Image
-                src="/images/digital-formats.png"
+                src="/images/yaga.png"
                 alt="Digital publishing formats"
                 width={584}
                 height={434}
@@ -315,8 +313,7 @@ const Publish = () => {
           <div className="w-full large:w-3/5 xl:w-3/5 large:pl-8 xl:pl-10">
             <FadeIn delay={0.1} direction="up" distance={15} duration={0.8}>
               <h2 className="text-xl xs:text-2xl medium:text-2xl large:text-3xl xl:text-4xl font-semibold mb-3 xs:mb-4 medium:mb-5 large:mb-6">
-                Enhance Your Book's Exposure -{" "}
-                <span className="text-[#EF5353]">Start Promoting</span>
+                Step 3: Promote Your Books - Make Them Visible
               </h2>
             </FadeIn>
 
@@ -341,8 +338,7 @@ const Publish = () => {
                     <rect width="12" height="12" fill="#D78585" />
                   </svg>
                   <span className="text-sm xs:text-base medium:text-lg large:text-lg xl:text-xl font-medium">
-                    Leverage Social Media by talking about your book and sharing
-                    the links.
+                    Promote your books by leveraging Social Media.
                   </span>
                 </li>
               </FadeIn>
@@ -378,8 +374,7 @@ const Publish = () => {
                     <rect width="12" height="12" fill="#D78585" />
                   </svg>
                   <span className="text-sm xs:text-base medium:text-lg large:text-lg xl:text-xl font-medium">
-                    Submit to Book review sites. Itan Book review service is
-                    coming soon.
+                    Submit to book review sites.
                   </span>
                 </li>
               </FadeIn>
@@ -397,9 +392,9 @@ const Publish = () => {
                     <rect width="12" height="12" fill="#D78585" />
                   </svg>
                   <span className="text-sm xs:text-base medium:text-lg large:text-lg xl:text-xl font-medium">
-                    Use SEO Strategies, keywords and tags; Optimize your book's
-                    description, title, and keywords for search engines to
-                    improve visibility and discoverability.
+                    Want more readers to find your book? Use SEO Techniques-
+                    Tweak your descriptions, keywords and tags to show up in
+                    search results.
                   </span>
                 </li>
               </FadeIn>
