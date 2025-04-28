@@ -50,15 +50,15 @@ export default function RootLayout({ children }) {
           <main className="w-full min-h-screen">
             <div>
               {/* <AnimatedLayout> */}
-                <div className="">
-                  <TopNav styles={shouldHideHeader} />
-                  <SubMenuNav styles={shouldHideHeader} />
-                  <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
-                    {children}
-                  </div>
-                  <Footer />
-                  {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
+              <div className="">
+                <TopNav styles={shouldHideHeader} />
+                <SubMenuNav styles={shouldHideHeader} />
+                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                  {children}
                 </div>
+                <Footer styles={shouldHideHeader} />
+                {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
+              </div>
               {/* </AnimatedLayout> */}
             </div>
           </main>

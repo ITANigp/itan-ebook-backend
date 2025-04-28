@@ -6,9 +6,7 @@ const SubMenuNav = ({ styles }) => {
 
   return (
     <div className={styles}>
-      <nav
-        className={`hidden sm:hidden medium:block large:block xl:block p-6 xl:pl-10 medium:pl-10 bg-zinc-300 max-md:p-5`}
-      >
+      <nav className="hidden sm:hidden medium:block large:block xl:block p-6 xl:pl-10 medium:pl-10 bg-zinc-300 max-md:p-5">
         <ul className="flex gap-10 items-center max-sm:flex-col max-sm:gap-2.5 max-sm:w-full">
           <li>
             <Link
@@ -17,9 +15,8 @@ const SubMenuNav = ({ styles }) => {
             >
               About
               <span
-                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 
-                ${pathname === "/" ? "w-full" : "w-0"}`}
-              ></span>
+                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 ${pathname === "/" ? "w-full" : "w-0"}`}
+              />
             </Link>
           </li>
           <li>
@@ -29,9 +26,8 @@ const SubMenuNav = ({ styles }) => {
             >
               Publish
               <span
-                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 
-                ${pathname === "/publish" ? "w-full" : "w-0"}`}
-              ></span>
+                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 ${pathname === "/publish" ? "w-full" : "w-0"}`}
+              />
             </Link>
           </li>
           <li>
@@ -41,9 +37,8 @@ const SubMenuNav = ({ styles }) => {
             >
               Monetize
               <span
-                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 
-                ${pathname === "/monetize" ? "w-full" : "w-0"}`}
-              ></span>
+                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 ${pathname === "/monetize" ? "w-full" : "w-0"}`}
+              />
             </Link>
           </li>
           <li>
@@ -53,9 +48,8 @@ const SubMenuNav = ({ styles }) => {
             >
               Help
               <span
-                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 
-                ${pathname === "/help" ? "w-full" : "w-0"}`}
-              ></span>
+                className={`absolute left-0 bottom-0 h-[3px] bg-[#EF5353] transition-all duration-300 ${pathname === "/help" ? "w-full" : "w-0"}`}
+              />
             </Link>
           </li>
         </ul>

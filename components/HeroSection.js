@@ -46,13 +46,17 @@ const HeroSection = () => {
 
             {/* Buttons - Only visible on large screens */}
             <div className="hidden large:flex xl:flex flex-row gap-3 mt-6">
-              <button className="w-[180px] px-0 py-2 text-base large:w-[180px] xl:w-[200px] xl:py-2.5 xl:text-lg font-semibold border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 rounded-md transition-colors duration-300 shadow-sm text-center">
-                Sign In
-              </button>
+              <Link href="/author/sign_in">
+                <button className="w-[180px] px-0 py-2 text-base large:w-[180px] xl:w-[200px] xl:py-2.5 xl:text-lg font-semibold border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 rounded-md transition-colors duration-300 shadow-sm text-center">
+                  Sign In
+                </button>
+              </Link>
 
-              <button className="w-[180px] px-0 py-2 text-base large:w-[180px] xl:w-[200px] xl:py-2.5 xl:text-lg font-semibold border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 rounded-md transition-colors duration-300 shadow-sm text-center">
-                Create Account
-              </button>
+              <Link href="/author/sign_up">
+                <button className="w-[180px] px-0 py-2 text-base large:w-[180px] xl:w-[200px] xl:py-2.5 xl:text-lg font-semibold border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 rounded-md transition-colors duration-300 shadow-sm text-center">
+                  Create Account
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -72,13 +76,17 @@ const HeroSection = () => {
 
         {/* Buttons - Only visible on mobile/medium screens */}
         <div className="mt-4 medium:mt-6 flex flex-col items-center gap-3 w-full large:hidden xl:hidden">
-          <button className="w-[170px] px-0 py-1.5 text-sm medium:w-[180px] medium:py-2 medium:text-base font-semibold border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 rounded-md transition-colors duration-300 shadow-sm text-center">
-            Sign In
-          </button>
+          <Link href="/author/sign_in">
+            <button className="w-[170px] px-0 py-1.5 text-sm medium:w-[180px] medium:py-2 medium:text-base font-semibold border-2 border-red-500 text-red-500 bg-white hover:bg-red-50 rounded-md transition-colors duration-300 shadow-sm text-center">
+              Sign In
+            </button>
+          </Link>
 
-          <button className="w-[170px] px-0 py-1.5 text-sm medium:w-[180px] medium:py-2 medium:text-base font-semibold border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 rounded-md transition-colors duration-300 shadow-sm text-center">
-            Create Account
-          </button>
+          <Link href="/author/sign_up">
+            <button className="w-[170px] px-0 py-1.5 text-sm medium:w-[180px] medium:py-2 medium:text-base font-semibold border-2 border-red-500 bg-red-500 text-white hover:bg-red-600 rounded-md transition-colors duration-300 shadow-sm text-center">
+              Create Account
+            </button>
+          </Link>
         </div>
       </section>
     </FadeIn>

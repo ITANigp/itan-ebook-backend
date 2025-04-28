@@ -142,18 +142,22 @@ const TopNav = ({ styles }) => {
 
         {/* Right section - with improved button sizing */}
         <nav className="flex gap-3 large:gap-4 xl:gap-5 large:flex-shrink-0 xl:flex-shrink-0">
-          <LandingPgBtn
-            variant="outlined"
-            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-          >
-            Sign In
-          </LandingPgBtn>
-          <LandingPgBtn
-            variant="filled"
-            className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-          >
-            Create Account
-          </LandingPgBtn>
+          <Link href="/author/sign_in">
+            <LandingPgBtn
+              variant="outlined"
+              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
+            >
+              Sign In
+            </LandingPgBtn>
+          </Link>
+          <Link href="/author/sign_up">
+            <LandingPgBtn
+              variant="filled"
+              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
+            >
+              Create Account
+            </LandingPgBtn>
+          </Link>
         </nav>
       </nav>
 
@@ -230,21 +234,25 @@ const TopNav = ({ styles }) => {
               </div>
 
               <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <LandingPgBtn
-                  variant="outlined"
-                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
-                  onClick={toggleMenu}
-                >
-                  Sign In
-                </LandingPgBtn>
+                <Link href="/author/sign_in">
+                  <LandingPgBtn
+                    variant="outlined"
+                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
+                    onClick={toggleMenu}
+                  >
+                    Sign In
+                  </LandingPgBtn>
+                </Link>
 
-                <LandingPgBtn
-                  variant="filled"
-                  className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
-                  onClick={toggleMenu}
-                >
-                  Create Account
-                </LandingPgBtn>
+                <Link href="/author/sign_up">
+                  <LandingPgBtn
+                    variant="filled"
+                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
+                    onClick={toggleMenu}
+                  >
+                    Create Account
+                  </LandingPgBtn>
+                </Link>
               </motion.div>
             </motion.div>
           </>
