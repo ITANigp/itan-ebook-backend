@@ -42,7 +42,7 @@ const SignUp = () => {
 
   return (
     <main className="w-full mb-9">
-      <section className="bg-white rounded-2xl p-5 md:p-10 my-24 md:w-[500px] mt-24 mx-10 sm:mx-24 md:mx-auto border">
+      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
