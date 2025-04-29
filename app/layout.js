@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
               <div className="">
                 <TopNav styles={shouldHideHeader} />
                 <SubMenuNav styles={shouldHideHeader} />
-                <div className="px-4 py-10 large:py-4 xl:py-0 xl:px-8">
+                <div className="py-10 large:py-4 xl:py-0 xl:px-8">
                   {children}
                 </div>
                 <Footer styles={shouldHideHeader} />
