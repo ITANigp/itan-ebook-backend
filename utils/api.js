@@ -15,7 +15,7 @@ export const api = axios.create({
 export const registerAuthor = async (name, email, password, password_confirmation) => {
   try {
     const response = await api.post("/authors", {
-      author: { email, password },
+      author: { email, password, name, password_confirmation },
     });
 
     return response.data;
