@@ -8,8 +8,6 @@ import { Toaster } from "react-hot-toast";
 import TopNav from "../components/TopNav";
 import SubMenuNav from "../components/SubMenuNav";
 import Footer from "../components/Footer";
-import AnimatedLayout from "@/components/AnimatedLayout";
-import ScrollToTop from "@/components/ScrollToTop";
 import { FormProvider } from "@/context/FormContext";
 
 config.autoAddCss = false;
