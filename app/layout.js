@@ -3,7 +3,7 @@ export const metadata = {
 //     default: "IGP"
 //   },
   icons: {
-    icon: "/images/logo2.png",
+    icon: "/images/itan-favicon.png",
   },
 };
 
