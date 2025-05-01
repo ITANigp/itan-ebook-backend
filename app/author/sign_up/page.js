@@ -21,10 +21,10 @@ const SignUp = () => {
 
     try {
       const author = await registerAuthor(
-        name,
+        // name,
         email,
         password,
-        password_confirmation
+        // password_confirmation
       );
       if (author?.data?.id) {
         setMessage("Registration successful! You can now log in.");
@@ -68,7 +68,7 @@ const SignUp = () => {
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <label
                 htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-900"
@@ -84,7 +84,7 @@ const SignUp = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-            </div>
+            </div> */}
 
             <div className="mt-4">
               <label
@@ -121,7 +121,7 @@ const SignUp = () => {
               />
             </div>
 
-            <div className="my-4">
+            {/* <div className="my-4">
               <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900"
@@ -136,7 +136,7 @@ const SignUp = () => {
                 value={password_confirmation}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </div>
+            </div> */}
 
             <div>
               <button
