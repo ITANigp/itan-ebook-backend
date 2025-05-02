@@ -41,25 +41,23 @@ export default function RootLayout({ children }) {
 
 
   return (
-      <div className={`z-10 ${isRegPage ? "bg-slate-800" : ""}`}>
-        <FormProvider>
-          <Toaster />
-          <main className="w-full min-h-screen">
-            <div>
-              {/* <AnimatedLayout> */}
-              <div className="">
-                <TopNav styles={shouldHideHeader} />
-                <SubMenuNav styles={shouldHideHeader} />
-                <div className="py-10 large:py-4 xl:py-0 xl:px-8">
-                  {children}
-                </div>
-                <Footer styles={shouldHideHeader} />
-                {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
-              </div>
-              {/* </AnimatedLayout> */}
+    <div className={`z-10  ${isRegPage ? "bg-slate-800" : "bg-white"}`}>
+      <FormProvider>
+        <Toaster />
+        <main className="w-full min-h-screen">
+          <div>
+            {/* <AnimatedLayout> */}
+            <div className="">
+              <TopNav styles={shouldHideHeader} />
+              <SubMenuNav styles={shouldHideHeader} />
+              <div className="py-10 lg:py-4 xl:py-0 xl:px-8">{children}</div>
+              <Footer styles={shouldHideHeader} />
+              {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
             </div>
-          </main>
-        </FormProvider>
-      </div>
+            {/* </AnimatedLayout> */}
+          </div>
+        </main>
+      </FormProvider>
+    </div>
   );
 }

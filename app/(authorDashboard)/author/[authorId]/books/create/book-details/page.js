@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
-import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
-import { api } from "@/utils/api"
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
+import { api } from "@/utils/api";
 
 const BookDetails = () => {
   const { formData, updateFormData } = useForm();
@@ -28,22 +28,20 @@ const BookDetails = () => {
     }
   }, []);
 
+  const validateForm = () => {
+    let newErrors = {};
 
-   const validateForm = () => {
-     let newErrors = {};
-
-     if (!id && (!formData.title || formData.title.trim() === "")) {
-       newErrors.title = "Book title is required.";
-     }
+    if (!id && (!formData.title || formData.title.trim() === "")) {
+      newErrors.title = "Book title is required.";
+    }
 
     //  if (id && (formData.subtitle && formData.subtitle.length > 200)) {
     //    newErrors.subtitle = "Subtitle must be less than 200 characters.";
     //  }
 
-
-     if (id && (formData.edition_number && isNaN(formData.edition_number))) {
-       newErrors.edition_number = "Edition number must be a number.";
-     }
+    if (id && formData.edition_number && isNaN(formData.edition_number)) {
+      newErrors.edition_number = "Edition number must be a number.";
+    }
 
     //  if (!formData.description || formData.description.trim() === "") {
     //    newErrors.description = "Description is required.";
@@ -51,13 +49,13 @@ const BookDetails = () => {
     //    newErrors.description = "Description must be under 1000 characters.";
     //  }
 
-     if (!id && (!formData.categories || formData.categories.trim() === "")) {
-       newErrors.categories = "Category is required.";
-     }
+    if (!id && (!formData.categories || formData.categories.trim() === "")) {
+      newErrors.categories = "Category is required.";
+    }
 
-     setErrors(newErrors);
-     return Object.keys(newErrors).length === 0;
-   };
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   useEffect(() => {
     if (id && id !== "null" && id !== "undefined") {
@@ -79,7 +77,7 @@ const BookDetails = () => {
     e.preventDefault();
     if (validateForm()) {
       console.log("Form1 is valid, submitting data...", formData);
-      router.push(`/author/${authorId}/books/create/book-content?id=${id}`)
+      router.push(`/author/${authorId}/books/create/book-content?id=${id}`);
     }
   };
 
@@ -332,6 +330,6 @@ const BookDetails = () => {
       </button>
     </div>
   );
-}
+};
 
-export default BookDetails
+export default BookDetails;

@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 const BookPage = () => {
-  const { bookId } = useParams(); 
+  const { bookId } = useParams();
   const [book, setBook] = useState(null);
   const [loading, setLoading] = useState(true);
 

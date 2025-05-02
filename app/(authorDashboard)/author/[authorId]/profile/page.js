@@ -7,155 +7,152 @@ import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
-import FormModal from "@/components/ProfileFormModal"
+import FormModal from "@/components/ProfileFormModal";
 
 import CryptoJS from "crypto-js";
-  import {
-    createAuthorProfile,
-    getAuthorProfile, 
-    updateAuthorProfile,
-  } from "@/utils/api";
-  import { api } from "@/utils/api"; // Ensure this is imported
+import {
+  createAuthorProfile,
+  getAuthorProfile,
+  updateAuthorProfile,
+} from "@/utils/api";
+import { api } from "@/utils/api"; // Ensure this is imported
 
 const Profile = () => {
-  const [openModal, setOpenModal] = useState(false)
-  const [profile, setProfile] = useState({})
+  const [openModal, setOpenModal] = useState(false);
+  const [profile, setProfile] = useState({});
   const router = useRouter();
-    const [profileImg, setProfileImg] = useState(null);
-    const [editing, setEditing] = useState(false); // Track whether the user is editing
-    const [error, setError] = useState("");
-  
-    async function computeChecksum(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsArrayBuffer(file);
-        reader.onload = () => {
-          const wordArray = CryptoJS.lib.WordArray.create(reader.result);
-          const base64 = CryptoJS.enc.Base64.stringify(CryptoJS.MD5(wordArray));
-          resolve(base64);
-        };
-        reader.onerror = (error) => reject(error);
-      });
-    }
-  
-    async function directUploadFile(file) {
-      try {
-        const checksum = await computeChecksum(file);
-  
-        const response = await api.post("/direct_uploads", {
-          blob: {
-            filename: file.name,
-            byte_size: file.size,
-            checksum: checksum,
-            content_type: file.type,
-          },
-        });
-  
-        const { signed_id, direct_upload } = response.data;
-  
-        if (!direct_upload?.url) {
-          throw new Error("Invalid direct upload response");
-        }
-  
-        const uploadResponse = await fetch(direct_upload.url, {
-          method: "PUT",
-          headers: {
-            ...direct_upload.headers,
-            "Content-Type": file.type,
-            "Content-Length": file.size.toString(),
-            "Content-MD5": checksum,
-          },
-          body: file,
-        });
-  
-        if (!uploadResponse.ok) {
-          const errorText = await uploadResponse.text();
-          throw new Error(`S3 upload failed: ${uploadResponse.status}`);
-        }
-  
-        console.log(`✅ Successfully uploaded ${file.name} to S3`);
-        return signed_id;
-      } catch (error) {
-        console.error("Direct upload failed:", error);
-        throw error;
-      }
-    }
-  
-    // Fetch and set profile data when the component mounts
-    useEffect(() => {
-      const fetchProfile = async () => {
-        try {
-          const { data } = await getAuthorProfile();
-          setProfile(data);
-        } catch (err) {
-          setError("Failed to fetch author profile.");
-          console.error(err);
-        }
+  const [profileImg, setProfileImg] = useState(null);
+  const [editing, setEditing] = useState(false); // Track whether the user is editing
+  const [error, setError] = useState("");
+
+  async function computeChecksum(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      reader.onload = () => {
+        const wordArray = CryptoJS.lib.WordArray.create(reader.result);
+        const base64 = CryptoJS.enc.Base64.stringify(CryptoJS.MD5(wordArray));
+        resolve(base64);
       };
-  
-      fetchProfile();
-    }, []);
-  
-    const handleFileImage = (e) => {
-      if (e.target.files && e.target.files[0]) {
-        setProfileImg(e.target.files[0]);
+      reader.onerror = (error) => reject(error);
+    });
+  }
+
+  async function directUploadFile(file) {
+    try {
+      const checksum = await computeChecksum(file);
+
+      const response = await api.post("/direct_uploads", {
+        blob: {
+          filename: file.name,
+          byte_size: file.size,
+          checksum: checksum,
+          content_type: file.type,
+        },
+      });
+
+      const { signed_id, direct_upload } = response.data;
+
+      if (!direct_upload?.url) {
+        throw new Error("Invalid direct upload response");
       }
-    };
-  
-    const handleSubmit = async (e) => {
-      e.preventDefault();
-      try {
-        if (!profileImg && !editing) {
-          alert("Please select a profile image.");
-          return;
-        }
-  
-        const profileImage = profileImg
-          ? await directUploadFile(profileImg)
-          : profile.profile_image;
-  
-        if (editing) {
-          // If editing, update the profile
-          const updatedProfile = await updateAuthorProfile(profile, profileImage);
-          console.log("Updated Profile: ", updatedProfile);
-          setProfile(updatedProfile);
-        } else {
-          // If creating, create a new profile
-          const createdProfile = await createAuthorProfile(profile, profileImage);
-          console.log("Created Profile: ", createdProfile);
-          setProfile(createdProfile);
-        }
-        setEditing(false); // Reset the editing flag after submission
-      } catch (error) {
-        console.error("Profile Error: ", error);
+
+      const uploadResponse = await fetch(direct_upload.url, {
+        method: "PUT",
+        headers: {
+          ...direct_upload.headers,
+          "Content-Type": file.type,
+          "Content-Length": file.size.toString(),
+          "Content-MD5": checksum,
+        },
+        body: file,
+      });
+
+      if (!uploadResponse.ok) {
+        const errorText = await uploadResponse.text();
+        throw new Error(`S3 upload failed: ${uploadResponse.status}`);
       }
-    };
-  
-    const handleEditClick = () => {
-      setEditing(true); // Set the editing flag to true when edit is clicked
-    };
-  
-    if (error) {
-      return <div className="text-red-600">{error}</div>;
+
+      console.log(`✅ Successfully uploaded ${file.name} to S3`);
+      return signed_id;
+    } catch (error) {
+      console.error("Direct upload failed:", error);
+      throw error;
     }
-  
+  }
 
+  // Fetch and set profile data when the component mounts
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await getAuthorProfile();
+        setProfile(data);
+      } catch (err) {
+        setError("Failed to fetch author profile.");
+        console.error(err);
+      }
+    };
 
-   // Fetch and set profile data when the component mounts
-   const fetchProfile = async () => {
-     try {
-       const { data } = await getAuthorProfile();
-       setProfile(data);
-       console.log("Fetched Profile Data: ", data);
-     } catch (err) {
-       // setError("Failed to fetch author profile.");
-       console.error(err);
-     }
-   };
-    useEffect(() => {
-      fetchProfile();
-    }, []);
-  
+    fetchProfile();
+  }, []);
+
+  const handleFileImage = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileImg(e.target.files[0]);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!profileImg && !editing) {
+        alert("Please select a profile image.");
+        return;
+      }
+
+      const profileImage = profileImg
+        ? await directUploadFile(profileImg)
+        : profile.profile_image;
+
+      if (editing) {
+        // If editing, update the profile
+        const updatedProfile = await updateAuthorProfile(profile, profileImage);
+        console.log("Updated Profile: ", updatedProfile);
+        setProfile(updatedProfile);
+      } else {
+        // If creating, create a new profile
+        const createdProfile = await createAuthorProfile(profile, profileImage);
+        console.log("Created Profile: ", createdProfile);
+        setProfile(createdProfile);
+      }
+      setEditing(false); // Reset the editing flag after submission
+    } catch (error) {
+      console.error("Profile Error: ", error);
+    }
+  };
+
+  const handleEditClick = () => {
+    setEditing(true); // Set the editing flag to true when edit is clicked
+  };
+
+  if (error) {
+    return <div className="text-red-600">{error}</div>;
+  }
+
+  // Fetch and set profile data when the component mounts
+  const fetchProfile = async () => {
+    try {
+      const { data } = await getAuthorProfile();
+      setProfile(data);
+      console.log("Fetched Profile Data: ", data);
+    } catch (err) {
+      // setError("Failed to fetch author profile.");
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   return (
     <div>

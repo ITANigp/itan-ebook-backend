@@ -7,14 +7,14 @@ import { useRouter } from "next/navigation";
 import { api } from "@/utils/api";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import BookMenu from "@/components/BookMenu";
-import DeleteModal from "@/components/DeleteModal"
-import toast from 'react-hot-toast';
+import DeleteModal from "@/components/DeleteModal";
+import toast from "react-hot-toast";
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
-  const [deleteBook, setDeleteBook] = useState(false)
+  const [deleteBook, setDeleteBook] = useState(false);
   const [openMenuForBookId, setOpenMenuForBookId] = useState(null);
-  const [isOpenMenu, setOpenMenu] = useState(false)
+  const [isOpenMenu, setOpenMenu] = useState(false);
   const bookMenuRef = useRef(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -50,9 +50,9 @@ export default function AuthorBooks() {
       .delete(`/books/${bookId}`)
       .then((response) => {
         if (response.status === 200) {
-          setDeleteBook(false)
+          setDeleteBook(false);
           toast.success("Book deleted successfully!");
-         
+
           setBooks((prevBooks) =>
             prevBooks.filter((book) => book.id !== bookId)
           );
@@ -76,7 +76,7 @@ export default function AuthorBooks() {
     const handleClickOutside = (event) => {
       if (bookMenuRef.current && !bookMenuRef.current.contains(event.target)) {
         setOpenMenuForBookId(null);
-        setOpenMenu(false)
+        setOpenMenu(false);
       }
     };
 

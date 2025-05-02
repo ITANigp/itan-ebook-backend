@@ -6,7 +6,7 @@ export default function ConfirmPage() {
     <Suspense
       fallback={
         <div className="min-h-screen flex justify-center items-center">
-          <p className="text-lg">Loading confirmation...</p>
+          <p className="text-lg">Processing confirmation...</p>
         </div>
       }
     >

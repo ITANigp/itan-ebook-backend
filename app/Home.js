@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
-import  HeroSection from "@/components/HeroSection"
+import HeroSection from "@/components/HeroSection";
 import FadeIn from "@/components/FadeIn";
 import AnimatedLayout from "@/components/AnimatedLayout";
 import ScrollToTop from "@/components/ScrollToTop";

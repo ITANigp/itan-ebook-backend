@@ -8,7 +8,6 @@ import LogoutModal from "@/components/LogoutModal";
 import { signOutAuthor } from "@/utils/api";
 
 const layout = ({ children }) => {
-
   const [showModal, setShowModal] = useState(false);
   const pathname = usePathname();
   const isProfilePage = pathname.endsWith("/profile");
@@ -19,7 +18,7 @@ const layout = ({ children }) => {
     try {
       await signOutAuthor();
       setShowModal(false);
-      alert("You have been logged out!");     
+      alert("You have been logged out!");
       window.location.href = "/";
     } catch (error) {
       alert("Failed to log out. Please try again.");
@@ -54,10 +53,7 @@ const layout = ({ children }) => {
               </li>
             </Link>
 
-            <Link
-              href="#"
-              onClick={() => setShowModal(true)}
-            >
+            <Link href="#" onClick={() => setShowModal(true)}>
               <li
                 className={`hover:text-red-500 cursor-pointer ${showModal ? "text-red-500 " : ""} `}
               >

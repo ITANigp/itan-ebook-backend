@@ -1,87 +1,81 @@
-"use client"
+"use client";
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
-import { storedAuthorInfo } from '@/utils/storedAuthorInfo';
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import { api } from "@/utils/api";
-
 
 const BookContent = () => {
   const { formData, updateFormData } = useForm();
   const router = useRouter();
-  const [selectedOption, setSelectedOption] = useState("")
+  const [selectedOption, setSelectedOption] = useState("");
   const [errors, setErrors] = useState({});
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
 
-  const ebookInputRef = useRef()
-  const coverInputRef = useRef()
+  const ebookInputRef = useRef();
+  const coverInputRef = useRef();
 
   useEffect(() => {
-      const savedData = localStorage.getItem("bookFormData");
-      if (savedData) {
-        updateFormData(JSON.parse(savedData));
+    const savedData = localStorage.getItem("bookFormData");
+    if (savedData) {
+      updateFormData(JSON.parse(savedData));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("bookFormData", JSON.stringify(formData));
+  }, [formData]);
+
+  const validateForm = () => {
+    let newErrors = {};
+
+    console.log("book id @ form2: ", id);
+
+    if (id == "null") {
+      if (!formData.ebook_file) {
+        newErrors.ebook_file = "Ebook file is required.";
       }
-    }, []);
-  
-     useEffect(() => {
-       localStorage.setItem("bookFormData", JSON.stringify(formData));
-     }, [formData]);
-  
-  
-     const validateForm = () => {
-       let newErrors = {};
 
-       console.log("book id @ form2: ", id)
-  
-       if (id == "null"){
-        if (!formData.ebook_file) {
-          newErrors.ebook_file = "Ebook file is required.";
-        }
-
-        if (!formData.cover_image) {
-          newErrors.cover_image = "Ebook file is required.";
-        }
-  
-       }
-       setErrors(newErrors);
-       return Object.keys(newErrors).length === 0;
-     };
-
-  
-    useEffect(() => {
-      if (id && id !== "null" && id !== "undefined") {
-        // Prevent refetching if data already exists
-        api
-          .get(`/books/${id}`)
-          .then((response) => {
-            updateFormData(response.data.data); // Update the form context
-          })
-          .catch((error) => {
-            console.error("Error fetching book:", error);
-          });
+      if (!formData.cover_image) {
+        newErrors.cover_image = "Ebook file is required.";
       }
-    }, [id]);
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  useEffect(() => {
+    if (id && id !== "null" && id !== "undefined") {
+      // Prevent refetching if data already exists
+      api
+        .get(`/books/${id}`)
+        .then((response) => {
+          updateFormData(response.data.data); // Update the form context
+        })
+        .catch((error) => {
+          console.error("Error fetching book:", error);
+        });
+    }
+  }, [id]);
 
   const { id: authorId } = storedAuthorInfo;
 
   const handleFileChange = (e) => {
     const file = e.target.files?.[0];
-          if (!file) return;
+    if (!file) return;
     updateFormData({ [e.target.name]: file });
-  
   };
 
   const handleEbookButtonClick = () => {
-    ebookInputRef.current?.click(); 
+    ebookInputRef.current?.click();
   };
   const handleCoverButtonClick = () => {
-    coverInputRef.current?.click(); 
+    coverInputRef.current?.click();
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -90,7 +84,7 @@ const BookContent = () => {
       router.push(`/author/${authorId}/books/create/book-pricing?id=${id}`);
     }
   };
-  
+
   return (
     <div>
       <h3 className="font-bold text-lg mt-7 mb-3">Manuscript</h3>
@@ -260,6 +254,6 @@ const BookContent = () => {
       </div>
     </div>
   );
-}
+};
 
-export default BookContent
+export default BookContent;

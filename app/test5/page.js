@@ -1,48 +1,59 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Line, Doughnut } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  ArcElement,
-} from "chart.js";
+import dynamic from "next/dynamic";
+import { Doughnut } from "react-chartjs-2";
+import { Chart as ChartJS, ArcElement } from "chart.js";
 import { FaBook, FaUsers, FaUserTie, FaMoneyBillWave } from "react-icons/fa";
 
-ChartJS.register(
-  LineElement,
-  PointElement,
-  CategoryScale,
-  LinearScale,
-  ArcElement
-);
+const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
+
+ChartJS.register(ArcElement);
 
 export default function Dashboard() {
-  const [lineData, setLineData] = useState({ labels: [], datasets: [] });
+  const [areaData, setAreaData] = useState({
+    series: [],
+    options: {},
+  });
+
   const [doughnutData, setDoughnutData] = useState({
     labels: [],
     datasets: [],
   });
 
   useEffect(() => {
-    setLineData({
-      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
-      datasets: [
+    setAreaData({
+      series: [
         {
-          label: "Transaction Analytics",
+          name: "Transactions",
           data: [
             12000000, 18000000, 15000000, 21000000, 19500000, 20500000,
             23000000,
           ],
-          borderColor: "#EF4444",
-          backgroundColor: "rgba(239, 68, 68, 0.2)",
-          tension: 0.4,
-          fill: true,
         },
       ],
+      options: {
+        chart: {
+          type: "area",
+          height: 350,
+          toolbar: { show: false },
+        },
+        dataLabels: { enabled: false },
+        stroke: { curve: "smooth" },
+        xaxis: {
+          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        },
+        fill: {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            opacityFrom: 0.4,
+            opacityTo: 0.1,
+            stops: [0, 90, 100],
+          },
+        },
+        colors: ["#EF4444"],
+      },
     });
 
     setDoughnutData({
@@ -55,6 +66,16 @@ export default function Dashboard() {
       ],
     });
   }, []);
+
+  const Dougnut = () => {
+     return (<div className="bg-white p-4 rounded shadow">
+            <h2 className="mb-2 text-lg font-semibold">Approved Payments</h2>
+            {doughnutData?.datasets && <Doughnut data={doughnutData} />}
+            <div className="text-center mt-4 text-xl">
+              1289 Approved Payments
+            </div>
+          </div>
+          )}
 
   const stats = [
     {
@@ -79,7 +100,7 @@ export default function Dashboard() {
       color: "text-red-500",
     },
     {
-      icon: <FaMoneyBillWave />,
+      icon: <Dougnut />,
       label: "Approved Payments",
       value: "1289",
       change: "",
@@ -126,20 +147,21 @@ export default function Dashboard() {
           ))}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 gap-6 mb-6">
           <div className="bg-white p-4 rounded shadow">
             <h2 className="mb-2 text-lg font-semibold">
               Transaction Analytics
             </h2>
-            {lineData?.datasets && <Line data={lineData} />}
+            {areaData.series.length > 0 && (
+              <ApexChart
+                options={areaData.options}
+                series={areaData.series}
+                type="area"
+                height={300}
+              />
+            )}
           </div>
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="mb-2 text-lg font-semibold">Approved Payments</h2>
-            {doughnutData?.datasets && <Doughnut data={doughnutData} />}
-            <div className="text-center mt-4 text-xl">
-              1289 Approved Payments
-            </div>
-          </div>
+          
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

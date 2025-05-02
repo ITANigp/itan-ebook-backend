@@ -35,9 +35,7 @@ export default function AuthorProfilePage() {
   }
 
   return (
-    <div
-      className="p-6 mx-auto bg-white rounded-2xl shadow-md mt-10 border my-8 max-w-4xl lg:ml-72 lg:mr-8 lg:mt-24 container"
-    >
+    <div className="p-6 mx-auto bg-white rounded-2xl shadow-md mt-10 border my-8 max-w-4xl lg:ml-72 lg:mr-8 lg:mt-24 container">
       <div className="flex items-center space-x-4 mb-6">
         <img
           src={author.author_profile_image_url}

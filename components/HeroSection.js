@@ -33,7 +33,7 @@ const HeroSection = () => {
   const content = pageContent[pathname] || pageContent["/"];
   return (
     <FadeIn>
-      <section className="mt-4 medium:mt-6 flex flex-col items-center text-center large:text-left xl:text-left xl:max-w-7xl xl:mx-auto">
+      <section className="pt-4 medium:mt-6 flex flex-col items-center text-center large:text-left xl:text-left xl:max-w-7xl xl:mx-auto">
         <div className="flex flex-col items-center large:flex-row large:items-center w-full large:max-w-7xl mx-auto xl:flex-row xl:items-center xl:gap-6 xl:max-w-8xl">
           {/* Left Section: Text */}
           <div className="max-w-2xl mt-2 medium:mt-4 large:mt-0 xl:mt-0 large:w-1/2 xl:w-1/2">

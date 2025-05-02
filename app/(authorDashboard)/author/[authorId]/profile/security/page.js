@@ -11,7 +11,6 @@ import { cn } from "@/lib/utils";
 
 import { api } from "@/utils/api";
 
-
 const Profile = () => {
   const router = useRouter();
 
