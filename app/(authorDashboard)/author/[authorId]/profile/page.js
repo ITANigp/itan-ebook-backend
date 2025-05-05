@@ -82,19 +82,19 @@ const Profile = () => {
   // }
 
   // Fetch and set profile data when the component mounts
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const { data } = await getAuthorProfile();
-        setProfile(data);
-      } catch (err) {
-        setError("Failed to fetch author profile.");
-        console.error(err);
-      }
-    };
+  // useEffect(() => {
+  //   const fetchProfile = async () => {
+  //     try {
+  //       const { data } = await getAuthorProfile();
+  //       setProfile(data);
+  //     } catch (err) {
+  //       setError("Failed to fetch author profile.");
+  //       console.error(err);
+  //     }
+  //   };
 
-    fetchProfile();
-  }, []);
+  //   fetchProfile();
+  // }, []);
 
   // const handleFileImage = (e) => {
   //   if (e.target.files && e.target.files[0]) {

@@ -46,7 +46,8 @@ const layout = ({ children }) => {
       <div className="lg:flex lg:space-x-6 p-4 bg-gray-100 rounded-md">
         <nav className="hidden lg:flex">
           <ul className="space-y-7">
-            <Link href={`/author/${profile.id}/profile`}>
+            {/* <Link href={`/author/${profile.id}/profile`}> */}
+            <Link href={`/author/1/profile`}>
               <li
                 className={`hover:text-red-500 cursor-pointer ${isProfilePage ? "text-red-500 " : ""} `}
               >
