@@ -61,7 +61,7 @@ const Profile = () => {
         method: "PUT",
         headers: {
           ...direct_upload.headers,
-          "Content-Type": file.type,
+          // "Content-Type": file.type,
           "Content-Length": file.size.toString(),
           "Content-MD5": checksum,
         },

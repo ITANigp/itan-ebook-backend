@@ -1,14 +1,16 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import LogoutModal from "@/components/LogoutModal";
+import { getAuthorProfile } from "@/utils/api";
 import { signOutAuthor } from "@/utils/api";
 
 const layout = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
+  const [profile, setProfile] = useState({})
   const pathname = usePathname();
   const isProfilePage = pathname.endsWith("/profile");
   const isPrivacyPage = pathname.endsWith("/security");
@@ -25,19 +27,33 @@ const layout = ({ children }) => {
     }
   };
 
+  const fetchProfile = async () => {
+      try {
+        const { data } = await getAuthorProfile();
+        setProfile(data);
+        console.log("Fetched Profile Data: ", data);
+      } catch (err) {
+        // setError("Failed to fetch author profile.");
+        console.error(err);
+      }
+    };
+    useEffect(() => {
+      fetchProfile();
+    }, []);
+
   return (
     <div className="mx-2  lg:pl-64  lg:pt-24 bg-gray-100 lg:bg-white">
       <div className="lg:flex lg:space-x-6 p-4 bg-gray-100 rounded-md">
         <nav className="hidden lg:flex">
           <ul className="space-y-7">
-            <Link href="/author/1/profile">
+            <Link href={`/author/${profile.id}/profile`}>
               <li
                 className={`hover:text-red-500 cursor-pointer ${isProfilePage ? "text-red-500 " : ""} `}
               >
                 Profile
               </li>
             </Link>
-            <Link href="/author/1/profile/security">
+            <Link href={`/author/${profile.id}/profile/security`}>
               <li
                 className={`hover:text-red-500 cursor-pointer ${isPrivacyPage ? "text-red-500 " : ""} `}
               >
@@ -45,13 +61,13 @@ const layout = ({ children }) => {
               </li>
             </Link>
 
-            <Link href="/author/1/profile/notification">
+            {/* <Link href="/author/1/profile/notification">
               <li
                 className={`hover:text-red-500 cursor-pointer ${isNotificationPage ? "text-red-500 " : ""} `}
               >
                 Notification
               </li>
-            </Link>
+            </Link> */}
 
             <Link href="#" onClick={() => setShowModal(true)}>
               <li
