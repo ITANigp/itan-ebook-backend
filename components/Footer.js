@@ -37,11 +37,11 @@ const Footer = ({ styles }) => {
         {/* Full-screen backdrop to reduce image sharpness */}
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 w-full px-4 text-white mb-2 medium:mb-3">
-          <h2 className="mx-auto text-center text-base xs:text-lg medium:text-xl large:text-2xl xl:text-3xl font-semibold">
+        <div className="relative z-10 w-full px-4 text-white mb-1  medium:mb-3">
+          <h2 className="mx-auto text-center text-base sm:text-xl  mb-2 font-semibold">
             Stay In The Know
           </h2>
-          <p className="mx-auto text-center text-xs xs:text-sm medium:text-base mt-1 large:text-xl xl:text-xl">
+          <p className="mx-auto text-center text-[10px]  sm:text-base ">
             Subscribe to our newsletter and receive IGP updates and special
             offers
           </p>
@@ -88,23 +88,21 @@ const Footer = ({ styles }) => {
 
           <p>
             Our vision is to bring African stories to the global market in ways
-            that make them accessible, and engaging. <br /> 
-            By leveraging technology,
-            we are redefining modern <br /> 
-            publishing—offering services that include
-            manuscript formatting, digital publishing, strategic marketing, and
-            seamless distribution.
+            that make them accessible, and engaging. <br />
+            By leveraging technology, we are redefining modern <br />
+            publishing—offering services that include manuscript formatting,
+            digital publishing, strategic marketing, and seamless distribution.
           </p>
         </div>
 
         <div className="flex flex-col items-center text-white mt-4">
           {/* Social icons */}
-          <div className="col-span-2 flex items-center justify-center">
-            <div className="flex justify-between w-36 xs:w-40 medium:w-44">
+          <div className="flex items-center justify-center ">
+            <div className="flex space-x-2">
               <Link href="#" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon
                   icon={faLinkedinIn}
-                  className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                  className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
                 />
               </Link>
               <Link
@@ -114,7 +112,7 @@ const Footer = ({ styles }) => {
               >
                 <FontAwesomeIcon
                   icon={faXTwitter}
-                  className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                  className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
                 />
               </Link>
               <Link
@@ -124,7 +122,7 @@ const Footer = ({ styles }) => {
               >
                 <FontAwesomeIcon
                   icon={faFacebookF}
-                  className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                  className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
                 />
               </Link>
               <Link
@@ -134,7 +132,7 @@ const Footer = ({ styles }) => {
               >
                 <FontAwesomeIcon
                   icon={faInstagram}
-                  className="w-3 h-5 xs:w-4 xs:h-6 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                  className="w-[15px] h-3 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
                 />
               </Link>
             </div>

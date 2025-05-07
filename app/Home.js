@@ -29,7 +29,7 @@ const Home = () => {
           Publish your manuscripts in multiple formats. Create ebooks and
           audiobooks to expand your reach and connect with new readers.
         </p>
-        <div className="flex justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 pt-[5px] pb-[6px] space-x-2 text-white ">
+        <div className="flex justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 w-[100px] pt-[5px] pb-[6px] space-x-2 text-white ">
           <p className="text-[10px] font-semibold">Get Started</p>
           <FontAwesomeIcon
             icon={faArrowRight}
@@ -39,8 +39,8 @@ const Home = () => {
       </section>
       <div className="flex justify-center px-2">
         <Image
-          src="/images/publish-hero.png"
-          alt="publish books"
+          src="/images/book-show.png"
+          alt="books show"
           width={450}
           height={350}
         />
