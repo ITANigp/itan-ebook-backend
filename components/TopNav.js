@@ -110,7 +110,7 @@ const TopNav = ({ styles }) => {
         <div className="flex items-center justify-between w-full medium:w-auto medium:justify-start medium:gap-4 large:flex-grow large:mr-8 xl:flex-grow xl:mr-10">
           {/* Hamburger menu - mobile only */}
           <button
-            className="block medium:hidden large:hidden xl:hidden z-30 p-1"
+            className="block medium:hidden z-30 p-1"
             onClick={toggleMenu}
             aria-label={menu ? "Close menu" : "Open menu"}
           >
@@ -165,27 +165,15 @@ const TopNav = ({ styles }) => {
       <AnimatePresence>
         {menu && (
           <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-20"
-              onClick={toggleMenu}
-            />
+            
 
             {/* Slide-in Menu */}
-            <motion.div
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={menuVariants}
+            <div
               className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6"
             >
               {/* Close button positioned at top-right */}
-              <motion.button
-                variants={itemVariants}
+              <button
+              
                 className="absolute top-4 right-4 text-white p-2"
                 onClick={toggleMenu}
                 aria-label="Close menu"
@@ -194,10 +182,10 @@ const TopNav = ({ styles }) => {
                   icon={faTimes}
                   className="text-2xl hover:text-red-400 transition-colors"
                 />
-              </motion.button>
+              </button>
 
               <div className="mb-8">
-                <motion.div variants={itemVariants} className="mb-8">
+                <div className="mb-8">
                   <Image
                     src="/images/logo.svg"
                     alt="logo"
@@ -207,15 +195,12 @@ const TopNav = ({ styles }) => {
                     quality={85}
                     className="w-10 h-8"
                   />
-                </motion.div>
+                </div>
 
                 <nav className="flex flex-col space-y-6">
                   {menuItems.map((item, index) => (
-                    <motion.div
+                    <div
                       key={index}
-                      variants={itemVariants}
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
                     >
                       <Link
                         href={item.href}
@@ -228,12 +213,12 @@ const TopNav = ({ styles }) => {
                         />
                         {item.title}
                       </Link>
-                    </motion.div>
+                    </div>
                   ))}
                 </nav>
               </div>
 
-              <motion.div variants={itemVariants} className="mt-auto space-y-4">
+              <div className="mt-auto space-y-4">
                 <Link href="/author/sign_in">
                   <LandingPgBtn
                     variant="outlined"
@@ -253,8 +238,8 @@ const TopNav = ({ styles }) => {
                     Create Account
                   </LandingPgBtn>
                 </Link>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </>
         )}
       </AnimatePresence>
