@@ -2,7 +2,6 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import HeroSection from "@/components/HeroSection";
 import Image from "next/image";
 import FadeIn from "@/components/FadeIn";
 

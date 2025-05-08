@@ -14,10 +14,10 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="bg-gray-100 text-black font-sans container">
+    <div className="bg-gray-100 text-black font-sans container pt-7">
       <section className="flex flex-col items-center text-center">
         <h2
-          className="text-3xl font-semibold"
+          className="text-2xl font-semibold"
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
         >
           Discover Global <br /> Publishing with ITAN
