@@ -14,6 +14,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { Bricolage_Grotesque } from "next/font/google";
 
 library.add(
   faBars,
@@ -24,75 +25,39 @@ library.add(
   faQuestionCircle
 );
 
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  display: "swap",
+});
+
 const TopNav = ({ styles }) => {
+  // ONLY ONE TopNav
+
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
 
-  // Updated toggle function with better icon transition
   const toggleMenu = () => {
     if (!menu) {
       setMenu(true);
-      // Delay changing the icon until menu is partially visible
       setTimeout(() => setShowCloseIcon(true), 150);
     } else {
       setShowCloseIcon(false);
-      // Delay closing the menu until icon has started changing
       setTimeout(() => setMenu(false), 50);
     }
   };
 
-  // Lock scrolling when menu is open
   useEffect(() => {
     if (menu) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [menu]);
-
-  // Menu animation variants
-  const menuVariants = {
-    closed: {
-      x: "-100%",
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: [0.4, 0.0, 0.2, 1],
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-        when: "afterChildren",
-      },
-    },
-    open: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.2, 0.0, 0.0, 1.0],
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-        when: "beforeChildren",
-      },
-    },
-  };
-
-  // Menu item animation variants
-  const itemVariants = {
-    closed: {
-      x: -20,
-      opacity: 0,
-      transition: { duration: 0.2 },
-    },
-    open: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.3 },
-    },
-  };
 
   const menuItems = [
     { title: "About Itan", href: "/", icon: faInfoCircle },
@@ -102,78 +67,44 @@ const TopNav = ({ styles }) => {
   ];
 
   return (
-    <>
-      <nav
-        className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}
+    <div className="bg-slate-700 flex items-center fixed w-full top-0 left-0 z-50 h-16">
+      {/* Mobile Menu Button */}
+      <button
+        className="block medium:hidden z-30 px-2"
+        onClick={toggleMenu}
+        aria-label={menu ? "Close menu" : "Open menu"}
       >
-        {/* Left section - force it to take most of the space on larger screens */}
-        <div className="flex items-center justify-between w-full medium:w-auto medium:justify-start medium:gap-4 large:flex-grow large:mr-8 xl:flex-grow xl:mr-10">
-          {/* Hamburger menu - mobile only */}
-          <button
-            className="block medium:hidden z-30 p-1"
-            onClick={toggleMenu}
-            aria-label={menu ? "Close menu" : "Open menu"}
-          >
-            <FontAwesomeIcon
-              icon={showCloseIcon ? faTimes : faBars}
-              style={{ color: "#FFFFFF" }}
-              className="text-2xl"
-            />
-          </button>
+        <FontAwesomeIcon
+          icon={showCloseIcon ? faTimes : faBars}
+          style={{ color: "#FFFFFF" }}
+          className="text-[21px] ml-2"
+        />
+      </button>
 
-          {/* Logo container with heading as a group */}
-          <div className="flex items-center">
-            <Image
-              src="/images/logo.svg"
-              alt="logo"
-              width={30}
-              height={20}
-              priority={true}
-              quality={85}
-              className="w-14 h-10 medium:w-10 medium:h-8"
-            />
+      {/* Logo and Text */}
+      <div className="flex items-center">
+        <Link href="/">
+          <Image
+            src="/images/logo3.png"
+            width={70}
+            height={20}
+            alt="itan logo"
+            className="lg:w-24 lg:-mb-3"
+          />
+        </Link>
+        <p
+          className={`${bricolage.className} text-white text-xl font-semibold -ml-2 leading-relaxed`}
+        >
+          Global Publishing
+        </p>
+      </div>
 
-            {/* Heading - directly after logo with proper spacing */}
-            <h1 className="text-white hidden large:block large:ml-5 large:text-2xl xl:block xl:ml-6 xl:text-4xl xl:font-semibold">
-              Global Publishing
-            </h1>
-          </div>
-        </div>
-
-        {/* Right section - with improved button sizing */}
-        <nav className="flex gap-3 large:gap-4 xl:gap-5 large:flex-shrink-0 xl:flex-shrink-0">
-          <Link href="/author/sign_in">
-            <LandingPgBtn
-              variant="outlined"
-              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-            >
-              Sign In
-            </LandingPgBtn>
-          </Link>
-          <Link href="/author/sign_up">
-            <LandingPgBtn
-              variant="filled"
-              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-            >
-              Create Account
-            </LandingPgBtn>
-          </Link>
-        </nav>
-      </nav>
-
-      {/* Mobile Menu Overlay */}
+      {/* Slide Menu */}
       <AnimatePresence>
         {menu && (
           <>
-            
-
-            {/* Slide-in Menu */}
-            <div
-              className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6"
-            >
-              {/* Close button positioned at top-right */}
+            <div className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6">
               <button
-              
                 className="absolute top-4 right-4 text-white p-2"
                 onClick={toggleMenu}
                 aria-label="Close menu"
@@ -185,44 +116,40 @@ const TopNav = ({ styles }) => {
               </button>
 
               <div className="mb-8">
-                <div className="mb-8">
-                  <Image
-                    src="/images/logo.svg"
-                    alt="logo"
-                    width={40}
-                    height={32}
-                    priority={true}
-                    quality={85}
-                    className="w-10 h-8"
-                  />
-                </div>
-
-                <nav className="flex flex-col space-y-6">
-                  {menuItems.map((item, index) => (
-                    <div
-                      key={index}
-                    >
-                      <Link
-                        href={item.href}
-                        className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
-                        onClick={toggleMenu}
-                      >
-                        <FontAwesomeIcon
-                          icon={item.icon}
-                          className="text-red-400 w-5 h-5"
-                        />
-                        {item.title}
-                      </Link>
-                    </div>
-                  ))}
-                </nav>
+                <Image
+                  src="/images/logo.svg"
+                  alt="logo"
+                  width={40}
+                  height={32}
+                  priority={true}
+                  quality={85}
+                  className="w-10 h-8"
+                />
               </div>
+
+              <nav className="flex flex-col space-y-6">
+                {menuItems.map((item, index) => (
+                  <div key={index}>
+                    <Link
+                      href={item.href}
+                      className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                      onClick={toggleMenu}
+                    >
+                      <FontAwesomeIcon
+                        icon={item.icon}
+                        className="text-red-400 w-5 h-5"
+                      />
+                      {item.title}
+                    </Link>
+                  </div>
+                ))}
+              </nav>
 
               <div className="mt-auto space-y-4">
                 <Link href="/author/sign_in">
                   <LandingPgBtn
                     variant="outlined"
-                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
+                    className="w-full mb-2 py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
                     onClick={toggleMenu}
                   >
                     Sign In
@@ -243,7 +170,7 @@ const TopNav = ({ styles }) => {
           </>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 };
 
