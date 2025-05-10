@@ -60,44 +60,71 @@ const Footer = ({ styles }) => {
       </section>
 
       <section className="bg-[#111928]">
-        <div className="flex items-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 pt-6">
+        <div className="flex items-center mx-4 lg:ml-0 xs:mx-5  pt-6">
           <Link href="/">
             <Image
               src="/images/logo3.png"
               width={70}
               height={20}
               alt="itan logo"
+              className="lg:w-24 lg:-mb-3"
             />
           </Link>
           <p
-            className={`${bricolage.className} text-white text-xl font-bold ml-2`}
+            className={`${bricolage.className} text-white text-xl lg:text-3xl font-bold ml-2 lg:-mb-2 lg:-ml-3`}
           >
             Global Publishing
           </p>
         </div>
 
         {/* About Itan */}
-        <div className="text-white text-xs max-w-[320px] mx-4">
-          <p className="mb-2 ">
-            ITAN Global Publishing (IGP) is a digital self-publishing and
-            aggregator that connects African literature to new audiences across
-            the globe, creating a vibrant market for African literature. We are
-            focused on empowering writers, authors, storytellers, and publishers
-            from underrepresented African nations.
-          </p>
+        <div className="sm:flex justify-between lg:max-w-[1200px]">
+          <div className="text-white text-xs max-w-[320px] lg:max-w-[700px] mx-4 mr-2 lg:text-sm">
+            <p className="mb-2 ">
+              ITAN Global Publishing (IGP) is a digital self-publishing and
+              aggregator that connects African literature to new audiences
+              across the globe, creating a vibrant market for African
+              literature. We are focused on empowering writers, authors,
+              storytellers, and publishers from underrepresented African
+              nations.
+            </p>
 
-          <p>
-            Our vision is to bring African stories to the global market in ways
-            that make them accessible, and engaging. <br />
-            By leveraging technology, we are redefining modern <br />
-            publishing—offering services that include manuscript formatting,
-            digital publishing, strategic marketing, and seamless distribution.
-          </p>
+            <p>
+              Our vision is to bring African stories to the global market in
+              ways that make them accessible, and engaging. <br />
+              By leveraging technology, we are redefining modern{" "}
+              <br className="lg:hidden" />
+              publishing—offering services that include manuscript formatting,
+              digital publishing, strategic marketing, and seamless
+              distribution.
+            </p>
+          </div>
+
+          <div className="sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-white font-semibold">
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Author Resources
+            </Link>
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Blog
+            </Link>
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Help Center
+            </Link>
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Content Policy
+            </Link>
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Youtube
+            </Link>
+            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              Contact
+            </Link>
+          </div>
         </div>
 
         <div className="flex flex-col items-center text-white mt-4">
           {/* Social icons */}
-          <div className="flex items-center justify-center ">
+          <div className="flex items-center justify-center sm:justify-start sm:ml-9 w-full">
             <div className="flex space-x-2">
               <Link href="#" target="_blank" rel="noopener noreferrer">
                 <FontAwesomeIcon
@@ -140,26 +167,26 @@ const Footer = ({ styles }) => {
 
           {/* Placeholder content */}
           <div className=" flex flex-col items-center mt-3">
-            <p>
+            <div className="flex flex-col items-center sm:hidden">
               <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
                 Author Resources
               </Link>
-            </p>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
-              Help Center
-            </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
-              Youtube
-            </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
-              Blog
-            </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
-              Contact
-            </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
-              Content Policy
-            </Link>
+              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+                Help Center
+              </Link>
+              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+                Youtube
+              </Link>
+              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+                Blog
+              </Link>
+              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+                Contact
+              </Link>
+              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+                Content Policy
+              </Link>
+            </div>
             <div className="mt-6">
               <Link
                 className="mr-4 hover:text-[#EF5353] cursor-pointer"
