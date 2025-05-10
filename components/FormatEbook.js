@@ -3,10 +3,10 @@ const FormatEbook = () => {
     <section className="bg-white overflow-hidden">
       {/* Header with brand accent */}
       <div className="bg-gradient-to-r from-[#FEE6E6] to-[#FFEFF2] p-6 pt-10 border-b border-gray-100">
-        <h3 className="text-2xl xs:text-3xl font-bold text-gray-800 mb-2">
+        <h3 className="font-bold text-gray-800 mb-2">
           Format Your <span className="text-[#EF5353]">eBook</span>
         </h3>
-        <h4 className="text-lg text-gray-600 italic font-medium">
+        <h4 className="text-sm text-gray-600 italic">
           Guidelines and specifications for publishing
         </h4>
       </div>
@@ -15,51 +15,51 @@ const FormatEbook = () => {
       <div className="p-6 xs:p-8">
         {/* Supported Formats Section */}
         <div className="mb-8">
-          <h4 className="text-xl font-semibold text-gray-800 mb-3">
+          <h4 className="text-sm font-semibold text-gray-800 mb-3">
             What file formats are supported for eBook manuscripts?
           </h4>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-700 mb-4 text-sm">
             IGP supports a variety of formats. Below, you'll find information
             about our recommended and most commonly used formats.
           </p>
 
           {/* Responsive Table */}
           <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-sm">
-            <table className="min-w-full divide-y divide-gray-200">
+            <table className="min-w-full divide-y divide-gray-200 text-xs">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 tracking-wider">
+                  <th className="px-2 py-3 text-left text-xs font-semibold text-gray-700 tracking-wider">
                     Format
                   </th>
-                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-700 tracking-wider">
+                  <th className="px-2 py-3 text-left text-xs font-semibold text-gray-700 tracking-wider">
                     Overview
                   </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
-                  <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-800">
+                  <td className="px-2 py-4 whitespace-nowrap font-medium text-gray-800 text-xs">
                     Microsoft Word
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
+                  <td className="px-2 py-4 text-xs text-gray-600">
                     Most DOC/DOCX files convert well to eBooks. Use the
                     Previewer to check if your eBook converted successfully.
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-800">
+                  <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-800 text-xs">
                     EPUB
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
+                  <td className="px-4 py-4 text-xs text-gray-600 ">
                     Use any third-party tool available on the internet to create
                     your EPUB file.
                   </td>
                 </tr>
                 <tr>
-                  <td className="px-4 py-4 whitespace-nowrap font-medium text-gray-800">
+                  <td className="px-2 py-4 whitespace-nowrap font-medium text-gray-800 text-xs">
                     PDF
                   </td>
-                  <td className="px-4 py-4 text-sm text-gray-600">
+                  <td className="px-2 py-4 text-sm text-gray-600 ">
                     Use any third-party tool available on the internet to create
                     your PDF file.
                   </td>
