@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans pt-7">
+    <div className="text-black font-sans pt-7 lg:mt-16">
       <section className="flex flex-col items-center text-center">
         <h2
           className="text-2xl font-semibold md:text-4xl"

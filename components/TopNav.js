@@ -67,109 +67,142 @@ const TopNav = ({ styles }) => {
   ];
 
   return (
-    <div className="bg-slate-700 flex items-center fixed w-full top-0 left-0 z-50 h-16">
-      {/* Mobile Menu Button */}
-      <button
-        className="block medium:hidden z-30 px-2"
-        onClick={toggleMenu}
-        aria-label={menu ? "Close menu" : "Open menu"}
-      >
-        <FontAwesomeIcon
-          icon={showCloseIcon ? faTimes : faBars}
-          style={{ color: "#FFFFFF" }}
-          className="text-[21px] ml-2"
-        />
-      </button>
+    <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-slate-700 ">
+      <div className="flex items-center ">
+        <div className="md:flex w-full justify-between mr-5">
+          {/* Mobile Menu Button */}
+          <button
+            className="block md:hidden z-30 px-2"
+            onClick={toggleMenu}
+            aria-label={menu ? "Close menu" : "Open menu"}
+          >
+            <FontAwesomeIcon
+              icon={showCloseIcon ? faTimes : faBars}
+              style={{ color: "#FFFFFF" }}
+              className="text-[21px] ml-2 md:hidden"
+            />
+          </button>
 
-      {/* Logo and Text */}
-      <div className="flex items-center">
-        <Link href="/">
-          <Image
-            src="/images/logo3.png"
-            width={70}
-            height={20}
-            alt="itan logo"
-            className="lg:w-24 lg:-mb-3"
-          />
-        </Link>
-        <p
-          className={`${bricolage.className} text-white text-xl font-semibold -ml-2 leading-relaxed`}
-        >
-          Global Publishing
-        </p>
-      </div>
+          {/* Logo and Text */}
+          <div className="flex items-center">
+            <Link href="/">
+              <Image
+                src="/images/logo3.png"
+                width={70}
+                height={20}
+                alt="itan logo"
+                className="lg:w-24 lg:-mb-3"
+              />
+            </Link>
+            <p
+              className={`${bricolage.className} text-white text-xl md:text-[25px] font-semibold -ml-2 md:-mb-2 leading-relaxed`}
+            >
+              Global Publishing
+            </p>
+          </div>
 
-      {/* Slide Menu */}
-      <AnimatePresence>
-        {menu && (
-          <>
-            <div className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6">
-              <button
-                className="absolute top-4 right-4 text-white p-2"
-                onClick={toggleMenu}
-                aria-label="Close menu"
-              >
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  className="text-2xl hover:text-red-400 transition-colors"
-                />
-              </button>
+          {/* Slide Menu */}
+          <AnimatePresence>
+            {menu && (
+              <>
+                <div className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6">
+                  <button
+                    className="absolute top-4 right-4 text-white p-2"
+                    onClick={toggleMenu}
+                    aria-label="Close menu"
+                  >
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="text-2xl hover:text-red-400 transition-colors"
+                    />
+                  </button>
 
-              <div className="mb-8">
-                <Image
-                  src="/images/logo.svg"
-                  alt="logo"
-                  width={40}
-                  height={32}
-                  priority={true}
-                  quality={85}
-                  className="w-10 h-8"
-                />
-              </div>
+                  <div className="mb-8">
+                    <Image
+                      src="/images/logo.svg"
+                      alt="logo"
+                      width={40}
+                      height={32}
+                      priority={true}
+                      quality={85}
+                      className="w-10 h-8"
+                    />
+                  </div>
 
-              <nav className="flex flex-col space-y-6">
-                {menuItems.map((item, index) => (
-                  <div key={index}>
-                    <Link
-                      href={item.href}
-                      className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
-                      onClick={toggleMenu}
-                    >
-                      <FontAwesomeIcon
-                        icon={item.icon}
-                        className="text-red-400 w-5 h-5"
-                      />
-                      {item.title}
+                  <nav className="flex flex-col space-y-6">
+                    {menuItems.map((item, index) => (
+                      <div key={index}>
+                        <Link
+                          href={item.href}
+                          className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                          onClick={toggleMenu}
+                        >
+                          <FontAwesomeIcon
+                            icon={item.icon}
+                            className="text-red-400 w-5 h-5"
+                          />
+                          {item.title}
+                        </Link>
+                      </div>
+                    ))}
+                  </nav>
+
+                  <div className="mt-auto space-y-4">
+                    <Link href="/author/sign_in">
+                      <LandingPgBtn
+                        variant="outlined"
+                        className="w-full mb-2 py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
+                        onClick={toggleMenu}
+                      >
+                        Sign In
+                      </LandingPgBtn>
+                    </Link>
+
+                    <Link href="/author/sign_up">
+                      <LandingPgBtn
+                        variant="filled"
+                        className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
+                        onClick={toggleMenu}
+                      >
+                        Create Account
+                      </LandingPgBtn>
                     </Link>
                   </div>
-                ))}
-              </nav>
+                </div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+        <div className="w-[300px] md:flex justify-between mr-10">
+          <div>
+            {" "}
+            <Link
+              href="/author/sign_in"
+              className="bg-[#0c1320] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+            >
+              Sign In
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/author/sign_in"
+              className="bg-[#E50913] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      </div>
 
-              <div className="mt-auto space-y-4">
-                <Link href="/author/sign_in">
-                  <LandingPgBtn
-                    variant="outlined"
-                    className="w-full mb-2 py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
-                    onClick={toggleMenu}
-                  >
-                    Sign In
-                  </LandingPgBtn>
-                </Link>
-
-                <Link href="/author/sign_up">
-                  <LandingPgBtn
-                    variant="filled"
-                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
-                    onClick={toggleMenu}
-                  >
-                    Create Account
-                  </LandingPgBtn>
-                </Link>
-              </div>
-            </div>
-          </>
-        )}
-      </AnimatePresence>
+      <div className="flex justify-between text-white">
+        <ul className="flex space-x-4 h-9 text-center px-9">
+          <li className="border-b-2 border-b-red-600 px-2">About Itan</li>
+          <li className="border-b-2 border-b-red-600 px-2">Publish</li>
+          <li className="border-b-2 border-b-red-600 px-2">Monetize</li>
+          <li className="border-b-2 border-b-red-600 px-2">Help</li>
+        </ul>
+        <p className="text-xs mr-7">One Book Multiple Formats, Endless Readers</p>
+      </div>
     </div>
   );
 };

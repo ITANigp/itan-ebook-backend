@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 import { Toaster } from "react-hot-toast";
 
 import TopNav from "../components/TopNav";
-import SubMenuNav from "../components/SubMenuNav";
 import Footer from "../components/Footer";
 import { FormProvider } from "@/context/FormContext";
 
@@ -49,7 +48,6 @@ export default function RootLayout({ children }) {
             {/* <AnimatedLayout> */}
             <div className="">
               <TopNav styles={shouldHideHeader} />
-              <SubMenuNav styles={shouldHideHeader} />
               <div className="py-10 lg:py-4 xl:py-0 xl:px-8">{children}</div>
               <Footer styles={shouldHideHeader} />
               {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
