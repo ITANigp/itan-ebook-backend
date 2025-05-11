@@ -196,12 +196,22 @@ const TopNav = ({ styles }) => {
 
       <div className="flex justify-between text-white">
         <ul className="flex space-x-4 h-9 text-center px-9">
-          <li className="border-b-2 border-b-red-600 px-2">About Itan</li>
-          <li className="border-b-2 border-b-red-600 px-2">Publish</li>
-          <li className="border-b-2 border-b-red-600 px-2">Monetize</li>
-          <li className="border-b-2 border-b-red-600 px-2">Help</li>
+          <Link href="/" className="border-b-2 border-b-red-600 px-2">
+            About Itan
+          </Link>
+          <Link href="/publish" className="border-b-2 border-b-red-600 px-2">
+            Publish
+          </Link>
+          <Link href="/monetize" className="border-b-2 border-b-red-600 px-2">
+            Monetize
+          </Link>
+          <Link href="/help" className="border-b-2 border-b-red-600 px-2">
+            Help
+          </Link>
         </ul>
-        <p className="text-xs mr-7">One Book Multiple Formats, Endless Readers</p>
+        <p className="text-xs mr-7">
+          One Book Multiple Formats, Endless Readers
+        </p>
       </div>
     </div>
   );
