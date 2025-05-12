@@ -124,7 +124,7 @@ const Monetize = () => {
       </section>
 
       <section className="mt-6 pb-7 mx-3">
-        <div className="md:flex md:max-w-[1100px] justify-between bg-yellow-400">
+        <div className="md:flex md:max-w-[1100px] justify-between">
           <div className="md:max-w-[500px] md:ml-8 md:pt-8">
             <h4 className="font-semibold mb-3 md:text-xl">
               Get Paid for Every Page you Read on ITAN Unbound
