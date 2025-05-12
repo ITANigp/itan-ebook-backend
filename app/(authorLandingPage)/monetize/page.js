@@ -8,8 +8,8 @@ import FadeIn from "@/components/FadeIn";
 const Monetize = () => {
   return (
     <div className="bg-gray-50">
-      <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-32 md:bg-slate-500">
-        <div className=" md:relative md:pb-14 md:w-[500px] md:text-left md:ml-40 text-white">
+      <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-3 bg-slate-700">
+        <div className=" md:relative md:pb-14 md:w-[500px] text-white md:text-left md:ml-40 ">
           <h2
             className="text-2xl font-semibold"
             style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
@@ -17,12 +17,25 @@ const Monetize = () => {
             Monetize with Itan <br /> Global Publishing (IGP)
           </h2>
           <p
-            className="max-w-[300px] md:max-w-[480px] mx-4 text-sm mt-4 md:ml-0 mb-2"
+            className="max-w-[300px] md:max-w-[480px] mx-4 text-sm md:mt-4 md:ml-0 mb-2"
             style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
           >
             Itan Global Publishing provides free publishing and multiple royalty
             streams
           </p>
+
+          <div className="flex justify-center mb-5 md:mb-0">
+            <div className="flex md:hidden justify-center items-center rounded-sm bg-[#E50913] py-[8px] w-[150px] ml-3 space-x-1 text-white cursor-pointer">
+              <p className="text-xs font-semibold md:font-normal md:text-sm">
+                Get Started for Free
+              </p>
+              <FontAwesomeIcon
+                icon={faArrowRight}
+                className="w-3 font-extralight md:w-6"
+              />
+            </div>
+          </div>
+
           <div className="hidden absolute bottom-0 right-0 md:flex justify-center items-center rounded-sm bg-[#E50913] py-[8px] w-[150px] md:h-10 md:w-44 md:rounded-lg ml-3 md:ml-0 space-x-1 text-white cursor-pointer">
             <p className="text-xs font-semibold md:font-normal md:text-sm">
               Get Started for Free
@@ -39,17 +52,8 @@ const Monetize = () => {
           width={300}
           height={400}
           alt="monetize"
-          className="md:w-[450px]"
+          className="md:w-[450px] -ml-7 md:ml-0"
         />
-        <div className="flex md:hidden justify-center items-center rounded-sm bg-[#E50913] py-[8px] w-[150px] md:h-10 md:w-44 md:rounded-lg ml-3 space-x-1 text-white md:ml-8 cursor-pointer">
-          <p className="text-xs font-semibold md:font-normal md:text-sm">
-            Get Started for Free
-          </p>
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className="w-3 font-extralight md:w-6"
-          />
-        </div>
       </section>
 
       <section className="bg-gray-200 py-6 md:pb-24">
