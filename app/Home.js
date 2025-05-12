@@ -29,7 +29,7 @@ const Home = () => {
           Publish your manuscripts in multiple formats. Create ebooks and
           audiobooks to expand your reach and connect with new readers.
         </p>
-        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[40px] sm:w-[140px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-white cursor-pointer">
+        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[40px] sm:w-[140px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-gray-200 cursor-pointer">
           <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
           <FontAwesomeIcon
             icon={faArrowRight}
@@ -199,7 +199,7 @@ const Home = () => {
             alt="itan phone"
             className="md:w-[400px]"
           />
-          <div className="text-white pt-6 md:w-[500px] md:pt-20">
+          <div className="text-gray-200 pt-6 md:w-[500px] md:pt-20">
             <h3 className="font-bold md:text-[34px]">
               Building global bridges through the power of storytelling.
             </h3>
