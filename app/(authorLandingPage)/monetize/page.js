@@ -47,13 +47,15 @@ const Monetize = () => {
           </div>
         </div>
 
-        <Image
-          src="/images/monetize-hero.png"
-          width={300}
-          height={400}
-          alt="monetize"
-          className="md:w-[450px] -ml-7 md:ml-0"
-        />
+        <div className="w-full md:w-auto">
+          <Image
+            src="/images/monetize-hero.png"
+            width={300}
+            height={400}
+            alt="monetize"
+            className="md:w-[450px] -ml-7 md:ml-0"
+          />
+        </div>
       </section>
 
       <section className="bg-gray-200 py-6 md:pb-24">
