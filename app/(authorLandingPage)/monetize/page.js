@@ -63,7 +63,7 @@ const Monetize = () => {
         >
           Maximize your Earnings Through Multiple Revenue Sources
         </h3>
-        <ul className="mx-3 md:flex  md:flex-col md:items-center ">
+        <ul className="mx-3 flex  flex-col items-center ">
           <li className="flex items-start">
             <svg
               viewBox="0 0 14 14"
@@ -107,7 +107,7 @@ const Monetize = () => {
         </ul>
       </section>
 
-      <section className=" flex flex-col items-center md:flex-row md:justify-center mt-5 py-6 space-y-5 md:space-y-0 bg-gray-100">
+      <section className=" flex flex-col items-center sm:flex-row sm:justify-center mt-5 py-6 space-y-5 sm:space-y-0 bg-gray-100">
         <div className="flex flex-col justify-center items-center mx-10 w-[260px] md:w-[350px] bg-white shadow-md rounded-sm h-[150px] md:h-[200px]">
           <p className="mb-5 text-[16px] font-semibold md:text-[20px]">
             Royalty for eBook sale{" "}
