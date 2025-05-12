@@ -69,7 +69,7 @@ const TopNav = ({ styles }) => {
   return (
     <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-slate-700 ">
       <div className="flex items-center ">
-        <div className="md:flex w-full justify-between mr-5">
+        <div className="flex w-full md:justify-between pr-5">
           {/* Mobile Menu Button */}
           <button
             className="block md:hidden z-30 px-2"
@@ -91,11 +91,11 @@ const TopNav = ({ styles }) => {
                 width={70}
                 height={20}
                 alt="itan logo"
-                className="lg:w-24 lg:-mb-3"
+                className=" md:w-24 md:-mb-1 lg:-mb-3"
               />
             </Link>
             <p
-              className={`${bricolage.className} text-white text-xl md:text-[25px] font-semibold -ml-2 md:-mb-2 leading-relaxed`}
+              className={`${bricolage.className} text-white text-2xl  md:text-[35px] font-semibold -ml-2  lg:-mb-3 `}
             >
               Global Publishing
             </p>
@@ -173,7 +173,7 @@ const TopNav = ({ styles }) => {
             )}
           </AnimatePresence>
         </div>
-        <div className="w-[300px] md:flex justify-between mr-10">
+        <div className="w-[350px] hidden sm:flex justify-between mr-3 md:mr-10">
           <div>
             {" "}
             <Link
@@ -194,18 +194,18 @@ const TopNav = ({ styles }) => {
         </div>
       </div>
 
-      <div className="flex justify-between text-white">
+      <div className=" hidden md:flex justify-between text-white -ml-6">
         <ul className="flex space-x-4 h-9 text-center px-9">
-          <Link href="/" className="border-b-2 border-b-red-600 px-2">
+          <Link href="/" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
             About Itan
           </Link>
-          <Link href="/publish" className="border-b-2 border-b-red-600 px-2">
+          <Link href="/publish" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
             Publish
           </Link>
-          <Link href="/monetize" className="border-b-2 border-b-red-600 px-2">
+          <Link href="/monetize" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
             Monetize
           </Link>
-          <Link href="/help" className="border-b-2 border-b-red-600 px-2">
+          <Link href="/help" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
             Help
           </Link>
         </ul>

@@ -7,8 +7,8 @@ import FadeIn from "@/components/FadeIn";
 
 const Monetize = () => {
   return (
-    <div className="bg-gray-50 md:mt-24 ">
-      <section className="flex flex-col items-center text-center pb-3 md:bg-slate-500 md:flex-row-reverse md:justify-end">
+    <div className="bg-gray-50">
+      <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-32 md:bg-slate-500">
         <div className=" md:relative md:pb-14 md:w-[500px] md:text-left md:ml-40 text-white">
           <h2
             className="text-2xl font-semibold"
@@ -39,6 +39,7 @@ const Monetize = () => {
           width={300}
           height={400}
           alt="monetize"
+          className="md:w-[450px]"
         />
         <div className="flex md:hidden justify-center items-center rounded-sm bg-[#E50913] py-[8px] w-[150px] md:h-10 md:w-44 md:rounded-lg ml-3 space-x-1 text-white md:ml-8 cursor-pointer">
           <p className="text-xs font-semibold md:font-normal md:text-sm">

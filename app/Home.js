@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans pt-7 md:mt-24 ">
+    <div className="text-black font-sans pt-7 md:pt-32 ">
       <section className="flex flex-col items-center text-center">
         <h2
           className="text-2xl font-semibold md:text-4xl"
@@ -113,7 +113,7 @@ const Home = () => {
         </section>
       </div>
 
-      <div className="sm:w-full sm:flex justify-center sm:mt-0 sm:bg-red-50 sm:py-16">
+      <div className="sm:w-full sm:flex justify-center sm:mt-0 sm:bg-red-50 sm:py-16 mt-10">
         <section className="sm:flex justify-between sm:max-w-[1200px] md:space-x-14 sm:h-auto sm:mx-3">
           <div className="py-10 bg-red-100 rounded-md px-6 mx-6 sm:w-[450px] h-auto md:h-full md:flex flex-col justify-center">
             <h3 className="mb-2 font-bold text-sm md:text-lg text-gray-800">
@@ -188,7 +188,7 @@ const Home = () => {
         </section>
       </div>
 
-      <div className="md:flex justify-center bg-[#111928] md:mt-10">
+      <div className="md:flex justify-center bg-[#111928]">
         <section className="flex justify-center bg-[#111928] pr-4 my-10 sm:mt-0 md:justify-between md:w-[1000px]">
           <Image
             src="/images/itan-phone.png"

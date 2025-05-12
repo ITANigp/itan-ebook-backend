@@ -37,10 +37,9 @@ export default function AccordionFaq() {
   ];
 
   return (
-    <section className="text-sm md:text-base">
-      <div className="mt-8 font-semibold text-center text-gray-500">
-        Frequently Asked Questions
-        <h3>(FAQs)</h3>
+    <section className="text-sm md:text-base md:mt-24">
+      <div className="mt-8 font-semibold md:text-xl text-center text-gray-500">
+        <h3>Frequently Asked Questions <br className="md:hidden"/> (FAQs)</h3>
       </div>
 
       <div className="divide-y divide-gray-200 rounded-lg xl:mb-8">
