@@ -14,22 +14,22 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans pt-7 md:pt-32 ">
+    <div className="text-black font-sans pt-7 md:pt-36 ">
       <section className="flex flex-col items-center text-center">
         <h2
-          className="text-2xl font-semibold md:text-4xl"
+          className="text-2xl font-semibold md:text-5xl"
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
         >
           Discover Global <br className="md:hidden" /> Publishing with ITAN
         </h2>
         <p
-          className="max-w-[300px] sm:text-base sm:max-w-[600px] mx-4 text-sm mt-4 mb-2"
+          className="max-w-[300px] sm:text-base sm:max-w-[600px] mx-4 text-sm mt-4 md:mt-6 mb-2 md:mb-6"
           style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
         >
           Publish your manuscripts in multiple formats. Create ebooks and
           audiobooks to expand your reach and connect with new readers.
         </p>
-        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[32px] sm:w-[120px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-white ">
+        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[40px] sm:w-[140px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-white cursor-pointer">
           <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
           <FontAwesomeIcon
             icon={faArrowRight}
@@ -46,8 +46,8 @@ const Home = () => {
           className="sm:max-w-[650px] sm:max-h-[450px] w-full h-auto"
         />
       </div>
-      <section className="sm:flex sm:justify-center sm:w-full">
-        <div className="relative bg-slate-200 shadow-md pt-6 pb-5 rounded-md sm:max-w-[700px] flex justify-center  md:max-w-full  sm:px-20  pl-10   mx-1">
+      <section className="sm:flex sm:justify-center sm:w-full md:mb-16">
+        <div className="relative bg-slate-200 shadow-md pt-6 pb-5 rounded-md sm:max-w-[700px] flex justify-center  md:max-w-full  sm:px-20  pl-10   mx-1 md:mx-10">
           <Image
             src="/images/global-map.png"
             width={70}
@@ -59,8 +59,8 @@ const Home = () => {
             className="max-w-[300px] text-lg text-center lg:text-[44px] sm:text-3xl sm:max-w-[700px] lg:max-w-[1000px] lg:leading-normal lg:pl-32 sm:pl-16 md:mx-8"
             style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
           >
-            ITAN Makes Self-Publishing Simple, Allowing You To Release Books In
-            Different Formats And Engage New Readers Worldwide.
+            ITAN makes self-publishing simple, allowing you to release books in
+            different formats and engage new readers worldwide.
           </p>
         </div>
       </section>
@@ -92,20 +92,22 @@ const Home = () => {
                 </p>
               </div>
               <ul className="list-disc list-inside mx-3 text-gray-100">
-                <li className="text-xs md:text-lg">
+                <li className="text-xs md:text-lg md:mb-5">
                   <span className="text-base md:text-[22px] font-semibold">
-                    Ebook
+                    ebook
                   </span>{" "}
-                  <br />
-                  Upload your manuscript and distribute your eBook on ITAN.
+                  <p className="ml-7 text-sm">
+                    Upload your manuscript and distribute your eBook on ITAN.
+                  </p>
                 </li>
                 <li className="text-xs md:text-lg">
                   <span className="text-base md:text-[22px] font-semibold">
                     Audio Books
                   </span>{" "}
-                  <br />
-                  Publish your audiobooks and connect with readers in exciting
-                  ways.
+                  <p className="ml-7 text-sm">
+                    Publish your audiobooks and connect with readers in exciting
+                    ways.
+                  </p>
                 </li>
               </ul>
             </div>
@@ -116,10 +118,10 @@ const Home = () => {
       <div className="sm:w-full sm:flex justify-center sm:mt-0 sm:bg-red-50 sm:py-16 mt-10">
         <section className="sm:flex justify-between sm:max-w-[1200px] md:space-x-14 sm:h-auto sm:mx-3">
           <div className="py-10 bg-red-100 rounded-md px-6 mx-6 sm:w-[450px] h-auto md:h-full md:flex flex-col justify-center">
-            <h3 className="mb-2 font-bold text-sm md:text-lg text-gray-800">
+            <h3 className="mb-8 font-bold text-sm md:text-2xl text-gray-800 md:-mt-12">
               Earn More–Monetize your Works
             </h3>
-            <div className="flex items-start mb-2">
+            <div className="flex items-start mb-5">
               <Image
                 src="/images/save-money.png"
                 width={15}
@@ -137,7 +139,7 @@ const Home = () => {
               </div>
             </div>
 
-            <div className="flex items-start mb-2">
+            <div className="flex items-start mb-5">
               <Image
                 src="/images/save-money.png"
                 width={15}
@@ -188,7 +190,7 @@ const Home = () => {
         </section>
       </div>
 
-      <div className="md:flex justify-center bg-[#111928]">
+      <div className="relative overflow-hidden md:flex justify-center bg-[#111928] ">
         <section className="flex justify-center bg-[#111928] pr-4 my-10 sm:mt-0 md:justify-between md:w-[1000px]">
           <Image
             src="/images/itan-phone.png"
@@ -201,7 +203,7 @@ const Home = () => {
             <h3 className="font-bold md:text-[34px]">
               Building global bridges through the power of storytelling.
             </h3>
-            <p className="text-[10px] my-3 md:text-2xl">
+            <p className="text-[10px] my-6 mb-8 md:text-2xl">
               From text to audio, engage all audiences
             </p>
             <Image
@@ -209,7 +211,7 @@ const Home = () => {
               width={150}
               height={100}
               alt="itan phone"
-              className="ml-9 md:w-[400px] h-auto"
+              className="ml-9 md:w-[400px] h-auto md:mt-16 md:absolute -right-16 bottom-32 "
             />
           </div>
         </section>

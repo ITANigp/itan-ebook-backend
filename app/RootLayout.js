@@ -40,7 +40,9 @@ export default function RootLayout({ children }) {
 
 
   return (
-    <div className={`z-10  ${isRegPage ? "bg-slate-800" : "bg-white"}`}>
+    <div
+      className={`z-10  ${isRegPage ? "bg-slate-800" : "bg-white"} overflow-hidden`}
+    >
       <FormProvider>
         <Toaster />
         <main className="w-full min-h-screen">

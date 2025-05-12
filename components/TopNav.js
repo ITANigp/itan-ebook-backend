@@ -74,7 +74,7 @@ const TopNav = ({ styles }) => {
 
   return (
     <div
-      className={` ${styles} top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-[#111928]`}
+      className={` ${styles} top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-[#111928] md:px-5`}
     >
       <div className="flex items-center ">
         <div className="flex w-full md:justify-between pr-5">
@@ -103,7 +103,7 @@ const TopNav = ({ styles }) => {
               />
             </Link>
             <p
-              className={`${bricolage.className} text-white text-2xl  md:text-[35px] font-semibold -ml-2  lg:-mb-3 `}
+              className={`${bricolage.className} text-white text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
             >
               Global Publishing
             </p>
@@ -181,7 +181,7 @@ const TopNav = ({ styles }) => {
             )}
           </AnimatePresence>
         </div>
-        <div className="w-[350px] hidden sm:flex justify-between mr-3 md:mr-10">
+        <div className="w-[280px] hidden sm:flex justify-between mr-3 md:mr-10">
           <div>
             {" "}
             <Link
