@@ -67,7 +67,7 @@ const TopNav = ({ styles }) => {
   ];
 
   return (
-    <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-slate-700 ">
+    <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-[#111928] ">
       <div className="flex items-center ">
         <div className="flex w-full md:justify-between pr-5">
           {/* Mobile Menu Button */}
@@ -196,16 +196,28 @@ const TopNav = ({ styles }) => {
 
       <div className=" hidden md:flex justify-between text-white -ml-6">
         <ul className="flex space-x-4 h-9 text-center px-9">
-          <Link href="/" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+          <Link
+            href="/"
+            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+          >
             About Itan
           </Link>
-          <Link href="/publish" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+          <Link
+            href="/publish"
+            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+          >
             Publish
           </Link>
-          <Link href="/monetize" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+          <Link
+            href="/monetize"
+            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+          >
             Monetize
           </Link>
-          <Link href="/help" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+          <Link
+            href="/help"
+            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+          >
             Help
           </Link>
         </ul>
