@@ -31,7 +31,7 @@ const Help = () => {
   };
 
   return (
-    <section className="md:pt-32 bg-gray-50 w-full">
+    <section className="md:pt-32 pt-16 bg-gray-50 w-full">
       <div className="md:flex md:justify-center">
         <div className="md:flex md:flex-row md:justify-between md:w-[1100px]">
           <div className="flex flex-col  items-center md:items-start text-center md:text-left md:ml-4 md:mt-10">
@@ -72,6 +72,11 @@ const Help = () => {
 
       <article className="w-full mt-24 mx-2 md:flex md:justify-center ">
         <div className="md:w-[900px]">
+          <div className="flex md:hidden w-full mb-3 justify-center">
+            <h3 className="text-sm  font-semibold text-gray-800 ">
+              New Author? Follow these steps
+            </h3>
+          </div>
           <div className="w-full flex justify-between items-center">
             <div className="w-full">
               <h3 className="text-sm md:text-base font-semibold  text-gray-800">
@@ -97,8 +102,8 @@ const Help = () => {
             />
 
             <div className="w-full relative">
-              <div className="w-full mb-3 absolute -top-10 left-0">
-                <h3 className="text-sm font-semibold text-gray-800 md:text-lg">
+              <div className="hidden md:block w-full mb-3 md:absolute -top-14 left-0">
+                <h3 className="text-sm  font-semibold text-gray-800 md:text-lg">
                   New Author? Follow these steps
                 </h3>
               </div>
