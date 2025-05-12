@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans pt-7 md:pt-36 ">
+    <div className="text-black font-sans pt-7 md:pt-12 ">
       <section className="flex flex-col items-center text-center">
         <h2
           className="text-2xl font-semibold md:text-5xl"
@@ -29,7 +29,7 @@ const Home = () => {
           Publish your manuscripts in multiple formats. Create ebooks and
           audiobooks to expand your reach and connect with new readers.
         </p>
-        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[40px] sm:w-[140px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-gray-200 cursor-pointer">
+        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[40px] sm:w-[140px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-white cursor-pointer">
           <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
           <FontAwesomeIcon
             icon={faArrowRight}
@@ -83,7 +83,7 @@ const Home = () => {
                 <h3 className="font-semibold md:text-3xl">
                   Let the world read and listen to your unique story
                 </h3>
-                <h4 className="text-sm md:text-2xl my-3">
+                <h4 className="text-sm my-6">
                   Make your book the next bestseller
                 </h4>
                 <p className="text-xs md:text-lg pb-7">
@@ -328,16 +328,18 @@ const Home = () => {
         </section>
       </div>
       <div className="flex justify-center sm:mt-14">
-          <Link
-            href="/author/sign_in"
-            className="flex cursor-pointer justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[45px] sm:w-[170px] pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg"
-          >
-            <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
-            <FontAwesomeIcon
-              icon={faArrowRight}
-              className="w-3 sm:w-5 font-extralight"
-            />
-          </Link>
+        <Link
+          href="/author/sign_in"
+          className="flex cursor-pointer justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[45px] sm:w-[170px] pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg"
+        >
+          <p className="text-[10px] sm:text-sm font-semibold text-white ">
+            Get Started
+          </p>
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className="w-3 sm:w-5 font-extralight"
+          />
+        </Link>
       </div>
       <ScrollToTop />
     </div>
