@@ -7,8 +7,8 @@ import FadeIn from "@/components/FadeIn";
 
 const Publish = () => {
   return (
-    <div className="md:mt-24 md:w-full">
-      <section className="relative h-[270px] md:h-[600px] from-[#111928] to-[#0841AC] bg-gradient-from-tl bg-gradient-to-br">
+    <div className="md:w-full">
+      <section className="relative md:pt-24  h-[270px] md:h-[600px] from-[#111928] to-[#0841AC] bg-gradient-from-tl bg-gradient-to-br">
         <h2
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
           className="text-white text-[18px] font-semibold ml-3 pt-7 md:pt-16 md:mt-p md:text-3xl md:ml-8"

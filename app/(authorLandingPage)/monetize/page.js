@@ -8,7 +8,7 @@ import FadeIn from "@/components/FadeIn";
 const Monetize = () => {
   return (
     <div className="bg-gray-50">
-      <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-3 bg-slate-700">
+      <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-44 bg-slate-700">
         <div className=" md:relative md:pb-14 md:w-[500px] text-white md:text-left md:ml-40 ">
           <h2
             className="text-2xl font-semibold"
@@ -124,7 +124,7 @@ const Monetize = () => {
       </section>
 
       <section className="mt-6 pb-7 mx-3">
-        <div className="md:flex md:w-[1100px] justify-between">
+        <div className="md:flex md:max-w-[1100px] justify-between bg-yellow-400">
           <div className="md:max-w-[500px] md:ml-8 md:pt-8">
             <h4 className="font-semibold mb-3 md:text-xl">
               Get Paid for Every Page you Read on ITAN Unbound
