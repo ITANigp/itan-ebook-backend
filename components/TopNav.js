@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import LandingPgBtn from "./LandingPgBtn";
+import { usePathname } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBars,
@@ -33,7 +34,6 @@ const bricolage = Bricolage_Grotesque({
 });
 
 const TopNav = ({ styles }) => {
-  // ONLY ONE TopNav
 
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
@@ -66,8 +66,16 @@ const TopNav = ({ styles }) => {
     { title: "Help", href: "/help", icon: faQuestionCircle },
   ];
 
+  const pathname = usePathname()
+  const homePath = pathname.endsWith("/")
+  const publishPath = pathname.endsWith("/publish")
+  const monetizePath = pathname.endsWith("/monetize")
+  const helpPath = pathname.endsWith("/help")
+
   return (
-    <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-[#111928] ">
+    <div
+      className={` ${styles} top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-[#111928]`}
+    >
       <div className="flex items-center ">
         <div className="flex w-full md:justify-between pr-5">
           {/* Mobile Menu Button */}
@@ -198,25 +206,25 @@ const TopNav = ({ styles }) => {
         <ul className="flex space-x-4 h-9 text-center px-9">
           <Link
             href="/"
-            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+            className={` ${homePath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             About Itan
           </Link>
           <Link
             href="/publish"
-            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+            className={` ${publishPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             Publish
           </Link>
           <Link
             href="/monetize"
-            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+            className={` ${monetizePath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             Monetize
           </Link>
           <Link
             href="/help"
-            className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2"
+            className={` ${helpPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             Help
           </Link>
