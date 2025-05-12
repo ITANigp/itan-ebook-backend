@@ -217,7 +217,7 @@ const Home = () => {
         </section>
       </div>
 
-      <section className="pb-10 lg:mb-10">
+      <section className="pb-10 lg:mb-10 md:mx-10">
         <h3
           className="text-center mb-2 font-bold md:text-[40px] md:mt-8 lg:mb-5"
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
@@ -234,7 +234,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className=" lg:w-[180px]"
+              className=" lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Literature & Fiction </p>
           </div>
@@ -244,7 +244,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className="lg:w-[180px]"
+              className="lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Horror </p>
           </div>
@@ -255,7 +255,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className="lg:w-[180px]"
+              className="lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Teen & Young Adult </p>
           </div>
@@ -266,7 +266,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className="lg:w-[180px]"
+              className="lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Romance </p>
           </div>
@@ -277,7 +277,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className="lg:w-[180px]"
+              className="lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Mystery </p>
           </div>
@@ -288,7 +288,7 @@ const Home = () => {
               width={100}
               height={150}
               alt="itan phone"
-              className="lg:w-[180px]"
+              className="lg:w-[150px]"
             />
             <p className="text-xs lg:text-lg lg:mt-2">Comics </p>
           </div>
@@ -296,7 +296,7 @@ const Home = () => {
       </section>
 
       <div className=" sm:w-full flex justify-center">
-        <section className="sm:flex justify-between sm:max-w-[1150px] md:space-x-14 sm:h-auto sm:mx-3">
+        <section className="sm:flex justify-between sm:max-w-[1150px] md:space-x-10 sm:h-auto sm:mx-3">
           <div className="mx-4 flex justify-center">
             <Image
               src="/images/analysis.png"
@@ -308,17 +308,17 @@ const Home = () => {
           </div>
           <div className="mt-8 sm:mt-0 mx-3 pb-10 sm:bg-gray-200 sm:rounded-md sm:w-[600px] sm:h-auto sm:pl-4 sm:pr-1 sm:pt-4 md:p-8 lg:p-12">
             <h3
-              className="font-bold text-xl"
+              className="font-bold text-2xl mb-4"
               style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
             >
               Publish, monitor sales, and manage your earnings
             </h3>
-            <p className="text-sm my-2 md:text-base">
+            <p className="text-sm my-2 mb-3 md:text-base">
               Own your publishing process with ITAN—customize your book content,
               look, and price.
             </p>
-            <ul className="list-disc list-inside text-xs md:text-base">
-              <li>Publish as many titles as you desire.</li>
+            <ul className="list-disc list-inside text-xs md:text-base ">
+              <li className="mb-2">Publish as many titles as you desire.</li>
               <li>
                 Maintain full control and ownership ofyour content, publish at
                 your convenience and set your pricing.
@@ -328,13 +328,16 @@ const Home = () => {
         </section>
       </div>
       <div className="flex justify-center sm:mt-14">
-        <div className="flex justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[35px] sm:w-50 pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg">
-          <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className="w-3 sm:w-5 font-extralight"
-          />
-        </div>
+          <Link
+            href="/author/sign_in"
+            className="flex cursor-pointer justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[45px] sm:w-[170px] pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg"
+          >
+            <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
+            <FontAwesomeIcon
+              icon={faArrowRight}
+              className="w-3 sm:w-5 font-extralight"
+            />
+          </Link>
       </div>
       <ScrollToTop />
     </div>

@@ -103,7 +103,7 @@ const TopNav = ({ styles }) => {
               />
             </Link>
             <p
-              className={`${bricolage.className} text-white text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
+              className={`${bricolage.className} text-gray-200 text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
             >
               Global Publishing
             </p>
@@ -115,7 +115,7 @@ const TopNav = ({ styles }) => {
               <>
                 <div className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6">
                   <button
-                    className="absolute top-4 right-4 text-white p-2"
+                    className="absolute top-4 right-4 text-gray-200 p-2"
                     onClick={toggleMenu}
                     aria-label="Close menu"
                   >
@@ -142,7 +142,7 @@ const TopNav = ({ styles }) => {
                       <div key={index}>
                         <Link
                           href={item.href}
-                          className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                          className="text-gray-200 text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
                           onClick={toggleMenu}
                         >
                           <FontAwesomeIcon
@@ -186,7 +186,7 @@ const TopNav = ({ styles }) => {
             {" "}
             <Link
               href="/author/sign_in"
-              className="bg-[#0c1320] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+              className="bg-[#0c1320] text-gray-200 px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
             >
               Sign In
             </Link>
@@ -194,7 +194,7 @@ const TopNav = ({ styles }) => {
           <div>
             <Link
               href="/author/sign_in"
-              className="bg-[#E50913] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+              className="bg-[#E50913] text-gray-200 px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
             >
               Sign Up
             </Link>
@@ -202,7 +202,7 @@ const TopNav = ({ styles }) => {
         </div>
       </div>
 
-      <div className=" hidden md:flex justify-between text-white -ml-6">
+      <div className=" hidden md:flex justify-between text-gray-200 -ml-6">
         <ul className="flex space-x-4 h-9 text-center px-9">
           <Link
             href="/"

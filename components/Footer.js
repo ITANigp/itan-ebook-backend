@@ -26,7 +26,9 @@ const Footer = ({ styles }) => {
     pathname.startsWith("/author") || pathname.startsWith("/dashboard");
 
   return (
-    <footer className={`${styles} mt-6 medium:mt-8 large:mt-10 xl:mt-0`}>
+    <footer
+      className={`${styles} mt-6 medium:mt-8 large:mt-10 xl:mt-0 bg-[#111928]`}
+    >
       <section className="relative z-30 h-[150px] xs:h-[170px] medium:h-[200px] large:h-[220px] xl:h-[250px] flex flex-col items-center justify-center text-center">
         {/* Background image */}
         <div
@@ -37,11 +39,11 @@ const Footer = ({ styles }) => {
         {/* Full-screen backdrop to reduce image sharpness */}
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 w-full px-4 text-white mb-1  medium:mb-3">
-          <h2 className="mx-auto text-center text-base sm:text-xl  mb-2 font-semibold">
+        <div className="relative z-10 w-full px-4 text-gray-200 mb-1  medium:mb-3">
+          <h2 className="mx-auto text-center text-base sm:text-4xl  mb-2 md:mb-5 font-semibold">
             Stay In The Know
           </h2>
-          <p className="mx-auto text-center text-[10px]  sm:text-base ">
+          <p className="mx-auto text-center text-[10px]  sm:text-base md:mb-2">
             Subscribe to our newsletter and receive IGP updates and special
             offers
           </p>
@@ -53,13 +55,13 @@ const Footer = ({ styles }) => {
             placeholder="Enter email address"
             className="w-10 flex-1 border-0 outline-none ring-0 focus:ring-0 text-xs xs:text-sm medium:text-base px-2"
           />
-          <button className="text-white bg-[#EF5353] border border-black px-3 xs:px-4 medium:px-6 py-1.5 medium:py-2 text-xs xs:text-sm medium:text-base rounded-md cursor-pointer">
+          <button className="text-gray-200 bg-[#E50913] border border-black px-3 xs:px-4 medium:px-6 py-1.5 medium:py-2 text-xs xs:text-sm medium:text-base rounded-md cursor-pointer">
             Subscribe
           </button>
         </div>
       </section>
 
-      <section className="bg-[#111928]">
+      <section className="bg-[#111928] md:mx-5">
         <div className="flex items-center mx-4 lg:ml-0 xs:mx-5  pt-6">
           <Link href="/">
             <Image
@@ -71,7 +73,7 @@ const Footer = ({ styles }) => {
             />
           </Link>
           <p
-            className={`${bricolage.className} text-white text-xl lg:text-3xl font-bold ml-2 lg:-mb-2 lg:-ml-3`}
+            className={`${bricolage.className} text-gray-200 text-xl lg:text-3xl font-bold ml-2 lg:-mb-3 lg:-ml-3`}
           >
             Global Publishing
           </p>
@@ -79,12 +81,12 @@ const Footer = ({ styles }) => {
 
         {/* About Itan */}
         <div className="sm:flex justify-between lg:max-w-[1200px]">
-          <div className="text-white text-xs max-w-[320px] lg:max-w-[700px] mx-4 mr-2 lg:text-sm">
+          <div className="text-gray-200 text-xs max-w-[320px] lg:max-w-[700px] mx-4 mr-2 lg:text-sm">
             <p className="mb-2 ">
               ITAN Global Publishing (IGP) is a digital self-publishing and
               aggregator that connects African literature to new audiences
               across the globe, creating a vibrant market for African
-              literature. We are focused on empowering writers, authors,
+              narrative. We are focused on empowering writers, authors,
               storytellers, and publishers from underrepresented African
               nations.
             </p>
@@ -100,7 +102,7 @@ const Footer = ({ styles }) => {
             </p>
           </div>
 
-          <div className="sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-white font-semibold">
+          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-gray-200">
             <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
               Author Resources
             </Link>
@@ -122,7 +124,7 @@ const Footer = ({ styles }) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center text-white mt-4">
+        <div className="flex flex-col items-center text-gray-200 mt-4">
           {/* Social icons */}
           <div className="flex items-center justify-center sm:justify-start sm:ml-9 w-full">
             <div className="flex space-x-2">
@@ -214,15 +216,10 @@ const Footer = ({ styles }) => {
         </div>
 
         {/* Copyright */}
-        <div className="text-white flex items-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-3 pb-6 medium:pb-8 large:pb-10 text-xs xs:text-sm medium:text-base">
-          <Image
-            src="/images/copy-right.png"
-            alt="copy right"
-            width={16}
-            height={16}
-            className="mr-2"
-          />
-          <p>Copyright 2025 itan. All Rights Reserved.</p>
+        <div className="text-gray-200 flex justify-center mx-4 xs:mx-5 medium:mx-10 large:mx-16 xl:mx-20 mt-3 pb-6 medium:pb-8 large:pb-10 text-sm md:text-base">
+          <p style={{ fontFamily: "Lato, sans-serif" }}>
+            ITAN Technologies Ltd. &copy; 2025. All Rights Reserved
+          </p>
         </div>
       </section>
     </footer>
