@@ -14,6 +14,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { Bricolage_Grotesque } from "next/font/google";
 
 library.add(
   faBars,
@@ -24,75 +25,39 @@ library.add(
   faQuestionCircle
 );
 
+const bricolage = Bricolage_Grotesque({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal"],
+  display: "swap",
+});
+
 const TopNav = ({ styles }) => {
+  // ONLY ONE TopNav
+
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
 
-  // Updated toggle function with better icon transition
   const toggleMenu = () => {
     if (!menu) {
       setMenu(true);
-      // Delay changing the icon until menu is partially visible
       setTimeout(() => setShowCloseIcon(true), 150);
     } else {
       setShowCloseIcon(false);
-      // Delay closing the menu until icon has started changing
       setTimeout(() => setMenu(false), 50);
     }
   };
 
-  // Lock scrolling when menu is open
   useEffect(() => {
     if (menu) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
     }
-
     return () => {
       document.body.style.overflow = "unset";
     };
   }, [menu]);
-
-  // Menu animation variants
-  const menuVariants = {
-    closed: {
-      x: "-100%",
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: [0.4, 0.0, 0.2, 1],
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-        when: "afterChildren",
-      },
-    },
-    open: {
-      x: 0,
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: [0.2, 0.0, 0.0, 1.0],
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-        when: "beforeChildren",
-      },
-    },
-  };
-
-  // Menu item animation variants
-  const itemVariants = {
-    closed: {
-      x: -20,
-      opacity: 0,
-      transition: { duration: 0.2 },
-    },
-    open: {
-      x: 0,
-      opacity: 1,
-      transition: { duration: 0.3 },
-    },
-  };
 
   const menuItems = [
     { title: "About Itan", href: "/", icon: faInfoCircle },
@@ -102,163 +67,153 @@ const TopNav = ({ styles }) => {
   ];
 
   return (
-    <>
-      <nav
-        className={`flex justify-between items-center bg-gray-900 h-auto p-4 medium:px-10 medium:py-4 xl:pl-10 xl:py-6 relative z-20 ${styles}`}
-      >
-        {/* Left section - force it to take most of the space on larger screens */}
-        <div className="flex items-center justify-between w-full medium:w-auto medium:justify-start medium:gap-4 large:flex-grow large:mr-8 xl:flex-grow xl:mr-10">
-          {/* Hamburger menu - mobile only */}
+    <div className="top-0 left-0 z-50 h-16 md:h-auto fixed w-full bg-slate-700 ">
+      <div className="flex items-center ">
+        <div className="flex w-full md:justify-between pr-5">
+          {/* Mobile Menu Button */}
           <button
-            className="block medium:hidden large:hidden xl:hidden z-30 p-1"
+            className="block md:hidden z-30 px-2"
             onClick={toggleMenu}
             aria-label={menu ? "Close menu" : "Open menu"}
           >
             <FontAwesomeIcon
               icon={showCloseIcon ? faTimes : faBars}
               style={{ color: "#FFFFFF" }}
-              className="text-2xl"
+              className="text-[21px] ml-2 md:hidden"
             />
           </button>
 
-          {/* Logo container with heading as a group */}
+          {/* Logo and Text */}
           <div className="flex items-center">
-            <Image
-              src="/images/logo.svg"
-              alt="logo"
-              width={30}
-              height={20}
-              priority={true}
-              quality={85}
-              className="w-14 h-10 medium:w-10 medium:h-8"
-            />
-
-            {/* Heading - directly after logo with proper spacing */}
-            <h1 className="text-white hidden large:block large:ml-5 large:text-2xl xl:block xl:ml-6 xl:text-4xl xl:font-semibold">
+            <Link href="/">
+              <Image
+                src="/images/logo3.png"
+                width={70}
+                height={20}
+                alt="itan logo"
+                className=" md:w-24 md:-mb-1 lg:-mb-3"
+              />
+            </Link>
+            <p
+              className={`${bricolage.className} text-white text-2xl  md:text-[35px] font-semibold -ml-2  lg:-mb-3 `}
+            >
               Global Publishing
-            </h1>
+            </p>
           </div>
-        </div>
 
-        {/* Right section - with improved button sizing */}
-        <nav className="flex gap-3 large:gap-4 xl:gap-5 large:flex-shrink-0 xl:flex-shrink-0">
-          <Link href="/author/sign_in">
-            <LandingPgBtn
-              variant="outlined"
-              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-            >
-              Sign In
-            </LandingPgBtn>
-          </Link>
-          <Link href="/author/sign_up">
-            <LandingPgBtn
-              variant="filled"
-              className="hidden medium:block large:block xl:block medium:px-3 medium:py-2 medium:text-base large:px-5 large:py-3 xl:px-6 xl:py-4 large:text-lg xl:text-xl"
-            >
-              Create Account
-            </LandingPgBtn>
-          </Link>
-        </nav>
-      </nav>
+          {/* Slide Menu */}
+          <AnimatePresence>
+            {menu && (
+              <>
+                <div className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6">
+                  <button
+                    className="absolute top-4 right-4 text-white p-2"
+                    onClick={toggleMenu}
+                    aria-label="Close menu"
+                  >
+                    <FontAwesomeIcon
+                      icon={faTimes}
+                      className="text-2xl hover:text-red-400 transition-colors"
+                    />
+                  </button>
 
-      {/* Mobile Menu Overlay */}
-      <AnimatePresence>
-        {menu && (
-          <>
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-black bg-opacity-50 z-20"
-              onClick={toggleMenu}
-            />
+                  <div className="mb-8">
+                    <Image
+                      src="/images/logo.svg"
+                      alt="logo"
+                      width={40}
+                      height={32}
+                      priority={true}
+                      quality={85}
+                      className="w-10 h-8"
+                    />
+                  </div>
 
-            {/* Slide-in Menu */}
-            <motion.div
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={menuVariants}
-              className="fixed top-0 left-0 h-full w-4/5 max-w-sm bg-gray-900 shadow-xl z-30 flex flex-col py-20 px-6"
-            >
-              {/* Close button positioned at top-right */}
-              <motion.button
-                variants={itemVariants}
-                className="absolute top-4 right-4 text-white p-2"
-                onClick={toggleMenu}
-                aria-label="Close menu"
-              >
-                <FontAwesomeIcon
-                  icon={faTimes}
-                  className="text-2xl hover:text-red-400 transition-colors"
-                />
-              </motion.button>
+                  <nav className="flex flex-col space-y-6">
+                    {menuItems.map((item, index) => (
+                      <div key={index}>
+                        <Link
+                          href={item.href}
+                          className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                          onClick={toggleMenu}
+                        >
+                          <FontAwesomeIcon
+                            icon={item.icon}
+                            className="text-red-400 w-5 h-5"
+                          />
+                          {item.title}
+                        </Link>
+                      </div>
+                    ))}
+                  </nav>
 
-              <div className="mb-8">
-                <motion.div variants={itemVariants} className="mb-8">
-                  <Image
-                    src="/images/logo.svg"
-                    alt="logo"
-                    width={40}
-                    height={32}
-                    priority={true}
-                    quality={85}
-                    className="w-10 h-8"
-                  />
-                </motion.div>
-
-                <nav className="flex flex-col space-y-6">
-                  {menuItems.map((item, index) => (
-                    <motion.div
-                      key={index}
-                      variants={itemVariants}
-                      whileHover={{ x: 5 }}
-                      transition={{ duration: 0.2 }}
-                    >
-                      <Link
-                        href={item.href}
-                        className="text-white text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
+                  <div className="mt-auto space-y-4">
+                    <Link href="/author/sign_in">
+                      <LandingPgBtn
+                        variant="outlined"
+                        className="w-full mb-2 py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
                         onClick={toggleMenu}
                       >
-                        <FontAwesomeIcon
-                          icon={item.icon}
-                          className="text-red-400 w-5 h-5"
-                        />
-                        {item.title}
-                      </Link>
-                    </motion.div>
-                  ))}
-                </nav>
-              </div>
+                        Sign In
+                      </LandingPgBtn>
+                    </Link>
 
-              <motion.div variants={itemVariants} className="mt-auto space-y-4">
-                <Link href="/author/sign_in">
-                  <LandingPgBtn
-                    variant="outlined"
-                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-opacity-10 hover:bg-white active:scale-98"
-                    onClick={toggleMenu}
-                  >
-                    Sign In
-                  </LandingPgBtn>
-                </Link>
+                    <Link href="/author/sign_up">
+                      <LandingPgBtn
+                        variant="filled"
+                        className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
+                        onClick={toggleMenu}
+                      >
+                        Create Account
+                      </LandingPgBtn>
+                    </Link>
+                  </div>
+                </div>
+              </>
+            )}
+          </AnimatePresence>
+        </div>
+        <div className="w-[350px] hidden sm:flex justify-between mr-3 md:mr-10">
+          <div>
+            {" "}
+            <Link
+              href="/author/sign_in"
+              className="bg-[#0c1320] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+            >
+              Sign In
+            </Link>
+          </div>
+          <div>
+            <Link
+              href="/author/sign_in"
+              className="bg-[#E50913] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      </div>
 
-                <Link href="/author/sign_up">
-                  <LandingPgBtn
-                    variant="filled"
-                    className="w-full py-3 text-base font-medium transition-all duration-300 hover:bg-red-600 active:scale-98"
-                    onClick={toggleMenu}
-                  >
-                    Create Account
-                  </LandingPgBtn>
-                </Link>
-              </motion.div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+      <div className=" hidden md:flex justify-between text-white -ml-6">
+        <ul className="flex space-x-4 h-9 text-center px-9">
+          <Link href="/" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+            About Itan
+          </Link>
+          <Link href="/publish" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+            Publish
+          </Link>
+          <Link href="/monetize" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+            Monetize
+          </Link>
+          <Link href="/help" className="hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2">
+            Help
+          </Link>
+        </ul>
+        <p className="text-xs mr-7">
+          One Book Multiple Formats, Endless Readers
+        </p>
+      </div>
+    </div>
   );
 };
 

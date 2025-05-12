@@ -12,7 +12,8 @@ export default function AccordionFaq() {
     {
       question: "What is IGP?",
       answer:
-        "IGP Stands for Itan Global Publishing IGP lets you self-publish eBooks and audiobooks for free, providing direct access to showcase your book on Itan Stores. You can create a dedicated product detail page for your book, enhancing its visibility. Additionally, IGP also provides tools to translate your book into multiple languages and publish audio files (if available), expanding your global readership",
+        `IGP Stands for Itan Global Publishing.
+        IGP lets you self-publish eBooks and audiobooks for free, providing direct access to showcase your book on Itan Stores. You can create a dedicated product detail page for your book, enhancing its visibility. Additionally, IGP also provides tools to translate your book into multiple languages and publish audio files (if available), expanding your global readership.`,
     },
     {
       question: "What types of content can I publish through IGP?",
@@ -36,10 +37,9 @@ export default function AccordionFaq() {
   ];
 
   return (
-    <section>
-      <div className="mt-8 text-xl xs:text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center medium:mb-8 large:mb-10">
-        Frequently Asked Questions
-        <h3>FAQs</h3>
+    <section className="text-sm md:text-base md:mt-24">
+      <div className="mt-8 font-semibold md:text-xl text-center text-gray-500">
+        <h3>Frequently Asked Questions <br className="md:hidden"/> (FAQs)</h3>
       </div>
 
       <div className="divide-y divide-gray-200 rounded-lg xl:mb-8">
@@ -49,7 +49,9 @@ export default function AccordionFaq() {
               onClick={() => toggleAccordion(index)}
               className="flex items-center justify-between w-full p-5 font-medium text-gray-500 hover:bg-gray-100 gap-3"
             >
-              <span className="flex-1 text-left font-semibold">{item.question}</span>
+              <span className="flex-1 text-left font-semibold">
+                {item.question}
+              </span>
               <div className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 medium:w-8 medium:h-8 rounded-full bg-[#FEE6E6] text-[#EF5353] flex-shrink-0 transition-all duration-300">
                 {activeIndex === index ? (
                   // Minus icon when expanded

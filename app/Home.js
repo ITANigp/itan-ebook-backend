@@ -2,10 +2,9 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 
-import HeroSection from "@/components/HeroSection";
-import FadeIn from "@/components/FadeIn";
-import AnimatedLayout from "@/components/AnimatedLayout";
 import ScrollToTop from "@/components/ScrollToTop";
 
 // export const metadata = {
@@ -15,430 +14,328 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    // <AnimatedLayout>
-    <section className="">
-      <HeroSection />
-      <FadeIn delay={0.4} direction="fade" distance={0} duration={1.2}>
-        <article className="w-full mt-6 medium:mt-8 large:mt-10 xl:max-w-7xl xl:mx-auto">
-          <div className="relative h-auto min-h-[280px] medium:h-72 large:h-80 xl:h-96 overflow-hidden rounded-lg bg-[#F6F6F6]">
-            {/* Centered text with improved readability */}
-            <div className="flex items-center justify-center h-full w-full px-6 py-8 medium:px-8 large:px-10 relative z-10">
-              <FadeIn
-                delay={0.6}
-                direction="up"
-                distance={15}
-                duration={1.4}
-                className="w-full flex justify-center"
-              >
-                <p
-                  className="text-black text-center mx-auto w-full max-w-[340px] xs:max-w-md medium:max-w-lg large:max-w-xl xl:max-w-2xl 
-          p-4 medium:p-5 large:p-8 xl:p-10 
-          font-semibold text-base xs:text-lg medium:text-2xl large:text-3xl xl:text-4xl 
-          leading-snug xs:leading-relaxed medium:leading-relaxed large:leading-relaxed xl:leading-relaxed"
-                >
-                  ITAN makes self-publishing simple, allowing you to release
-                  books in different formats and engage new readers worldwide.
-                </p>
-              </FadeIn>
-            </div>
-          </div>
-        </article>
-      </FadeIn>
-      <article className="xl:max-w-7xl xl:mx-auto">
-        <div className="large:flex xl:flex large:items-center xl:items-center large:gap-12 xl:gap-16 large:p-8 xl:p-10">
-          <figure className="mx-auto w-full max-w-xs large:max-w-sm xl:max-w-md large:w-1/2 xl:w-1/2 flex items-center justify-center">
+    <div className="text-black font-sans pt-7 md:pt-32 ">
+      <section className="flex flex-col items-center text-center">
+        <h2
+          className="text-2xl font-semibold md:text-4xl"
+          style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
+        >
+          Discover Global <br className="md:hidden" /> Publishing with ITAN
+        </h2>
+        <p
+          className="max-w-[300px] sm:text-base sm:max-w-[600px] mx-4 text-sm mt-4 mb-2"
+          style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+        >
+          Publish your manuscripts in multiple formats. Create ebooks and
+          audiobooks to expand your reach and connect with new readers.
+        </p>
+        <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] px-3 h-50 w-[100px] sm:h-[32px] sm:w-[120px] pt-[5px] md:mt-3 pb-[6px] space-x-2 text-white ">
+          <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className="w-3 font-extralight"
+          />
+        </div>
+      </section>
+      <div className="flex justify-center px-2">
+        <Image
+          src="/images/book-show.png"
+          alt="books show"
+          width={450}
+          height={350}
+          className="sm:max-w-[650px] sm:max-h-[450px] w-full h-auto"
+        />
+      </div>
+      <section className="sm:flex sm:justify-center sm:w-full">
+        <div className="relative bg-slate-200 shadow-md pt-6 pb-5 rounded-md sm:max-w-[700px] flex justify-center  md:max-w-full  sm:px-20  pl-10   mx-1">
+          <Image
+            src="/images/global-map.png"
+            width={70}
+            height={100}
+            className="absolute -left-[10px] sm:w-32 sm:-left-1 top-2 lg:w-48"
+            alt="globe"
+          />
+          <p
+            className="max-w-[300px] text-lg text-center lg:text-[44px] sm:text-3xl sm:max-w-[700px] lg:max-w-[1000px] lg:leading-normal lg:pl-32 sm:pl-16 md:mx-8"
+            style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
+          >
+            ITAN Makes Self-Publishing Simple, Allowing You To Release Books In
+            Different Formats And Engage New Readers Worldwide.
+          </p>
+        </div>
+      </section>
+
+      <div className="md:flex justify-center bg-[#111928] md:mt-10">
+        <section className=" bg-[#111928] mt-12 pt-6 pb-8 sm:py-4 sm:flex justify-center md:justify-between sm:space-x-3 md:w-[1000px]">
+          <div className="flex flex-col items-center">
             <Image
-              src="/images/books.png"
-              alt="books"
-              width={714}
-              height={301}
-              priority={true}
-              quality={85}
-              className="w-full h-auto object-contain"
+              src="/images/phone-book.png"
+              width={300}
+              height={450}
+              className=" mb-5  p-10 sm:p-0  sm:-mb-4 md:w-[400px] md:h-auto"
+              alt="phone and books"
             />
-          </figure>
-          <div className="medium:w-full large:w-2/3 xl:w-2/3 large:pt-0 xl:pt-0">
-            <FadeIn
-              delay={0.1}
-              direction="fade"
-              animateChildren={true}
-              staggerChildren={0.15}
-            >
-              <h2 className="text-center large:text-start xl:text-start text-2xl font-bold large:text-4xl xl:text-5xl mt-6 large:mt-0 xl:mt-0">
-                Let the World Read and Listen to your Unique Story
-              </h2>
-              <h2 className="font-semibold text-2xl mt-6 medium:px-4 large:px-0 large:text-3xl xl:text-3xl xl:mt-8">
-                Make your book the next bestseller
-              </h2>
-              <p className="mt-6 text-gray-600 medium:px-4 large:px-0 large:text-2xl xl:text-3xl">
-                Publish in diverse formats to make your content easily
-                accessible and enjoyable for all readers.
-              </p>
-            </FadeIn>
-            <FadeIn delay={0.2} direction="fade" distance={0} duration={1.0}>
-              <ul className="large:px-0 mt-8">
-                <FadeIn
-                  delay={0.3}
-                  direction="left"
-                  distance={25}
-                  duration={0.9}
-                >
-                  <li className="flex flex-col mt-6 medium:px-4 large:px-0">
-                    <div className="flex items-center">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="flex-shrink-0 mr-3 large:w-5 large:h-5 xl:w-6 xl:h-6"
-                      >
-                        <rect width="12" height="12" fill="#D78585" />
-                      </svg>
-                      <h2 className="font-semibold text-2xl xl:text-3xl">
-                        Ebook
-                      </h2>
-                    </div>
-                    <p className="text-gray-600 ml-[24px] large:ml-[28px] xl:ml-[32px] large:text-2xl xl:text-3xl">
-                      Upload your manuscript and distribute your eBook on ITAN.
-                    </p>
-                  </li>
-                </FadeIn>
-
-                <FadeIn
-                  delay={0.4}
-                  direction="left"
-                  distance={25}
-                  duration={0.9}
-                >
-                  <li className="flex flex-col mt-6 medium:px-4 large:px-0 large:text-2xl">
-                    <div className="flex items-center">
-                      <svg
-                        width="16"
-                        height="16"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="flex-shrink-0 mr-3 large:w-5 large:h-5 xl:w-6 xl:h-6"
-                      >
-                        <rect width="12" height="12" fill="#D78585" />
-                      </svg>
-                      <h2 className="font-semibold text-2xl xl:text-3xl">
-                        Audio Books
-                      </h2>
-                    </div>
-                    <p className="text-gray-600 ml-[24px] large:ml-[28px] xl:ml-[32px] xl:text-3xl">
-                      Publish your audiobooks and connect with readers in
-                      exciting ways.
-                    </p>
-                  </li>
-                </FadeIn>
-              </ul>
-            </FadeIn>
           </div>
-        </div>
-        <div className="bg-[#E7E7E7] mt-8 p-4 large:p-8 xl:p-10 large:mt-12 xl:mt-16 rounded-lg">
-          <FadeIn delay={0.1} direction="up" distance={25}>
-            <h3 className="text-2xl font-bold large:text-3xl xl:text-4xl">
-              Increase your Earnings with ITAN – Monetize your Works
-            </h3>
-          </FadeIn>
 
-          <div className="large:flex xl:flex large:items-center xl:items-center large:justify-between xl:justify-between large:mt-2 xl:mt-4">
-            <div className="flex flex-col gap-6 mt-6 medium:px-4 large:px-0 xl:mb-0 large:w-3/5 xl:w-3/5">
-              <FadeIn delay={0.2} direction="up" distance={20}>
-                <p className="font-semibold text-2xl medium:px-4 large:px-0 xl:text-3xl">
-                  Control your earnings
-                </p>
-              </FadeIn>
-
-              <ul className="flex flex-col gap-6">
-                <FadeIn delay={0.3} direction="left" distance={30}>
-                  <li className="flex items-start gap-4">
-                    <img
-                      src="/images/cash-hand.png"
-                      alt="cash hand"
-                      className="mt-1 w-6 h-6 large:w-8 large:h-8 xl:w-10 xl:h-10"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-xl large:text-2xl xl:text-3xl">
-                        Earn up to 70% on eBooks
-                      </h3>
-                      <p className="text-gray-600 mt-2 large:text-xl xl:text-2xl">
-                        Earn up to 70% royalty on all ebooks sold through ITAN
-                      </p>
-                    </div>
-                  </li>
-                </FadeIn>
-
-                <FadeIn delay={0.4} direction="left" distance={30}>
-                  <li className="flex items-start gap-4">
-                    <img
-                      src="/images/cash-hand.png"
-                      alt="cash hand"
-                      className="mt-1 w-6 h-6 large:w-8 large:h-8 xl:w-10 xl:h-10"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-xl large:text-2xl xl:text-3xl">
-                        Earn up to 65% on audio books
-                      </h3>
-                      <p className="text-gray-600 mt-2 large:text-xl xl:text-2xl">
-                        Earn up to 60% royalty on audiobooks and hardcover books
-                        sold through ITAN
-                      </p>
-                    </div>
-                  </li>
-                </FadeIn>
-
-                <FadeIn delay={0.5} direction="left" distance={30}>
-                  <li className="flex items-start gap-4">
-                    <img
-                      src="/images/hand-2-hand.png"
-                      alt="hand"
-                      className="mt-1 w-6 h-6 large:w-8 large:h-8 xl:w-10 xl:h-10"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-xl large:text-2xl xl:text-3xl">
-                        Payment of earnings into your local account
-                      </h3>
-                      <p className="text-gray-600 mt-2 large:text-xl xl:text-2xl">
-                        Control your earnings and get paid into any bank account
-                        of your choice
-                      </p>
-                    </div>
-                  </li>
-                </FadeIn>
-              </ul>
-            </div>
-
-            <figure className="xs:flex xs:items-center justify-center large:block mt-8 medium:hidden large:w-2/5 xl:w-2/5">
-              <Image
-                src="/images/image-one.png"
-                alt="ITAN publishing"
-                width={610}
-                height={657}
-                priority={true}
-                quality={85}
-                className="large:w-full large:h-auto xl:w-full xl:h-auto large:max-w-md xl:max-w-lg mx-auto"
-              />
-            </figure>
-          </div>
-        </div>
-      </article>
-      <FadeIn delay={0.2} direction="up">
-        <div className="xl:max-w-7xl xl:mx-auto">
           <div>
-            <p className="mb-8 text-center text-2xl font-semibold mt-6 medium:text-3xl medium:mt-10 large:text-3xl xl:text-4xl">
-              Publish a variety of Genres
-            </p>
-            <div className="grid grid-cols-2 xs:grid-cols-2 medium:grid-cols-3 large:grid-cols-6 xl:grid-cols-6 gap-6 medium:gap-4 large:gap-[3px] xl:gap-[3px] p-4">
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/comics.png"
-                      alt="comics"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={80}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Literature & fiction</p>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/horror.png"
-                      alt="horror"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={85}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Horror</p>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/literature.png"
-                      alt="literature"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={85}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Teen & Young Adult</p>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/mystery.png"
-                      alt="mystery"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={85}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Romance</p>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/romance.png"
-                      alt="romance"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={85}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Mystery</p>
-                </div>
-              </FadeIn>
-
-              <FadeIn direction="up" delay={0.1} distance={30}>
-                <div className="flex flex-col items-center text-center p-2 hover:scale-105 transition-transform duration-300">
-                  <div className="w-full aspect-square flex items-center justify-center mb-3">
-                    <Image
-                      src="/images/teen-adult.png"
-                      alt="teen-adult"
-                      width={197}
-                      height={305}
-                      priority={true}
-                      quality={85}
-                      className="w-40 h-40 xs:w-44 xs:h-44 medium:w-48 medium:h-48 large:w-52 large:h-52 xl:w-56 xl:h-56 object-contain"
-                    />
-                  </div>
-                  <p className="text-base font-medium">Comics</p>
-                </div>
-              </FadeIn>
+            <div className="">
+              <div className="text-gray-100 mx-3 max-w-[300px] md:max-w-[500px]">
+                <h3 className="font-semibold md:text-3xl">
+                  Let the world read and listen to your unique story
+                </h3>
+                <h4 className="text-sm md:text-2xl my-3">
+                  Make your book the next bestseller
+                </h4>
+                <p className="text-xs md:text-lg pb-7">
+                  Publish in diverse formats to make your content easily
+                  accessible and enjoyable for all readers.
+                </p>
+              </div>
+              <ul className="list-disc list-inside mx-3 text-gray-100">
+                <li className="text-xs md:text-lg">
+                  <span className="text-base md:text-[22px] font-semibold">
+                    Ebook
+                  </span>{" "}
+                  <br />
+                  Upload your manuscript and distribute your eBook on ITAN.
+                </li>
+                <li className="text-xs md:text-lg">
+                  <span className="text-base md:text-[22px] font-semibold">
+                    Audio Books
+                  </span>{" "}
+                  <br />
+                  Publish your audiobooks and connect with readers in exciting
+                  ways.
+                </li>
+              </ul>
             </div>
           </div>
-        </div>
-      </FadeIn>
-      <FadeIn delay={0.3} direction="up">
-        <article className="medium:mt-10 medium:px-4 large:mt-10 large:flex large:gap-6 large:px-6 xl:mt-4 xl:flex xl:justify-between xl:max-w-7xl xl:mx-auto">
-          {/* Image figure kept exactly as is */}
-          <figure className="mt-8 medium:hidden large:block xl:block">
-            <Image
-              src="/images/laptop.png"
-              alt=""
-              width={609}
-              height={453}
-              priority={true}
-              quality={85}
-              className="large:w-64 large:h-64"
-            />
-          </figure>
+        </section>
+      </div>
 
-          <div className="mt-10 xl:text-2xl xl:ml-10">
-            {/* Enhanced heading animation */}
-            <FadeIn delay={0.1} direction="up" distance={25} duration={0.95}>
-              <h3 className="text-2xl font-bold">
-                Publish, Monitor Sales, and Manage Your Earnings
-              </h3>
-            </FadeIn>
+      <div className="sm:w-full sm:flex justify-center sm:mt-0 sm:bg-red-50 sm:py-16 mt-10">
+        <section className="sm:flex justify-between sm:max-w-[1200px] md:space-x-14 sm:h-auto sm:mx-3">
+          <div className="py-10 bg-red-100 rounded-md px-6 mx-6 sm:w-[450px] h-auto md:h-full md:flex flex-col justify-center">
+            <h3 className="mb-2 font-bold text-sm md:text-lg text-gray-800">
+              Earn More–Monetize your Works
+            </h3>
+            <div className="flex items-start mb-2">
+              <Image
+                src="/images/save-money.png"
+                width={15}
+                height={10}
+                alt="earn money"
+                className="pt-1 mr-1"
+              />
+              <div>
+                <h4 className="font-semibold text-xs md:text-base">
+                  Earn Up To 70% On Ebooks
+                </h4>
+                <p className="text-[10px] md:text-sm">
+                  Earn up to 70% royalty on all ebooks sold through ITAN
+                </p>
+              </div>
+            </div>
 
-            {/* Subtle paragraph animation */}
-            <FadeIn delay={0.25} direction="fade" distance={0} duration={1.0}>
-              <p className="text-gray-700 py-2">
-                Own your publishing process with ITAN. Customize your book's
-                content, look, and price.
-              </p>
-            </FadeIn>
+            <div className="flex items-start mb-2">
+              <Image
+                src="/images/save-money.png"
+                width={15}
+                height={10}
+                alt="earn money"
+                className="pt-1 mr-1"
+              />
+              <div>
+                <h4 className="font-semibold text-xs md:text-base">
+                  Earn Up To 65% On Audiobooks
+                </h4>
+                <p className="text-[10px] md:text-sm">
+                  Earn up to 60% royalty on audiobooks and hardcover books sold
+                  through ITAN
+                </p>
+              </div>
+            </div>
 
-            <ul className="space-y-3 mt-4">
-              {/* First list item with left animation */}
-              <FadeIn
-                delay={0.4}
-                direction="left"
-                distance={30}
-                duration={0.85}
-              >
-                <li className="flex items-start">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="flex-shrink-0 mr-3 mt-1.5"
-                  >
-                    <rect width="12" height="12" fill="#D78585" />
-                  </svg>
-                  <span className="text-xl font-semibold xl:text-2xl">
-                    Publish as many titles as you desire.
-                  </span>
-                </li>
-              </FadeIn>
-
-              {/* Second list item with left animation and slightly more delay */}
-              <FadeIn
-                delay={0.55}
-                direction="left"
-                distance={35}
-                duration={0.85}
-              >
-                <li className="flex items-start">
-                  <svg
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="flex-shrink-0 mr-3 mt-1.5"
-                  >
-                    <rect width="12" height="12" fill="#D78585" />
-                  </svg>
-                  <span className="text-xl large:pr-12 large:text-wrap font-semibold xl:text-2xl">
-                    Maintain full control and ownership of your content, publish
-                    at your convenience and set your pricing.
-                  </span>
-                </li>
-              </FadeIn>
-            </ul>
-
-            {/* Button with attention-grabbing scale-up animation */}
-            <FadeIn
-              delay={0.7}
-              direction="up"
-              distance={15}
-              duration={0.9}
-              className="transform transition-all hover:scale-105"
-            >
-              <Link href="/author/sign_up">
-                <button className="px-4 py-2 my-6 text-xl text-white bg-red-500 rounded-md xl:px-6 xl:py-4">
-                  Get started
-                </button>
-              </Link>
-            </FadeIn>
+            <div className="flex items-start">
+              <Image
+                src="/images/save-money.png"
+                width={15}
+                height={10}
+                alt="earn money"
+                className="pt-1 mr-1"
+              />
+              <div>
+                <h4 className="font-semibold text-xs md:text-base ">
+                  Royalty Payment Into Your Local Account
+                </h4>
+                <p className="text-[10px] md:text-sm">
+                  Control your earnings and get paid into any bank account of
+                  your choosing
+                </p>
+              </div>
+            </div>
           </div>
-        </article>
-      </FadeIn>
+
+          <div className="bg-red-100 flex justify-center rounded-md pt-10 mx-6 sm:mt-0 mt-4 sm:pr-4">
+            <Image
+              src="/images/earn-money.png"
+              width={300}
+              height={450}
+              alt="earn money"
+              className="w-[300px] sm:w-[450px] h-auto"
+            />
+          </div>
+        </section>
+      </div>
+
+      <div className="md:flex justify-center bg-[#111928]">
+        <section className="flex justify-center bg-[#111928] pr-4 my-10 sm:mt-0 md:justify-between md:w-[1000px]">
+          <Image
+            src="/images/itan-phone.png"
+            width={160}
+            height={300}
+            alt="itan phone"
+            className="md:w-[400px]"
+          />
+          <div className="text-white pt-6 md:w-[500px] md:pt-20">
+            <h3 className="font-bold md:text-[34px]">
+              Building global bridges through the power of storytelling.
+            </h3>
+            <p className="text-[10px] my-3 md:text-2xl">
+              From text to audio, engage all audiences
+            </p>
+            <Image
+              src="/images/congratulation-meg.png"
+              width={150}
+              height={100}
+              alt="itan phone"
+              className="ml-9 md:w-[400px] h-auto"
+            />
+          </div>
+        </section>
+      </div>
+
+      <section className="pb-10 lg:mb-10">
+        <h3
+          className="text-center mb-2 font-bold md:text-[40px] md:mt-8 lg:mb-5"
+          style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
+        >
+          Publish a variety of Genres
+        </h3>
+        <div
+          className="grid grid-cols-3 sm:grid-cols-6 gap-y-5"
+          style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+        >
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/lit-and-fiction.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className=" lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Literature & Fiction </p>
+          </div>
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/horror.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className="lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Horror </p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/teen-and-young.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className="lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Teen & Young Adult </p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/romance.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className="lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Romance </p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/mystery.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className="lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Mystery </p>
+          </div>
+
+          <div className="flex flex-col items-center">
+            <Image
+              src="/images/comics.png"
+              width={100}
+              height={150}
+              alt="itan phone"
+              className="lg:w-[180px]"
+            />
+            <p className="text-xs lg:text-lg lg:mt-2">Comics </p>
+          </div>
+        </div>
+      </section>
+
+      <div className=" sm:w-full flex justify-center">
+        <section className="sm:flex justify-between sm:max-w-[1150px] md:space-x-14 sm:h-auto sm:mx-3">
+          <div className="mx-4 flex justify-center">
+            <Image
+              src="/images/analysis.png"
+              width={350}
+              height={150}
+              alt="analysis"
+              className="sm:w-[600px] sm:h-auto"
+            />
+          </div>
+          <div className="mt-8 sm:mt-0 mx-3 pb-10 sm:bg-gray-200 sm:rounded-md sm:w-[600px] sm:h-auto sm:pl-4 sm:pr-1 sm:pt-4 md:p-8 lg:p-12">
+            <h3
+              className="font-bold text-xl"
+              style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
+            >
+              Publish, monitor sales, and manage your earnings
+            </h3>
+            <p className="text-sm my-2 md:text-base">
+              Own your publishing process with ITAN—customize your book content,
+              look, and price.
+            </p>
+            <ul className="list-disc list-inside text-xs md:text-base">
+              <li>Publish as many titles as you desire.</li>
+              <li>
+                Maintain full control and ownership ofyour content, publish at
+                your convenience and set your pricing.
+              </li>
+            </ul>
+          </div>
+        </section>
+      </div>
+      <div className="flex justify-center sm:mt-14">
+        <div className="flex justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[35px] sm:w-50 pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg">
+          <p className="text-[10px] sm:text-sm font-semibold">Get Started</p>
+          <FontAwesomeIcon
+            icon={faArrowRight}
+            className="w-3 sm:w-5 font-extralight"
+          />
+        </div>
+      </div>
       <ScrollToTop />
-    </section>
-    // {/* </AnimatedLayout> */}
+    </div>
   );
 };
 export default Home;
