@@ -12,20 +12,22 @@ const Monetize = () => {
       <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-24 bg-slate-700">
         <div className=" md:relative md:pb-14 md:max-w-[650px] text-white md:text-left md:ml-24 md:-mt-28">
           <h2
-            className="text-2xl md:3xl lg:text-5xl font-semibold mb-4 md:mb-12"
+            className="text-2xl sm:3xl lg:text-5xl font-semibold mb-4 md:mb-12 max-w-[650px] mt-10 md:mt-0 mx-3"
             style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
           >
             Monetize your digital books with ITAN global publishing
           </h2>
-          <p
-            className="max-w-[300px] md:max-w-[480px] mx-4 text-sm md:my-6 md:ml-0 mb-2"
-            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-          >
-            ITAN provides authors with free publishing and multiple royalty
-            streams.
-          </p>
+          <div className="w-full flex justify-center md:block">
+            <p
+              className="max-w-[480px] mx-4 text-sm md:text-xl md:my-6 mb-2 pt-3 md:pt-0"
+              style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+            >
+              ITAN provides authors with free publishing and multiple royalty
+              streams.
+            </p>
+          </div>
 
-          <div className="flex justify-center mb-5 md:mb-0">
+          <div className="flex justify-center mb-5 md:mb-0 py-10 md:py-0">
             <div className="flex md:hidden justify-center items-center rounded-sm bg-[#E50913] py-[8px] w-[150px] ml-3 space-x-1 text-white cursor-pointer">
               <p className="text-xs font-semibold md:font-normal md:text-sm">
                 Get Started for Free
@@ -57,7 +59,7 @@ const Monetize = () => {
             width={300}
             height={400}
             alt="monetize"
-            className="md:w-[500px] -ml-7 md:ml-0"
+            className="sm:w-[500px] -ml-7 md:ml-0"
           />
         </div>
       </section>
@@ -132,7 +134,7 @@ const Monetize = () => {
       </section>
 
       <section className="mt-6 pb-7 mx-3 md:mx-5">
-        <div className="md:flex md:max-w-[1100px] justify-between">
+        <div className="sm:flex md:max-w-[1100px] justify-between space-x-4">
           <div className="md:max-w-[500px] md:ml-8 md:pt-8">
             <h4 className="font-semibold mb-5 md:text-2xl">
               Get Paid for Every Page you Read on ITAN Unbound
@@ -152,7 +154,7 @@ const Monetize = () => {
             width={300}
             height={250}
             alt="read book"
-            className=" mb-3 md:w-[400px]"
+            className=" mb-3 md:w-[400px] mt-6 md:mt-0"
           />
         </div>
       </section>
