@@ -1,8 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import LandingPgBtn from "./LandingPgBtn";
-import { usePathname } from "next/navigation";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faXTwitter,
+  faFacebookF,
+  faLinkedinIn,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+import { usePathname } from "next/navigation";
 import {
   faBars,
   faTimes,
@@ -73,9 +80,7 @@ const TopNav = ({ styles }) => {
   const helpPath = pathname.endsWith("/help")
 
   return (
-    <div
-      className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}
-    >
+    <div className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}>
       <div className="flex items-center ">
         <div className="flex w-full md:justify-between pr-5">
           {/* Mobile Menu Button */}
@@ -127,13 +132,12 @@ const TopNav = ({ styles }) => {
 
                   <div className="mb-8">
                     <Image
-                      src="/images/logo.svg"
+                      src="/images/logo3.png"
                       alt="logo"
                       width={40}
                       height={32}
                       priority={true}
-                      quality={85}
-                      className="w-10 h-8"
+                      className="w-16 h-auto -mt-[70px] -ml-4"
                     />
                   </div>
 
@@ -145,17 +149,13 @@ const TopNav = ({ styles }) => {
                           className="text-gray-200 text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
                           onClick={toggleMenu}
                         >
-                          <FontAwesomeIcon
-                            icon={item.icon}
-                            className="text-red-400 w-5 h-5"
-                          />
                           {item.title}
                         </Link>
                       </div>
                     ))}
                   </nav>
 
-                  <div className="mt-auto space-y-4">
+                  <div className="my-10 space-y-4">
                     <Link href="/author/sign_in">
                       <LandingPgBtn
                         variant="outlined"
@@ -175,6 +175,46 @@ const TopNav = ({ styles }) => {
                         Create Account
                       </LandingPgBtn>
                     </Link>
+                  </div>
+                  <div className="flex items-center justify-between sm:justify-start sm:ml-9 w-full text-white">
+                    <div className="flex space-x-2">
+                      <Link href="#" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon
+                          icon={faLinkedinIn}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://x.com/ItanGlobal"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faXTwitter}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://web.facebook.com/itanglobalpublishing/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faFacebookF}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://www.instagram.com/itanglobalpublishing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faInstagram}
+                          className="w-[15px] h-3 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                        />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </>
