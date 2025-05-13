@@ -125,11 +125,16 @@ const SignIn = () => {
           <div className="relative">
             <button
               type="submit"
-              disabled={loading || !captchaToken} // Disable until reCAPTCHA completed
-              className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
+              disabled={loading || !captchaToken}
+              className={`${
+                loading || !captchaToken
+                  ? "cursor-not-allowed"
+                  : "cursor-pointer"
+              } h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full`}
             >
               {loading ? "Logging in..." : "Log In"}
             </button>
+
             <Link
               href="/auth/forget-password"
               className="absolute right-0 -bottom-6 text-sm hover:text-blue-700"
