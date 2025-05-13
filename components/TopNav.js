@@ -230,7 +230,7 @@ const TopNav = ({ styles }) => {
           </Link>
         </ul>
         <p className="text-xs mr-7">
-          One Book Multiple Formats, Endless Readers
+          One Book, Multiple Formats, Endless Readers
         </p>
       </div>
     </div>

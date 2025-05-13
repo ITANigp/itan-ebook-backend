@@ -17,13 +17,13 @@ const Home = () => {
     <div className="text-black font-sans pt-7 md:pt-12 ">
       <section className="flex flex-col items-center text-center">
         <h2
-          className="text-2xl font-semibold md:text-5xl"
+          className="text-3xl font-semibold md:text-5xl"
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
         >
           Discover Global <br className="md:hidden" /> Publishing with ITAN
         </h2>
         <p
-          className="max-w-[300px] sm:text-base sm:max-w-[600px] mx-4 text-sm mt-4 md:mt-6 mb-2 md:mb-6"
+          className="max-w-[300px] text-sm md:max-w-[700px] mx-4 md:text-lg mt-4 md:mt-6 mb-5 md:mb-6"
           style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
         >
           Publish your manuscripts in multiple formats. Create ebooks and
@@ -80,12 +80,9 @@ const Home = () => {
           <div>
             <div className="">
               <div className="text-gray-100 mx-3 max-w-[300px] md:max-w-[500px]">
-                <h3 className="font-semibold md:text-3xl">
+                <h3 className="font-semibold md:text-3xl mb-6">
                   Let the world read and listen to your unique story
                 </h3>
-                <h4 className="text-sm my-6">
-                  Make your book the next bestseller
-                </h4>
                 <p className="text-xs md:text-lg pb-7">
                   Publish in diverse formats to make your content easily
                   accessible and enjoyable for all readers.
@@ -190,107 +187,111 @@ const Home = () => {
         </section>
       </div>
 
-      <div className="relative overflow-hidden md:flex justify-center bg-[#111928] ">
-        <section className="flex justify-center bg-[#111928] pr-4 my-10 sm:mt-0 md:justify-between md:w-[1000px]">
+      <div className="relative overflow-hidden md:flex justify-center bg-[#111928] mt-10">
+        <section className="flex flex-col items-center sm:items-start sm:flex-row bg-[#111928] pr-4 my-10 sm:mt-0 sm:justify-between md:w-[1000px]">
           <Image
             src="/images/itan-phone.png"
             width={160}
             height={300}
             alt="itan phone"
-            className="md:w-[400px]"
+            className="md:w-[400px] min-w-[300px] h-auto"
           />
-          <div className="text-gray-200 pt-6 md:w-[500px] md:pt-20">
-            <h3 className="font-bold md:text-[34px]">
+          <div className="text-gray-200 pt-6 pb-24 sm:pb-0 sm:max-w-[500px] md:pt-20 ml-3 sm:ml-0">
+            <h3 className="font-bold text-2xl md:text-[34px] leading-normal">
               Building global bridges through the power of storytelling.
             </h3>
-            <p className="text-[10px] my-6 mb-8 md:text-2xl">
+            <p className="text-xs mt-5 sm:my-6 mb-8 md:text-2xl">
               From text to audio, engage all audiences
             </p>
             <Image
               src="/images/congratulation-meg.png"
-              width={150}
-              height={100}
+              width={250}
+              height={150}
               alt="itan phone"
-              className="ml-9 md:w-[400px] h-auto md:mt-16 md:absolute -right-16 bottom-32 "
+              className="sm:ml-9 sm:w-[300px] md:w-[400px] sm:h-auto sm:mt-16 absolute right-0 bottom-10 lg:bottom-16 "
             />
           </div>
         </section>
       </div>
 
-      <section className="pb-10 lg:mb-10 md:mx-10">
+      <section className="pb-10 mt-4 lg:mb-10 md:mx-10">
         <h3
-          className="text-center mb-2 font-bold md:text-[40px] md:mt-8 lg:mb-5"
+          className="text-center text-2xl mb-2 font-bold md:text-[40px] md:mt-8 lg:mb-5"
           style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
         >
           Publish a variety of Genres
         </h3>
-        <div
-          className="grid grid-cols-3 sm:grid-cols-6 gap-y-5"
-          style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
-        >
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/lit-and-fiction.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className=" lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Literature & Fiction </p>
-          </div>
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/horror.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className="lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Horror </p>
-          </div>
+        <div className="w-full flex justify-center bg-slate-300 py-7">
+          <div
+            className="grid grid-cols-3 sm:grid-cols-6 gap-y-5 max-w-[1580px]"
+            style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
+          >
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/lit-and-fiction.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className=" lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">
+                Literature & Fiction{" "}
+              </p>
+            </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/horror.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className="lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">Horror </p>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/teen-and-young.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className="lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Teen & Young Adult </p>
-          </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/teen-and-young.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className="lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">Teen & Young Adult </p>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/romance.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className="lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Romance </p>
-          </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/romance.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className="lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">Romance </p>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/mystery.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className="lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Mystery </p>
-          </div>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/mystery.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className="lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">Mystery </p>
+            </div>
 
-          <div className="flex flex-col items-center">
-            <Image
-              src="/images/comics.png"
-              width={100}
-              height={150}
-              alt="itan phone"
-              className="lg:w-[150px]"
-            />
-            <p className="text-xs lg:text-lg lg:mt-2">Comics </p>
+            <div className="flex flex-col items-center">
+              <Image
+                src="/images/comics.png"
+                width={100}
+                height={150}
+                alt="itan phone"
+                className="lg:w-[150px]"
+              />
+              <p className="text-xs lg:text-lg lg:mt-2">Comics </p>
+            </div>
           </div>
         </div>
       </section>
@@ -327,7 +328,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center sm:mt-14">
+      <div className="flex justify-center sm:mt-14 xl:mb-7">
         <Link
           href="/author/sign_in"
           className="flex cursor-pointer justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[45px] sm:w-[170px] pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg"
