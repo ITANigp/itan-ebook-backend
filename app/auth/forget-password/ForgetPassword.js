@@ -1,23 +1,23 @@
 "use client";
 
-import { useState } from 'react'
-import { api } from "@/utils/api"
+import { useState } from "react";
+import { api } from "@/utils/auth/authorApi";
 
 export default function ForgotPassword() {
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
       const res = await api.post("/authors/password", {
         author: { email },
       });
-      setMessage('If the email exists, reset instructions have been sent.')
+      setMessage("If the email exists, reset instructions have been sent.");
     } catch (err) {
-      setMessage('If the email exists, reset instructions have been sent.')
+      setMessage("If the email exists, reset instructions have been sent.");
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-4 border rounded-xl">
@@ -31,9 +31,11 @@ export default function ForgotPassword() {
           onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">Send Reset Link</button>
+        <button className="bg-blue-600 text-white px-4 py-2 rounded">
+          Send Reset Link
+        </button>
       </form>
       {message && <p className="mt-4 text-sm">{message}</p>}
     </div>
-  )
+  );
 }

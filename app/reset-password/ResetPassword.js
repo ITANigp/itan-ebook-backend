@@ -1,35 +1,35 @@
-"use client"
+"use client";
 
-import { useSearchParams, useRouter } from 'next/navigation'
-import { useState } from 'react'
-import { api } from '@/utils/api'
+import { useSearchParams, useRouter } from "next/navigation";
+import { useState } from "react";
+import { api } from "@/utils/auth/authorApi";
 
 export default function ResetPassword() {
-  const searchParams = useSearchParams()
-  const router = useRouter()
-  const reset_password_token = searchParams.get('reset_password_token')
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const reset_password_token = searchParams.get("reset_password_token");
 
-  const [password, setPassword] = useState('')
-  const [passwordConfirmation, setPasswordConfirmation] = useState('')
-  const [message, setMessage] = useState('')
-  const [error, setError] = useState([])
+  const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState([]);
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const res = await api.put('/authors/password', {
+      const res = await api.put("/authors/password", {
         author: {
           reset_password_token,
           password,
           password_confirmation: passwordConfirmation,
         },
-      })
-      setMessage('Password reset successfully. Redirecting to login...')
-      setTimeout(() => router.push('/author/sign_in'), 2000)
+      });
+      setMessage("Password reset successfully. Redirecting to login...");
+      setTimeout(() => router.push("/author/sign_in"), 2000);
     } catch (err) {
-      setError(err.response?.data?.errors || ['An error occurred.'])
+      setError(err.response?.data?.errors || ["An error occurred."]);
     }
-  }
+  };
 
   return (
     <div className="max-w-md mx-auto mt-16 p-4 border rounded-xl">
@@ -51,7 +51,9 @@ export default function ResetPassword() {
           onChange={(e) => setPasswordConfirmation(e.target.value)}
           required
         />
-        <button className="bg-green-600 text-white px-4 py-2 rounded">Reset Password</button>
+        <button className="bg-green-600 text-white px-4 py-2 rounded">
+          Reset Password
+        </button>
       </form>
       {message && <p className="mt-4 text-green-600">{message}</p>}
       {error.length > 0 && (
@@ -62,5 +64,5 @@ export default function ResetPassword() {
         </ul>
       )}
     </div>
-  )
+  );
 }

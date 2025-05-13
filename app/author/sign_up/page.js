@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { registerAuthor } from "@/utils/api";
+import { registerAuthor } from "@/utils/auth/authorApi";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -23,7 +23,7 @@ const SignUp = () => {
       const author = await registerAuthor(
         // name,
         email,
-        password,
+        password
         // password_confirmation
       );
       if (author?.data?.id) {

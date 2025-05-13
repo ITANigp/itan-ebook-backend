@@ -5,12 +5,12 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import LogoutModal from "@/components/LogoutModal";
-import { getAuthorProfile } from "@/utils/api";
-import { signOutAuthor } from "@/utils/api";
+import { getAuthorProfile } from "@/utils/auth/authorApi";
+import { signOutAuthor } from "@/utils/auth/authorApi";
 
 const layout = ({ children }) => {
   const [showModal, setShowModal] = useState(false);
-  const [profile, setProfile] = useState({})
+  const [profile, setProfile] = useState({});
   const pathname = usePathname();
   const isProfilePage = pathname.endsWith("/profile");
   const isPrivacyPage = pathname.endsWith("/security");
@@ -28,18 +28,18 @@ const layout = ({ children }) => {
   };
 
   const fetchProfile = async () => {
-      try {
-        const { data } = await getAuthorProfile();
-        setProfile(data);
-        console.log("Fetched Profile Data: ", data);
-      } catch (err) {
-        // setError("Failed to fetch author profile.");
-        console.error(err);
-      }
-    };
-    useEffect(() => {
-      fetchProfile();
-    }, []);
+    try {
+      const { data } = await getAuthorProfile();
+      setProfile(data);
+      console.log("Fetched Profile Data: ", data);
+    } catch (err) {
+      // setError("Failed to fetch author profile.");
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
   return (
     <div className="mx-2  lg:pl-64  lg:pt-24 bg-gray-100 lg:bg-white">

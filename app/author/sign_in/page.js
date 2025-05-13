@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInAuthor } from "@/utils/api"; // Ensure this is correctly set up
+import { signInAuthor } from "@/utils/auth/authorApi"; // Ensure this is correctly set up
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ const SignIn = () => {
     } catch (error) {
       setMessage(
         error.response?.data?.error ||
-        "Sign-in failed. Please check your credentials."
+          "Sign-in failed. Please check your credentials."
       );
     } finally {
       setLoading(false);
@@ -136,16 +136,18 @@ const SignIn = () => {
               <p>Redirecting...</p>
             ) : (
               <>
-                <img src="/images/google.png" className="w-6 h-6" alt="Google Logo" />
+                <img
+                  src="/images/google.png"
+                  className="w-6 h-6"
+                  alt="Google Logo"
+                />
                 <p>Continue with Google</p>
               </>
             )}
           </button>
 
           {message && (
-            <p className="mt-4 text-center text-sm text-[#E50913]">
-              {message}
-            </p>
+            <p className="mt-4 text-center text-sm text-[#E50913]">{message}</p>
           )}
         </form>
       </section>

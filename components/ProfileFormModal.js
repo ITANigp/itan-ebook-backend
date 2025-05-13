@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAuthorProfile, updateAuthorProfile } from "@/utils/api";
+import { getAuthorProfile, updateAuthorProfile } from "@/utils/auth/authorApi";
 
 const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
   const [profile, setProfile] = useState({

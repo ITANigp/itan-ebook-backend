@@ -14,8 +14,8 @@ import {
   createAuthorProfile,
   getAuthorProfile,
   updateAuthorProfile,
-} from "@/utils/api";
-import { api } from "@/utils/api"; // Ensure this is imported
+} from "@/utils/auth/authorApi";
+import { api } from "@/utils/auth/authorApi"; // Ensure this is imported
 
 const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -185,7 +185,7 @@ const Profile = () => {
             <p className="text-gray-400 italic">
               {/* {profile.email} */}
               oluola96@gmail.com
-              </p>
+            </p>
           </div>
         </div>
       </section>
@@ -211,7 +211,7 @@ const Profile = () => {
           <p className="text-gray-400">
             {/* {profile.first_name} */}
             Paul
-            </p>
+          </p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-2">
@@ -219,7 +219,7 @@ const Profile = () => {
           <p className="text-gray-400">
             {/* {profile.last_name} */}
             Oluyemi
-            </p>
+          </p>
         </div>
         <div className="flex justify-between w-full border-b mb-2">
           <p>Bio</p>
@@ -230,7 +230,7 @@ const Profile = () => {
           <p className="text-gray-400">
             {/* {profile.phone_number} */}
             888888888888888
-            </p>
+          </p>
         </div>
       </section>
 
@@ -247,13 +247,13 @@ const Profile = () => {
           <p className="text-gray-400">
             {/* {profile.country} */}
             Nija
-            </p>
+          </p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-3">
           <p>Location</p>
           <p className="text-gray-400">
-            {/* {profile.location === "null" ? "..." : profile.location} */} 
+            {/* {profile.location === "null" ? "..." : profile.location} */}
             Lagos
           </p>
         </div>
