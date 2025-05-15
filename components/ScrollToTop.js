@@ -40,7 +40,7 @@ export default function ScrollToTop({ styles }) {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0.8 }}
           transition={{ duration: 0.2 }}
-          className="fixed bottom-6 right-6 p-3 rounded-full bg-[#EF5353] text-white shadow-lg hover:bg-[#D64545] focus:outline-none focus:ring-2 focus:ring-red-400 z-50 transition-transform duration-300 hover:scale-110"
+          className="fixed bottom-6 right-6 p-3 rounded-full bg-[#E50913] text-white shadow-lg hover:bg-[#d83a3a] focus:outline-none focus:ring-2 focus:bg-[#E50913] z-50 transition-transform duration-300 hover:scale-110"
           aria-label="Scroll to top"
         >
           <svg
