@@ -41,7 +41,6 @@ const bricolage = Bricolage_Grotesque({
 });
 
 const TopNav = ({ styles }) => {
-
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
 
@@ -73,16 +72,16 @@ const TopNav = ({ styles }) => {
     { title: "Help", href: "/help", icon: faQuestionCircle },
   ];
 
-  const pathname = usePathname()
-  const homePath = pathname.endsWith("/")
-  const publishPath = pathname.endsWith("/publish")
-  const monetizePath = pathname.endsWith("/monetize")
-  const helpPath = pathname.endsWith("/help")
+  const pathname = usePathname();
+  const homePath = pathname.endsWith("/");
+  const publishPath = pathname.endsWith("/publish");
+  const monetizePath = pathname.endsWith("/monetize");
+  const helpPath = pathname.endsWith("/help");
 
   return (
     <div className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}>
       <div className="flex items-center ">
-        <div className="flex w-full md:justify-between pr-5">
+        <div className="flex w-full md:justify-between">
           {/* Mobile Menu Button */}
           <button
             className="block md:hidden z-30 px-2"
@@ -96,22 +95,22 @@ const TopNav = ({ styles }) => {
             />
           </button>
 
-          {/* Logo and Text */}
-          <div className="flex items-center">
+          {/* Logo and Text - pushed to right on mobile */}
+          <div className="flex items-center ml-auto md:ml-0">
             <Link href="/">
               <Image
                 src="/images/logo3.png"
                 width={70}
                 height={20}
                 alt="itan logo"
-                className=" md:w-24 md:-mb-1 lg:-mb-3"
+                className="md:w-24 md:-mb-1 lg:-mb-3"
               />
             </Link>
-            <p
-              className={`${bricolage.className} text-gray-200 text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
+            {/* <p
+              className={`${bricolage.className} hidden xs:hidden medium:hidden large:flex xl:flex text-gray-200 text-xl md:text-[26px] lg:text-[28px] font-normal -ml-2 md:-ml-3 lg:-mb-3`}
             >
               Global Publishing
-            </p>
+            </p> */}
           </div>
 
           {/* Slide Menu */}
