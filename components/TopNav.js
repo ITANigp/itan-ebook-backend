@@ -106,11 +106,11 @@ const TopNav = ({ styles }) => {
                 className="md:w-24 md:-mb-1 lg:-mb-3"
               />
             </Link>
-            {/* <p
-              className={`${bricolage.className} hidden xs:hidden medium:hidden large:flex xl:flex text-gray-200 text-xl md:text-[26px] lg:text-[28px] font-normal -ml-2 md:-ml-3 lg:-mb-3`}
+            <p
+              className={`${bricolage.className} hidden lg:flex xl:flex text-gray-200 text-xl md:text-[26px] lg:text-[18px] font-normal -ml-2 md:-ml-3 lg:-mb-3`}
             >
               Global Publishing
-            </p> */}
+            </p>
           </div>
 
           {/* Slide Menu */}

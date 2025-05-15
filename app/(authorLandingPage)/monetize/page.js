@@ -17,24 +17,19 @@ const Monetize = () => {
           <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between">
             {/* Image column */}
             <div className="w-full md:w-1/2 lg:w-5/12 flex justify-center md:justify-end relative">
-              {/* Square image container - add rounded-full class to make it circular instead */}
-              <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] aspect-square rounded-xl overflow-hidden transform transition-transform duration-700 hover:scale-[1.02]">
-                <div className="absolute -inset-0.5 bg-gradient-to-tr from-slate-500/10 to-slate-400/5 rounded-xl blur opacity-30 -z-10"></div>
+              {/* Direct image with no container */}
+              <div className="relative transform transition-transform duration-700 hover:scale-[1.02]">
+                <div className="absolute -inset-1 bg-gradient-to-tr from-slate-500/10 to-slate-400/5 rounded-xl blur opacity-30"></div>
 
-                {/* Image with fill to properly fill the container */}
-                <div className="w-full h-full relative">
-                  <Image
-                    src="/images/monetize-hero.png"
-                    fill
-                    alt="Monetize your books with ITAN"
-                    className="object-cover object-center relative z-10"
-                    priority={true}
-                    sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, 380px"
-                  />
-                </div>
-
-                {/* Add shadow effect */}
-                <div className="absolute inset-0 shadow-lg z-10 pointer-events-none"></div>
+                <Image
+                  src="/images/monetize_2.png"
+                  width={380}
+                  height={380}
+                  alt="Monetize your books with ITAN"
+                  className="relative z-10 rounded-xl shadow-lg w-auto h-auto max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[450px] xl:max-w-[520px]"
+                  priority={true}
+                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, (max-width: 1280px) 450px, 520px"
+                />
               </div>
 
               {/* Decorative element */}
@@ -189,6 +184,88 @@ const Monetize = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="my-16 flex flex-col large:flex-row xl:flex-row gap-6 xl:max-w-7xl xl:mx-auto">
+        {/* Ebook Royalty Card */}
+        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02] mb-6 large:mb-0 xl:mb-0">
+          <div className="p-6 flex flex-col items-center text-center">
+            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
+              <Image
+                src="/images/phone-book.svg"
+                alt="phone-book"
+                width={147}
+                height={147}
+                priority={true}
+                quality={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
+              Royalty for eBook Sale
+            </p>
+            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
+              70%
+            </p>
+          </div>
+        </div>
+
+        {/* Audiobook Royalty Card */}
+        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02]">
+          <div className="p-6 flex flex-col items-center text-center">
+            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
+              <Image
+                src="/images/audio-book.png"
+                alt="audio-book"
+                width={147}
+                height={147}
+                priority={true}
+                quality={80}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
+              Royalty for Audiobook Sale
+            </p>
+            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
+              65%
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="my-16 xl:max-w-7xl xl:mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+        <div className="p-6 medium:p-8 large:p-10 xl:p-12 flex flex-col large:flex-row xl:flex-row gap-8 large:gap-12 xl:gap-16">
+          <div className="w-full large:w-1/2 xl:w-1/2">
+            <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
+              Get Paid for Every Page Read on{" "}
+              <span className="text-[#EF5353]">ITAN Unbound</span>
+            </h3>
+
+            <p className="text-lg medium:text-xl large:text-2xl text-gray-700 mb-4">
+              With ITAN Unbound's subscription program, your book reaches a
+              wider audience of eager readers, expanding its reach beyond
+              traditional sales.
+            </p>
+
+            <p className="text-lg medium:text-xl large:text-2xl text-gray-700">
+              Your revenue share is based on the number of pages read by
+              customers in the subscription program.
+            </p>
+          </div>
+
+          <figure className="w-full large:w-1/2 xl:w-1/2 flex items-center justify-center">
+            <Image
+              src="/images/woman.png"
+              alt="ITAN Unbound revenue graph"
+              width={308}
+              height={308}
+              priority={true}
+              quality={85}
+              className="w-full h-auto max-w-md mx-auto object-contain rounded-md"
+            />
+          </figure>
         </div>
       </section>
     </div>

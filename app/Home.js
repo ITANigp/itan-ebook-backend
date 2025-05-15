@@ -143,7 +143,8 @@ const Home = () => {
         </FadeIn>
       </section>
 
-      <div className="relative overflow-hidden bg-gradient-to-b from-[#111928] to-[#1a2235] mt-12 lg:py-24 py-16">
+      {/* Blue section */}
+      <div className="relative overflow-hidden bg-gradient-to-b from-[#111928] to-[#1a2235] mt-12 lg:py-24 py-10">
         {/* Texture Overlay */}
         <div className="absolute inset-0 bg-[url('/images/subtle-paper-texture.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
 
@@ -155,10 +156,10 @@ const Home = () => {
                 <div className="relative transform transition-transform duration-500 hover:scale-[1.02] max-w-[320px] md:max-w-none">
                   <div className="absolute -inset-0.5 bg-gradient-to-tr from-red-600/20 to-gray-400/10 rounded-xl blur opacity-30"></div>
                   <Image
-                    src="/images/phone-book.png"
+                    src="/images/phone-book.svg"
                     width={400}
                     height={600}
-                    className="relative mt-6 md:mt-0 w-full max-w-[350px] md:max-w-[450px] lg:max-w-[500px] h-auto z-10 drop-shadow-2xl"
+                    className="relative mb-8 mt-6 md:mt-0 w-full max-w-[350px] md:max-w-[450px] lg:max-w-[500px] h-auto z-10 drop-shadow-2xl"
                     alt="Phone and books"
                     priority
                   />
@@ -167,38 +168,39 @@ const Home = () => {
 
               {/* Text Section */}
               <div className="text-white max-w-xl md:pl-6 lg:pl-12">
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-semibold leading-tight mb-6 tracking-tight">
-                  Let the world read and{" "}
-                  <span className="text-red-500">listen</span> to your unique
-                  story
+                <h3 className="text-3xl sm:text-4xl lg:text-4xl font-semibold leading-tight mb-6 tracking-tight">
+                  Let the world both read and listen to your unique story
                 </h3>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
-                  Publish in diverse formats to make your content easily
-                  accessible and enjoyable for readers worldwide.
+                  Publish in multiple formats to reach broader audiences and
+                  create immersive experiences that resonate with readers
+                  worldwide.
                 </p>
 
                 <div className="space-y-6">
                   {/* Ebooks */}
                   <div className="relative pl-10">
-                    <div className="absolute left-0 top-1 w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 to-red-400 flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">1</span>
+                    <div className="absolute left-0 top-1 w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center">
+                      <span className="text-gray-900 text-xs font-bold">1</span>
                     </div>
                     <h4 className="text-xl font-semibold mb-1">Ebooks</h4>
                     <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                      Upload your manuscript and distribute your eBook on ITAN
-                      to reach digital readers globally.
+                      Transform your manuscripts into professional ebooks on
+                      ITAN and connect with digital readers across every
+                      continent.
                     </p>
                   </div>
 
                   {/* Audiobooks */}
                   <div className="relative pl-10">
-                    <div className="absolute left-0 top-1 w-7 h-7 rounded-full bg-gradient-to-tr from-red-600 to-red-400 flex items-center justify-center">
-                      <span className="text-white text-xs font-bold">2</span>
+                    <div className="absolute left-0 top-1 w-7 h-7 rounded-full bg-white shadow-sm flex items-center justify-center">
+                      <span className="text-gray-900 text-xs font-bold">2</span>
                     </div>
                     <h4 className="text-xl font-semibold mb-1">Audio Books</h4>
                     <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
-                      Publish your audiobooks and connect with listeners in
-                      exciting new ways through audio storytelling.
+                      Bring your stories to life with immersive audio
+                      experiences that captivate listeners during commutes,
+                      workouts, and beyond.
                     </p>
                   </div>
                 </div>
@@ -316,10 +318,10 @@ const Home = () => {
       <section className="relative bg-gradient-to-b from-[#111928] to-[#1a2235] py-16 sm:py-20 lg:py-24 xl:py-28 overflow-hidden">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl relative">
           <FadeIn delay={0.2} direction="up" distance={10} duration={0.7}>
-            {/* Mobile-optimized layout (side by side) */}
-            <div className="flex flex-col sm:hidden gap-4">
-              <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-[120px]">
+            {/* Mobile-optimized layout with improved spacing and sizing */}
+            <div className="flex flex-col sm:hidden gap-6">
+              <div className="flex items-start gap-5">
+                <div className="flex-shrink-0 w-[130px]">
                   <div className="relative transform transition-transform duration-500 hover:scale-[1.02]">
                     <div className="absolute -inset-0.5 bg-gradient-to-tr from-red-600/10 to-gray-400/5 rounded-xl blur opacity-30"></div>
                     <Image
@@ -338,14 +340,14 @@ const Home = () => {
                     Building global bridges through storytelling.
                   </h3>
 
-                  <p className="text-xs text-gray-300 mt-2">
+                  <p className="text-sm text-gray-300 mt-3 leading-relaxed">
                     From text to audio, engage all audiences
                   </p>
                 </div>
               </div>
 
-              {/* Congratulation message for mobile */}
-              <div className="mt-4 sm:mt-6 w-full max-w-[260px] xs:max-w-[320px] medium:max-w-[380px] large:max-w-[420px] xl:max-w-[450px] mx-auto">
+              {/* Congratulation message for mobile - improved container */}
+              <div className="mt-6 w-full max-w-full mx-auto px-2">
                 <div className="relative overflow-hidden rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                   {/* Enhanced gradient overlay with better opacity */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-white/15 mix-blend-overlay"></div>
@@ -391,7 +393,7 @@ const Home = () => {
 
               {/* Right column with text content */}
               <div className="col-span-7 lg:col-span-7 flex flex-col items-start z-10">
-                <h3 className="font-bold mt-4 text-3xl md:text-4xl lg:text-5xl text-white leading-tight tracking-tight max-w-xl">
+                <h3 className="font-bold mt-8 text-3xl md:text-4xl lg:text-5xl text-white leading-tight tracking-tight max-w-xl">
                   Building global bridges through the power of storytelling.
                 </h3>
 
@@ -426,7 +428,7 @@ const Home = () => {
         >
           Publish a variety of Genres
         </h3>
-        <div className="w-full flex justify-center bg-slate-300 py-7">
+        <div className="w-full flex justify-center py-7">
           <div
             className="grid grid-cols-3 sm:grid-cols-6 gap-y-5 max-w-[1580px]"
             style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
@@ -514,19 +516,23 @@ const Home = () => {
           </div>
           <div className="mt-8 sm:mt-0 mx-3 pb-10 sm:bg-gray-200 sm:rounded-md sm:w-[600px] sm:h-auto sm:pl-4 sm:pr-1 sm:pt-4 md:p-8 lg:p-12">
             <h3
-              className="font-bold text-2xl mb-4"
+              className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl mb-3 sm:mb-4 md:mb-5 leading-tight tracking-tight"
               style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
             >
               Publish, monitor sales, and manage your earnings
             </h3>
-            <p className="text-sm my-2 mb-3 md:text-base">
+
+            <p className="text-sm sm:text-base md:text-lg lg:text-lg xl:text-xl my-2 mb-3 md:mb-4 leading-relaxed text-gray-700">
               Own your publishing process with ITAN—customize your book content,
               look, and price.
             </p>
-            <ul className="list-disc list-inside text-xs md:text-base ">
-              <li className="mb-2">Publish as many titles as you desire.</li>
+
+            <ul className="list-disc list-outside ml-5 space-y-2 md:space-y-3 text-sm sm:text-base md:text-lg text-gray-700 leading-relaxed">
+              <li className="mb-1 sm:mb-2">
+                Publish as many titles as you desire.
+              </li>
               <li>
-                Maintain full control and ownership ofyour content, publish at
+                Maintain full control and ownership of your content, publish at
                 your convenience and set your pricing.
               </li>
             </ul>
