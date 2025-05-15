@@ -101,14 +101,14 @@ const TopNav = ({ styles }) => {
             <Link href="/">
               <Image
                 src="/images/logo3.png"
-                width={70}
+                width={50}
                 height={20}
                 alt="itan logo"
-                className=" md:w-24 md:-mb-1 lg:-mb-3"
+                className=" sm:w-16 md:w-24 md:-mb-1 lg:-mb-3"
               />
             </Link>
             <p
-              className={`${bricolage.className} text-gray-200 text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
+              className={`${bricolage.className} text-gray-200 text-[20px] sm:text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
             >
               Global Publishing
             </p>

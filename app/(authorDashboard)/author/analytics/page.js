@@ -9,18 +9,20 @@ import {
   LinearScale,
   ArcElement,
 } from "chart.js";
-import {
-  FaMoneyBillWave,
-  FaShoppingCart,
-  FaUsers,
-  FaBoxOpen,
-} from "react-icons/fa";
+import { FaMoneyBillWave, FaShoppingCart, FaUsers } from "react-icons/fa";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement);
 
 export default function Dashboard() {
-  const [barData, setBarData] = useState({});
-  const [doughnutData, setDoughnutData] = useState({});
+  const [barData, setBarData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const [doughnutData, setDoughnutData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   useEffect(() => {
     setBarData({
@@ -110,43 +112,38 @@ export default function Dashboard() {
 
   return (
     <div className="flex bg-gray-100 min-h-screen">
-      <aside className="w-64 bg-black text-white p-6">
-        <h1 className="text-2xl font-bold mb-6">itan</h1>
-        <nav className="space-y-4">
-          <div>Overview</div>
-          <div>Book Shelf</div>
-          <div>Sales</div>
-          <div className="text-red-500">Analytics</div>
-          <div>Withdrawal</div>
-          <div>Help</div>
-          <div>Profile</div>
-        </nav>
-      </aside>
       <main className="flex-1 p-6">
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {stats.map((stat, idx) => (
             <div key={idx} className="bg-white p-4 rounded shadow">
               <div className="text-gray-500 flex items-center gap-2">
                 {stat.icon} <span>{stat.label}</span>
               </div>
               <div className="text-2xl font-bold">{stat.value}</div>
-              <div className="text-sm text-green-500">
+              <div
+                className={`text-sm ${stat.change.startsWith("-") ? "text-red-500" : "text-green-500"}`}
+              >
                 {stat.change} vs last month
               </div>
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-6 mb-6">
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
           <div className="bg-white p-4 rounded shadow">
             <h2 className="mb-2 text-lg font-semibold">Users Report</h2>
-            <Bar data={barData} />
+            {barData.datasets.length > 0 && <Bar data={barData} />}
           </div>
+
           <div className="bg-white p-4 rounded shadow">
             <h2 className="mb-2 text-lg font-semibold">Reading Traffic</h2>
-            <Doughnut data={doughnutData} />
+            {doughnutData.datasets.length > 0 && (
+              <Doughnut data={doughnutData} />
+            )}
             <div className="text-center mt-4 text-xl">66.4k Unique Readers</div>
           </div>
         </div>
+
         <div className="bg-white p-4 rounded shadow">
           <h2 className="mb-4 text-lg font-semibold">Latest Transactions</h2>
           <table className="w-full text-left">
@@ -166,7 +163,11 @@ export default function Dashboard() {
                   </td>
                   <td className="py-2">{tx.date}</td>
                   <td className="py-2">{tx.amount}</td>
-                  <td className="py-2 text-green-600">{tx.status}</td>
+                  <td
+                    className={`py-2 ${tx.status === "Cancelled" ? "text-red-500" : "text-green-600"}`}
+                  >
+                    {tx.status}
+                  </td>
                 </tr>
               ))}
             </tbody>

@@ -1,9 +1,20 @@
-import React from 'react'
+// app/books/page.tsx (or wherever the route is)
 
-const Books = () => {
+import { getAllBooks } from "@/utils/db/admin/bookApi";
+
+const Books = async () => {
+  const books = await getAllBooks();
+
   return (
-    <div>All Books</div>
-  )
-}
+    <div>
+      <h1>All Books</h1>
+      <ul>
+        {books?.data?.map((book) => (
+          <li key={book.id}>{book.title}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 
-export default Books
+export default Books;
