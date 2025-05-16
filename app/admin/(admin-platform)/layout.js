@@ -41,7 +41,7 @@ export default function AuthorDashboardLayout({ children }) {
   const isDashboard = pathName.endsWith("/admin/dashboard")
     ? "text-[#E50913]"
     : "text-gray-300";
-  const isBooksPage = pathName.endsWith("/admin/dashboard/books");
+  const isBooksPage = pathName.endsWith("/admin/books");
   const isBookContent = pathName.endsWith("/books/create/book-content");
   const isBookPricing = pathName.endsWith("/books/create/book-pricing");
   const isSignIn = pathName.endsWith("/author/sign_in");
@@ -122,7 +122,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <Link
-                href={`/admin/dashboard/books`}
+                href={`/admin/books`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
