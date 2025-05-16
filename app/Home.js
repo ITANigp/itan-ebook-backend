@@ -156,10 +156,10 @@ const Home = () => {
                 <div className="relative transform transition-transform duration-500 hover:scale-[1.02] max-w-[320px] md:max-w-none">
                   <div className="absolute -inset-0.5 bg-gradient-to-tr from-red-600/20 to-gray-400/10 rounded-xl blur opacity-30"></div>
                   <Image
-                    src="/images/phone-book.svg"
+                    src="/images/phone-book.png"
                     width={400}
                     height={600}
-                    className="relative mb-8 mt-6 md:mt-0 w-full max-w-[350px] md:max-w-[450px] lg:max-w-[500px] h-auto z-10 drop-shadow-2xl"
+                    className="relative md:-mb-24 lg:-mb-24 mt-6 md:mt-0 w-full max-w-[350px] md:max-w-[450px] lg:max-w-[500px] h-auto z-10 drop-shadow-2xl"
                     alt="Phone and books"
                     priority
                   />
