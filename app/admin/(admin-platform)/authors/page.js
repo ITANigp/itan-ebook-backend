@@ -20,49 +20,49 @@ const Readers = async () => {
     {
       accountName: "Mr. Oluyemi 01",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 02",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 03",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 04",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 05",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 06",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
     {
       accountName: "Mr. Oluyemi 07",
       email: "oluola96@gmail.com",
-      phoneNumber: "09145673425",
+      phoneNumber: "08156748934",
       regNo: "Ebook",
       profilePicture: "/images/picture.png"
     },
