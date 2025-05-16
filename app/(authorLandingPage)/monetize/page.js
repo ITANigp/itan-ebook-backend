@@ -10,9 +10,9 @@ const Monetize = () => {
   return (
     <div className="bg-gray-50">
       <section className="flex flex-col items-center text-center  md:flex-row-reverse md:justify-end md:pt-24 bg-slate-700">
-        <div className=" md:relative md:pb-14 md:max-w-[650px] text-white md:text-left md:ml-24 md:-mt-28">
+        <div className=" md:relative md:pb-14 md:max-w-[1000px] text-white md:text-left md:ml-3 md:-mt-28">
           <h2
-            className="text-2xl sm:3xl lg:text-5xl font-semibold mb-4 md:mb-12 max-w-[650px] mt-10 md:mt-0 mx-3"
+            className="text-2xl sm:3xl lg:text-5xl font-semibold mb-4 md:mb-12 max-w-[1000px] mt-10 md:mt-0 mx-3"
             style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
           >
             Monetize your digital books with ITAN global publishing
