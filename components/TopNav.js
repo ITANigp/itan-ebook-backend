@@ -1,8 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import LandingPgBtn from "./LandingPgBtn";
-import { usePathname } from "next/navigation";
+import "@fortawesome/fontawesome-svg-core/styles.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faXTwitter,
+  faFacebookF,
+  faLinkedinIn,
+  faInstagram,
+} from "@fortawesome/free-brands-svg-icons";
+import { usePathname } from "next/navigation";
 import {
   faBars,
   faTimes,
@@ -34,7 +41,6 @@ const bricolage = Bricolage_Grotesque({
 });
 
 const TopNav = ({ styles }) => {
-
   const [menu, setMenu] = useState(false);
   const [showCloseIcon, setShowCloseIcon] = useState(false);
 
@@ -66,18 +72,16 @@ const TopNav = ({ styles }) => {
     { title: "Help", href: "/help", icon: faQuestionCircle },
   ];
 
-  const pathname = usePathname()
-  const homePath = pathname.endsWith("/")
-  const publishPath = pathname.endsWith("/publish")
-  const monetizePath = pathname.endsWith("/monetize")
-  const helpPath = pathname.endsWith("/help")
+  const pathname = usePathname();
+  const homePath = pathname.endsWith("/");
+  const publishPath = pathname.endsWith("/publish");
+  const monetizePath = pathname.endsWith("/monetize");
+  const helpPath = pathname.endsWith("/help");
 
   return (
-    <div
-      className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}
-    >
+    <div className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}>
       <div className="flex items-center ">
-        <div className="flex w-full md:justify-between pr-5">
+        <div className="flex w-full md:justify-between">
           {/* Mobile Menu Button */}
           <button
             className="block md:hidden z-30 px-2"
@@ -91,19 +95,19 @@ const TopNav = ({ styles }) => {
             />
           </button>
 
-          {/* Logo and Text */}
-          <div className="flex items-center">
+          {/* Logo and Text - pushed to right on mobile */}
+          <div className="flex items-center ml-auto md:ml-0">
             <Link href="/">
               <Image
                 src="/images/logo3.png"
                 width={70}
                 height={20}
                 alt="itan logo"
-                className=" md:w-24 md:-mb-1 lg:-mb-3"
+                className="md:w-24 md:-mb-1 lg:-mb-3"
               />
             </Link>
             <p
-              className={`${bricolage.className} text-gray-200 text-2xl  md:text-[35px] font-semibold -ml-2 md:-ml-3  lg:-mb-3 `}
+              className={`${bricolage.className} hidden lg:flex xl:flex text-gray-200 text-xl md:text-[26px] lg:text-[18px] font-normal -ml-2 md:-ml-3 lg:-mb-3`}
             >
               Global Publishing
             </p>
@@ -127,13 +131,12 @@ const TopNav = ({ styles }) => {
 
                   <div className="mb-8">
                     <Image
-                      src="/images/logo.svg"
+                      src="/images/logo3.png"
                       alt="logo"
                       width={40}
                       height={32}
                       priority={true}
-                      quality={85}
-                      className="w-10 h-8"
+                      className="w-16 h-auto -mt-[70px] -ml-4"
                     />
                   </div>
 
@@ -145,17 +148,13 @@ const TopNav = ({ styles }) => {
                           className="text-gray-200 text-xl font-medium hover:text-red-400 transition-colors flex items-center gap-3"
                           onClick={toggleMenu}
                         >
-                          <FontAwesomeIcon
-                            icon={item.icon}
-                            className="text-red-400 w-5 h-5"
-                          />
                           {item.title}
                         </Link>
                       </div>
                     ))}
                   </nav>
 
-                  <div className="mt-auto space-y-4">
+                  <div className="my-10 space-y-4">
                     <Link href="/author/sign_in">
                       <LandingPgBtn
                         variant="outlined"
@@ -175,6 +174,46 @@ const TopNav = ({ styles }) => {
                         Create Account
                       </LandingPgBtn>
                     </Link>
+                  </div>
+                  <div className="flex items-center justify-between sm:justify-start sm:ml-9 w-full text-white">
+                    <div className="flex space-x-2">
+                      <Link href="#" target="_blank" rel="noopener noreferrer">
+                        <FontAwesomeIcon
+                          icon={faLinkedinIn}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://x.com/ItanGlobal"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faXTwitter}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://web.facebook.com/itanglobalpublishing/"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faFacebookF}
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                        />
+                      </Link>
+                      <Link
+                        href="https://www.instagram.com/itanglobalpublishing"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <FontAwesomeIcon
+                          icon={faInstagram}
+                          className="w-[15px] h-3 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                        />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </>
@@ -230,7 +269,7 @@ const TopNav = ({ styles }) => {
           </Link>
         </ul>
         <p className="text-xs mr-7">
-          One Book Multiple Formats, Endless Readers
+          One Book, Multiple Formats, Endless Readers
         </p>
       </div>
     </div>

@@ -62,7 +62,7 @@ const Footer = ({ styles }) => {
       </section>
 
       <section className="bg-[#111928] md:mx-5">
-        <div className="flex items-center mx-4 lg:ml-0 xs:mx-5  pt-6">
+        <div className="flex items-center  md:mx-4 lg:ml-0 xs:mx-5  pt-6">
           <Link href="/">
             <Image
               src="/images/logo3.png"
@@ -73,7 +73,7 @@ const Footer = ({ styles }) => {
             />
           </Link>
           <p
-            className={`${bricolage.className} text-gray-200 text-xl lg:text-3xl font-bold ml-2 lg:-mb-3 lg:-ml-3`}
+            className={`${bricolage.className} text-gray-200 text-[21px] md:text-[24px] lg:text-3xl font-bold -ml-3 -mb-1 lg:-mb-3 lg:-ml-3`}
           >
             Global Publishing
           </p>
@@ -81,12 +81,12 @@ const Footer = ({ styles }) => {
 
         {/* About Itan */}
         <div className="sm:flex justify-between lg:max-w-[1200px]">
-          <div className="text-gray-200 text-xs max-w-[320px] lg:max-w-[700px] mx-4 mr-2 lg:text-sm">
+          <div className="text-gray-200 text-xs max-w-[600px] lg:max-w-[700px] mx-4 mr-10 lg:text-sm">
             <p className="mb-2 ">
               ITAN Global Publishing (IGP) is a digital self-publishing and
               aggregator that connects African literature to new audiences
               across the globe, creating a vibrant market for African
-              narrative. We are focused on empowering writers, authors,
+              narratives. We are focused on empowering writers, authors,
               storytellers, and publishers from underrepresented African
               nations.
             </p>
@@ -102,7 +102,7 @@ const Footer = ({ styles }) => {
             </p>
           </div>
 
-          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-gray-200">
+          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-gray-200 min-w-[250px]">
             <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
               Author Resources
             </Link>
