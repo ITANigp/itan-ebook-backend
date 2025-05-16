@@ -13,65 +13,58 @@ import {
 } from "@/components/ui/table";
 import Image from "next/image";
 
-const Books = async () => {
+const Readers = async () => {
   // const books = await getAllBooks();
 
-  const bookList = [
+  const readerList = [
     {
-      bookName: "Cyber Security 01",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 01",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 02",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 02",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 03",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 03",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 04",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 04",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 05",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 05",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 06",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 06",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
     {
-      bookName: "Cyber Security 07",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
+      accountName: "Mr. Oluyemi 07",
+      email: "oluola96@gmail.com",
+      phoneNumber: "Mr Oluyemi",
+      regNo: "Ebook",
+      profilePicture: "/images/picture.png"
     },
   ];
 
@@ -113,23 +106,20 @@ const Books = async () => {
           <Table>
             <TableHeader>
               <TableRow className="bg-slate-700 hover:bg-slate-700 rounded-lg">
-                <TableHead className="text-white">
-                  Book Name
-                </TableHead>
-                <TableHead className="text-white">Author</TableHead>
-                <TableHead className="text-white">Book Types</TableHead>
-                <TableHead className="text-white">Book Status</TableHead>
-                <TableHead className="text-white">Date</TableHead>
+                <TableHead className="text-white">Account Name</TableHead>
+                <TableHead className="text-white">Email</TableHead>
+                <TableHead className="text-white">Phone Number</TableHead>
+                <TableHead className="text-white">Registration Date</TableHead>
                 <TableHead className="text-white"></TableHead>
               </TableRow>
 
+              {/* Filter Icon Row */}
               <TableRow className="hover:bg-white">
                 <TableHead />
                 <TableHead />
                 <TableHead />
                 <TableHead />
-                <TableHead />
-                <TableHead>
+                <TableHead className="align-middle">
                   <FontAwesomeIcon
                     icon={faSlidersH}
                     className="text-slate-700 w-6 h-10 py-1 bg-slate-100 shadow-lg rounded-md cursor-pointer"
@@ -138,29 +128,26 @@ const Books = async () => {
               </TableRow>
             </TableHeader>
 
+            {/* Table Body */}
             <TableBody>
-              {bookList.map((book) => (
-                <TableRow key={book.bookName}>
-                  <TableCell className="font-medium">
+              {readerList.map((reader) => (
+                <TableRow key={reader.accountName}>
+                  <TableCell className="font-medium flex items-center gap-2">
                     <Image
-                      src={book.bookCover}
-                      width={70}
-                      height={120}
-                      alt="book cover"
-                      className="w-24 h-auto"
+                      src={reader.profilePicture}
+                      width={20}
+                      height={20}
+                      alt="reader cover"
+                      className="w-8 h-8 rounded-full object-cover"
                     />
-                    <p>{book.bookName}</p>
+                    <p className="align-middle">{reader.accountName}</p>
                   </TableCell>
-                  <TableCell>{book.author}</TableCell>
-                  <TableCell>{book.bookType}</TableCell>
-                  <TableCell>{book.bookStatus}</TableCell>
-                  <TableCell>{book.date}</TableCell>
-                  <TableCell>
-                    <FontAwesomeIcon
-                      icon={faEllipsisH}
-                      className="cursor-pointer"
-                    />
+                  <TableCell className="align-middle">{reader.email}</TableCell>
+                  <TableCell className="align-middle">
+                    {reader.phoneNumber}
                   </TableCell>
+                  <TableCell className="align-middle">{reader.regNo}</TableCell>
+                  <TableCell></TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -171,4 +158,4 @@ const Books = async () => {
   );
 };
 
-export default Books;
+export default Readers;
