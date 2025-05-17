@@ -51,7 +51,7 @@ const SignUp = () => {
         <header>
           <Link href="/">
             <img
-              src="/images/logo3.png"
+              src="/images/logo.png"
               alt="Itan Logo"
               className="w-10 h-6 cursor-pointer"
             />
