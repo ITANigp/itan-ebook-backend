@@ -83,34 +83,56 @@ const TopNav = ({ styles }) => {
       <div className="flex items-center ">
         <div className="flex w-full md:justify-between">
           {/* Mobile Menu Button */}
-          <button
-            className="block md:hidden z-30 px-2"
-            onClick={toggleMenu}
-            aria-label={menu ? "Close menu" : "Open menu"}
-          >
-            <FontAwesomeIcon
-              icon={showCloseIcon ? faTimes : faBars}
-              style={{ color: "#FFFFFF" }}
-              className="text-[21px] ml-2 md:hidden"
-            />
-          </button>
-
-          {/* Logo and Text - pushed to right on mobile */}
-          <div className="flex items-center ml-auto md:ml-0">
+          <div className="flex md:hidden">
+            <button
+              className="block md:hidden z-30 px-2"
+              onClick={toggleMenu}
+              aria-label={menu ? "Close menu" : "Open menu"}
+            >
+              <FontAwesomeIcon
+                icon={showCloseIcon ? faTimes : faBars}
+                style={{ color: "#FFFFFF" }}
+                className="text-[21px] ml-2 md:hidden"
+              />
+            </button>
             <Link href="/">
               <Image
                 src="/images/logo3.png"
-                width={70}
-                height={20}
+                width={50}
+                height={12}
                 alt="itan logo"
-                className="md:w-24 md:-mb-1 lg:-mb-3"
+                className="w-10 ml-4 hidden sm:block md:hidden"
               />
             </Link>
-            <p
-              className={`${bricolage.className} hidden lg:flex xl:flex text-gray-200 text-xl md:text-[26px] lg:text-[18px] font-normal -ml-2 md:-ml-3 lg:-mb-3`}
-            >
-              Global Publishing
-            </p>
+          </div>
+
+          {/* Logo and Text - pushed to right on mobile */}
+          <div className="flex items-center ml-auto md:ml-0 pb-3">
+            <div className="hidden md:flex items-center">
+              <Link href="/">
+                <Image
+                  src="/images/logo3.png"
+                  width={50}
+                  height={12}
+                  alt="itan logo"
+                  className="md:w-8 md:ml-3 lg:-mb-3 "
+                />
+              </Link>
+              <p
+                className={`${bricolage.className} hidden sm:flex text-gray-200 text-xl md:text-[26px] lg:text-[18px] ml-1 lg:-mb-3 font-bold`}
+              >
+                Global Publishing
+              </p>
+            </div>
+            <Link href="/">
+              <Image
+                src="/images/logo3.png"
+                width={50}
+                height={12}
+                alt="itan logo"
+                className="w-10 pt-4 mt-4 mr-4 sm:hidden"
+              />
+            </Link>
           </div>
 
           {/* Slide Menu */}
@@ -220,7 +242,7 @@ const TopNav = ({ styles }) => {
             )}
           </AnimatePresence>
         </div>
-        <div className="w-[320px] lg:w-[280px] hidden sm:flex justify-between mr-3 md:mr-10">
+        <div className="w-[320px] lg:w-[280px] hidden sm:flex justify-between mr-3 md:mr-10 py-3">
           <div>
             {" "}
             <Link
@@ -241,7 +263,7 @@ const TopNav = ({ styles }) => {
         </div>
       </div>
 
-      <div className=" hidden md:flex justify-between text-gray-200 -ml-6">
+      <div className=" hidden md:flex justify-between text-gray-200 -ml-7">
         <ul className="flex space-x-4 h-9 text-center px-9">
           <Link
             href="/"

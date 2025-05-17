@@ -58,7 +58,7 @@ const SignIn = () => {
       <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <Link href="/">
           <img
-            src="/images/logo2.png"
+            src="/images/logo3.png"
             alt="Company Logo"
             className="w-10 h-6 cursor-pointer"
           />
