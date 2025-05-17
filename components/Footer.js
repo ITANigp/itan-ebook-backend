@@ -65,7 +65,7 @@ const Footer = ({ styles }) => {
         <div className="flex items-center ml-8 mb-3 pt-3">
           <Link href="/">
             <Image
-              src="/images/logo3.png"
+              src="/images/logo.png"
               width={60}
               height={20}
               alt="itan logo"

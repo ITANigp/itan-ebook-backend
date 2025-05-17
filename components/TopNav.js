@@ -97,7 +97,7 @@ const TopNav = ({ styles }) => {
             </button>
             <Link href="/">
               <Image
-                src="/images/logo3.png"
+                src="/images/logo.png"
                 width={50}
                 height={12}
                 alt="itan logo"
@@ -111,7 +111,7 @@ const TopNav = ({ styles }) => {
             <div className="hidden md:flex items-center">
               <Link href="/">
                 <Image
-                  src="/images/logo3.png"
+                  src="/images/logo.png"
                   width={50}
                   height={12}
                   alt="itan logo"
@@ -126,7 +126,7 @@ const TopNav = ({ styles }) => {
             </div>
             <Link href="/">
               <Image
-                src="/images/logo3.png"
+                src="/images/logo.png"
                 width={50}
                 height={12}
                 alt="itan logo"
@@ -153,7 +153,7 @@ const TopNav = ({ styles }) => {
 
                   <div className="mb-8">
                     <Image
-                      src="/images/logo3.png"
+                      src="/images/logo.png"
                       alt="logo"
                       width={40}
                       height={32}
