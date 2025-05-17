@@ -4,8 +4,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { registerAuthor } from "@/utils/api";
+import ReCAPTCHA from "react-google-recaptcha";
+
+const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const SignUp = () => {
+  const [captchaToken, setCaptchaToken] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,6 +28,7 @@ const SignUp = () => {
         // name,
         email,
         password,
+        captchaToken
         // password_confirmation
       );
       if (author?.data?.id) {
@@ -138,11 +143,19 @@ const SignUp = () => {
               />
             </div> */}
 
+            {/* ✅ Added reCAPTCHA component here */}
+            <div className="my-4">
+              <ReCAPTCHA
+                sitekey={SITE_KEY}
+                onChange={(token) => setCaptchaToken(token || "")}
+              />
+            </div>
+
             <div>
               <button
                 type="submit"
                 className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading}
+                disabled={loading || !captchaToken} // ✅ Disable button until reCAPTCHA is complete
               >
                 {loading ? "Loading..." : "Sign Up"}
               </button>
