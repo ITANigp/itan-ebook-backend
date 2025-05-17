@@ -40,12 +40,11 @@ const Footer = ({ styles }) => {
         <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 w-full px-4 text-gray-200 mb-1  medium:mb-3">
-          <h2 className="mx-auto text-center text-base sm:text-4xl  mb-2 md:mb-5 font-semibold">
+          <h2 className="mx-auto text-center text-2xl sm:text-4xl  mb-4 md:mb-6 font-semibold">
             Stay In The Know
           </h2>
-          <p className="mx-auto text-center text-[10px]  sm:text-base md:mb-2">
-            Subscribe to our newsletter and receive IGP updates and special
-            offers
+          <p className="mx-auto text-center text-sm sm:text-xl md:mb-2">
+            Subscribe for IGP updates and special offers
           </p>
         </div>
 

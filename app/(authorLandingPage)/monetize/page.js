@@ -187,55 +187,23 @@ const Monetize = () => {
         </div>
       </section>
 
-      <section className="my-16 flex flex-col large:flex-row xl:flex-row gap-6 xl:max-w-7xl xl:mx-auto">
-        {/* Ebook Royalty Card */}
-        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02] mb-6 large:mb-0 xl:mb-0">
-          <div className="p-6 flex flex-col items-center text-center">
-            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
-              <Image
-                src="/images/phone-book.svg"
-                alt="phone-book"
-                width={147}
-                height={147}
-                priority={true}
-                quality={80}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
-              Royalty for eBook Sale
-            </p>
-            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
-              70%
-            </p>
-          </div>
+      <section className=" flex flex-col items-center sm:flex-row sm:justify-center my-10 py-6 space-y-5 sm:space-y-0 bg-gray-200">
+        <div className="flex flex-col justify-center items-center mx-10 w-[260px] md:w-[550px] bg-white shadow-md rounded-sm h-[150px] md:h-[250px]">
+          <p className="mb-5 text-[16px] font-semibold md:text-[20px]">
+            Royalty for eBook sale{" "}
+          </p>
+          <p className="text-red-600 text-6xl md:text-8xl font-bold">70%</p>
         </div>
 
-        {/* Audiobook Royalty Card */}
-        <div className="flex-1 bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 transform hover:scale-[1.02]">
-          <div className="p-6 flex flex-col items-center text-center">
-            <div className="w-24 h-24 medium:w-28 medium:h-28 large:w-32 large:h-32 mb-4">
-              <Image
-                src="/images/audio-book.png"
-                alt="audio-book"
-                width={147}
-                height={147}
-                priority={true}
-                quality={80}
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <p className="text-lg medium:text-3xl large:text-3xl xl:text-4xl font-semibold text-gray-800 mb-2">
-              Royalty for Audiobook Sale
-            </p>
-            <p className="text-[#EF5353] text-3xl medium:text-4xl large:text-5xl xl:text-6xl font-bold">
-              65%
-            </p>
-          </div>
+        <div className="flex flex-col justify-center items-center mx-10 w-[260px] md:w-[550px] bg-white shadow-md rounded-sm h-[150px] md:h-[250px]">
+          <p className="mb-5 text-[16px] md:text-[20px] font-semibold">
+            Royalty for Audiobook sale
+          </p>
+          <p className="text-red-600 text-6xl  md:text-8xl font-bold">65%</p>
         </div>
       </section>
 
-      <section className="my-16 xl:max-w-7xl xl:mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
+      <section className="mb-10 xl:max-w-7xl xl:mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="p-6 medium:p-8 large:p-10 xl:p-12 flex flex-col large:flex-row xl:flex-row gap-8 large:gap-12 xl:gap-16">
           <div className="w-full large:w-1/2 xl:w-1/2">
             <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
