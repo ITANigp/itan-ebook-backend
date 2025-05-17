@@ -292,8 +292,8 @@ const TopNav = ({ styles }) => {
             Help
           </Link>
         </ul>
-        <div className="overflow-hidden whitespace-nowrap">
-          <p className="text-xs mr-7 inline-block animate-marquee">
+        <div className="overflow-hidden whitespace-nowrap -mr-7 w-72">
+          <p className="text-xs inline-block animate-marquee">
             One Book, Multiple Formats, Endless Readers
           </p>
         </div>
