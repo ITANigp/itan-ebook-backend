@@ -144,7 +144,7 @@ const Home = () => {
       </section>
 
       {/* Blue section */}
-      <div className="relative overflow-hidden bg-gradient-to-b from-[#111928] to-[#1a2235] mt-12 lg:py-24 py-10">
+      <div className="relative overflow-hidden bg-[#111928] mt-12 lg:py-24 py-10">
         {/* Texture Overlay */}
         <div className="absolute inset-0 bg-[url('/images/subtle-paper-texture.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
 
@@ -167,7 +167,7 @@ const Home = () => {
               </div>
 
               {/* Text Section */}
-              <div className="text-white max-w-xl md:pl-6 lg:pl-12">
+              <div className="mt-10 md:mt-0 text-white max-w-xl md:pl-6 lg:pl-12">
                 <h3 className="text-3xl sm:text-4xl lg:text-4xl font-semibold leading-tight mb-6 tracking-tight">
                   Let the world both read and listen to your unique story
                 </h3>

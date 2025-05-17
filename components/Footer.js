@@ -62,18 +62,18 @@ const Footer = ({ styles }) => {
       </section>
 
       <section className="bg-[#111928] md:mx-5">
-        <div className="flex items-center  md:mx-4 lg:ml-0 xs:mx-5  pt-6">
+        <div className="flex items-center ml-8 mb-3 pt-3">
           <Link href="/">
             <Image
               src="/images/logo3.png"
-              width={70}
+              width={60}
               height={20}
               alt="itan logo"
-              className="lg:w-24 lg:-mb-3"
+              className="lg:w-16 -ml-4 lg:-mb-3"
             />
           </Link>
           <p
-            className={`${bricolage.className} text-gray-200 text-[21px] md:text-[24px] lg:text-3xl font-bold -ml-3 -mb-1 lg:-mb-3 lg:-ml-3`}
+            className={`${bricolage.className} text-gray-200 text-[21px] md:text-[24px] lg:text-3xl font-bold -mb-1 lg:-mb-3 -ml-3`}
           >
             Global Publishing
           </p>
@@ -102,7 +102,7 @@ const Footer = ({ styles }) => {
             </p>
           </div>
 
-          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-12 text-gray-200 min-w-[250px]">
+          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-10 text-gray-200 min-w-[250px]">
             <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
               Author Resources
             </Link>

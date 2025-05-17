@@ -12,10 +12,10 @@ export const api = axios.create({
 });
 
 // Register an author
-export const registerAuthor = async (email, password) => {
+export const registerAuthor = async (email, password, captchaToken) => {
   try {
     const response = await api.post("/authors", {
-      author: { email, password },
+      author: { email, password, captchaToken },
     });
 
     return response.data;
@@ -65,10 +65,10 @@ export const enableEmailTwoFactor = async () => {
 
 
 // Sign in an author
-export const signInAuthor = async (email, password) => {
+export const signInAuthor = async (email, password, captchaToken) => {
   try {
     const response = await api.post("/authors/sign_in", {
-      author: { email, password },
+      author: { email, password, captchaToken },
     });
 
     return response.data;
