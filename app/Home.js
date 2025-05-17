@@ -80,15 +80,16 @@ const Home = () => {
           </FadeIn>
 
           <div className="inline-flex">
-            <div className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 sm:h-[40px] sm:w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md">
-              <p className="text-[10px] sm:text-sm xl:text-base font-semibold">
-                Get Started
-              </p>
+            <Link
+              href="/author/sign_up"
+              className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 h-[35px] sm:h-[40px] w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md"
+            >
+              <p className="text-sm xl:text-base font-semibold">Get Started</p>
               <FontAwesomeIcon
                 icon={faArrowRight}
                 className="w-3 sm:w-3.5 xl:w-4"
               />
-            </div>
+            </Link>
           </div>
 
           {/* Enhanced decorative dots */}
@@ -541,15 +542,13 @@ const Home = () => {
       </div>
       <div className="flex justify-center sm:mt-14 xl:mb-7">
         <Link
-          href="/author/sign_in"
-          className="flex cursor-pointer justify-center items-center rounded-sm bg-[#E50913] px-3 h-50 sm:h-[45px] sm:w-[170px] pt-[5px] pb-[6px] space-x-2 text-white sm:rounded-lg"
+          href="/author/sign_up"
+          className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 h-[35px] sm:h-[40px] w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md"
         >
-          <p className="text-[10px] sm:text-sm font-semibold text-white ">
-            Get Started
-          </p>
+          <p className="text-sm xl:text-base font-semibold">Get Started</p>
           <FontAwesomeIcon
             icon={faArrowRight}
-            className="w-3 sm:w-5 font-extralight"
+            className="w-3 sm:w-3.5 xl:w-4"
           />
         </Link>
       </div>

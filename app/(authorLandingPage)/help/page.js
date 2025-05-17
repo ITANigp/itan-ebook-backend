@@ -99,7 +99,7 @@ const Help = () => {
               </p>
               <button
                 onClick={() => openModal("igp")}
-                className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
+                className="inline-flex items-center text-[#1E8ABF] font-medium hover:text-[#44c6d7] transition-colors duration-200"
               >
                 <span>Learn More</span>
                 <svg
@@ -147,7 +147,7 @@ const Help = () => {
               </p>
               <button
                 onClick={() => openModal("format")}
-                className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
+                className="inline-flex items-center text-[#1E8ABF] font-medium hover:text-[#44c6d7] transition-colors duration-200"
               >
                 <span>Learn More</span>
                 <svg
@@ -195,7 +195,7 @@ const Help = () => {
               </p>
               <button
                 onClick={() => openModal("createEbook")}
-                className="inline-flex items-center text-[#EF5353] font-medium hover:text-[#D64141] transition-colors duration-200"
+                className="inline-flex items-center text-[#1E8ABF] font-medium hover:text-[#44c6d7] transition-colors duration-200"
               >
                 <span>Learn More</span>
                 <svg

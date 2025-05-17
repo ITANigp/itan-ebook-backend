@@ -79,8 +79,10 @@ const TopNav = ({ styles }) => {
   const helpPath = pathname.endsWith("/help");
 
   return (
-    <div className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5`}>
-      <div className="flex items-center ">
+    <div
+      className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5 md:pt-3`}
+    >
+      <div className="flex items-center">
         <div className="flex w-full md:justify-between">
           {/* Mobile Menu Button */}
           <div className="flex md:hidden">
@@ -115,11 +117,11 @@ const TopNav = ({ styles }) => {
                   width={50}
                   height={12}
                   alt="itan logo"
-                  className="md:w-8 md:ml-3 lg:-mb-3 "
+                  className="md:w-12 md:ml-3 lg:-mb-3"
                 />
               </Link>
               <p
-                className={`${bricolage.className} hidden sm:flex text-gray-200 text-xl md:text-[26px] lg:text-[18px] ml-1 lg:-mb-3 font-bold`}
+                className={`${bricolage.className} hidden sm:flex text-gray-200 text-xl md:text-[28px] lg:text-[32px] ml-1 lg:-mb-3 font-bold`}
               >
                 Global Publishing
               </p>
@@ -130,7 +132,7 @@ const TopNav = ({ styles }) => {
                 width={50}
                 height={12}
                 alt="itan logo"
-                className="w-10 pt-4 mt-4 mr-4 sm:hidden"
+                className="w-10 pt-4 -mt-1 mr-4 sm:hidden"
               />
             </Link>
           </div>
@@ -158,7 +160,7 @@ const TopNav = ({ styles }) => {
                       width={40}
                       height={32}
                       priority={true}
-                      className="w-16 h-auto -mt-[70px] -ml-4"
+                      className="w-16 h-auto -mt-[60px] -ml-2"
                     />
                   </div>
 
@@ -290,9 +292,11 @@ const TopNav = ({ styles }) => {
             Help
           </Link>
         </ul>
-        <p className="text-xs mr-7">
-          One Book, Multiple Formats, Endless Readers
-        </p>
+        <div className="overflow-hidden whitespace-nowrap -mr-7 w-72">
+          <p className="text-xs inline-block animate-marquee">
+            One Book, Multiple Formats, Endless Readers
+          </p>
+        </div>
       </div>
     </div>
   );
