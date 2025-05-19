@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInAdmin } from "@/utils/api";
+import { signInAdmin } from "@/utils/auth/adminApi";
 
 export default function AdminAuthPage() {
   const [email, setEmail] = useState("");
@@ -24,7 +24,10 @@ export default function AdminAuthPage() {
       if (!err.response) {
         setError("Cannot connect to the server. Please try again later.");
       } else {
-        setError(err.response?.data?.error || "Sign-in failed. Please check your credentials.");
+        setError(
+          err.response?.data?.error ||
+            "Sign-in failed. Please check your credentials."
+        );
       }
     } finally {
       setLoading(false);

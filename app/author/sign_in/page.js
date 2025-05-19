@@ -3,7 +3,7 @@
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signInAuthor } from "@/utils/api"; // Ensure this is correctly set up
+import { signInAuthor } from "@/utils/auth/authorApi"; // Ensure this is correctly set up
 import ReCAPTCHA from "react-google-recaptcha";
 
 const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
@@ -55,7 +55,7 @@ const SignIn = () => {
 
   return (
     <main className="w-full mb-9">
-      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
+      <section className="bg-white max-w-[410px] rounded-2xl p-2  sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
         <Link href="/">
           <img
             src="/images/logo.png"
@@ -90,7 +90,7 @@ const SignIn = () => {
               id="email"
               required
               placeholder="Johndoe@gmail.com"
-              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -108,7 +108,7 @@ const SignIn = () => {
               id="password"
               required
               placeholder="Enter your password"
-              className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

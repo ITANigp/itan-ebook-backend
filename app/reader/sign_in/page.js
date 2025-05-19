@@ -3,14 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { registerAuthor } from "@/utils/auth/authorApi";
-import ReCAPTCHA from "react-google-recaptcha";
 
-const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+import { api } from "@/utils/auth/readerApi";
 
-const SignUp = () => {
-  const [captchaToken, setCaptchaToken] = useState("");
-  const [name, setName] = useState("");
+const SignIn = () => {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setConfirmPassword] = useState("");
@@ -24,34 +22,36 @@ const SignUp = () => {
     setMessage("");
 
     try {
-      const author = await registerAuthor(
-        // name,
-        email,
-        password,
-        captchaToken
-        // password_confirmation
-      );
-      if (author?.data?.id) {
-        setMessage("Registration successful! You can now log in.");
-        router.push("/author/sign_in");
+        const response = await api.post("/readers/sign_in", {
+          reader: {
+            email,
+            password,
+          },
+        });
+      console.log("Reader logged in successfully:", response.data)
+        alert("Log in successfully.");
+        router.push("/reader/books");
+      } catch (error) {
+        console.error("Login failed:", error);
+      
+        const errorMessage =
+          error?.response?.data?.error ||
+          "Login failed. Please try again.";
+      
+        alert(errorMessage);
+      } finally {
+        setLoading(false);
       }
-    } catch (error) {
-      setMessage(
-        error.response?.data?.message ||
-          "Registration failed. Please try again."
-      );
-    } finally {
-      setLoading(false);
-    }
+      
   };
 
   return (
     <main className="w-full mb-9">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
-              src="/images/logo.png"
+              src="/images/logo2.png"
               alt="Itan Logo"
               className="w-10 h-6 cursor-pointer"
             />
@@ -66,31 +66,14 @@ const SignUp = () => {
               href="/author/sign_in"
               className="font-bold cursor-pointer hover:text-blue-700"
             >
-              Log In
+              Sign Up
             </Link>
           </p>
         </div>
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
-            {/* <div className="mt-4">
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Enter Your Name"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div> */}
-
+ 
             <div className="mt-4">
               <label
                 htmlFor="email"
@@ -101,7 +84,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
                 placeholder="Johndoe@gmail.com"
                 required
                 value={email}
@@ -119,35 +102,10 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-
-            {/* <div className="my-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                // id="password"
-                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-                required
-                value={password_confirmation}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div> */}
-
-            {/* ✅ Added reCAPTCHA component here */}
-            <div className="my-4">
-              <ReCAPTCHA
-                sitekey={SITE_KEY}
-                onChange={(token) => setCaptchaToken(token || "")}
               />
             </div>
 
@@ -155,9 +113,9 @@ const SignUp = () => {
               <button
                 type="submit"
                 className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading || !captchaToken} // ✅ Disable button until reCAPTCHA is complete
+                disabled={loading}
               >
-                {loading ? "Loading..." : "Sign Up"}
+                {loading ? "Loading..." : "Sign In"}
               </button>
 
               <div className="inline-flex items-center justify-center w-full my-5">
@@ -196,4 +154,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default SignIn;

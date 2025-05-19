@@ -44,7 +44,7 @@ const Footer = ({ styles }) => {
             Stay In The Know
           </h2>
           <p className="mx-auto text-center text-sm sm:text-xl md:mb-2">
-            Subscribe for IGP updates and special offers
+            Subscribe for IGP updates and special offers.
           </p>
         </div>
 
@@ -101,23 +101,48 @@ const Footer = ({ styles }) => {
             </p>
           </div>
 
-          <div className="text-sm sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 -mt-10 text-gray-200 min-w-[250px]">
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+          <div className="text-[13px] sm:grid grid-cols-2 gap-x-3 lg:gap-x-10 hidden h-28 text-gray-400 min-w-[250px]">
+            <Link
+              href="https://itanglobalpublishing.substack.com/"
+              target="_blank"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Author Resources
             </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+            <Link
+              href="https://itanglobalpublishing.substack.com/"
+              target="_blank"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Blog
             </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+            <Link
+              href="mailto:support@itan.app"
+              target="_blank"
+              aria-label="Contact support via email"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Help Center
             </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+            <Link
+              href="#"
+              target="_blank"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Content Policy
             </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+            <Link
+              href="https://www.youtube.com/@itanIGP"
+              target="_blank"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Youtube
             </Link>
-            <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+            <Link
+              href="#"
+              target="_blank"
+              className="cursor-pointer hover:text-[#EF5353]"
+            >
               Contact
             </Link>
           </div>
@@ -167,24 +192,49 @@ const Footer = ({ styles }) => {
           </div>
 
           {/* Placeholder content */}
-          <div className=" flex flex-col items-center mt-3">
-            <div className="flex flex-col items-center sm:hidden">
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+          <div className=" flex flex-col items-center mt-3 text-[12px] text-gray-400">
+            <div className="flex flex-col items-center sm:hidden space-y-3">
+              <Link
+                href="https://itanglobalpublishing.substack.com/"
+                target="_blank"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Author Resources
               </Link>
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              <Link
+                href="mailto:support@itan.app"
+                target="_blank"
+                aria-label="Contact support via email"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Help Center
               </Link>
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              <Link
+                href="https://www.youtube.com/@itanIGP"
+                target="_blank"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Youtube
               </Link>
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              <Link
+                href="https://itanglobalpublishing.substack.com/"
+                target="_blank"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Blog
               </Link>
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              <Link
+                href="#"
+                target="_blank"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Contact
               </Link>
-              <Link href="#" className="cursor-pointer hover:text-[#EF5353]">
+              <Link
+                href="#"
+                target="_blank"
+                className="cursor-pointer hover:text-[#EF5353]"
+              >
                 Content Policy
               </Link>
             </div>

@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 export default function ConfirmEmailContent() {
   const BASE_API_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -21,7 +21,10 @@ export default function ConfirmEmailContent() {
       }
 
       try {
-        const response = await api.post(`${BASE_API_URL}/authors/confirmation`, { confirmation_token, email });
+        const response = await api.post(
+          `${BASE_API_URL}/authors/confirmation`,
+          { confirmation_token, email }
+        );
 
         if (response.ok) {
           setStatus("Email confirmed! Redirecting...");

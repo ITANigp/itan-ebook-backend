@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 const BookContent = () => {
   const { formData, updateFormData } = useForm();

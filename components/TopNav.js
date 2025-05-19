@@ -80,7 +80,7 @@ const TopNav = ({ styles }) => {
 
   return (
     <div
-      className={` ${styles} h-16 md:h-auto w-full bg-[#111928] md:px-5 md:pt-3`}
+      className={` ${styles} h-16 md:h-auto w-full bg-[#111928] items-center pt-[10px] md:px-5 md:pt-3`}
     >
       <div className="flex items-center">
         <div className="flex w-full md:justify-between">

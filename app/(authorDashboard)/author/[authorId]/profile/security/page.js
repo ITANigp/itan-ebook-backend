@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 const Profile = () => {
   const router = useRouter();

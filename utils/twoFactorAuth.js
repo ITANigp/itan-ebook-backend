@@ -1,4 +1,4 @@
-import {api} from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 // Get 2FA status
 export const getTwoFactorStatus = async () => {
@@ -17,7 +17,7 @@ export const setupSms2FA = async (phoneNumber) => {
   const { data } = await api.post("/authors/two_factor/setup_sms", {
     phone_number: phoneNumber,
   });
-  console.log("Phone setup Successful: ", data)
+  console.log("Phone setup Successful: ", data);
   return data;
 };
 

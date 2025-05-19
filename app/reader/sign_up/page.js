@@ -3,14 +3,12 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { registerAuthor } from "@/utils/auth/authorApi";
-import ReCAPTCHA from "react-google-recaptcha";
 
-const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
+import { api } from "@/utils/auth/readerApi";
 
 const SignUp = () => {
-  const [captchaToken, setCaptchaToken] = useState("");
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password_confirmation, setConfirmPassword] = useState("");
@@ -24,22 +22,26 @@ const SignUp = () => {
     setMessage("");
 
     try {
-      const author = await registerAuthor(
-        // name,
-        email,
-        password,
-        captchaToken
-        // password_confirmation
-      );
-      if (author?.data?.id) {
+      const reader = await api.post("/readers", {
+        reader: {
+          email,
+          password,
+          password_confirmation,
+          first_name: firstName,
+          last_name: lastName,
+        },
+      });
+      console.log("Reader's registered successfully: ", reader.data)
+      if (reader?.data?.id) {
         setMessage("Registration successful! You can now log in.");
-        router.push("/author/sign_in");
+        router.push("/reader/sign_in");
       }
     } catch (error) {
       setMessage(
         error.response?.data?.message ||
           "Registration failed. Please try again."
       );
+      console.log("Reader's registration failed: ", error);
     } finally {
       setLoading(false);
     }
@@ -47,11 +49,11 @@ const SignUp = () => {
 
   return (
     <main className="w-full mb-9">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
-              src="/images/logo.png"
+              src="/images/logo2.png"
               alt="Itan Logo"
               className="w-10 h-6 cursor-pointer"
             />
@@ -73,23 +75,39 @@ const SignUp = () => {
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
-            {/* <div className="mt-4">
+            <div className="mt-4">
               <label
                 htmlFor="name"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Name
+                First Name
               </label>
               <input
                 type="text"
-                id="name"
                 className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Enter Your Name"
+                placeholder="Enter Your Firstname"
                 required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
-            </div> */}
+            </div>
+
+            <div className="mt-4">
+              <label
+                htmlFor="lastName"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Last Name
+              </label>
+              <input
+                type="text"
+                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+                placeholder="Enter Your Lastname"
+                required
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
 
             <div className="mt-4">
               <label
@@ -101,7 +119,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
                 placeholder="Johndoe@gmail.com"
                 required
                 value={email}
@@ -119,14 +137,14 @@ const SignUp = () => {
               <input
                 type="password"
                 id="password"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            {/* <div className="my-4">
+            <div className="my-4">
               <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900"
@@ -141,21 +159,13 @@ const SignUp = () => {
                 value={password_confirmation}
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
-            </div> */}
-
-            {/* ✅ Added reCAPTCHA component here */}
-            <div className="my-4">
-              <ReCAPTCHA
-                sitekey={SITE_KEY}
-                onChange={(token) => setCaptchaToken(token || "")}
-              />
             </div>
 
             <div>
               <button
                 type="submit"
                 className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading || !captchaToken} // ✅ Disable button until reCAPTCHA is complete
+                disabled={loading}
               >
                 {loading ? "Loading..." : "Sign Up"}
               </button>
