@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans pt-7 md:pt-12 ">
+    <div className="text-black font-sans py-10 md:pt-12 ">
       <section className="relative flex flex-col items-center text-center py-10 md:py-16 xl:py-24 px-4 overflow-hidden">
         {/* Enhanced background elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 -z-10"></div>
