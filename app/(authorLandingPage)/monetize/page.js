@@ -8,17 +8,17 @@ import FadeIn from "@/components/FadeIn";
 
 const Monetize = () => {
   return (
-    <div className="md:bg-slate-200 md:py-12">
-      <section className="relative overflow-hidden bg-[#111928] md:bg-slate-300 md:mx-5 md:mt-3 md:mb-16 md:rounded-3xl">
+    <div className="md:bg-slate-200 md:p-12">
+      <section className="relative overflow-hidden bg-[#111928] md:bg-white md:mx-5 md:mt-3 md:mb-16 md:rounded-3xl">
         {/* Background decorative elements - pattern removed */}
         {/* Red accent line removed */}
 
         <div className="mx-auto px-4 py-5 ">
           <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between">
             {/* Image column */}
-            <div className="w-[800px] justify-center md:mr-6">
+            <div className="w-[800px] justify-center md:mr-12">
               {/* Direct image with no container */}
-              <div className="hidden w-full md md:block transform transition-transform duration-700 hover:scale-[1.10] md:rounded-xl overflow-hidden">
+              <div className="hidden w-full md md:block transform transition-transform duration-700 hover:scale-[1.04] md:rounded-xl overflow-hidden">
                 <Image
                   src="/images/monetize_4.png"
                   width={380}
@@ -74,7 +74,7 @@ const Monetize = () => {
               style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
             >
               Maximize Your Earnings Through{" "}
-              <span className="text-[#E50913]">Multiple Revenue Sources</span>
+              <span className="">Multiple Revenue Sources</span>
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto text-sm sm:text-base md:text-lg">
               ITAN offers industry-leading royalty rates and multiple income
@@ -201,7 +201,7 @@ const Monetize = () => {
           <div className="w-full large:w-1/2 xl:w-1/2">
             <h3 className="text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6">
               Get Paid for Every Page Read on{" "}
-              <span className="text-[#EF5353]">ITAN Unbound</span>
+              <span className="">ITAN Unbound</span>
             </h3>
 
             <p className="text-lg medium:text-xl large:text-2xl text-gray-700 mb-4">

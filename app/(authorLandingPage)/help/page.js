@@ -27,7 +27,7 @@ const Help = () => {
   };
 
   return (
-    <section className="">
+    <section className="mb-10">
       <div className="mt-8 md:mt-12 md:flex md:justify-center overflow-hidden relative">
         {/* Subtle background decoration */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-70 -z-10"></div>
@@ -40,7 +40,7 @@ const Help = () => {
               className="text-2xl md:text-3xl lg:text-4xl font-bold md:ml-4 tracking-tight"
               style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
             >
-              Get Full Support from <span className="text-[#E50913]">IGP</span>
+              Get Full Support from <span className="">IGP</span>
             </h2>
 
             <p
@@ -80,9 +80,9 @@ const Help = () => {
       </div>
 
       <article className="w-full px-4 xs:px-5 medium:px-6 large:px-8 xl:max-w-7xl xl:mx-auto">
-        <div className="rounded-lg overflow-hidden bg-[#FEE6E6] bg-opacity-30 shadow-sm p-6 xs:p-7 medium:p-8 large:p-10 xl:p-12">
+        <div className="rounded-lg overflow-hidden bg-gray-200 bg-opacity-30 shadow-sm p-6 xs:p-7 medium:p-8 large:p-10 xl:p-12">
           <h3 className="text-xl xs:text-2xl medium:text-3xl large:text-4xl xl:text-5xl font-semibold text-center large:text-left xl:text-left mb-6 medium:mb-8 large:mb-10">
-            Are you <span className="text-[#EF5353]">New?</span>{" "}
+            Are you <span className="">New?</span>{" "}
             <span className="block xs:inline mt-2 xs:mt-0">
               Here are a few steps to get you started:
             </span>

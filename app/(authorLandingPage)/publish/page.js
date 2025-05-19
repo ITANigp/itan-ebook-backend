@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const Publish = () => {
   return (
-    <div>
+    <div className="pb-10">
       <FadeIn delay={0.1} direction="fade" distance={0} duration={1.0}>
         <section className="relative w-full overflow-hidden bg-gradient-to-br from-[#111928] to-[#0841AC] rounded-b-lg">
           {/* Animated background elements */}
