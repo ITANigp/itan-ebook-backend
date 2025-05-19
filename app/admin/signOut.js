@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { signOutAdmin } from "@/utils/api";
+import { signOutAdmin } from "@/utils/auth/authorApi";
 
 const AdminDashboard = () => {
   const [loading, setLoading] = useState(false);

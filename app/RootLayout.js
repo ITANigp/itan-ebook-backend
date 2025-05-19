@@ -29,9 +29,11 @@ export default function RootLayout({ children }) {
   const PasswordPage =
     pathname.endsWith("/auth/forget-password") ||
     pathname.endsWith("/reset-password");
+
+  const adminPage = pathname.startsWith("/admin")
     
     const shouldHideHeader =
-      authorPages || privacyPages || PasswordPage ? "hidden" : "";
+      authorPages || privacyPages || PasswordPage || adminPage ? "hidden" : "";
 
     const ProfilePage = pathname.endsWith('/profile')
     const ProfileBackground = ProfilePage ? "bg-gray-100" : ""

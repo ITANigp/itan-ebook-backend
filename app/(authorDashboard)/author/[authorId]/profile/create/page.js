@@ -7,8 +7,8 @@ import {
   createAuthorProfile,
   getAuthorProfile,
   updateAuthorProfile,
-} from "@/utils/api";
-import { api } from "@/utils/api"; // Ensure this is imported
+} from "@/utils/auth/authorApi";
+import { api } from "@/utils/auth/authorApi"; // Ensure this is imported
 
 export default function AuthorProfilePage() {
   const [profile, setProfile] = useState({});

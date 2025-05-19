@@ -4,7 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import BookMenu from "@/components/BookMenu";
 import DeleteModal from "@/components/DeleteModal";

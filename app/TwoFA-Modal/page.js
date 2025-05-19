@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 export default function TwoFACode() {
   const [verification_code, setCode] = useState("");
@@ -15,7 +15,7 @@ export default function TwoFACode() {
     };
 
     try {
-      const response = await api.post("/authors/verify", code );
+      const response = await api.post("/authors/verify", code);
       console.log("2FA Code:", response);
       // router.push(`/dashboard/author/${author.data.id}`);
       router.push(`/dashboard/author/${code.verification_code}`);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getAuthorProfile } from "@/utils/api";
+import { getAuthorProfile } from "@/utils/auth/authorApi";
 
 export default function AuthorProfilePage() {
   const [author, setAuthor] = useState(null);

@@ -14,8 +14,8 @@ import {
   createAuthorProfile,
   getAuthorProfile,
   updateAuthorProfile,
-} from "@/utils/api";
-import { api } from "@/utils/api"; // Ensure this is imported
+} from "@/utils/auth/authorApi";
+import { api } from "@/utils/auth/authorApi"; // Ensure this is imported
 
 const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -185,7 +185,7 @@ const Profile = () => {
             <p className="text-gray-400 italic">
               {/* {profile.email} */}
               oluola96@gmail.com
-              </p>
+            </p>
           </div>
         </div>
       </section>
@@ -209,28 +209,25 @@ const Profile = () => {
         <div className="flex justify-between w-full border-b mb-2">
           <p>First Name</p>
           <p className="text-gray-400">
-            {/* {profile.first_name} */}
-            Paul
-            </p>
+            {profile.first_name}
+          </p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-2">
           <p>Last Name</p>
           <p className="text-gray-400">
-            {/* {profile.last_name} */}
-            Oluyemi
-            </p>
+            {profile.last_name}
+          </p>
         </div>
         <div className="flex justify-between w-full border-b mb-2">
           <p>Bio</p>
-          <p className="text-gray-400">Author</p>
+          <p className="text-gray-400">{profile.bio}</p>
         </div>
         <div className="flex justify-between w-full border-b mb-3">
           <p>Phone Number</p>
           <p className="text-gray-400">
-            {/* {profile.phone_number} */}
-            888888888888888
-            </p>
+            {profile.phone_number}
+          </p>
         </div>
       </section>
 
@@ -245,23 +242,21 @@ const Profile = () => {
         <div className="flex justify-between w-full border-b mb-2">
           <p>Country</p>
           <p className="text-gray-400">
-            {/* {profile.country} */}
-            Nija
-            </p>
+            {profile.country}
+          </p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-3">
           <p>Location</p>
           <p className="text-gray-400">
-            {/* {profile.location === "null" ? "..." : profile.location} */} 
-            Lagos
+            {profile.location === "null" ? "..." : profile.location}
           </p>
         </div>
       </section>
       <FormModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}
-        // onProfileUpdate={fetchProfile}
+        onProfileUpdate={fetchProfile}
       />
     </div>
   );

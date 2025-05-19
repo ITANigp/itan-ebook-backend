@@ -9,18 +9,30 @@ import {
   LinearScale,
   ArcElement,
 } from "chart.js";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  FaMoneyBillWave,
-  FaShoppingCart,
-  FaUsers,
-  FaBoxOpen,
-} from "react-icons/fa";
+  faBox,
+  faFolder,
+  faBriefcase,
+  faUsers,
+  faArrowUp,
+  faChevronRight,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, ArcElement);
 
 export default function Dashboard() {
-  const [barData, setBarData] = useState({});
-  const [doughnutData, setDoughnutData] = useState({});
+  const [barData, setBarData] = useState({
+    labels: [],
+    datasets: [],
+  });
+
+  const [doughnutData, setDoughnutData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   useEffect(() => {
     setBarData({
@@ -44,7 +56,7 @@ export default function Dashboard() {
       datasets: [
         {
           data: [30000, 10000, 26400],
-          backgroundColor: ["#36A2EB", "#FFCE56", "#FF6384"],
+          backgroundColor: ["#2563EB", "#EA580C", "#16A34A"],
         },
       ],
     });
@@ -52,25 +64,45 @@ export default function Dashboard() {
 
   const stats = [
     {
-      icon: <FaMoneyBillWave />,
+      icon: (
+        <FontAwesomeIcon icon={faBox} size="2x" className="text-red-600 mr-1" />
+      ),
       label: "Total Income",
       value: "$50,000",
       change: "+2.1%",
     },
     {
-      icon: <FaMoneyBillWave />,
+      icon: (
+        <FontAwesomeIcon
+          icon={faFolder}
+          size="2x"
+          className="text-green-600 mr-1"
+        />
+      ),
       label: "Gross Revenue",
       value: "$50,000",
       change: "-1.2%",
     },
     {
-      icon: <FaShoppingCart />,
+      icon: (
+        <FontAwesomeIcon
+          icon={faBriefcase}
+          size="2x"
+          className="text-blue-600 mr-1"
+        />
+      ),
       label: "Total Orders",
       value: "13,000",
       change: "+3.3%",
     },
     {
-      icon: <FaUsers />,
+      icon: (
+        <FontAwesomeIcon
+          icon={faUsers}
+          size="2x"
+          className="text-yellow-600 mr-1"
+        />
+      ),
       label: "Total Customers",
       value: "40,000",
       change: "+2.4%",
@@ -109,44 +141,124 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex bg-gray-100 min-h-screen">
-      <aside className="w-64 bg-black text-white p-6">
-        <h1 className="text-2xl font-bold mb-6">itan</h1>
-        <nav className="space-y-4">
-          <div>Overview</div>
-          <div>Book Shelf</div>
-          <div>Sales</div>
-          <div className="text-red-500">Analytics</div>
-          <div>Withdrawal</div>
-          <div>Help</div>
-          <div>Profile</div>
-        </nav>
-      </aside>
+    <div className="flex bg-gray-100 min-h-screen lg:ml-64 lg:mt-16">
       <main className="flex-1 p-6">
-        <div className="grid grid-cols-4 gap-4 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           {stats.map((stat, idx) => (
-            <div key={idx} className="bg-white p-4 rounded shadow">
-              <div className="text-gray-500 flex items-center gap-2">
-                {stat.icon} <span>{stat.label}</span>
-              </div>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <div className="text-sm text-green-500">
-                {stat.change} vs last month
+            <div
+              key={idx}
+              className="bg-white p-4 rounded shadow flex items-center"
+            >
+              <p>{stat.icon}</p>
+              <div className="text-gray-500 lg:flex-1  flex flex-col items-center">
+                <p>{stat.label}</p>{" "}
+                <p className="text-xl font-bold">{stat.value}</p>
+                <p
+                  className={`text-sm ${stat.change.startsWith("-") ? "text-red-500" : "text-green-500"}`}
+                >
+                  {stat.change} last month
+                </p>
               </div>
             </div>
           ))}
         </div>
-        <div className="grid grid-cols-2 gap-6 mb-6">
-          <div className="bg-white p-4 rounded shadow">
-            <h2 className="mb-2 text-lg font-semibold">Users Report</h2>
-            <Bar data={barData} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div className="bg-white pt-8 p-4 rounded shadow">
+            <div>
+              <div className="flex justify-between border-0 border-b-2 border-b-gray-600 pb-4">
+                <div className="flex ">
+                  <FontAwesomeIcon
+                    icon={faUsers}
+                    size="2x"
+                    className="text-gray-600 bg-slate-200 rounded-md px-4 py-3 mr-4"
+                  />
+
+                  <div>
+                    <h3 className="text-2xl text-gray-900 font-bold">3.4k</h3>{" "}
+                    <p>New reader this week</p>
+                  </div>
+                </div>
+                <div className="flex justify-center items-center w-16 h-8 text-green-600 bg-green-300 rounded-md p-[3px]">
+                  <FontAwesomeIcon
+                    icon={faArrowUp}
+                    className="text-green-600 mr-1"
+                  />
+
+                  <p className="">24%</p>
+                </div>
+              </div>
+              <div className="flex justify-between mt-3">
+                <p className="text-sm">
+                  Money earned:{" "}
+                  <span className="text-base font-bold">$3,232</span>
+                </p>
+                <p className="text-sm">
+                  Conversion rate:{" "}
+                  <span className="text-base font-bold">1.2%</span>
+                </p>
+              </div>
+            </div>
+            <div className="mt-9">
+              {barData.datasets.length > 0 && <Bar data={barData} />}
+            </div>
+            <div className="flex justify-between mt-9 mx-2 pt-3 border-0 border-t-2 border-gray-400">
+              <div className="flex items-center">
+                <p className="mr-1">Last 7 days</p>
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="text-gray-600 mr-1"
+                />
+              </div>
+              <div className="flex items-center">
+                <p className="mr-1">USERS REPORT</p>
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className="text-gray-600 mr-1"
+                />
+              </div>
+            </div>
           </div>
+
           <div className="bg-white p-4 rounded shadow">
-            <h2 className="mb-2 text-lg font-semibold">Reading Traffic</h2>
-            <Doughnut data={doughnutData} />
+            {doughnutData.datasets.length > 0 && (
+              <Doughnut data={doughnutData} />
+            )}
             <div className="text-center mt-4 text-xl">66.4k Unique Readers</div>
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-blue-600" />
+                <p>Desktop</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-green-600" />
+                <p>Tablet</p>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded-full bg-orange-600" />
+                <p>Mobile</p>
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-9 mx-2 pt-3 border-0 border-t-2 border-gray-400">
+              <div className="flex items-center">
+                <p className="mr-1">Last 7 days</p>
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="text-gray-600 mr-1"
+                />
+              </div>
+              <div className="flex items-center">
+                <p className="mr-1">USERS REPORT</p>
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className="text-gray-600 mr-1"
+                />
+              </div>
+            </div>
           </div>
         </div>
+
         <div className="bg-white p-4 rounded shadow">
           <h2 className="mb-4 text-lg font-semibold">Latest Transactions</h2>
           <table className="w-full text-left">
@@ -166,7 +278,11 @@ export default function Dashboard() {
                   </td>
                   <td className="py-2">{tx.date}</td>
                   <td className="py-2">{tx.amount}</td>
-                  <td className="py-2 text-green-600">{tx.status}</td>
+                  <td
+                    className={`py-2 ${tx.status === "Cancelled" ? "text-red-500" : "text-green-600"}`}
+                  >
+                    {tx.status}
+                  </td>
                 </tr>
               ))}
             </tbody>

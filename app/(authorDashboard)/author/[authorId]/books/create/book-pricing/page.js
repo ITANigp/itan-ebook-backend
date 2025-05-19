@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "@/context/FormContext";
 import Modal from "@/components/Modal";
 import CryptoJS from "crypto-js";
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/authorApi";
 
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 

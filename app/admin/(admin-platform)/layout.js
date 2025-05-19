@@ -5,12 +5,12 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartPie,
-  faUpload,
-  faClipboard,
-  faShoppingCart,
-  faQuestionCircle,
-  faUser,
+  faThLarge,
+  faBook,
+  faBookReader,
+  faUserEdit,
+  faCreditCard,
+  faGear,
   faSignOut,
   faBars,
   faTimes,
@@ -24,24 +24,24 @@ export default function AuthorDashboardLayout({ children }) {
   const router = useRouter();
   const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
-  //   if (!stored?.id) {
-  //     alert("Sign in to continue!");
-  //     router.push("/author/sign_in");
-  //   } else {
-  //     setAuthorId(stored.id);
+  //   useEffect(() => {
+  //     const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
+  //     if (!stored?.id) {
+  //       alert("Sign in to continue!");
+  //       router.push("/author/sign_in");
+  //     } else {
+  //       setAuthorId(stored.id);
+  //     }
+  //   }, [router]);
+
+  //   if (!authorId) {
+  //     return null;
   //   }
-  // }, [router]);
 
-  // if (!authorId) {
-  //   return null;
-  // }
-
-  const isDashboard = pathName.startsWith("/dashboard/author/")
+  const isDashboard = pathName.endsWith("/admin/dashboard")
     ? "text-[#E50913]"
     : "text-gray-300";
-  const isBookDetails = pathName.endsWith("/books/create/book-details");
+  const isBooksPage = pathName.endsWith("/admin/books");
   const isBookContent = pathName.endsWith("/books/create/book-content");
   const isBookPricing = pathName.endsWith("/books/create/book-pricing");
   const isSignIn = pathName.endsWith("/author/sign_in");
@@ -49,7 +49,7 @@ export default function AuthorDashboardLayout({ children }) {
   const isRegPage = isSignIn || isSignUp;
 
   const textColor =
-    isBookDetails || isBookContent || isBookPricing
+    isBooksPage || isBookContent || isBookPricing
       ? "text-[#E50913]"
       : "text-gray-300";
 
@@ -106,57 +106,71 @@ export default function AuthorDashboardLayout({ children }) {
           <ul className="space-y-2 font-medium">
             <li>
               <Link
-                href={`/dashboard/author/${authorId}`}
+                href={`/admin/dashboard`}
                 className="flex items-center p-2 text-[#C5C5C5] rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
-                  icon={faChartPie}
+                  icon={faThLarge}
                   className={`text-lg group-hover:text-[#E50913] ${isDashboard}`}
                 />
                 <span
                   className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${isDashboard}`}
                 >
-                  Overview
+                  Dashboard
                 </span>
               </Link>
             </li>
             <li>
               <Link
-                href={`/author/${authorId}/books/create/book-details`}
+                href={`/admin/books`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
-                  icon={faUpload}
+                  icon={faBook}
                   className={`text-lg group-hover:text-[#E50913] ${textColor}`}
                 />
                 <span
                   className={`ml-2 text-[#C5C5C5] text-lg group-hover:text-[#E50913] ${textColor}`}
                 >
-                  Make an Upload
+                  Books
                 </span>
               </Link>
             </li>
             <li>
               <Link
-                href={`/author/${authorId}/books`}
+                href={`/admin/readers`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
-                  icon={faClipboard}
+                  icon={faBookReader}
                   className={`text-lg group-hover:text-[#E50913] ${
-                    pathName.endsWith("/books")
+                    pathName.endsWith("/admin/dashboard/books-not-found")
                       ? "text-[#E50913]"
                       : "text-gray-300"
                   }`}
                 />
                 <span
                   className={`ml-2 text-[#C5C5C5] group-hover:text-[#E50913] ${
-                    pathName.endsWith("/books")
+                    pathName.endsWith("/books-not-found")
                       ? "text-[#E50913]"
                       : "text-gray-300"
                   }`}
                 >
-                  Book Shelf
+                  Reader
+                </span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/admin/authors"
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <FontAwesomeIcon
+                  icon={faUserEdit}
+                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                />
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Authors
                 </span>
               </Link>
             </li>
@@ -166,47 +180,34 @@ export default function AuthorDashboardLayout({ children }) {
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
-                  icon={faShoppingCart}
+                  icon={faCreditCard}
                   className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sales
+                  Payments
                 </span>
               </Link>
             </li>
             <li>
               <Link
-                href="#"
+                href="/author/1/profile"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
-                  icon={faQuestionCircle}
+                  icon={faGear}
                   className="text-gray-300 text-lg group-hover:text-[#E50913]"
                 />
                 <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Help
-                </span>
-              </Link>
-            </li>
-            <li>
-              <Link
-                // href={`/author/${authorId}/profile`}
-                href={`/author/1/profile`}
-                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <FontAwesomeIcon
-                  icon={faUser}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
-                />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Profile
+                  Settings
                 </span>
               </Link>
             </li>
           </ul>
         </div>
       </aside>
-      {children}
+      <section className="container">
+        <div className="lg:ml-64 lg:mt-20 px-4 lg:px-0 py-6">{children}</div>
+      </section>
     </div>
   );
 }
