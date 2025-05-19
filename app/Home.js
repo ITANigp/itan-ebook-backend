@@ -71,7 +71,7 @@ const Home = () => {
 
           <FadeIn delay={0.3} direction="up" distance={10} duration={0.7}>
             <p
-              className="max-w-[300px] text-sm md:text-lg md:max-w-[700px] xl:text-xl xl:max-w-[800px] 2xl:max-w-[900px] mx-auto mt-4 md:mt-6 xl:mt-8 mb-5 md:mb-6 xl:mb-8 text-gray-700 leading-relaxed xl:leading-relaxed"
+              className="max-w-[500px] sm:text-2xl sm:max-w-[700px] xl:max-w-[800px] 2xl:max-w-[900px] mx-auto mt-4 md:mt-6 xl:mt-8 mb-5 md:mb-6 xl:mb-8 text-gray-700 leading-relaxed xl:leading-relaxed"
               style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
             >
               Publish your manuscripts in multiple formats. Create ebooks and
@@ -170,7 +170,7 @@ const Home = () => {
               {/* Text Section */}
               <div className="mt-10 md:mt-0 text-white max-w-xl md:pl-6 lg:pl-12">
                 <h3 className="text-3xl sm:text-4xl lg:text-4xl font-semibold leading-tight mb-6 tracking-tight">
-                  Let the world both read and listen to your unique story
+                  Let the world read and listen to your unique story
                 </h3>
                 <p className="text-base sm:text-lg lg:text-xl text-gray-300 mb-8 leading-relaxed">
                   Publish in multiple formats to reach broader audiences and

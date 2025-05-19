@@ -8,46 +8,39 @@ import FadeIn from "@/components/FadeIn";
 
 const Monetize = () => {
   return (
-    <div className="bg-gray-50">
-      <section className="relative overflow-hidden bg-gradient-to-br from-slate-800 to-slate-700">
+    <div className="md:bg-slate-200 md:py-12">
+      <section className="relative overflow-hidden bg-[#111928] md:bg-slate-300 md:mx-5 md:mt-3 md:mb-16 md:rounded-3xl">
         {/* Background decorative elements - pattern removed */}
         {/* Red accent line removed */}
 
-        <div className="container mx-auto px-4 py-10 sm:py-12 md:py-16 lg:py-20">
+        <div className="mx-auto px-4 py-5 ">
           <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between">
             {/* Image column */}
-            <div className="w-full md:w-1/2 lg:w-5/12 flex justify-center md:justify-end relative">
+            <div className="w-[800px] justify-center md:mr-6">
               {/* Direct image with no container */}
-              <div className="relative transform transition-transform duration-700 hover:scale-[1.02]">
-                <div className="absolute -inset-1 bg-gradient-to-tr from-slate-500/10 to-slate-400/5 rounded-xl blur opacity-30"></div>
-
+              <div className="hidden w-full md md:block transform transition-transform duration-700 hover:scale-[1.10] md:rounded-xl overflow-hidden">
                 <Image
-                  src="/images/monetize_2.png"
+                  src="/images/monetize_4.png"
                   width={380}
                   height={380}
                   alt="Monetize your books with ITAN"
-                  className="relative z-10 rounded-xl shadow-lg w-auto h-auto max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[450px] xl:max-w-[520px]"
+                  className="w-[500px] h-[400px]"
                   priority={true}
-                  sizes="(max-width: 768px) 280px, (max-width: 1024px) 320px, (max-width: 1280px) 450px, 520px"
                 />
               </div>
-
-              {/* Decorative element */}
-              <div className="absolute -bottom-6 -right-12 w-24 h-24 bg-gradient-to-bl from-slate-400/10 to-transparent rounded-full blur-md"></div>
             </div>
 
             {/* Content column */}
-            <div className="w-full md:w-1/2 lg:w-7/12 mt-8 md:mt-0 text-center md:text-left">
+            <div className="w-full mt-1 md:mt-0 text-center md:text-left text-white md:text-[#111928] md:h-[445px] md:mx-5 p-5 pr-9 md:rounded-2xl">
               <h1
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white leading-tight tracking-tight mb-4 md:mb-6 px-2 md:px-0"
+                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6 px-2 md:px-0"
                 style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
               >
-                Monetize your digital books with{" "}
-                <span className="text-red-500">ITAN</span> global publishing
+                Monetize your digital books with IGP
               </h1>
 
               <p
-                className="text-gray-300 text-sm sm:text-base md:text-lg lg:text-xl max-w-xl mx-auto md:mx-0 mb-8 md:mb-10 px-4 md:px-0"
+                className="text-sm sm:text-base md:text-lg md:pr-6 lg:text-xl max-w-xl mx-auto md:mx-0 mb-8 md:mb-10 px-4 md:px-0"
                 style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
               >
                 ITAN provides authors with free publishing and multiple royalty
@@ -55,7 +48,7 @@ const Monetize = () => {
               </p>
 
               <Link
-                href="/author/sign_in"
+                href="/author/sign_up"
                 className="inline-flex items-center justify-center px-6 py-3 bg-[#E50913] hover:bg-red-700 text-white font-medium rounded-md transition-all duration-300 shadow-sm hover:shadow-md group"
               >
                 <span className="mr-2">Get Started for Free</span>
@@ -187,7 +180,7 @@ const Monetize = () => {
         </div>
       </section>
 
-      <section className=" flex flex-col items-center sm:flex-row sm:justify-center my-10 py-6 space-y-5 sm:space-y-0 bg-gray-200">
+      <section className=" flex flex-col items-center sm:flex-row sm:justify-center mb-10 md:mt-10 py-6 space-y-5 sm:space-y-0 bg-gray-200">
         <div className="flex flex-col justify-center items-center mx-10 w-[260px] md:w-[550px] bg-white shadow-md rounded-sm h-[150px] md:h-[250px]">
           <p className="mb-5 text-[16px] font-semibold md:text-[20px]">
             Royalty for eBook sale{" "}

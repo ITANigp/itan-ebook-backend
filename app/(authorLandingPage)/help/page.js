@@ -53,7 +53,8 @@ const Help = () => {
 
             <div className="md:ml-4 transform transition-all duration-300 hover:scale-[1.02] hover:shadow-md">
               <a
-                href="mailto:oluola96@gmail.com"
+                href="mailto:support@itan.app"
+                target="_blank"
                 className="flex items-center justify-center bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 text-white font-semibold rounded py-2.5 px-5 min-w-[120px] text-xs md:text-sm"
               >
                 Contact Us

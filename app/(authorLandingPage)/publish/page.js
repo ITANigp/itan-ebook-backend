@@ -4,6 +4,7 @@ import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import FadeIn from "@/components/FadeIn";
+import Link from "next/link";
 
 const Publish = () => {
   return (
@@ -83,7 +84,7 @@ const Publish = () => {
                 </p>
 
                 <div className="mt-8 xs:mt-9 medium:mt-10 large:mt-12 xl:mt-14 flex flex-wrap justify-center gap-4 xs:gap-5">
-                  <button className="flex items-center justify-center space-x-2 bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4 shadow-lg">
+                  <Link href="/author/sign_in" className="flex items-center justify-center space-x-2 bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4 shadow-lg">
                     <span className="font-medium text-sm xs:text-base medium:text-lg large:text-lg xl:text-lg">
                       Start Publishing
                     </span>
@@ -91,12 +92,12 @@ const Publish = () => {
                       icon={faArrowRight}
                       className="w-3.5 h-3.5 xs:w-4 xs:h-4 medium:w-5 medium:h-5"
                     />
-                  </button>
-                  <button className="flex items-center justify-center space-x-2 bg-transparent border-2 border-white/30 hover:border-white/50 transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4">
+                  </Link>
+                  <Link href="/help" className="flex items-center justify-center space-x-2 bg-transparent border-2 border-white/30 hover:border-white/50 transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4">
                     <span className="font-medium text-sm xs:text-base medium:text-lg">
                       Learn More
                     </span>
-                  </button>
+                  </Link>
                 </div>
               </FadeIn>
             </div>
