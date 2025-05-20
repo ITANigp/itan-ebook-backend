@@ -90,7 +90,7 @@ const SignIn = () => {
               id="email"
               required
               placeholder="Johndoe@gmail.com"
-              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+              className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -108,7 +108,7 @@ const SignIn = () => {
               id="password"
               required
               placeholder="Enter your password"
-              className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+              className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />

@@ -101,7 +101,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
                 placeholder="Johndoe@gmail.com"
                 required
                 value={email}
@@ -118,8 +118,8 @@ const SignUp = () => {
               </label>
               <input
                 type="password"
-                id="password"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                placeholder="Enter your password"
+                className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
