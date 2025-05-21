@@ -153,7 +153,7 @@ export default function AuthorBooks() {
             </div>
 
             <div className="flex flex-col items-center sm:border-r border-r-gray-600 mb-2 mt-3 pr-9 mx-auto ">
-              <Link href={`/author/${authorId}/books/${book.id}/ebook-preview`}>
+              <Link href={`/author/${authorId}/books/${book.id}`}>
                 <img
                   src={book.cover_image_url || "/images/book-shelf.png"}
                   alt={book.title}
