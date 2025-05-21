@@ -3,7 +3,7 @@ import React from 'react'
 const AuthorDashboard = () => {
   return (
     <section className="container">
-      <div className="lg:ml-64 lg:mt-20 px-4 lg:px-0 py-6">
+      <div className="lg:ml-72 lg:mt-20 px-4 lg:px-0 py-6">
         <h2 className="font-bold text-2xl mb-6 text-center sm:text-left">
           Welcome! What would you like to create?
         </h2>
