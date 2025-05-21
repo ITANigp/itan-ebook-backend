@@ -22,18 +22,21 @@ export default function ConfirmEmailContent() {
 
       try {
         const response = await api.post(
-          `${BASE_API_URL}/authors/confirmation`,
+          `${BASE_API_URL}/authors/confirmation/confirm`,
           { confirmation_token, email }
         );
-
-        if (response.ok) {
+        // Check status code instead of response.ok
+        if (response.status >= 200 && response.status < 300) {
           setStatus("Email confirmed! Redirecting...");
-          setTimeout(() => router.push("/sign_in"), 2000);
+          setTimeout(() => router.push("/author/sign_in"), 2000);
         } else {
-          const data = await response.json();
-          setStatus(
-            `Email confirmation failed: ${data.message || "Unknown error"}`
-          );
+          // Access the error message from the data object
+          const errorMessage =
+            response.data?.status?.message ||
+            response.data?.message ||
+            "Unknown error";
+
+          setStatus(`Email confirmation failed: ${errorMessage}`);
         }
       } catch (error) {
         setStatus("An error occurred. Please try again.");
