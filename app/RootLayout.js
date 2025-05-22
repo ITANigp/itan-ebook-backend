@@ -22,6 +22,8 @@ export default function RootLayout({ children }) {
     pathname.startsWith("/author") ||
     pathname.startsWith("/dashboard");
 
+  const authPages = pathname.startsWith("/auth")
+
   const privacyPages =
     pathname.startsWith("/privacy-policies") ||
     pathname.startsWith("/terms&conditions");
@@ -33,7 +35,9 @@ export default function RootLayout({ children }) {
   const adminPage = pathname.startsWith("/admin")
     
     const shouldHideHeader =
-      authorPages || privacyPages || PasswordPage || adminPage ? "hidden" : "";
+      authorPages || privacyPages || PasswordPage || adminPage || authPages
+        ? "hidden"
+        : "";
 
     const ProfilePage = pathname.endsWith('/profile')
     const ProfileBackground = ProfilePage ? "bg-gray-100" : ""

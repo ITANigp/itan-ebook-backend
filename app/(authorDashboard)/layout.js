@@ -24,19 +24,19 @@ export default function AuthorDashboardLayout({ children }) {
   const router = useRouter();
   const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
-  //   if (!stored?.id) {
-  //     alert("Sign in to continue!");
-  //     router.push("/author/sign_in");
-  //   } else {
-  //     setAuthorId(stored.id);
-  //   }
-  // }, [router]);
+  useEffect(() => {
+    const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
+    if (!stored?.id) {
+      alert("Sign in to continue!");
+      router.push("/author/sign_in");
+    } else {
+      setAuthorId(stored.id);
+    }
+  }, [router]);
 
-  // if (!authorId) {
-  //   return null;
-  // }
+  if (!authorId) {
+    return null;
+  }
 
   const isDashboard = pathName.startsWith("/dashboard/author/")
     ? "text-[#E50913]"
@@ -86,7 +86,7 @@ export default function AuthorDashboardLayout({ children }) {
 
       <aside
         ref={sidebarRef}
-        className={`fixed top-0 left-0 z-40 w-64 h-full bg-gray-900 text-white transition-transform ${
+        className={`fixed top-0 left-0 z-40 w-64 pt-6 h-full bg-gray-900 text-white transition-transform ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 sm:block`}
         aria-label="Sidebar"
@@ -101,7 +101,7 @@ export default function AuthorDashboardLayout({ children }) {
         </div>
         <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
           <Link href="/">
-            <img src="/images/logo.png" className="w-16 mb-6 ml-3" />
+            <img src="/images/logo.png" className="w-16 mb-8 ml-3" />
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
@@ -176,7 +176,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <Link
-                href="#"
+                href="/help"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

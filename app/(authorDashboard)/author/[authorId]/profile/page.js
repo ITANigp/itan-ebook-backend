@@ -178,13 +178,11 @@ const Profile = () => {
           </div>
           <div className="lg:flex lg:flex-col lg:items-start">
             <h3 className="mt-4 font-semibold">
-              {/* {profile.first_name} {profile.last_name} */}
-              Paul Oluyemi
+              {profile.first_name} {profile.last_name}
             </h3>
             <p className="text-gray-400">Author</p>
             <p className="text-gray-400 italic">
-              {/* {profile.email} */}
-              oluola96@gmail.com
+              {profile.email}
             </p>
           </div>
         </div>
