@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,18 +12,19 @@ import {
   faShoppingCart,
   faQuestionCircle,
   faUser,
-  faSignOut,
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { getAuthorProfile } from "@/utils/auth/authorApi";
+
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [authorId, setAuthorId] = useState(null);
+  const [profile, setProfile] = useState({});
   const sidebarRef = useRef(null);
   const pathName = usePathname();
   const router = useRouter();
-  const inputRef = useRef(null);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
@@ -33,6 +35,20 @@ export default function AuthorDashboardLayout({ children }) {
       setAuthorId(stored.id);
     }
   }, [router]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await getAuthorProfile();
+        setProfile(data);
+        console.log("Fetched Profile Data: ", data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   if (!authorId) {
     return null;
@@ -73,9 +89,14 @@ export default function AuthorDashboardLayout({ children }) {
         } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
         <div className="flex-1 relative mr-8">
-          <img
-            src="/images/picture.png"
-            className="w-12 absolute right-0 -top-6"
+          <Image
+            width={50}
+            height={50}
+            className="w-12 absolute right-0 -top-6 p-2 rounded-full bg-slate-400 object-cover"
+            alt="Profile"
+            src={
+              profile.author_image ? profile.author_image : `/images/avatar.png`
+            }
           />
         </div>
       </div>
@@ -101,7 +122,7 @@ export default function AuthorDashboardLayout({ children }) {
         </div>
         <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
           <Link href="/">
-            <img src="/images/logo.png" className="w-16 mb-8 ml-3" />
+            <img src="/images/logo.png" className="w-16 mb-8 ml-3" alt="Logo" />
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
@@ -190,8 +211,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <Link
-                // href={`/author/${authorId}/profile`}
-                href={`/author/1/profile`}
+                href={`/author/${authorId}/profile`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

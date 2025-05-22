@@ -256,7 +256,7 @@ const TopNav = ({ styles }) => {
           </div>
           <div>
             <Link
-              href="/author/sign_in"
+              href="/author/sign_up"
               className="bg-[#E50913] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
             >
               Sign Up

@@ -2,13 +2,17 @@
 
 import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 import { api } from "@/utils/auth/authorApi";
-import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import BookMenu from "@/components/BookMenu";
 import DeleteModal from "@/components/DeleteModal";
 import toast from "react-hot-toast";
+import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
@@ -94,12 +98,28 @@ export default function AuthorBooks() {
   return (
     <section className="lg:ml-72 sm:mr-8 sm:mt-24 mb-8 lg:container lg:mx-auto">
       {books.length === 0 ? (
-        <p>No books available.</p>
+        <div className="flex flex-col items-center justify-center text-center py-10 space-y-4 text-gray-600 lg:-ml-52">
+          <Image
+            src="/images/no_book.png"
+            width={100}
+            height={100}
+            alt="no books in the shelf"
+          />
+          <h2 className="text-xl font-semibold">No books in your shelf</h2>
+          <p className="text-sm">Uploaded books will show here once added.</p>
+          <Link
+            href={`/author/${authorId}/books/create/book-details?id`}
+            className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 h-[35px] sm:h-[40px] w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md"
+          >
+            <FontAwesomeIcon icon={faPlus} className="w-3 sm:w-3.5 xl:w-4" />
+            <p className=" text-sm xl:text-base font-semibold">Add a book</p>
+          </Link>
+        </div>
       ) : (
         books.map((book) => (
           <div
             key={book.id}
-            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative"
+            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative lg:max-w-[1000px] lg:ml-0"
           >
             <div className="flex justify-between my-3 ml-6 sm:hidden">
               <div className="flex items-center">
@@ -162,7 +182,7 @@ export default function AuthorBooks() {
               </Link>
               <div className="text-center sm:text-left">
                 <p className="font-semibold w-32">{book.title}</p>
-                <p className="text-sm">By {book.author || "Oluyemi Paul"}</p>
+                <p className="text-sm">By {book.author || "Author's Name"}</p>
               </div>
             </div>
 

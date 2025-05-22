@@ -129,11 +129,15 @@ const BookDetails = () => {
           onBlur={(e) =>
             (e.target.placeholder = "First Name (Include your middle name)")
           }
+          value={formData.first_name}
+          onChange={(e) => updateFormData({ first_name: e.target.value })}
         />
         <input
           type="text"
           placeholder="Last Name"
           className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+          value={formData.last_name}
+          onChange={(e) => updateFormData({ last_name: e.target.value })}
         />
       </div>
 
