@@ -22,8 +22,8 @@ export const setupSms2FA = async (phoneNumber) => {
 };
 
 // Verify phone (only needed once)
-export const verifySms2FA = async (code) => {
-  const { data } = await api.post("/authors/two_factor/verify_sms", {
+export const verify2FA = async (code) => {
+  const { data } = await api.post("/authors/verify", {
     verification_code: code,
   });
   return data;

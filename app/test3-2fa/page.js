@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import {
   getTwoFactorStatus,
   setupSms2FA,
-  verifySms2FA,
+  verify2FA,
   enableEmail2FA,
   disable2FA,
 } from "@/utils/twoFactorAuth";
@@ -35,7 +35,7 @@ const TwoFactorSettings = () => {
   };
 
   const handleVerifySms = async () => {
-    await verifySms2FA(code);
+    await verify2FA(code);
     alert("Phone verified and 2FA enabled with SMS");
     setStep("idle");
   };
