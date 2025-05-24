@@ -16,6 +16,7 @@ import {
 
 import { getAllAuthors } from "@/utils/auth/adminApi"
 import formatDate from "@/utils/formatDate";
+import Link from "next/link";
 
 const Readers = () => {
   const [authors, setAuthor] = useState([]);
@@ -97,6 +98,7 @@ const Readers = () => {
                 authors.map((author) => (
                   <TableRow key={author.id}>
                     <TableCell className="font-medium flex items-center gap-2">
+                    <Link href={`/admin/authors/author-details/${author.id}`}>
                       {author?.author_profile_image_url ? (
                         <Image
                           src={author.author_profile_image_url}
@@ -117,6 +119,7 @@ const Readers = () => {
                       <p className="align-middle">
                         {author.last_name} {author.first_name}
                       </p>
+                      </Link>
                     </TableCell>
                     <TableCell className="align-middle">
                       {author.email}
