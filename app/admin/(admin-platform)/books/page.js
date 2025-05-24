@@ -1,79 +1,75 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSlidersH, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+"use client";
 
-import { getAllBooks } from "@/utils/db/admin/bookApi";
+import Image from "next/image";
+import Link from "next/link";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import formatDate from "@/utils/formatDate";
+import { faSlidersH, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 
-const Books = async () => {
-  // const books = await getAllBooks();
+import { api, getAllBooks } from "@/utils/auth/adminApi"; 
 
-  const bookList = [
-    {
-      bookName: "Cyber Security 01",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 02",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 03",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 04",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 05",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 06",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-    {
-      bookName: "Cyber Security 07",
-      bookCover: "/images/books/book1.png",
-      author: "Mr Oluyemi",
-      bookType: "Ebook",
-      bookStatus: "Live",
-      date: "06 June, 2025",
-    },
-  ];
+const Books = () => {
+  const [books, setBooks] = useState([]);
+  const [filter, setFilter] = useState("all");
+
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      const books = await getAllBooks();
+      if (!books) {
+        console.error(
+          "No books returned. Possibly unauthorized or server error."
+        );
+      } else {
+        console.log("All books from Admin Panel:", books);
+        setBooks(books);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  const filteredBooks = books.filter((book) => {
+    if (filter === "all") return true;
+    return book.approval_status === filter;
+  });
+
+  const handleReject = async (bookId) => {
+    try {
+      const response = await api.patch(`/admin/books/${bookId}/reject`, {
+        "admin_feedback":
+          "This book needs revisions on chapters 2-4. Content is inappropriate.",
+      });
+      console.log("Book is rejected: ", response.data);
+    } catch (err) {
+      console.log("Error approving the book: ", err);
+    }
+  };
+
+  const handleApprove = async (bookId) => {
+    try {
+      const response = await api.patch(`/admin/books/${bookId}/approve`, {
+        "admin_feedback": "Congratulations, your book is approved",
+      });
+      console.log("Book is approved: ", response.data)
+    } catch (err) {
+      console.log("Error approving the book: ", err);
+    }
+  };
+
+  if (!books.length) {
+    return <p className="ml-3 mt-5">Loading books...</p>;
+  }
 
   return (
     <div className="ml-3">
@@ -103,19 +99,12 @@ const Books = async () => {
           <p />
         </div>
       </div>
-      {/* <ul>
-        {books?.data?.map((book) => (
-          <li key={book.id}>{book.title}</li>
-        ))}
-      </ul> */}
       <div className="relative mt-5">
         <div className="relative">
           <Table>
             <TableHeader>
               <TableRow className="bg-slate-700 hover:bg-slate-700 rounded-lg">
-                <TableHead className="text-white">
-                  Book Name
-                </TableHead>
+                <TableHead className="text-white">Book Name</TableHead>
                 <TableHead className="text-white">Author</TableHead>
                 <TableHead className="text-white">Book Types</TableHead>
                 <TableHead className="text-white">Book Status</TableHead>
@@ -124,10 +113,44 @@ const Books = async () => {
               </TableRow>
 
               <TableRow className="hover:bg-white">
-                <TableHead />
-                <TableHead />
-                <TableHead />
-                <TableHead />
+                <TableHead>
+                  {" "}
+                  <button
+                    onClick={() => setFilter("all")}
+                    className="px-4 py-2 bg-gray-200 rounded"
+                  >
+                    All
+                  </button>
+                </TableHead>
+                <TableHead>
+                  {" "}
+                  <button
+                    onClick={() => setFilter("pending")}
+                    className="px-4 py-2 bg-yellow-200 rounded"
+                  >
+                    Pending
+                  </button>
+                </TableHead>
+
+                <TableHead>
+                  {" "}
+                  <button
+                    onClick={() => setFilter("rejected")}
+                    className="px-4 py-2 bg-red-200 rounded"
+                  >
+                    Rejected
+                  </button>
+                </TableHead>
+
+                <TableHead>
+                  {" "}
+                  <button
+                    onClick={() => setFilter("approved")}
+                    className="px-4 py-2 bg-green-200 rounded"
+                  >
+                    Approved
+                  </button>
+                </TableHead>
                 <TableHead />
                 <TableHead>
                   <FontAwesomeIcon
@@ -139,30 +162,57 @@ const Books = async () => {
             </TableHeader>
 
             <TableBody>
-              {bookList.map((book) => (
-                <TableRow key={book.bookName}>
-                  <TableCell className="font-medium">
-                    <Image
-                      src={book.bookCover}
-                      width={70}
-                      height={120}
-                      alt="book cover"
-                      className="w-24 h-auto"
-                    />
-                    <p>{book.bookName}</p>
-                  </TableCell>
-                  <TableCell>{book.author}</TableCell>
-                  <TableCell>{book.bookType}</TableCell>
-                  <TableCell>{book.bookStatus}</TableCell>
-                  <TableCell>{book.date}</TableCell>
-                  <TableCell>
-                    <FontAwesomeIcon
-                      icon={faEllipsisH}
-                      className="cursor-pointer"
-                    />
+              {filteredBooks.length > 0 ? (
+                filteredBooks.map((book) => (
+                  <TableRow key={book.id}>
+                    <TableCell className="font-medium">
+                      <Link href={`/admin/books/book-details/${book.id}`}>
+                        <Image
+                          src={book.cover_image_url}
+                          width={70}
+                          height={120}
+                          alt="book cover"
+                          className="w-24 h-auto"
+                        />
+                      </Link>
+                      <p>{book.title}</p>
+                    </TableCell>
+                    <TableCell>
+                      {book.first_name} {book.last_name}{" "}
+                    </TableCell>
+                    <TableCell>{book?.unique_book_id ? "Ebook" : ""}</TableCell>
+                    <TableCell>{book.approval_status}</TableCell>
+                    <TableCell>
+                      {book.date} {}
+                    </TableCell>
+                    <TableCell>{formatDate(book.created_at)}</TableCell>
+                    <TableCell className="flex flex-col">
+                      <FontAwesomeIcon
+                        icon={faEllipsisH}
+                        className="cursor-pointer"
+                      />
+                      <button
+                        onClick={() => handleReject(book.id)}
+                        className="text-red-600 cursor-pointer"
+                      >
+                        Reject
+                      </button>
+                      <button
+                        onClick={() => handleApprove(book.id)}
+                        className="text-green-600 cursor-pointer"
+                      >
+                        Accept
+                      </button>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={6} className="text-center py-4">
+                    No books found for "{filter}"
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>

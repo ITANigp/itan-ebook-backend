@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -28,5 +28,24 @@ export const signOutAdmin = async () => {
   } catch (error) {
     console.error("Admin sign-out failed:", error.response?.data || error);
     throw error;
+  }
+};
+
+export const getAllBooks = async () => {
+  try {
+    const response = await api.get("/admin/books");
+    return response.data.data;
+  } catch (err) {
+    console.log("Error fetching all Books: ", err);
+  }
+};
+
+
+export const getAllAuthors = async () => {
+  try {
+    const response = await api.get("admin/authors");
+    return response.data.data;
+  } catch (err) {
+    console.log("Error fetching all Authors: ", err);
   }
 };
