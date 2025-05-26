@@ -119,7 +119,7 @@ export default function AuthorBooks() {
         books.map((book) => (
           <div
             key={book.id}
-            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative lg:max-w-[1000px] lg:ml-0"
+            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative lg:max-w-[800px] lg:ml-0"
           >
             <div className="flex justify-between my-3 ml-6 sm:hidden">
               <div className="flex items-center">

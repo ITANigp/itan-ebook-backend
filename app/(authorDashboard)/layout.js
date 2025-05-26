@@ -92,10 +92,12 @@ export default function AuthorDashboardLayout({ children }) {
           <Image
             width={50}
             height={50}
-            className="w-12 absolute right-0 -top-6 p-2 rounded-full bg-slate-400 object-cover"
+            className={`w-12 h-12 absolute right-0 -top-6 rounded-full bg-slate-400 object-cover ${profile.author_profile_image_url ? "" : "bg-slate-400 p-2"}`}
             alt="Profile"
             src={
-              profile.author_image ? profile.author_image : `/images/avatar.png`
+              profile.author_profile_image_url
+                ? profile.author_profile_image_url
+                : `/images/avatar.png`
             }
           />
         </div>

@@ -1,106 +1,70 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import Image from "next/image";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSlidersH, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
-
-import { getAllBooks } from "@/utils/db/admin/bookApi";
 import {
   Table,
   TableBody,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
 
-const Readers = async () => {
-  // const books = await getAllBooks();
+import { getAllAuthors } from "@/utils/auth/adminApi"
+import formatDate from "@/utils/formatDate";
+import Link from "next/link";
 
-  const readerList = [
-    {
-      accountName: "Mr. Oluyemi 01",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 02",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 03",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 04",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 05",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 06",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-    {
-      accountName: "Mr. Oluyemi 07",
-      email: "oluola96@gmail.com",
-      phoneNumber: "08156748934",
-      regNo: "Ebook",
-      profilePicture: "/images/picture.png"
-    },
-  ];
+const Readers = () => {
+  const [authors, setAuthor] = useState([]);
+  
+    useEffect(() => {
+      const fetchAuthors = async () => {
+        const author = await getAllAuthors();
+        if (!author) {
+          console.error(
+            "No author returned. Possibly unauthorized or server error."
+          );
+        } else {
+          console.log("All author from Admin Panel:", author);
+          setAuthor(author);
+        }
+      };
+  
+      fetchAuthors();
+    }, []);
 
   return (
     <div className="ml-3">
-      <h2>Books</h2>
+      <h2>Authors</h2>
       <div className="flex w-[600px] justify-between mt-3">
-        <div className="flex flex-col w-[120px] h-[120px] justify-evenly pt-3 items-center border border-orange-200 rounded-md">
-          <p className="text-sm">All Books</p>
+        <div className="flex flex-col w-[130px] h-[120px] justify-evenly pt-3 items-center border border-orange-200 rounded-md">
+          <p className="text-sm">All Authors</p>
           <p className="text-2xl font-bold">10,450</p>
           <p />
         </div>
 
-        <div className="flex flex-col w-[120px] h-[120px] justify-evenly pt-3  text-orange-300 items-center border border-orange-200 rounded-md">
-          <p className="text-sm">Download Books</p>
+        <div className="flex flex-col w-[130px] h-[120px] justify-evenly pt-3  text-orange-300 items-center border border-orange-200 rounded-md">
+          <p className="text-sm">Ebook Authors</p>
           <p className="text-2xl font-bold">10,450</p>
           <p />
         </div>
 
-        <div className="flex flex-col w-[120px] h-[120px] justify-evenly pt-3 text-green-600 items-center border border-orange-200 rounded-md">
-          <p className="text-sm">Bought Books</p>
+        <div className="flex flex-col w-[140px] h-[120px] justify-evenly pt-3 text-green-600 items-center border border-orange-200 rounded-md">
+          <p className="text-sm">Audiobook Authors</p>
           <p className="text-2xl font-bold">10,450</p>
           <p />
         </div>
 
-        <div className="flex flex-col w-[120px] h-[120px] justify-evenly pt-3 text-red-600 items-center border border-orange-200 rounded-md">
-          <p className="text-sm">Rejected Books</p>
+        <div className="flex flex-col w-[140px] h-[120px] justify-evenly pt-3 text-red-600 items-center border border-orange-200 rounded-md">
+          <p className="text-sm">Rejected Authors</p>
           <p className="text-2xl font-bold">10,450</p>
           <p />
         </div>
       </div>
-      {/* <ul>
-        {books?.data?.map((book) => (
-          <li key={book.id}>{book.title}</li>
-        ))}
-      </ul> */}
       <div className="relative mt-5">
         <div className="relative">
           <Table>
@@ -110,7 +74,8 @@ const Readers = async () => {
                 <TableHead className="text-white">Email</TableHead>
                 <TableHead className="text-white">Phone Number</TableHead>
                 <TableHead className="text-white">Registration Date</TableHead>
-                <TableHead className="text-white"></TableHead>
+                <TableHead className="text-white text-center">
+                </TableHead>
               </TableRow>
 
               {/* Filter Icon Row */}
@@ -119,37 +84,63 @@ const Readers = async () => {
                 <TableHead />
                 <TableHead />
                 <TableHead />
-                <TableHead className="align-middle">
+                <TableHead className="text-center">
                   <FontAwesomeIcon
                     icon={faSlidersH}
-                    className="text-slate-700 w-6 h-10 py-1 bg-slate-100 shadow-lg rounded-md cursor-pointer"
+                    className="text-slate-700 w-6 h-10 py-1 bg-slate-100 shadow-lg rounded-md cursor-pointer inline-block"
                   />
                 </TableHead>
               </TableRow>
             </TableHeader>
 
-            {/* Table Body */}
             <TableBody>
-              {readerList.map((reader) => (
-                <TableRow key={reader.accountName}>
-                  <TableCell className="font-medium flex items-center gap-2">
-                    <Image
-                      src={reader.profilePicture}
-                      width={20}
-                      height={20}
-                      alt="reader cover"
-                      className="w-8 h-8 rounded-full object-cover"
-                    />
-                    <p className="align-middle">{reader.accountName}</p>
+              {authors?.length ? (
+                authors.map((author) => (
+                  <TableRow key={author.id}>
+                    <TableCell className="font-medium flex items-center gap-2">
+                    <Link href={`/admin/authors/author-details/${author.id}`}>
+                      {author?.author_profile_image_url ? (
+                        <Image
+                          src={author.author_profile_image_url}
+                          width={32}
+                          height={32}
+                          alt={`Profile picture of ${author.first_name} ${author.last_name}`}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <Image
+                          src="/images/avatar.png"
+                          width={32}
+                          height={32}
+                          alt={`Default avatar for ${author.first_name} ${author.last_name}`}
+                          className="w-8 h-8 rounded-full object-cover bg-slate-400"
+                        />
+                      )}
+                      <p className="align-middle">
+                        {author.last_name} {author.first_name}
+                      </p>
+                      </Link>
+                    </TableCell>
+                    <TableCell className="align-middle">
+                      {author.email}
+                    </TableCell>
+                    <TableCell className="align-middle">
+                      {author.phone_number}
+                    </TableCell>
+                    <TableCell className="align-middle">
+                      {formatDate(author.created_at)}
+                    </TableCell>
+                    <TableCell className="text-center">
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={5} className="text-center text-slate-500">
+                    No authors found.
                   </TableCell>
-                  <TableCell className="align-middle">{reader.email}</TableCell>
-                  <TableCell className="align-middle">
-                    {reader.phoneNumber}
-                  </TableCell>
-                  <TableCell className="align-middle">{reader.regNo}</TableCell>
-                  <TableCell></TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>

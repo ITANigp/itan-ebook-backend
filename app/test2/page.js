@@ -4,36 +4,43 @@ import { useState } from "react";
 import genreData from "@/constants/dataGenres";
 
 const BookForm = () => {
-  // State to track selected genre and sub-categories
   const [genre, setGenre] = useState("");
-  const [subCategories, setSubCategories] = useState([]);
+  const [selectedSubCategories, setSelectedSubCategories] = useState([]);
 
-  // Handle genre selection
   const handleGenreChange = (e) => {
     setGenre(e.target.value);
-    setSubCategories([]); // Reset sub-categories when genre changes
+    setSelectedSubCategories([]);
   };
 
-  // Handle sub-category checkbox selection
   const handleSubCategoryChange = (e) => {
     const value = e.target.value;
-    setSubCategories((prevState) =>
-      prevState.includes(value)
-        ? prevState.filter((item) => item !== value)
-        : [...prevState, value]
+
+    const alreadySelected = selectedSubCategories.some(
+      (item) => item.genre === genre && item.value === value
     );
+
+    if (alreadySelected) {
+      setSelectedSubCategories((prev) =>
+        prev.filter((item) => !(item.genre === genre && item.value === value))
+      );
+    } else {
+      setSelectedSubCategories((prev) => [...prev, { genre, value }]);
+    }
   };
 
-  // Helper function to render sub-categories
-  const renderSubCategories = (genreData) => {
-    if (Array.isArray(genreData)) {
-      // If the genreData is an array, map directly to sub-categories
-      return genreData.map((subCat, index) => (
+  const isChecked = (value) =>
+    selectedSubCategories.some(
+      (item) => item.genre === genre && item.value === value
+    );
+
+  const renderSubCategories = (data) => {
+    if (Array.isArray(data)) {
+      return data.map((subCat, index) => (
         <label key={index} className="inline-flex items-center space-x-2 mr-3">
           <input
             type="checkbox"
             value={subCat}
-            checked={subCategories.includes(subCat)}
+            checked={isChecked(subCat)}
             onChange={handleSubCategoryChange}
             className="h-4 w-4"
           />
@@ -41,20 +48,19 @@ const BookForm = () => {
         </label>
       ));
     } else {
-      // If genreData is an object (e.g., Religious Fiction), loop through nested categories
-      return Object.keys(genreData).map((subCategoryGroup, index) => (
+      return Object.keys(data).map((group, index) => (
         <div key={index}>
-          <h3 className="font-semibold">{subCategoryGroup}</h3>
+          <h3 className="font-semibold">{group}</h3>
           <div className="space-y-2 ml-4">
-            {genreData[subCategoryGroup].map((subCat, index) => (
+            {data[group].map((subCat, i) => (
               <label
-                key={index}
+                key={i}
                 className="inline-flex items-center space-x-2 mr-3"
               >
                 <input
                   type="checkbox"
                   value={subCat}
-                  checked={subCategories.includes(subCat)}
+                  checked={isChecked(subCat)}
                   onChange={handleSubCategoryChange}
                   className="h-4 w-4"
                 />
@@ -102,7 +108,11 @@ const BookForm = () => {
         </div>
       )}
 
-      {/* Submit Button */}
+      {/* Debug */}
+      <pre className="text-xs bg-gray-100 p-2 mt-4 rounded">
+        {JSON.stringify(selectedSubCategories, null, 2)}
+      </pre>
+
       <button
         type="submit"
         className="mt-6 py-2 px-4 bg-blue-500 text-white font-bold rounded-md hover:bg-blue-600"

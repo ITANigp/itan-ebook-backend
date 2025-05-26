@@ -6,6 +6,8 @@ const FormContext = createContext();
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
+    first_name: "",
+    last_name: "",
     audiobook_price: "",
     bio: "",
     contributors: "",
@@ -16,11 +18,13 @@ export const FormProvider = ({ children }) => {
     subtitle: "",
     ebook_file: null,    // For PDF or EPUB
     ebook_price: "",
-    keywords:"",
+    keywords: ["", "", "", ""],
     book_isbn: "",
     primary_audience: "",
-    publishing_rights: false,
-    terms_and_conditions: false,
+    publishing_rights: null,
+    terms_and_conditions: null,
+    ai_generated_image: null,
+    explicit_images: null,
   });
 
   const updateFormData = (newData) => {

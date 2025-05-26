@@ -16,27 +16,30 @@ import {
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { signOutAdmin } from "@/utils/auth/adminApi"; 
+import Image from "next/image";
+
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [authorId, setAuthorId] = useState(null);
   const sidebarRef = useRef(null);
   const pathName = usePathname();
   const router = useRouter();
   const inputRef = useRef(null);
 
-  //   useEffect(() => {
-  //     const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
-  //     if (!stored?.id) {
-  //       alert("Sign in to continue!");
-  //       router.push("/author/sign_in");
-  //     } else {
-  //       setAuthorId(stored.id);
-  //     }
-  //   }, [router]);
+const handleSignOut = async () => {
 
-  //   if (!authorId) {
-  //     return null;
-  //   }
+    try {
+      await signOutAdmin();
+      alert("Sign out successfully!")
+      router.push("/admin");
+    } catch (err) {
+      if (!err.response) {
+        alert("Cannot connect to the server. Please try again later.");
+      } else {
+        alert("Sign-out failed. Please try again.");
+      }
+    } 
+  };
 
   const isDashboard = pathName.endsWith("/admin/dashboard")
     ? "text-[#E50913]"
@@ -73,10 +76,15 @@ export default function AuthorDashboardLayout({ children }) {
         } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
         <div className="flex-1 relative mr-8">
-          <img
-            src="/images/picture.png"
-            className="w-12 absolute right-0 -top-6"
-          />
+          <Image
+                      width={50}
+                      height={50}
+                      className="w-12 absolute right-0 -top-6 p-2 rounded-full bg-slate-400 object-cover"
+                      alt="Profile"
+                      src={
+                        `/images/avatar.png`
+                      }
+                    />
         </div>
       </div>
 
@@ -201,6 +209,14 @@ export default function AuthorDashboardLayout({ children }) {
                   Settings
                 </span>
               </Link>
+              <button
+                onClick={handleSignOut}
+                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+              >
+                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                  Sign Out
+                </span>
+              </button>
             </li>
           </ul>
         </div>

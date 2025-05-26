@@ -27,6 +27,10 @@ const SignIn = () => {
       const author = await signInAuthor(email, password, captchaToken);
       console.log("Author Sign-in Data:", author);
 
+      if (author.status.code === 202 && author.status.requires_verification == true) {
+        router.push("/auth/mfa/verify")
+      }
+
       if (author?.data?.id) {
         localStorage.setItem("authorInfo", JSON.stringify(author.data));
         router.push(`/dashboard/author/${author.data.id}`);

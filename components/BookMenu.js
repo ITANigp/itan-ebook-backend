@@ -10,8 +10,6 @@ const BookMenu = ({
   onHandleDelete,
   onHandleEdit,
   onHandleSetDeleteModalOpen,
-  // onHandleSetMenuModalClose,
-  onCloseMenu,
 }) => {
   return (
     <div className="flex flex-col space-y-[6px]  items-start my-6 w-36 h-24 rounded-md shadow-lg bg-white">

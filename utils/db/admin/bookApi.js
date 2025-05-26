@@ -2,13 +2,12 @@ import { api } from "@/utils/auth/adminApi"
 
 // Get all books
 
-export async function getAllBooks () {
-   try {
-      const response = await api.get("/books")
-      console.log("all book api from admin platform: ", response.data)
-      return response.data
-   }
-   catch (err) {
-       console.log("all book api from admin platform Error: ", err);
-   }
-}
+// export const getAllBooks = async () => {
+//   try {
+//     const response = await api.get("/admin/books");
+//     return response.data;
+//   } catch (err) {
+//     console.log("Error fetching all Books: ", err);
+//   }
+// };
+ 
