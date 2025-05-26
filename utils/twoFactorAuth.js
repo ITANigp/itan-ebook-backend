@@ -28,6 +28,10 @@ export const verify2FA = async (code) => {
   });
   return data;
 };
+export const resendCode = async () => {
+  const { data } = await api.post("/authors/resend_verification");
+  return data;
+};
 
 //Disable 2FA
 export const disable2FA = async () => {

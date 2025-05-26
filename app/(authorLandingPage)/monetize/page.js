@@ -108,7 +108,7 @@ const Monetize = () => {
                 </h3>
                 <p className="text-gray-700 mb-4">
                   <span className="text-[#E50913] font-bold text-xl sm:text-2xl">
-                    60%
+                    70%
                   </span>{" "}
                   royalties on all your ebook sales
                 </p>

@@ -154,3 +154,23 @@ export const updateAuthorProfile = async (authorData, imageFile) => {
   }
 };
 
+// Update Author Profile (PUT or PATCH /authors/profile)
+export const updateAuthorProfileImg = async (imageFile) => {
+  try {
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append("author[author_profile_image]", imageFile);
+    }
+
+    const response = await api.patch("/authors/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update profile:", error.response?.data || error);
+    throw error;
+  }
+};
