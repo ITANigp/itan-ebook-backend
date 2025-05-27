@@ -13,6 +13,7 @@ import BookMenu from "@/components/BookMenu";
 import DeleteModal from "@/components/DeleteModal";
 import toast from "react-hot-toast";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
+import formatDate from "@/utils/formatDate";
 
 export default function AuthorBooks() {
   const [books, setBooks] = useState([]);
@@ -122,8 +123,46 @@ export default function AuthorBooks() {
         books.map((book) => (
           <div
             key={book.id}
-            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative lg:max-w-[800px] lg:ml-0 mb-4"
+            className="sm:flex rounded-lg sm:justify-between mx-auto shadow-md relative lg:max-w-[750px] lg:ml-0 mb-4 z-0"
           >
+            <div className="absolute sm:hidden text-right flex justify-between mx-3">
+              <div className="relative z-50">
+                <img
+                  src="/images/book-menu.png"
+                  alt="book menu"
+                  className="h-1 w-5 cursor-pointer"
+                  onClick={() => {
+                    setOpenMenuForBookId(
+                      openMenuForBookId === book.id ? null : book.id
+                    );
+                    setOpenMenu(true);
+                  }}
+                />
+
+                {openMenuForBookId === book.id && isOpenMenu && (
+                  <BookMenu
+                    ref={bookMenuRef}
+                    book={book}
+                    onHandleEdit={() => {
+                      handleEdit(book.id);
+                      setOpenMenu(false);
+                    }}
+                    onHandleSetDeleteModalOpen={() => {
+                      setDeleteBook(true);
+                      setOpenMenu(false);
+                    }}
+                    onCloseMenu={() => setOpenMenu(false)}
+                  />
+                )}
+                {openMenuForBookId === book.id && deleteBook && (
+                  <DeleteModal
+                    onHandleSetDeleteModalClose={() => setDeleteBook(false)}
+                    onHandleDeleteBook={() => handleDelete(book.id)}
+                  />
+                )}
+              </div>
+            </div>
+
             {/* Book Cover and Info */}
             <div className="flex flex-col items-center sm:border-r border-r-gray-600 mb-2 mt-3 pr-9 mx-auto">
               <Link href={`/author/${authorId}/books/${book.id}`}>
@@ -135,7 +174,10 @@ export default function AuthorBooks() {
               </Link>
               <div className="text-center sm:text-left">
                 <p className="font-semibold w-32">{book.title}</p>
-                <p className="text-sm">By {book.author || "Author's Name"}</p>
+                <p className="text-sm">
+                  By{" "}
+                  {`${book.last_name}  ${book.first_name}` || "Author's Name"}
+                </p>
               </div>
             </div>
 
@@ -145,7 +187,7 @@ export default function AuthorBooks() {
                 <p>
                   Book Status:{" "}
                   <span className="text-[#FF9A6C] font-semibold">
-                    IN REVIEW
+                    {book.approval_status}
                   </span>
                 </p>
                 <img
@@ -155,7 +197,7 @@ export default function AuthorBooks() {
                 />
               </div>
               <p>
-                Last Updated on <span>March 9, 2025</span>
+                Last Updated on <span>{formatDate(book.updated_at)}</span>
               </p>
             </div>
 
@@ -201,12 +243,12 @@ export default function AuthorBooks() {
             </div>
 
             {/* Mobile View */}
-            <div className="flex sm:hidden justify-between w-full px-4 py-2 text-sm border-t mt-2 text-gray-600">
+            <div className="flex sm:hidden justify-between w-full px-2 py-2 text-sm border-t mt-2 text-gray-600">
               <div>
                 <p>
                   Book Status:{" "}
                   <span className="text-[#FF9A6C] font-semibold">
-                    IN REVIEW
+                    {book.approval_status}
                   </span>
                   <img
                     src="/images/status.png"
@@ -215,46 +257,12 @@ export default function AuthorBooks() {
                   />
                 </p>
                 <p>
-                  Last Updated on <span>March 9, 2025</span>
+                  Last Updated on <span>{formatDate(book.updated_at)}</span>
                 </p>
               </div>
-              <div className="text-right">
-                <img
-                  src="/images/book-menu.png"
-                  alt="book menu"
-                  className="h-1 w-5 cursor-pointer"
-                  onClick={() => {
-                    setOpenMenuForBookId(
-                      openMenuForBookId === book.id ? null : book.id
-                    );
-                    setOpenMenu(true);
-                  }}
-                />
-                <p className="mt-2">
-                  Book Type: <span>Ebook</span>
-                </p>
-                {openMenuForBookId === book.id && isOpenMenu && (
-                  <BookMenu
-                    ref={bookMenuRef}
-                    book={book}
-                    onHandleEdit={() => {
-                      handleEdit(book.id);
-                      setOpenMenu(false);
-                    }}
-                    onHandleSetDeleteModalOpen={() => {
-                      setDeleteBook(true);
-                      setOpenMenu(false);
-                    }}
-                    onCloseMenu={() => setOpenMenu(false)}
-                  />
-                )}
-                {openMenuForBookId === book.id && deleteBook && (
-                  <DeleteModal
-                    onHandleSetDeleteModalClose={() => setDeleteBook(false)}
-                    onHandleDeleteBook={() => handleDelete(book.id)}
-                  />
-                )}
-              </div>
+              <p className="mt-5">
+                Book Type: <span>Ebook</span>
+              </p>
             </div>
           </div>
         ))

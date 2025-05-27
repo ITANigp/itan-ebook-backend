@@ -121,7 +121,7 @@ const TopNav = ({ styles }) => {
                 />
               </Link>
               <p
-                className={`${bricolage.className} hidden sm:flex text-gray-200 text-xl md:text-[28px] lg:text-[32px] ml-1 lg:-mb-3 font-bold`}
+                className={`${bricolage.className} hidden sm:flex text-gray-200 text-lg md:text-xl ml-1 lg:-mb-3 font-medium`}
               >
                 Global Publishing
               </p>
@@ -204,7 +204,7 @@ const TopNav = ({ styles }) => {
                       <Link href="#" target="_blank" rel="noopener noreferrer">
                         <FontAwesomeIcon
                           icon={faLinkedinIn}
-                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] transition-colors"
                         />
                       </Link>
                       <Link
@@ -214,7 +214,7 @@ const TopNav = ({ styles }) => {
                       >
                         <FontAwesomeIcon
                           icon={faXTwitter}
-                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] transition-colors"
                         />
                       </Link>
                       <Link
@@ -224,7 +224,7 @@ const TopNav = ({ styles }) => {
                       >
                         <FontAwesomeIcon
                           icon={faFacebookF}
-                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                          className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] transition-colors"
                         />
                       </Link>
                       <Link
@@ -244,59 +244,57 @@ const TopNav = ({ styles }) => {
             )}
           </AnimatePresence>
         </div>
-        <div className="w-[320px] lg:w-[280px] hidden sm:flex justify-between mr-3 md:mr-10 py-3">
-          <div>
-            {" "}
-            <Link
-              href="/author/sign_in"
-              className="bg-[#0c1320] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
-            >
-              Sign In
-            </Link>
-          </div>
-          <div>
-            <Link
-              href="/author/sign_up"
-              className="bg-[#E50913] text-white px-6 py-1 w-24 pb-2 border border-red-600 border-b-gray-400 rounded-md"
-            >
-              Sign Up
-            </Link>
-          </div>
+        <div className="w-[320px] lg:w-[280px] hidden sm:flex justify-between mr-3 md:mr-3 py-3">
+          <Link
+            href="/author/sign_in"
+            className="ml-6 bg-[#0c1320] text-white px-5 py-2 rounded-md border border-gray-600 hover:border-red-500 transition-colors text-sm font-medium"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/author/sign_up"
+            className="bg-[#E50913] text-white px-5 py-2 rounded-md hover:bg-red-700 transition-colors text-sm font-medium"
+          >
+            Sign Up
+          </Link>
         </div>
       </div>
 
-      <div className=" hidden md:flex justify-between text-gray-200 -ml-7">
-        <ul className="flex space-x-4 h-9 text-center px-9">
+      {/* Horizontal divider line */}
+      <div className="hidden md:block w-full h-px bg-gradient-to-r from-transparent via-gray-600 to-transparent mt-2 mb-1"></div>
+
+      <div className="hidden md:flex justify-between text-gray-200 -ml-7 mt-2">
+        <ul className="flex space-x-6 h-9 text-center px-9">
           <Link
             href="/"
-            className={` ${homePath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+            className={`${homePath ? "border-b-2 border-b-red-600 text-red-400" : ""} hover:border-b-2 hover:border-b-red-600 hover:text-red-400 cursor-pointer px-3 py-1 transition-all duration-200 text-sm font-medium`}
           >
             About Itan
           </Link>
           <Link
             href="/publish"
-            className={` ${publishPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+            className={`${publishPath ? "border-b-2 border-b-red-600 text-red-400" : ""} hover:border-b-2 hover:border-b-red-600 hover:text-red-400 cursor-pointer px-3 py-1 transition-all duration-200 text-sm font-medium`}
           >
             Publish
           </Link>
           <Link
             href="/monetize"
-            className={` ${monetizePath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+            className={`${monetizePath ? "border-b-2 border-b-red-600 text-red-400" : ""} hover:border-b-2 hover:border-b-red-600 hover:text-red-400 cursor-pointer px-3 py-1 transition-all duration-200 text-sm font-medium`}
           >
             Monetize
           </Link>
           <Link
             href="/help"
-            className={` ${helpPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+            className={`${helpPath ? "border-b-2 border-b-red-600 text-red-400" : ""} hover:border-b-2 hover:border-b-red-600 hover:text-red-400 cursor-pointer px-3 py-1 transition-all duration-200 text-sm font-medium`}
           >
             Help
           </Link>
         </ul>
-        <div className="overflow-hidden whitespace-nowrap -mr-7 w-72">
-          <p className="text-xs inline-block animate-marquee">
+        {/* <div className="whitespace-nowrap -mr-4 w-72 flex items-center">
+          <p className="text-xs text-gray-400 font-light">
             One Book, Multiple Formats, Endless Readers
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );
