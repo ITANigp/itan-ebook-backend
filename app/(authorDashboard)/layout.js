@@ -216,7 +216,7 @@ export default function AuthorDashboardLayout({ children }) {
                     Analytics
                   </Link>
                   <Link
-                    href="author/withdrawal"
+                    href="/author/withdrawal"
                     className="text-[#C5C5C5] hover:text-[#E50913] cursor-pointer mt-4"
                   >
                     Withdrawal

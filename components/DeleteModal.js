@@ -8,7 +8,7 @@ const Modal = ({
   //   if (!isOpen) return null; // Don't render if modal is closed
 
   return (
-    <div className=" lg:ml-64 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+    <div className=" lg:ml-64 fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
       <div className="w-96 lg:mt-12 bg-amber-200  rounded-md shadow-lg mx-2">
         <div className="flex justify-between items-center h-8 bg-amber-300  rounded-t-md">
           <p />
