@@ -4,6 +4,7 @@ import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -20,6 +21,7 @@ import { getAuthorProfile } from "@/utils/auth/authorApi";
 
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [openSales, setOpenSales] = useState(false);
   const [authorId, setAuthorId] = useState(null);
   const [profile, setProfile] = useState({});
   const sidebarRef = useRef(null);
@@ -186,16 +188,41 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <Link
                 href="#"
-                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => setOpenSales(!openSales)}
+                className="flex justify-between items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                <div>
+                  <FontAwesomeIcon
+                    icon={faShoppingCart}
+                    className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                  />
+                  <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                    Sales
+                  </span>
+                </div>
+                <ChevronRight
+                  className={`transition-transform duration-300 group-hover:text-[#E50913] ${openSales ? "rotate-90" : "rotate-0"}`}
                 />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sales
-                </span>
               </Link>
+              {/* Dropdown */}
+              <div
+                className={`${openSales ? "block" : "hidden"} ml-10 mt-1 space-y-1`}
+              >
+                <div className="flex flex-col">
+                  <Link
+                    href="/author/analytics"
+                    className="text-[#C5C5C5] hover:text-[#E50913] cursor-pointer"
+                  >
+                    Analytics
+                  </Link>
+                  <Link
+                    href="author/withdrawal"
+                    className="text-[#C5C5C5] hover:text-[#E50913] cursor-pointer mt-4"
+                  >
+                    Withdrawal
+                  </Link>
+                </div>
+              </div>
             </li>
             <li>
               <Link

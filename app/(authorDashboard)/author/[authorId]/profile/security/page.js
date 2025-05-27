@@ -59,11 +59,14 @@ const Profile = () => {
     <div>
       <section className="text-center mx-auto">
         <div className="flex justify-between">
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            onClick={() => router.back()}
-            className="ml-3 p-2 py-1 rounded-md cursor-pointer hover:bg-gray-400"
-          />
+          <div className="hidden lg:block"/>
+          <div className="lg:hidden">
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              onClick={() => router.back()}
+              className="ml-3 p-2 py-1 rounded-md cursor-pointer hover:bg-gray-400"
+            />
+          </div>
           <h2 className="font-bold text-xl">Privacy and Security</h2>
           <p className="mr-7" />
         </div>
@@ -89,7 +92,7 @@ const Profile = () => {
                 disabled={isLoading}
                 className={cn(
                   isEmailEnabled && "bg-green-500",
-                  "data-[state=checked]:bg-green-500"
+                  "data-[state=checked]:bg-green-500 my-2"
                 )}
               />
               <p className="text-xs text-gray-500">
