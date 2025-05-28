@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
+
 import { api } from "@/utils/auth/authorApi";
 
 export default function ForgotPassword() {
@@ -20,22 +23,50 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-16 p-4 border rounded-xl">
-      <h1 className="text-xl font-bold mb-4">Forgot Password</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="flex flex-col min-h-screen w-full px-3">
+      <header className="flex justify-between mt-3 mx-3">
+        <Link href="#">
+          <Image
+            width={20}
+            height={15}
+            src="/images/logo.png"
+            alt="Company Logo"
+            className="w-10 h-6 cursor-pointer"
+          />
+        </Link>
+        <Link
+          href="/author/sign_in"
+          className="bg-[#E50913] text-white px-2 py-1 rounded-md hover:bg-[#e50914da] disabled:opacity-50"
+        >
+          Login to account
+        </Link>
+      </header>
+      {/* Left column: OTP box */}
+      <div className="w-full max-w-[400px] p-8 border rounded shadow-lg space-y-6 mr-6 mt-20">
+        <h2 className="text-lg font-medium text-gray-800 text-left">
+          Forget Password?
+        </h2>
+
         <input
-          type="email"
-          className="w-full mb-3 p-2 border rounded"
-          placeholder="Your email"
+          type="text"
+          placeholder="Email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
+          className="w-full border border-gray-300 px-4 py-3 rounded-md text-sm"
         />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded">
-          Send Reset Link
+
+        <button
+          onClick={handleSubmit}
+          className="w-full bg-[#E50913] text-white py-3 rounded-md hover:bg-[#e50914da] disabled:opacity-50"
+        >
+          Reset Password
         </button>
-      </form>
-      {message && <p className="mt-4 text-sm">{message}</p>}
+
+        <Link href="/author/sign_in" className="text-sm text-[#091be5] disabled:opacity-50 rounded-md">
+          Remember your password?
+        </Link>
+      </div>
     </div>
   );
 }
