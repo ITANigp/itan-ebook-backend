@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import { api } from "@/utils/auth/authorApi";
+import GenreSelector from "@/components/SelectGenre";
 
 const BookDetails = () => {
   const { formData, updateFormData } = useForm();
@@ -126,7 +127,6 @@ const BookDetails = () => {
         onChange={(e) => updateFormData({ subtitle: e.target.value })}
         className="h-[35px] w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-md focus:ring-1 focus:outline-none focus:ring-teal-300"
       />
-
       <h3 className="mt-5 font-bold ">Author's Bio</h3>
       <p className="text-sm md:w-[650px]">
         Enter the author's name exactly as it appears on the book cover,
@@ -134,7 +134,6 @@ const BookDetails = () => {
         'First Name' field.
       </p>
       <h3 className="mt-5 font-bold">Author Name</h3>
-
       <div className="w-full max-w-[650px] flex">
         <input
           type="text"
@@ -158,7 +157,6 @@ const BookDetails = () => {
           onChange={(e) => updateFormData({ last_name: e.target.value })}
         />
       </div>
-
       <h3 className="font-bold mt-8">Bio</h3>
       <textarea
         className="h-40 w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-300 placeholder:text-gray-500"
@@ -166,7 +164,6 @@ const BookDetails = () => {
         value={formData.bio}
         onChange={(e) => updateFormData({ bio: e.target.value })}
       ></textarea>
-
       <h3 className="mt-5 font-bold">Edition Number</h3>
       <p className="my-2 w-full max-w-[650px] text-sm sm:text-base">
         The edition number tells readers/listeners whether the book is an
@@ -183,7 +180,6 @@ const BookDetails = () => {
         onChange={(e) => updateFormData({ edition_number: e.target.value })}
         className="h-[35px] w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-300"
       />
-
       <h3 className="font-bold mb-2 mt-5">Description</h3>
       <p className="w-full max-w-[650px] mb-1 text-sm sm:text-base">
         Summarize your book. This will be your product description on itan, so
@@ -195,13 +191,11 @@ const BookDetails = () => {
         value={formData.description}
         onChange={(e) => updateFormData({ description: e.target.value })}
       ></textarea>
-
       <h3 className="font-bold mt-3">Publishing Rights</h3>
       <p className="w-full max-w-[650px] my-3">
         Publishing rights: control your work's use and distribution, or make it
         public domain.
       </p>
-
       <div className="flex flex-col space-y-2">
         <label className="flex items-center space-x-2 cursor-pointer">
           <input
@@ -245,14 +239,12 @@ const BookDetails = () => {
           <span className="text-gray-700">Public content</span>
         </label>
       </div>
-
       <h3 className="font-bold text-lg mb-3 mt-10">Primary Audience</h3>
       <p className="text-sm sm:text-base">
         Choose the youngest and oldest ages at which a person can enjoy this
         book.
       </p>
       <p className="mt-3">Choose Age</p>
-
       <div className="w-72 sm:w-96">
         <select
           className="w-full border border-gray-300 p-2 rounded-md"
@@ -265,24 +257,12 @@ const BookDetails = () => {
           <option value="50">50</option>
         </select>
       </div>
-
       <h3 className="font-bold text-lg mt-6">Categories</h3>
       <p className="my-3 text-sm sm:text-base">
         Select the Fiction genre that best fits your book
       </p>
       <p>Choose categories</p>
-      <select
-        className="border border-gray-300 p-2 rounded-md w-72 sm:w-[550px]"
-        value={formData.categories}
-        onChange={(e) => updateFormData({ categories: e.target.value })}
-      >
-        <option value="">Choose categories</option>
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-      </select>
-      {errors.categories && <p className="text-red-500">{errors.categories}</p>}
-
+      <GenreSelector />
       <h3 className="font-bold text-lg mt-7 mb-3">Keywords</h3>
       <p className="w-full max-w-[650px] my-3 text-sm sm:text-base">
         Select up to 6 keywords (max 50 characters) that describe your book's
@@ -338,10 +318,8 @@ const BookDetails = () => {
           className="h-[35px] w-full bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-300 placeholder:text-gray-500"
         />
       </div>
-
       <h3 className="font-bold">Tags</h3>
       <div className="h-[1px] bg-gray-200 w-full max-w-[650px] mb-2" />
-
       <div className="flex flex-wrap gap-2 mt-2">
         {tags.map((tag, index) => (
           <div
@@ -358,7 +336,6 @@ const BookDetails = () => {
           </div>
         ))}
       </div>
-
       <div className="flex items-center border border-[#929292] w-full max-w-[650px] rounded-md my-8">
         <img
           src="/images/add-icon.png"

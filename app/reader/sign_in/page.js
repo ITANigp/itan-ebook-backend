@@ -4,14 +4,12 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { api } from "@/utils/auth/readerApi";
+import { signInReader } from "@/utils/auth/readerApi";
+import Image from "next/image";
 
 const SignIn = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [password_confirmation, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -22,27 +20,22 @@ const SignIn = () => {
     setMessage("");
 
     try {
-        const response = await api.post("/readers/sign_in", {
-          reader: {
-            email,
-            password,
-          },
-        });
-      console.log("Reader logged in successfully:", response.data)
-        alert("Log in successfully.");
-        router.push("/reader/books");
-      } catch (error) {
-        console.error("Login failed:", error);
-      
-        const errorMessage =
-          error?.response?.data?.error ||
-          "Login failed. Please try again.";
-      
-        alert(errorMessage);
-      } finally {
-        setLoading(false);
+      const reader = await signInReader(email, password);
+    
+      console.log("Reader log in successfully: ", reader.data);
+      if (reader?.data?.data?.id) {
+        setMessage("Registration successful! You can now log in.");
+        router.push("/reader/books")
       }
-      
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message ||
+          "Registration failed. Please try again."
+      );
+      console.log("Reader's registration failed: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -50,8 +43,10 @@ const SignIn = () => {
       <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
-            <img
-              src="/images/logo2.png"
+            <Image
+              src="/images/logo.png"
+              width={10}
+              height={10}
               alt="Itan Logo"
               className="w-10 h-6 cursor-pointer"
             />
@@ -61,19 +56,18 @@ const SignIn = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold">Welcome!</h1>
           <p className="text-sm mb-4">
-            Already have an account?{" "}
+            You don't have account?{" "}
             <Link
-              href="/author/sign_in"
+              href="/reader/sign_up"
               className="font-bold cursor-pointer hover:text-blue-700"
             >
-              Sign Up
+              creat one
             </Link>
           </p>
         </div>
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
- 
             <div className="mt-4">
               <label
                 htmlFor="email"

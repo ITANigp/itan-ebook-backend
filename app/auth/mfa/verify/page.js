@@ -7,6 +7,8 @@ import {
   getTwoFactorStatus,
   resendCode,
 } from "@/utils/twoFactorAuth";
+import Link from "next/link";
+import Image from "next/image";
 
 const TIMER_KEY = "resend_timer_expiry";
 
@@ -114,36 +116,65 @@ const TwoFactorSettings = () => {
   };
 
   return (
-    <div className="space-y-4">
-      <h2 className="text-xl font-semibold">Two-Factor Authentication</h2>
+    <div className="flex flex-col min-h-screen w-full px-3">
+      <header className="flex justify-between mt-3 mx-3">
+        <Link href="#">
+          <Image
+            width={20}
+            height={15}
+            src="/images/logo.png"
+            alt="Company Logo"
+            className="w-10 h-6 cursor-pointer"
+          />
+        </Link>
+          <Link
+            href="/author/sign_up"
+            className="bg-[#E50913] text-white px-2 py-1 rounded-md hover:bg-[#e50914da] disabled:opacity-50"
+          >
+            Create account
+          </Link>
+      </header>
+      {/* Left column: OTP box */}
+      <div className="w-full max-w-[400px] p-8 border rounded shadow-lg space-y-6 mr-6 mt-20">
+        <h2 className="text-lg font-medium text-gray-800 text-left">
+          Please enter the OTP sent to your email address or phone number
+        </h2>
 
-      <input
-        type="text"
-        placeholder="Enter verification code"
-        value={code}
-        onChange={(e) => setCode(e.target.value)}
-        className="border px-3 py-2 rounded w-full"
-      />
+        <input
+          type="text"
+          placeholder="One time password"
+          value={code}
+          onChange={(e) => setCode(e.target.value)}
+          className="w-full border border-gray-300 px-4 py-3 rounded-md text-sm"
+        />
 
-      <button
-        onClick={handleVerify2FA}
-        disabled={loading}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-      >
-        {loading ? "Verifying..." : "Verify Code"}
-      </button>
+        <button
+          onClick={handleVerify2FA}
+          disabled={loading}
+          className="w-full bg-[#E50913] text-white py-3 rounded-md hover:bg-[#e50914da] disabled:opacity-50"
+        >
+          {loading ? "Verifying..." : "Continue"}
+        </button>
 
-      <button
-        onClick={handleResendCode}
-        disabled={resendTimer > 0}
-        className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50"
-      >
-        {resendTimer > 0
-          ? `Resend in ${formatTime(resendTimer)}`
-          : "Resend Code"}
-      </button>
+        <button
+          onClick={handleResendCode}
+          disabled={resendTimer > 0}
+          className={`text-sm ${
+            resendTimer > 0 ? "text-gray-400" : "text-[#4a3aff]"
+          } disabled:opacity-50`}
+        >
+          {resendTimer > 0
+            ? `Resend in ${formatTime(resendTimer)}`
+            : "Resend OTP"}
+        </button>
 
-      {message && <p className="text-sm text-gray-700 mt-2">{message}</p>}
+        {message && (
+          <p className="text-sm text-gray-600 mt-2 text-center">{message}</p>
+        )}
+      </div>
+
+      {/* Right column: blank space or banner */}
+      <div className="flex-1 hidden lg:block bg-white" />
     </div>
   );
 };
