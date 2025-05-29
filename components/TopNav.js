@@ -83,7 +83,7 @@ const TopNav = ({ styles }) => {
       className={`${styles} h-16 w-full bg-[#111928] px-5 flex items-center fixed top-0 z-50`}
     >
       {/* Mobile Menu Button - Left Side */}
-      <div className="flex items-center md:hidden">
+      <div className="flex items-center md:hidden [@media(min-width:768px)_and_(max-width:1000px)]:flex">
         <button
           className="z-30 px-2"
           onClick={toggleMenu}
@@ -112,7 +112,7 @@ const TopNav = ({ styles }) => {
       </div>
 
       {/* Desktop/Tablet Logo and Text - Left Side (hidden on mobile) */}
-      <div className="hidden md:flex items-center">
+      <div className="hidden md:flex items-center [@media(min-width:768px)_and_(max-width:1000px)]:hidden">
         <Link href="/">
           <Image
             src="/images/logo.png"
