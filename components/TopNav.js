@@ -80,7 +80,7 @@ const TopNav = ({ styles }) => {
 
   return (
     <nav
-      className={`${styles} h-16 w-full bg-[#111928] px-5 flex items-center relative`}
+      className={`${styles} h-16 w-full bg-[#111928] px-5 flex items-center fixed top-0 z-50`}
     >
       {/* Mobile Menu Button - Left Side */}
       <div className="flex items-center md:hidden">
