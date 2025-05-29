@@ -50,7 +50,7 @@ const Publish = () => {
           <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-[#E50913] rounded-full filter blur-[100px] opacity-10 -z-10"></div>
 
           {/* Main content container with better padding for all screens */}
-          <div className="relative w-full px-5 xs:px-6 medium:px-8 large:px-10 xl:max-w-6xl xl:mx-auto pt-16 xs:pt-20 medium:pt-24 large:pt-28 xl:pt-32 pb-20 xs:pb-24 medium:pb-28 large:pb-32 xl:pb-36 z-10">
+          <div className="relative w-full px-5 xs:px-6 medium:px-8 large:px-10 xl:max-w-6xl xl:mx-auto pt-16 mt-10 medium:mt-14 large:mt-16 xl:mt-18 xs:pt-20 medium:pt-24 large:pt-28 xl:pt-32 pb-20 xs:pb-24 medium:pb-28 large:pb-32 xl:pb-36 z-10">
             {/* Centered content for all screen sizes */}
             <div className="w-full max-w-3xl mx-auto text-center">
               <FadeIn delay={0.3} direction="up" distance={15} duration={0.8}>
