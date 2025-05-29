@@ -119,11 +119,16 @@ const SignIn = () => {
           </div>
 
           {/* reCAPTCHA placed BEFORE the submit button */}
+          
           <div className="my-4">
-            <ReCAPTCHA
-              sitekey={SITE_KEY}
-              onChange={(token) => setCaptchaToken(token || "")}
-            />
+            <div className="w-full overflow-hidden">
+              <div className="transform scale-75 sm:scale-90 md:scale-100 origin-left w-full">
+                <ReCAPTCHA
+                  sitekey={SITE_KEY}
+                  onChange={(token) => setCaptchaToken(token || "")}
+                />
+              </div>
+            </div>
           </div>
 
           <div className="relative">

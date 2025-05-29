@@ -47,7 +47,7 @@ const SignUp = () => {
 
   return (
     <main className="w-full mb-9 px-4 sm:px-0">
-      <section className="bg-white w-full max-w-[350px] sm:max-w-[410px] rounded-2xl p-4 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+      <section className="bg-white max-w-[410px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
@@ -73,24 +73,6 @@ const SignUp = () => {
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
-            {/* <div className="mt-4">
-          <label
-            htmlFor="name"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-            placeholder="Enter Your Name"
-            required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div> */}
-
             <div className="mt-4">
               <label
                 htmlFor="email"
@@ -101,7 +83,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2 sm:p-2.5 text-sm sm:text-base min-w-0 max-w-full"
                 placeholder="Johndoe@gmail.com"
                 required
                 value={email}
@@ -119,43 +101,30 @@ const SignUp = () => {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="placeholder-gray-400 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2.5"
+                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2 sm:p-2.5 text-sm sm:text-base min-w-0 max-w-full"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
-            {/* <div className="my-4">
-          <label
-            htmlFor="password"
-            className="block mb-2 text-sm font-medium text-gray-900"
-          >
-            Confirm Password
-          </label>
-          <input
-            type="password"
-            // id="password"
-            className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-            required
-            value={password_confirmation}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          />
-        </div> */}
-
             {/* ✅ Added reCAPTCHA component here */}
             <div className="my-4">
-              <ReCAPTCHA
-                sitekey={SITE_KEY}
-                onChange={(token) => setCaptchaToken(token || "")}
-              />
+              <div className="w-full overflow-hidden">
+                <div className="transform scale-75 sm:scale-90 md:scale-100 origin-left w-full">
+                  <ReCAPTCHA
+                    sitekey={SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token || "")}
+                  />
+                </div>
+              </div>
             </div>
 
             <div>
               <button
                 type="submit"
-                className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading || !captchaToken} // ✅ Disable button until reCAPTCHA is complete
+                className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full max-w-full min-w-0"
+                disabled={loading || !captchaToken}
               >
                 {loading ? "Loading..." : "Sign Up"}
               </button>
