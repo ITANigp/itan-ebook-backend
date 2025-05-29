@@ -543,7 +543,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center sm:mt-14 xl:mb-7">
+      <div className="flex justify-center sm:mt-14 mb-10 xl:mb-7">
         <Link
           href="/author/sign_up"
           className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 h-[35px] sm:h-[40px] w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md"
