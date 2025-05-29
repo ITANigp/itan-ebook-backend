@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
           <div>
             {/* <AnimatedLayout> */}
             <div className="">
-              <TopNav styles={shouldHideHeader} />
+              <TopNav styles={shouldHideHeader } />
               <div>{children}</div>
               <Footer styles={shouldHideHeader} />
               {/* <ScrollToTop styles={hideIfAuthorPage} /> */}
