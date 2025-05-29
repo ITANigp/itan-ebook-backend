@@ -46,8 +46,8 @@ const SignUp = () => {
   };
 
   return (
-    <main className="w-full mb-9">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+    <main className="w-full mb-9 px-4 sm:px-0">
+      <section className="bg-white w-full max-w-[350px] sm:max-w-[410px] rounded-2xl p-4 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
@@ -74,22 +74,22 @@ const SignUp = () => {
         <form onSubmit={handleSignup} aria-label="Signup Form">
           <fieldset>
             {/* <div className="mt-4">
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Enter Your Name"
-                required
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-              />
-            </div> */}
+          <label
+            htmlFor="name"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+            placeholder="Enter Your Name"
+            required
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div> */}
 
             <div className="mt-4">
               <label
@@ -127,21 +127,21 @@ const SignUp = () => {
             </div>
 
             {/* <div className="my-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                // id="password"
-                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-                required
-                value={password_confirmation}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div> */}
+          <label
+            htmlFor="password"
+            className="block mb-2 text-sm font-medium text-gray-900"
+          >
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            // id="password"
+            className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+            required
+            value={password_confirmation}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+          />
+        </div> */}
 
             {/* ✅ Added reCAPTCHA component here */}
             <div className="my-4">
