@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { api } from "@/utils/auth/readerApi";
+import Image from "next/image";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -32,7 +33,7 @@ const SignUp = () => {
         },
       });
       console.log("Reader's registered successfully: ", reader.data)
-      if (reader?.data?.id) {
+      if (reader?.data?.data.id) {
         setMessage("Registration successful! You can now log in.");
         router.push("/reader/sign_in");
       }
@@ -52,8 +53,10 @@ const SignUp = () => {
       <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
         <header>
           <Link href="/">
-            <img
-              src="/images/logo2.png"
+            <Image
+              src="/images/logo.png"
+              width={10}
+              height={10}
               alt="Itan Logo"
               className="w-10 h-6 cursor-pointer"
             />
