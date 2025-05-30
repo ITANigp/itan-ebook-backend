@@ -14,7 +14,7 @@ import ScrollToTop from "@/components/ScrollToTop";
 
 const Home = () => {
   return (
-    <div className="text-black font-sans py-10 md:pt-12 ">
+    <div className="text-black font-sans mt-20 md:pt-22">
       <section className="relative flex flex-col items-center text-center py-10 md:py-16 xl:py-24 px-4 overflow-hidden">
         {/* Enhanced background elements */}
         <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 -z-10"></div>
@@ -151,9 +151,11 @@ const Home = () => {
 
         <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
           <FadeIn delay={0.1} direction="up" distance={10} duration={0.7}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
+            {/* CHANGED: Reduced gap for tablet/desktop only */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-0 lg:gap-0 xl:gap-0 items-center">
               {/* Image Section */}
-              <div className="flex justify-center md:justify-start">
+              {/* CHANGED: Added md:justify-end to push image closer to text on tablet/desktop */}
+              <div className="flex justify-center md:justify-end md:pr-2 lg:pr-4 xl:pr-6">
                 <div className="relative transform transition-transform duration-500 hover:scale-[1.02] max-w-[320px] md:max-w-none">
                   <div className="absolute -inset-0.5 bg-gradient-to-tr from-red-600/20 to-gray-400/10 rounded-xl blur opacity-30"></div>
                   <Image
@@ -168,7 +170,8 @@ const Home = () => {
               </div>
 
               {/* Text Section */}
-              <div className="mt-10 md:mt-0 text-white max-w-xl md:pl-6 lg:pl-12">
+              {/* CHANGED: Reduced left padding for tablet/desktop to bring text closer to image */}
+              <div className="mt-10 md:mt-0 text-white max-w-xl md:pl-2 lg:pl-3 xl:pl-4">
                 <h3 className="text-3xl sm:text-4xl lg:text-4xl font-semibold leading-tight mb-6 tracking-tight">
                   Let the world read and listen to your unique story
                 </h3>
@@ -540,7 +543,7 @@ const Home = () => {
           </div>
         </section>
       </div>
-      <div className="flex justify-center sm:mt-14 xl:mb-7">
+      <div className="flex justify-center sm:mt-14 mb-10 xl:mb-7">
         <Link
           href="/author/sign_up"
           className="flex justify-center items-center rounded-sm sm:rounded-md bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 px-4 py-2.5 h-[35px] sm:h-[40px] w-[140px] xl:h-[50px] xl:w-[170px] space-x-2 text-white cursor-pointer shadow-sm hover:shadow-md"

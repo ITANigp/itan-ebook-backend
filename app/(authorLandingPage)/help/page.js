@@ -28,7 +28,7 @@ const Help = () => {
 
   return (
     <section className="mb-10">
-      <div className="mt-8 md:mt-12 md:flex md:justify-center overflow-hidden relative">
+      <div className="mt-24 md:mt-28 md:flex md:justify-center overflow-hidden relative">
         {/* Subtle background decoration */}
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white opacity-70 -z-10"></div>
         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-400/20 to-transparent"></div>

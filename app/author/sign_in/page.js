@@ -63,8 +63,8 @@ const SignIn = () => {
   }, [email, password]);
 
   return (
-    <main className="w-full mb-9">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2  sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+    <main className="w-full mb-9 px-4 sm:px-0">
+      <section className="bg-white w-full max-w-[350px] sm:max-w-[410px] rounded-2xl p-4 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
         <Link href="/">
           <img
             src="/images/logo.png"
@@ -74,9 +74,9 @@ const SignIn = () => {
         </Link>
 
         <header className="text-center">
-          <h1 className="md:text-2xl font-bold">Welcome Back</h1>
+          <h1 className="text-lg md:text-2xl font-bold">Welcome Back</h1>
           <p className="text-xs md:text-sm mb-4">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <Link
               href="/author/sign_up"
               className="font-bold hover:text-blue-700"
@@ -124,6 +124,7 @@ const SignIn = () => {
           </div>
 
           {/* reCAPTCHA placed BEFORE the submit button */}
+          
           <div className="my-4">
             <ReCAPTCHA
               ref={recaptchaRef}
@@ -165,18 +166,18 @@ const SignIn = () => {
             type="button"
             onClick={handleLoginWithGoogle}
             disabled={googleLoading}
-            className="h-[50px] hover:text-white text-[#4e4c4c] space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+            className="h-[50px] hover:text-white text-[#4e4c4c] space-x-3 sm:space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
           >
             {googleLoading ? (
-              <p>Redirecting...</p>
+              <p className="text-sm sm:text-base">Redirecting...</p>
             ) : (
               <>
                 <img
                   src="/images/google.png"
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   alt="Google Logo"
                 />
-                <p>Continue with Google</p>
+                <p className="text-sm sm:text-base">Continue with Google</p>
               </>
             )}
           </button>
