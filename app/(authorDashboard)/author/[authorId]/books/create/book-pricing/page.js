@@ -82,6 +82,7 @@ export default function BookPricing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
+    setIsModalOpen(true);
 
     try {
       // If new book, ensure files are provided
@@ -261,7 +262,10 @@ export default function BookPricing() {
         </button>
       </div>
 
-      {isModalOpen && <Modal onClose={() => setIsModalOpen(false)} />}
+      {isModalOpen && <Modal onClose={() =>{ 
+        setIsModalOpen(false);
+        router.push(`/author/${authorId}/books/create/book-details?id=${id}`);
+      }} isOpen={isModalOpen} />}
     </form>
   );
 }
