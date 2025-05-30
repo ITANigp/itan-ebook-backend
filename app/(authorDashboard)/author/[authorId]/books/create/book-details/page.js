@@ -265,7 +265,7 @@ const BookDetails = () => {
       <GenreSelector />
       <h3 className="font-bold text-lg mt-7 mb-3">Keywords</h3>
       <p className="w-full max-w-[650px] my-3 text-sm sm:text-base">
-        Select up to 6 keywords (max 50 characters) that describe your book's
+        Select up to 4 keywords (max 50 characters) that describe your book's
         unique themes, genres, or topics. Examples: 'medieval fantasy', 'romance
         novel', 'sci-fi adventure'
       </p>
@@ -368,7 +368,10 @@ const BookDetails = () => {
         </button>
       </div>
       <button
-        onClick={handleSubmit}
+        onClick={(e) => {
+          handleSubmit(e);
+          router.push(`/author/${authorId}/books/create/book-content?id=${id}`);
+        }}
         className="bg-[#E50913] hover:bg-[#cd3f46]  float-right text-white px-8 py-[5px] mb-10 rounded-md w-24"
       >
         Next

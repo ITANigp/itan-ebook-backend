@@ -292,7 +292,12 @@ const BookContent = () => {
           Back to details
         </button>
         <button
-          onClick={handleSubmit}
+          onClick={(e) => {
+            handleSubmit(e);
+            router.push(
+              `/author/${authorId}/books/create/book-pricing?id=${id}`
+            );
+          }}
           className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-[5px] rounded-md mb-3 sm:mb-0"
         >
           Next
