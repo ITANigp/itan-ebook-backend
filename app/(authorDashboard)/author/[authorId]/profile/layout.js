@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import toast from "react-hot-toast";
+
 import LogoutModal from "@/components/LogoutModal";
 import { getAuthorProfile } from "@/utils/auth/authorApi";
 import { signOutAuthor } from "@/utils/auth/authorApi";
@@ -20,10 +22,10 @@ const layout = ({ children }) => {
     try {
       await signOutAuthor();
       setShowModal(false);
-      alert("You have been logged out!");
+      toast.success("Logged out successfully!");
       window.location.href = "/";
     } catch (error) {
-      alert("Failed to log out. Please try again.");
+      toast.error("Failed to log out. Please try again.");
     }
   };
 

@@ -40,7 +40,7 @@ const Readers = () => {
   return (
     <div className="ml-3">
       <h2>Authors</h2>
-      <div className="flex w-[600px] justify-between mt-3">
+      <div className="grid gap-y-5 mb-5 xxs:grid-cols-2 xs:grid-cols-3 medium:grid-cols-3 sm:grid-cols-4 max-w-[600px] justify-between mt-3">
         <div className="flex flex-col w-[130px] h-[120px] justify-evenly pt-3 items-center border border-orange-200 rounded-md">
           <p className="text-sm">All Authors</p>
           <p className="text-2xl font-bold">10,450</p>
@@ -65,7 +65,7 @@ const Readers = () => {
           <p />
         </div>
       </div>
-      <div className="relative mt-5">
+      <div className="overflow-x-auto w-full max-w-[850px] relative">
         <div className="relative">
           <Table>
             <TableHeader>
@@ -74,8 +74,7 @@ const Readers = () => {
                 <TableHead className="text-white">Email</TableHead>
                 <TableHead className="text-white">Phone Number</TableHead>
                 <TableHead className="text-white">Registration Date</TableHead>
-                <TableHead className="text-white text-center">
-                </TableHead>
+                <TableHead className="text-white text-center"></TableHead>
               </TableRow>
 
               {/* Filter Icon Row */}
@@ -98,27 +97,27 @@ const Readers = () => {
                 authors.map((author) => (
                   <TableRow key={author.id}>
                     <TableCell className="font-medium flex items-center gap-2">
-                    <Link href={`/admin/authors/author-details/${author.id}`}>
-                      {author?.author_profile_image_url ? (
-                        <Image
-                          src={author.author_profile_image_url}
-                          width={32}
-                          height={32}
-                          alt={`Profile picture of ${author.first_name} ${author.last_name}`}
-                          className="w-8 h-8 rounded-full object-cover"
-                        />
-                      ) : (
-                        <Image
-                          src="/images/avatar.png"
-                          width={32}
-                          height={32}
-                          alt={`Default avatar for ${author.first_name} ${author.last_name}`}
-                          className="w-8 h-8 rounded-full object-cover bg-slate-400"
-                        />
-                      )}
-                      <p className="align-middle">
-                        {author.last_name} {author.first_name}
-                      </p>
+                      <Link href={`/admin/authors/author-details/${author.id}`}>
+                        {author?.author_profile_image_url ? (
+                          <Image
+                            src={author.author_profile_image_url}
+                            width={32}
+                            height={32}
+                            alt={`Profile picture of ${author.first_name} ${author.last_name}`}
+                            className="w-8 h-8 rounded-full object-cover"
+                          />
+                        ) : (
+                          <Image
+                            src="/images/avatar.png"
+                            width={32}
+                            height={32}
+                            alt={`Default avatar for ${author.first_name} ${author.last_name}`}
+                            className="w-8 h-8 rounded-full object-cover bg-slate-400"
+                          />
+                        )}
+                        <p className="align-middle">
+                          {author.last_name} {author.first_name}
+                        </p>
                       </Link>
                     </TableCell>
                     <TableCell className="align-middle">
@@ -130,8 +129,7 @@ const Readers = () => {
                     <TableCell className="align-middle">
                       {formatDate(author.created_at)}
                     </TableCell>
-                    <TableCell className="text-center">
-                    </TableCell>
+                    <TableCell className="text-center"></TableCell>
                   </TableRow>
                 ))
               ) : (

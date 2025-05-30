@@ -26,20 +26,7 @@ export default function AuthorDashboardLayout({ children }) {
   const router = useRouter();
   const inputRef = useRef(null);
 
-const handleSignOut = async () => {
 
-    try {
-      await signOutAdmin();
-      alert("Sign out successfully!")
-      router.push("/admin");
-    } catch (err) {
-      if (!err.response) {
-        alert("Cannot connect to the server. Please try again later.");
-      } else {
-        alert("Sign-out failed. Please try again.");
-      }
-    } 
-  };
 
   const isDashboard = pathName.endsWith("/admin/dashboard")
     ? "text-[#E50913]"
@@ -108,7 +95,7 @@ const handleSignOut = async () => {
           </button>
         </div>
         <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
-          <Link href="/">
+          <Link href="#">
             <img src="/images/logo.png" className="w-16 mb-6 ml-3" />
           </Link>
           <ul className="space-y-2 font-medium">
@@ -198,7 +185,7 @@ const handleSignOut = async () => {
             </li>
             <li>
               <Link
-                href="/author/1/profile"
+                href="/admin/settings"
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon
@@ -209,19 +196,11 @@ const handleSignOut = async () => {
                   Settings
                 </span>
               </Link>
-              <button
-                onClick={handleSignOut}
-                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sign Out
-                </span>
-              </button>
             </li>
           </ul>
         </div>
       </aside>
-      <section className="container">
+      <section>
         <div className="lg:ml-64 lg:mt-20 px-4 lg:px-0 py-6">{children}</div>
       </section>
     </div>

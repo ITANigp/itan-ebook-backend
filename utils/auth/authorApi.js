@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -82,9 +81,6 @@ export const signOutAuthor = async () => {
   try {
     await api.delete("/authors/sign_out");
     localStorage.removeItem("authorInfo");
-
-    const router = useRouter();
-    router.push("/author/sign_in");
 
     return { success: true };
   } catch (error) {

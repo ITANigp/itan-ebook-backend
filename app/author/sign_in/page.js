@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
+
 import { signInAuthor } from "@/utils/auth/authorApi"; // Ensure this is correctly set up
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -10,6 +13,7 @@ const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const SignIn = () => {
   const [captchaToken, setCaptchaToken] = useState("");
+  const recaptchaRef = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -34,9 +38,10 @@ const SignIn = () => {
       if (author?.data?.id) {
         localStorage.setItem("authorInfo", JSON.stringify(author.data));
         router.push(`/dashboard/author/${author.data.id}`);
+        toast.success("Logged in successfully")
       }
     } catch (error) {
-      setMessage(
+      toast.error(
         error.response?.data?.error ||
           "Sign-in failed. Please check your credentials."
       );
@@ -51,11 +56,11 @@ const SignIn = () => {
   };
 
   useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+      setCaptchaToken(""); 
     }
-  }, [message]);
+  }, [email, password]);
 
   return (
     <main className="w-full mb-9">
@@ -121,6 +126,7 @@ const SignIn = () => {
           {/* reCAPTCHA placed BEFORE the submit button */}
           <div className="my-4">
             <ReCAPTCHA
+              ref={recaptchaRef}
               sitekey={SITE_KEY}
               onChange={(token) => setCaptchaToken(token || "")}
             />

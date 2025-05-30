@@ -15,7 +15,7 @@ export const signInAdmin = async (email, password) => {
     });
     return response.data;
   } catch (error) {
-    console.error("Admin sign-in failed:", error.response?.data || error);
+    console.error("Admin sign-in failed:", error.response?.data);
     throw error;
   }
 };
@@ -47,5 +47,13 @@ export const getAllAuthors = async () => {
     return response.data.data;
   } catch (err) {
     console.log("Error fetching all Authors: ", err);
+  }
+};
+export const getAllReaders = async () => {
+  try {
+    const response = await api.get("admin/readers");
+    return response.data.data;
+  } catch (err) {
+    console.log("Error fetching all Readers: ", err);
   }
 };

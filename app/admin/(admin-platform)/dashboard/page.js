@@ -10,9 +10,6 @@ import {
   faBookReader,
   faUserEdit,
   faMoneyBillWave,
-  faBell,
-  faUserCircle,
-  faSort,
   faArrowTrendDown,
   faArrowTrendUp,
 } from "@fortawesome/free-solid-svg-icons";
@@ -44,11 +41,7 @@ export default function Dashboard() {
         },
       ],
       options: {
-        chart: {
-          type: "area",
-          height: 350,
-          toolbar: { show: false },
-        },
+        chart: { type: "area", height: 350, toolbar: { show: false } },
         dataLabels: { enabled: false },
         stroke: { curve: "smooth" },
         xaxis: {
@@ -78,13 +71,11 @@ export default function Dashboard() {
     });
   }, []);
 
-  const Dougnut = () => {
-    return (
-      <div className="w-20 h-24">
-        {doughnutData?.datasets && <Doughnut data={doughnutData} />}
-      </div>
-    );
-  };
+  const Dougnut = () => (
+    <div className="w-full max-w-[100px] sm:max-w-[120px] md:max-w-[140px]">
+      {doughnutData?.datasets && <Doughnut data={doughnutData} />}
+    </div>
+  );
 
   const booksBought = [
     { name: "Fate", amount: "$50", date: "07 Mar 2025 12:35PM" },
@@ -107,87 +98,76 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="flex flex-col md:flex-row bg-gray-100 min-h-screen">
-      <main className="">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-white rounded-2xl p-2 shadow-md w-56">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h2 className="text-md font-semibold text-gray-700 mb-6 ml-2">
-                  Books
-                </h2>
-                <h3 className="text-3xl font-bold text-black">1589</h3>
+    <div className="flex flex-col md:flex-row min-h-screen p-4">
+      <main className="w-full">
+        {/* Metrics Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 mb-6">
+          {[
+            {
+              title: "Books",
+              value: "1589",
+              color: "purple",
+              icon: faBook,
+              trend: -5.5,
+            },
+            {
+              title: "Readers",
+              value: "9,458",
+              color: "green",
+              icon: faBookReader,
+              trend: +6.5,
+            },
+            {
+              title: "Authors",
+              value: "2,946",
+              color: "teal",
+              icon: faUserEdit,
+              trend: -5.5,
+            },
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="bg-white rounded-2xl p-4 shadow-md w-full"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <div>
+                  <h2 className="text-md font-semibold text-gray-700 mb-2">
+                    {item.title}
+                  </h2>
+                  <h3 className="text-3xl font-bold text-black">
+                    {item.value}
+                  </h3>
+                </div>
+                <div className={`bg-${item.color}-100 p-4 rounded-full`}>
+                  <FontAwesomeIcon
+                    icon={item.icon}
+                    className={`text-${item.color}-500 text-2xl`}
+                  />
+                </div>
               </div>
-              <div className="bg-purple-100 p-[20px] py-[17px] rounded-full">
+              <div
+                className={`flex items-center mt-2 text-sm ${item.trend < 0 ? "text-red-500" : "text-green-500"}`}
+              >
                 <FontAwesomeIcon
-                  icon={faBook}
-                  className="text-purple-500 text-[30px]"
+                  icon={item.trend < 0 ? faArrowTrendDown : faArrowTrendUp}
+                  className="mr-1"
                 />
+                <span className="font-medium">{item.trend}%</span>
+                <span className="text-gray-500 ml-1">since last month</span>
               </div>
             </div>
-            <div className="flex items-center mt-2 text-sm text-red-500">
-              <FontAwesomeIcon icon={faArrowTrendDown} className="mr-1" />
-              <span className="font-medium">-5.5%</span>
-              <span className="text-gray-500 ml-1">since last month</span>
-            </div>
-          </div>
+          ))}
 
-          <div className="bg-white rounded-2xl p-2 shadow-md w-56">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h2 className="text-md font-semibold text-gray-700 mb-6 ml-2">
-                  Readers
-                </h2>
-                <h3 className="text-3xl font-bold text-black">9,458</h3>
-              </div>
-              <div className="bg-green-100 p-[20px] rounded-full">
-                <FontAwesomeIcon
-                  icon={faBookReader}
-                  className="text-green-500 text-[30px]"
-                />
-              </div>
-            </div>
-            <div className="flex items-center mt-2 text-sm">
-              <FontAwesomeIcon
-                icon={faArrowTrendUp}
-                className="mr-1 text-green-500"
-              />
-              <span className="font-medium text-green-500">+6.5%</span>
-              <span className="ml-1">since last month</span>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-2 shadow-md w-56">
-            <div className="flex justify-between items-center mb-4">
-              <div>
-                <h2 className="text-md font-semibold text-gray-700 mb-6 ml-2">
-                  Authors
-                </h2>
-                <h3 className="text-3xl font-bold text-black">2,946</h3>
-              </div>
-              <div className="bg-teal-100 p-[20px] px-[17px] rounded-full">
-                <FontAwesomeIcon
-                  icon={faUserEdit}
-                  className="text-teal-500 text-[30px]"
-                />
-              </div>
-            </div>
-            <div className="flex items-center mt-2 text-sm text-red-500">
-              <FontAwesomeIcon icon={faArrowTrendDown} className="mr-1" />
-              <span className="font-medium">-5.5%</span>
-              <span className="text-gray-500 ml-1">since last month</span>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl p-2 shadow-md w-56">
-            <div className="flex justify-between items-center mb-4">
+          {/* Doughnut Chart */}
+          <div className="bg-white rounded-2xl p-4 shadow-md w-full">
+            <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
               <div>
                 <FontAwesomeIcon
                   icon={faMoneyBillWave}
-                  className="text-green-500 text-[30px]"
+                  className="text-green-500 text-2xl mb-2"
                 />
-                <h3 className="text-xl font-bold text-black mt-2">1,289</h3>
-                <h2 className="text-xs font-semibold text-gray-700 mb-1 mt-9">
+                <h3 className="text-xl font-bold text-black">1,289</h3>
+                <h2 className="text-sm font-semibold text-gray-700 mt-2">
                   Approved Payments
                 </h2>
               </div>
@@ -196,7 +176,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 gap-6 mb-6">
+        {/* Area Chart */}
+        <div className="mb-6">
           <div className="bg-white p-4 rounded shadow">
             <h2 className="mb-2 text-lg font-semibold">
               Transaction Analytics
@@ -212,8 +193,9 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Books & Notifications */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 rounded shadow">
+          <div className="bg-white p-4 rounded shadow overflow-x-auto">
             <h2 className="mb-4 text-lg font-semibold">Books Bought</h2>
             <table className="w-full text-left text-sm">
               <thead>

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
+
 import { signInAdmin } from "@/utils/auth/adminApi";
 
 export default function AdminAuthPage() {
@@ -20,14 +23,17 @@ export default function AdminAuthPage() {
     try {
       await signInAdmin(email, password);
       router.push("/admin/dashboard");
+      toast.success("logged in successfully!")
     } catch (err) {
       if (!err.response) {
-        setError("Cannot connect to the server. Please try again later.");
+        toast.error("Cannot connect to the server. Please try again later.");
       } else {
-        setError(
-          err.response?.data?.error ||
+        toast.error(
+          err.response?.data ||
             "Sign-in failed. Please check your credentials."
+            
         );
+        console.log("admin log in err: ", err.response?.data);
       }
     } finally {
       setLoading(false);
