@@ -264,7 +264,7 @@ export default function BookPricing() {
 
       {isModalOpen && <Modal onClose={() =>{ 
         setIsModalOpen(false);
-        router.push(`/author/${authorId}/books/create/book-details?id=${id}`);
+        router.push(`/author/${authorId}/books/create/book-details`);
       }} isOpen={isModalOpen} />}
     </form>
   );

@@ -60,6 +60,14 @@ const BookPage = () => {
           <p className="mt-4">
             {book?.description || "No description available."}
           </p>
+          <Link
+            href={book?.ebook_file_url || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-500 py-1 px-2 rounded-md text-white mt-3"
+          >
+            Read
+          </Link>
         </div>
       </div>
     </div>
