@@ -23,7 +23,7 @@ const layout = ({ children }) => {
       await signOutAuthor();
       setShowModal(false);
       toast.success("Logged out successfully!");
-      window.location.href = "/";
+      window.location.href = "/author/sign_in";
     } catch (error) {
       toast.error("Failed to log out. Please try again.");
     }

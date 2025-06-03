@@ -19,12 +19,12 @@ const BookContent = () => {
   const ebookInputRef = useRef();
   const coverInputRef = useRef();
 
-  useEffect(() => {
-    const savedData = localStorage.getItem("bookFormData");
-    if (savedData) {
-      updateFormData(JSON.parse(savedData));
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedData = localStorage.getItem("bookFormData");
+  //   if (savedData) {
+  //     updateFormData(JSON.parse(savedData));
+  //   }
+  // }, []);
 
   useEffect(() => {
     localStorage.setItem("bookFormData", JSON.stringify(formData));
@@ -48,19 +48,19 @@ const BookContent = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  useEffect(() => {
-    if (id && id !== "null" && id !== "undefined") {
-      // Prevent refetching if data already exists
-      api
-        .get(`/books/${id}`)
-        .then((response) => {
-          updateFormData(response.data.data); // Update the form context
-        })
-        .catch((error) => {
-          console.error("Error fetching book:", error);
-        });
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id && id !== "null" && id !== "undefined") {
+  //     // Prevent refetching if data already exists
+  //     api
+  //       .get(`/books/${id}`)
+  //       .then((response) => {
+  //         updateFormData(response.data.data); // Update the form context
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error fetching book:", error);
+  //       });
+  //   }
+  // }, [id]);
 
   const { id: authorId } = storedAuthorInfo;
 
@@ -107,7 +107,9 @@ const BookContent = () => {
         </span>
       </label>
 
-      <h3 className="font-bold mt-3">Does the content has explicit images or text</h3>
+      <h3 className="font-bold mt-3">
+        Does the content has explicit images or text
+      </h3>
       <div className="flex flex-col space-y-2">
         <label className="flex items-center space-x-2 cursor-pointer">
           <input
@@ -277,6 +279,8 @@ const BookContent = () => {
       <p className="mt-3 mb-1">Publisher (Optional) </p>
       <input
         type="text"
+        value={formData.publisher}
+        onChange={(e) => updateFormData({ publisher: e.target.value })}
         className="h-[35px] w-72 bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913]"
       />
 

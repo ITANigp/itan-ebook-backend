@@ -51,7 +51,8 @@ const BookPage = () => {
               <p className="text-gray-600">
                 by:{" "}
                 <span className="font-bold">
-                  {book?.author_name || "Author's Name"}
+                  {book?.first_name || "Author's FirstName"}{" "}
+                  {book?.last_name || "Author's LastName"}
                 </span>
               </p>
             </div>

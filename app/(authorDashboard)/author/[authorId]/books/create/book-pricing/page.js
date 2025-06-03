@@ -2,11 +2,14 @@
 
 import React, { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useForm } from "@/context/FormContext";
-import Modal from "@/components/Modal";
+
 import CryptoJS from "crypto-js";
+import toast from "react-hot-toast";
+
 import { api } from "@/utils/auth/authorApi";
+import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
+import Modal from "@/components/Modal";
 
 // Compute MD5 checksum in Base64 format
 async function computeChecksum(file) {
@@ -82,8 +85,6 @@ export default function BookPricing() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setUploading(true);
-    setIsModalOpen(true);
-
     try {
       // If new book, ensure files are provided
       if (isNew && !formData.ebook_file) {
@@ -140,10 +141,23 @@ export default function BookPricing() {
         }
       });
 
+
+
+
+
       if (ebookSignedId)
         formDataToSend.append("book[ebook_file]", ebookSignedId);
       if (coverImageSignedId)
         formDataToSend.append("book[cover_image]", coverImageSignedId);
+
+
+      console.log("Submitting data to:", isNew ? "/books" : `/books/${id}`);
+      for (let pair of formDataToSend.entries()) {
+        console.log(`${pair[0]}:`, pair[1]);
+      }
+
+
+      
 
       const response = await api({
         data: formDataToSend,
@@ -163,6 +177,8 @@ export default function BookPricing() {
 
     localStorage.removeItem("bookFormData");
   };
+
+  
 
   return (
     <form onSubmit={handleSubmit}>
@@ -226,6 +242,11 @@ export default function BookPricing() {
           </div>
           <span className="text-gray-700">No</span>
         </label>
+        {formData.terms_and_conditions === false && (
+          <p className="text-red-600 mt-2 text-xs">
+            You must agree to the terms and conditions to publish.
+          </p>
+        )}
       </div>
 
       {/* Upload status */}
@@ -255,17 +276,22 @@ export default function BookPricing() {
         </button>
         <button
           type="submit"
-          disabled={uploading}
-          className="bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md"
+          disabled={!formData.terms_and_conditions || uploading}
+          className={`bg-[#E50913] hover:bg-[#cd3f46] text-white px-8 py-2 rounded-md ${!formData.terms_and_conditions || uploading ? "cursor-not-allowed" : "cursor-pointer"}`}
         >
-          {uploading ? "Uploading..." : "Publish"}
+          {uploading ? "Uploading..." : isNew ? "Publish" : "Save Edit"}
         </button>
       </div>
 
-      {isModalOpen && <Modal onClose={() =>{ 
-        setIsModalOpen(false);
-        router.push(`/author/${authorId}/books/create/book-details`);
-      }} isOpen={isModalOpen} />}
+      {isModalOpen && (
+        <Modal
+          onClose={() => {
+            setIsModalOpen(false);
+            router.push(`/author/${authorId}/books/create/book-details`);
+          }}
+          isOpen={isModalOpen}
+        />
+      )}
     </form>
   );
 }
