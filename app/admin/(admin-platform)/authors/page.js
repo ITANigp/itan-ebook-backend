@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSlidersH, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faSlidersH, faEllipsish} from "@fortawesome/free-solid-svg-icons";
 import {
   Table,
   TableBody,
