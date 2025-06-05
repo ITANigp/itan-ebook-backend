@@ -10,7 +10,8 @@ export const FormProvider = ({ children }) => {
     audiobook_price: "",
     bio: "",
     book_isbn: "",
-    contributors: "",
+    categories: [],
+    contributors: [],
     cover_image: null,  // For image upload
     description: "",
     ebook_file: null,    // For PDF or EPUB

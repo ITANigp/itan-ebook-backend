@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "@/context/FormContext";
 import { storedAuthorInfo } from "@/utils/storedAuthorInfo";
 import { api } from "@/utils/auth/authorApi";
+import Collaborator from "@/components/Collaborator";
 import GenreSelector from "@/components/SelectGenre";
 
 const BookDetails = () => {
@@ -19,6 +20,8 @@ const BookDetails = () => {
 
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+
+ 
 
   useEffect(() => {
     localStorage.setItem("bookFormData", JSON.stringify(formData));
@@ -52,7 +55,7 @@ const BookDetails = () => {
     //    newErrors.description = "Description must be under 1000 characters.";
     //  }
 
-    if (!id && (!formData.categories || formData.categories.trim() === "")) {
+    if (!id && (!formData.categories || formData.categories === "")) {
       newErrors.categories = "Category is required.";
     }
 
@@ -63,11 +66,13 @@ const BookDetails = () => {
   useEffect(() => {
     if (id && id !== "null" && id !== "undefined") {
       // Prevent refetching if data already exists
-      api
+     api
         .get(`/books/${id}`)
         .then((response) => {
+          console.log("Print book info:", response.data.data);
           updateFormData(response.data.data); // Update the form context
         })
+        
         .catch((error) => {
           console.error("Error fetching book:", error);
         });
@@ -157,6 +162,14 @@ const BookDetails = () => {
           onChange={(e) => updateFormData({ last_name: e.target.value })}
         />
       </div>
+
+      <Collaborator
+        value={formData.contributors}
+        onChange={(updatedContributors) =>
+          updateFormData({ contributors: updatedContributors })
+        }
+      />
+
       <h3 className="font-bold mt-8">Bio</h3>
       <textarea
         className="h-40 w-full max-w-[650px] bg-gray-50 border focus:border-none text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-300 placeholder:text-gray-500"
@@ -262,7 +275,10 @@ const BookDetails = () => {
         Select the Fiction genre that best fits your book
       </p>
       <p>Choose categories</p>
-      <GenreSelector />
+      <GenreSelector
+        value={formData.categories}
+        onChange={(updated) => updateFormData({ categories: updated })}
+      />
       <h3 className="font-bold text-lg mt-7 mb-3">Keywords</h3>
       <p className="w-full max-w-[650px] my-3 text-sm sm:text-base">
         Select up to 4 keywords (max 50 characters) that describe your book's

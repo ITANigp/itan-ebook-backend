@@ -1,9 +1,9 @@
 import { useState } from "react";
 import genreData from "@/constants/dataGenres";
 
-export default function GenreSelector() {
+export default function GenreSelector({ value, onChange }) {
   const [selected, setSelected] = useState({});
-  const [selections, setSelections] = useState([]);
+  const selections = value || [];
 
   const mainCategories = Object.keys(genreData);
 
@@ -21,7 +21,7 @@ export default function GenreSelector() {
 
   const handleAdd = () => {
     if (selected.main && selected.detail && selections.length < 3) {
-      setSelections([...selections, { ...selected }]);
+      onChange([...selections, { ...selected }]);
       setSelected({});
     }
   };
@@ -124,7 +124,7 @@ export default function GenreSelector() {
               </span>
               <button
                 onClick={() =>
-                  setSelections(selections.filter((_, i) => i !== idx))
+                  onChange(selections.filter((_, i) => i !== idx))
                 }
                 className="bg-red-500 text-white hover:underline px-2 rounded-md"
               >

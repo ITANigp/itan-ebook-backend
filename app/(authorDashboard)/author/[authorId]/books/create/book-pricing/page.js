@@ -137,9 +137,15 @@ export default function BookPricing() {
           key !== "cover_image" &&
           value !== undefined
         ) {
-          formDataToSend.append(`book[${key}]`, value);
+          // Convert arrays or objects to JSON
+          if (Array.isArray(value) || typeof value === "object") {
+            formDataToSend.append(`book[${key}]`, JSON.stringify(value));
+          } else {
+            formDataToSend.append(`book[${key}]`, value);
+          }
         }
       });
+      
 
 
 
