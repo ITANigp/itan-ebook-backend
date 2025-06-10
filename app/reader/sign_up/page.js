@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { api } from "@/utils/auth/readerApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default function SignUp() {
   const [firstName, setFirstName] = useState("");
@@ -58,7 +60,9 @@ export default function SignUp() {
           alt="register"
           className="ml-8"
         />
-        <h2 className="absolute left-20 top-12 text-4xl text-red-600 font-bold">ITAN</h2>
+        <h2 className="absolute left-20 top-12 text-4xl text-red-600 font-bold">
+          ITAN
+        </h2>
         <div className="absolute left-20 top-48 text-white w-[400px]">
           <h2 className="text-4xl">
             Dive into African stories that keep you hooked from page one.
@@ -104,11 +108,13 @@ export default function SignUp() {
             />
           </div>
 
-          <div>
-            <label className="block mb-2 text-sm font-medium">Email</label>
+          <div className="relative">
+            <span className="absolute left-3 top-4 text-gray-500">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
             <input
               type="email"
-              className="h-[50px] w-full p-2.5 rounded-lg bg-gray-50 focus:ring-1 focus:ring-[#E50913] outline-none"
+              className="pl-10 h-[50px] w-full p-2.5 rounded-lg bg-gray-50 focus:ring-1 focus:ring-[#E50913] outline-none"
               placeholder="you@example.com"
               required
               value={email}
@@ -117,10 +123,13 @@ export default function SignUp() {
           </div>
 
           <div className="relative">
-            <label className="block mb-2 text-sm font-medium">Password</label>
+            <span className="absolute left-3 top-3 text-gray-500">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
             <input
               type={showPassword ? "text" : "password"}
-              className="h-[50px] w-full p-2.5 rounded-lg bg-gray-50 border focus:ring-1 focus:ring-[#E50913] outline-none"
+              id="password"
+              className="pl-10 h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -128,7 +137,7 @@ export default function SignUp() {
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute top-10 right-3 text-gray-600"
+              className="absolute top-3 right-3 text-gray-600"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
