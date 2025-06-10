@@ -10,6 +10,13 @@ export default {
   ],
   theme: {
     extend: {
+      transform: ["hover", "focus"],
+      perspective: {
+        1000: "1000px",
+      },
+      rotate: {
+        "x-12": "12deg",
+      },
       keyframes: {
         marquee: {
           "0%": { transform: "translateX(-100%)" },
