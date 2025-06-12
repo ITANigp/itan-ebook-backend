@@ -55,7 +55,7 @@ const SignIn = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/auth/google_oauth2`;
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     if (recaptchaRef.current) {
       recaptchaRef.current.reset();
       setCaptchaToken(""); 
@@ -124,13 +124,28 @@ const SignIn = () => {
           </div>
 
           {/* reCAPTCHA placed BEFORE the submit button */}
-          
           <div className="my-4">
-            <ReCAPTCHA
-              ref={recaptchaRef}
-              sitekey={SITE_KEY}
-              onChange={(token) => setCaptchaToken(token || "")}
-            />
+            <div className="w-full overflow-hidden">
+              <div className="transform scale-75 sm:scale-90 md:scale-100 origin-left w-full">
+                {SITE_KEY ? (
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token || "")}
+                    onError={(err) => {
+                      console.error("reCAPTCHA error:", err);
+                      toast.error(
+                        "reCAPTCHA failed to load. Please refresh the page."
+                      );
+                    }}
+                  />
+                ) : (
+                  <div className="p-3 text-red-500 text-sm border border-red-200 rounded bg-red-50">
+                    reCAPTCHA configuration error - Please try again
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="relative">

@@ -108,18 +108,32 @@ const SignUp = () => {
               />
             </div>
 
-            {/* ✅ Added reCAPTCHA component here */}
+            {/* ✅ Updated reCAPTCHA component with error handling */}
             <div className="my-4">
               <div className="w-full overflow-hidden">
                 <div className="transform scale-75 sm:scale-90 md:scale-100 origin-left w-full">
-                  <ReCAPTCHA
-                    sitekey={SITE_KEY}
-                    onChange={(token) => setCaptchaToken(token || "")}
-                  />
+                  {SITE_KEY ? (
+                    <ReCAPTCHA
+                      sitekey={SITE_KEY}
+                      onChange={(token) => setCaptchaToken(token || "")}
+                      onError={(err) => {
+                        console.error("reCAPTCHA error:", err);
+                        // If you have toast imported, uncomment the line below
+                        // toast.error("reCAPTCHA failed to load. Please refresh the page.");
+                        setMessage(
+                          "reCAPTCHA failed to load. Please refresh the page."
+                        );
+                      }}
+                    />
+                  ) : (
+                    <div className="p-3 text-red-500 text-sm border border-red-200 rounded bg-red-50">
+                      reCAPTCHA configuration error - Please try again
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-
+            
             <div>
               <button
                 type="submit"
