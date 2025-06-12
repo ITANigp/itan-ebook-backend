@@ -1,18 +1,21 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-
-import { api } from "@/utils/auth/readerApi";
 import Image from "next/image";
+import Link from "next/link";
+import { Eye, EyeOff } from "lucide-react";
+import { api } from "@/utils/auth/readerApi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
-const SignUp = () => {
+export default function SignUp() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [password_confirmation, setConfirmPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -27,186 +30,189 @@ const SignUp = () => {
         reader: {
           email,
           password,
-          password_confirmation,
+          password_confirmation: passwordConfirmation,
           first_name: firstName,
           last_name: lastName,
         },
       });
-      console.log("Reader's registered successfully: ", reader.data)
-      if (reader?.data?.data.id) {
-        setMessage("Registration successful! You can now log in.");
+
+      if (reader?.data?.data?.id) {
+        setMessage("Registration successful! Redirecting...");
         router.push("/reader/sign_in");
       }
     } catch (error) {
       setMessage(
-        error.response?.data?.message ||
-          "Registration failed. Please try again."
+        error.response?.data?.message || "Registration failed. Please try again."
       );
-      console.log("Reader's registration failed: ", error);
+      console.error("Registration error:", error);
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <main className="w-full mb-9">
-      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
-        <header>
-          <Link href="/">
-            <Image
-              src="/images/logo.png"
-              width={10}
-              height={10}
-              alt="Itan Logo"
-              className="w-10 h-6 cursor-pointer"
-            />
-          </Link>
-        </header>
-
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Welcome!</h1>
-          <p className="text-sm mb-4">
-            Already have an account?{" "}
-            <Link
-              href="/author/sign_in"
-              className="font-bold cursor-pointer hover:text-blue-700"
-            >
-              Log In
-            </Link>
+    <section className="flex py-12">
+      <div className="relative">
+        <Image
+          src="/images/readers/registration/register-picture.png"
+          width={950}
+          height={1600}
+          alt="register"
+          className="ml-8"
+        />
+        <h2 className="absolute left-20 top-12 text-4xl text-red-600 font-bold">
+          ITAN
+        </h2>
+        <div className="absolute left-20 top-48 text-white w-[400px]">
+          <h2 className="text-4xl">
+            Dive into African stories that keep you hooked from page one.
+          </h2>
+          <p className="mt-3">
+            Whether you're searching for inspiration, escape — we've got the
+            perfect story waiting for you.
           </p>
         </div>
+      </div>
 
-        <form onSubmit={handleSignup} aria-label="Signup Form">
-          <fieldset>
-            <div className="mt-4">
-              <label
-                htmlFor="name"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                First Name
-              </label>
-              <input
-                type="text"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Enter Your Firstname"
-                required
-                value={firstName}
-                onChange={(e) => setFirstName(e.target.value)}
-              />
-            </div>
+      <div className="min-h-screen flex flex-col justify-center px-6 w-full">
+        <h1 className="text-xl font-semibold text-center">Create Account</h1>
+        <p className="text-center text-gray-500 mb-6">
+          Fill your information below or register with your social account
+        </p>
 
-            <div className="mt-4">
-              <label
-                htmlFor="lastName"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Last Name
-              </label>
-              <input
-                type="text"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Enter Your Lastname"
-                required
-                value={lastName}
-                onChange={(e) => setLastName(e.target.value)}
-              />
-            </div>
+        <form
+          onSubmit={handleSignup}
+          className="space-y-4 max-w-md w-full mx-auto"
+        >
+          <div>
+            <label className="block mb-2 text-sm font-medium">First Name</label>
+            <input
+              type="text"
+              className="h-[50px] w-full p-2.5 rounded-lg bg-gray-50 focus:ring-1 focus:ring-[#E50913] outline-none"
+              placeholder="Enter Your First Name"
+              required
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </div>
 
-            <div className="mt-4">
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Johndoe@gmail.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+          <div>
+            <label className="block mb-2 text-sm font-medium">Last Name</label>
+            <input
+              type="text"
+              className="h-[50px] w-full p-2.5 rounded-lg bg-gray-50 focus:ring-1 focus:ring-[#E50913] outline-none"
+              placeholder="Enter Your Last Name"
+              required
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </div>
 
-            <div className="my-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+          <div className="relative">
+            <span className="absolute left-3 top-4 text-gray-500">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              type="email"
+              className="pl-10 h-[50px] w-full p-2.5 rounded-lg bg-gray-50 focus:ring-1 focus:ring-[#E50913] outline-none"
+              placeholder="you@example.com"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-            <div className="my-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Confirm Password
-              </label>
-              <input
-                type="password"
-                // id="password"
-                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-                required
-                value={password_confirmation}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-              />
-            </div>
+          <div className="relative">
+            <span className="absolute left-3 top-3 text-gray-500">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              className="pl-10 h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute top-4 right-3 text-gray-600"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
-            <div>
-              <button
-                type="submit"
-                className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading}
-              >
-                {loading ? "Loading..." : "Sign Up"}
-              </button>
+          <div>
+            <label className="block mb-2 text-sm font-medium">
+              Confirm Password
+            </label>
+            <input
+              type={showPassword ? "text" : "password"}
+              className="h-[50px] w-full p-2.5 rounded-lg bg-gray-50 border focus:ring-1 focus:ring-[#E50913] outline-none"
+              required
+              value={passwordConfirmation}
+              onChange={(e) => setPasswordConfirmation(e.target.value)}
+            />
+          </div>
 
-              <div className="inline-flex items-center justify-center w-full my-5">
-                <p className="ml-10 h-[1px] w-full bg-gray-300" />
-                <span className="px-3 font-extralight text-sm text-gray-300">
-                  OR
-                </span>
-                <p className="h-[1px] w-full bg-gray-300 mr-10" />
-              </div>
+          <div className="flex items-center text-sm">
+            <input type="checkbox" className="mr-2" defaultChecked />
+            <label>
+              Agree with{" "}
+              <a href="#" className="text-orange-600">
+                Terms and Conditions
+              </a>
+            </label>
+          </div>
 
-              <button
-                type="button"
-                className="h-[50px] hover:text-white text-[#4e4c4c] space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
-              >
-                <img
-                  src="/images/google.png"
-                  className="w-6 h-6"
-                  alt="Google Logo"
-                />
-                <p>Continue with Google</p>
-              </button>
-            </div>
+          {message && (
+            <p
+              className="text-sm text-[#E50913] text-center"
+              aria-live="polite"
+            >
+              {message}
+            </p>
+          )}
 
-            {message && (
-              <p
-                className="mt-4 text-center text-sm text-[#E50913]"
-                aria-live="polite"
-              >
-                {message}
-              </p>
-            )}
-          </fieldset>
+          <button
+            type="submit"
+            className="w-full bg-[#E50913] hover:bg-[#ba2129] text-white font-semibold py-3 rounded-lg"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Sign Up"}
+          </button>
+
+          <div className="inline-flex items-center justify-center w-full my-5">
+            <p className="h-[1px] w-full bg-gray-300" />
+            <span className="px-3 text-sm text-gray-400">OR</span>
+            <p className="h-[1px] w-full bg-gray-300" />
+          </div>
+
+          <button
+            type="button"
+            className="flex items-center justify-center gap-3 w-full bg-gray-200 hover:bg-gray-400 text-[#4e4c4c] font-medium py-3 rounded-lg"
+          >
+            <Image
+              src="/images/google.png"
+              width={24}
+              height={24}
+              alt="Google Logo"
+            />
+            Continue with Google
+          </button>
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Already have an account?{" "}
+            <Link
+              href="/reader/sign_in"
+              className="text-orange-600 font-medium"
+            >
+              Sign In
+            </Link>
+          </p>
         </form>
-      </section>
-    </main>
+      </div>
+    </section>
   );
-};
-
-export default SignUp;
+}

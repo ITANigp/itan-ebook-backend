@@ -4,17 +4,23 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
+import { Eye, EyeOff } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+
 import { signInReader } from "@/utils/auth/readerApi";
 import Image from "next/image";
 
-const SignIn = () => {
+
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  // const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
-  const handleSignup = async (e) => {
+  const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
     setMessage("");
@@ -39,113 +45,115 @@ const SignIn = () => {
   };
 
   return (
-    <main className="w-full mb-9">
-      <section className="bg-white max-w-[390px] rounded-2xl p-2 sm:py-5 sm:px-3 sm:w-[600px] mt-24 mx-auto border">
-        <header>
-          <Link href="/">
-            <Image
-              src="/images/logo.png"
-              width={10}
-              height={10}
-              alt="Itan Logo"
-              className="w-10 h-6 cursor-pointer"
-            />
-          </Link>
-        </header>
-
-        <div className="text-center">
-          <h1 className="text-2xl font-bold">Welcome!</h1>
-          <p className="text-sm mb-4">
-            You don't have account?{" "}
-            <Link
-              href="/reader/sign_up"
-              className="font-bold cursor-pointer hover:text-blue-700"
-            >
-              creat one
-            </Link>
+    <section className="flex py-12 items-center">
+      <div className="relative">
+        <Image
+          src="/images/readers/registration/register-picture.png"
+          width={950}
+          height={1600}
+          alt="register"
+          className="ml-8"
+        />
+        <h2 className="absolute left-20 top-12 text-4xl text-red-600 font-bold">
+          ITAN
+        </h2>
+        <div className="absolute left-20 top-48 text-white w-[400px]">
+          <h2 className="text-4xl">
+            Dive into African stories that keep you hooked from page one.
+          </h2>
+          <p className="mt-3">
+            Whether you're searching for inspiration, escape — we've got the
+            perfect story waiting for you.
           </p>
         </div>
+      </div>
 
-        <form onSubmit={handleSignup} aria-label="Signup Form">
-          <fieldset>
-            <div className="mt-4">
-              <label
-                htmlFor="email"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Email Address
-              </label>
-              <input
-                type="email"
-                id="email"
-                className="h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
-                placeholder="Johndoe@gmail.com"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-            </div>
+      <div className="min-h-screen flex flex-col justify-center px-6 w-full">
+        <h2 className="ml-16 -mt-10 mb-4 text-3xl font-semibold ">Welcome back!</h2>
 
-            <div className="my-4">
-              <label
-                htmlFor="password"
-                className="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Password
-              </label>
-              <input
-                type="password"
-                id="password"
-                className="h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+        <form
+          onSubmit={handleSignIn}
+          className="space-y-4 max-w-md w-full mx-auto"
+        >
+          <label className="block mb-2 text-sm font-medium">
+            Email Address
+          </label>
+          <div className="relative">
+            <span className="absolute left-3 top-4 text-gray-500">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              type="email"
+              id="email"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+              placeholder="Enter Email Address"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
 
-            <div>
-              <button
-                type="submit"
-                className="h-[50px] font-semibold text-white bg-[#E50913] hover:bg-[#ba2129] rounded-lg px-5 py-2.5 w-full"
-                disabled={loading}
-              >
-                {loading ? "Loading..." : "Sign In"}
-              </button>
+          <label className="block mb-2 text-sm font-medium">Password</label>
+          <div className="relative">
+            <span className="absolute left-3 top-3 text-gray-500">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Enter Passwords"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute top-4 right-3 text-gray-600"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
-              <div className="inline-flex items-center justify-center w-full my-5">
-                <p className="ml-10 h-[1px] w-full bg-gray-300" />
-                <span className="px-3 font-extralight text-sm text-gray-300">
-                  OR
-                </span>
-                <p className="h-[1px] w-full bg-gray-300 mr-10" />
-              </div>
+          <button
+            type="submit"
+            className="w-full bg-[#E50913] hover:bg-[#ba2129] text-white font-semibold py-3 rounded-lg"
+            disabled={loading}
+          >
+            {loading ? "Loading..." : "Sign Up"}
+          </button>
 
-              <button
-                type="button"
-                className="h-[50px] hover:text-white text-[#4e4c4c] space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
-              >
-                <img
-                  src="/images/google.png"
-                  className="w-6 h-6"
-                  alt="Google Logo"
-                />
-                <p>Continue with Google</p>
-              </button>
-            </div>
+          <div className="inline-flex items-center justify-center w-full my-5">
+            <p className="h-[1px] w-full bg-gray-300" />
+            <span className="px-3 text-sm text-gray-400">OR</span>
+            <p className="h-[1px] w-full bg-gray-300" />
+          </div>
 
-            {message && (
-              <p
-                className="mt-4 text-center text-sm text-[#E50913]"
-                aria-live="polite"
-              >
-                {message}
-              </p>
-            )}
-          </fieldset>
+          <button
+            type="button"
+            className="flex items-center justify-center gap-3 w-full bg-gray-200 hover:bg-gray-400 text-[#4e4c4c] font-medium py-3 rounded-lg"
+          >
+            <Image
+              src="/images/google.png"
+              width={24}
+              height={24}
+              alt="Google Logo"
+            />
+            Continue with Google
+          </button>
+
+          <p className="text-center text-sm text-gray-600 mt-4">
+            Already have an account?{" "}
+            <Link
+              href="/reader/sign_in"
+              className="text-orange-600 font-medium"
+            >
+              Sign In
+            </Link>
+          </p>
         </form>
-      </section>
-    </main>
+      </div>
+    </section>
   );
-};
-
-export default SignIn;
+}
