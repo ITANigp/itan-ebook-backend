@@ -1,4 +1,4 @@
-import { api } from "@/utils/api";
+import { api } from "@/utils/auth/readerApi";
 import { tokenManager } from "./tokenManager";
 
 export async function handlePaymentCallback(
