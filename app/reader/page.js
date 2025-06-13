@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import dynamic from "next/dynamic";
 import FAQ from "@/components/reader/FQA";
+import Link from "next/link";
 
 // Dynamically import FeatureCarousel with SSR disabled
 const FeatureCarousel = dynamic(() => import("@/components/reader/FeatureCarousel"), {
@@ -47,9 +48,12 @@ export default function Home() {
 
           {/* Sign Up button top-right */}
           <div className="absolute top-6 right-6">
-            <button className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 transition shadow">
+            <Link
+              href="/reader/sign_up"
+              className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 transition shadow"
+            >
               Sign Up
-            </button>
+            </Link>
           </div>
 
           {/* Main headline */}
@@ -63,9 +67,9 @@ export default function Home() {
           </p>
 
           {/* CTA Button */}
-          <button className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition">
+          <Link href="/reader/sign_up" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition">
             Get started
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -209,9 +213,9 @@ export default function Home() {
             With ITAN Global Publishing, authors can self-publish their works,
             manage their books, and royalties all in one platform.
           </p>
-          <button className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium">
+          <Link href="/" className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium">
             Learn More
-          </button>
+          </Link>
         </div>
       </section>
     </div>

@@ -23,15 +23,15 @@ export default function SignIn() {
   const handleSignIn = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setMessage("");
+    // setMessage("");
 
     try {
       const reader = await signInReader(email, password);
     
       console.log("Reader log in successfully: ", reader.data);
-      if (reader?.data?.data?.id) {
-        setMessage("Registration successful! You can now log in.");
-        router.push("/reader/books")
+      if (reader?.data?.id) {
+        // setMessage("Registration successful! You can now log in.");
+        router.push("/reader/home")
       }
     } catch (error) {
       setMessage(
@@ -69,7 +69,9 @@ export default function SignIn() {
       </div>
 
       <div className="min-h-screen flex flex-col justify-center px-6 w-full">
-        <h2 className="ml-16 -mt-10 mb-4 text-3xl font-semibold ">Welcome back!</h2>
+        <h2 className="ml-16 -mt-10 mb-4 text-3xl font-semibold ">
+          Welcome back!
+        </h2>
 
         <form
           onSubmit={handleSignIn}
@@ -121,7 +123,7 @@ export default function SignIn() {
             className="w-full bg-[#E50913] hover:bg-[#ba2129] text-white font-semibold py-3 rounded-lg"
             disabled={loading}
           >
-            {loading ? "Loading..." : "Sign Up"}
+            {loading ? "Loading..." : "Sign In"}
           </button>
 
           <div className="inline-flex items-center justify-center w-full my-5">
@@ -144,12 +146,12 @@ export default function SignIn() {
           </button>
 
           <p className="text-center text-sm text-gray-600 mt-4">
-            Already have an account?{" "}
+            Don’t have an account?{" "}
             <Link
-              href="/reader/sign_in"
+              href="/reader/sign_up"
               className="text-orange-600 font-medium"
             >
-              Sign In
+              Sign Up
             </Link>
           </p>
         </form>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Search, User } from "lucide-react";
+import Link from 'next/link';
 
 const DashboardNav = () => {
   return (
@@ -7,8 +8,12 @@ const DashboardNav = () => {
       <div className="text-xl font-bold text-red-600">ITAN</div>
       <div className="flex items-center space-x-3">
         <ul className="hidden md:flex space-x-6 text-sm font-medium">
-          <li className="text-red-600">Home</li>
-          <li>Library</li>
+          <li className="text-red-600">
+            <Link href="/reader/home">Home</Link>
+          </li>
+          <li>
+            <Link href="/reader/library">Library</Link>
+          </li>
         </ul>
         <div className="relative">
           <input

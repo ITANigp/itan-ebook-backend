@@ -74,11 +74,10 @@ export default function SignUp() {
         </div>
       </div>
 
-      <div className="min-h-screen flex flex-col justify-center px-6 w-full">
-        <h1 className="text-xl font-semibold text-center">Create Account</h1>
-        <p className="text-center text-gray-500 mb-6">
-          Fill your information below or register with your social account
-        </p>
+      <div className="min-h-screen flex flex-col justify-center px-6 w-full mt-10">
+        <h2 className="ml-16 -mt-10 mb-4 text-3xl font-semibold ">
+          Welcome!
+        </h2>
 
         <form
           onSubmit={handleSignup}
@@ -208,7 +207,7 @@ export default function SignUp() {
               href="/reader/sign_in"
               className="text-orange-600 font-medium"
             >
-              Sign In
+              Log In
             </Link>
           </p>
         </form>

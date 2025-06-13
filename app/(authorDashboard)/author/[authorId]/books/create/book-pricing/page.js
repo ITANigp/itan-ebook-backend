@@ -173,6 +173,7 @@ export default function BookPricing() {
 
       if (response.status >= 200 && response.status < 300) {
         setIsModalOpen(true);
+        localStorage.removeItem("bookFormData");
       }
     } catch (error) {
       console.error("Upload failed:", error);
@@ -180,8 +181,6 @@ export default function BookPricing() {
     } finally {
       setUploading(false);
     }
-
-    localStorage.removeItem("bookFormData");
   };
 
   
@@ -293,7 +292,7 @@ export default function BookPricing() {
         <Modal
           onClose={() => {
             setIsModalOpen(false);
-            router.push(`/author/${authorId}/books/create/book-details`);
+            router.push(`/author/${authorId}/books`);
           }}
           isOpen={isModalOpen}
         />
