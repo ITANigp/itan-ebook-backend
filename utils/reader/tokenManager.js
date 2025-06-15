@@ -50,7 +50,7 @@ class ReadingTokenManager {
 
     try {
       const response = await api.post(
-        "/api/v1/purchases/refresh_reading_token",
+        "/purchases/refresh_reading_token",
         {
           purchase_id: tokenData.purchaseId,
         }

@@ -47,7 +47,7 @@ const SignUp = () => {
 
   return (
     <main className="w-full mb-9 px-4 sm:px-0">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+      <section className="bg-white max-w-[350px] rounded-2xl p-2 sm:py-5 sm:px-6 sm:max-w-[410px] mt-24 mx-auto border">
         <header>
           <Link href="/">
             <img
@@ -72,7 +72,6 @@ const SignUp = () => {
         </div>
 
         <form onSubmit={handleSignup} aria-label="Signup Form">
-          <fieldset>
             <div className="mt-4">
               <label
                 htmlFor="email"
@@ -83,7 +82,7 @@ const SignUp = () => {
               <input
                 type="email"
                 id="email"
-                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2 sm:p-2.5 text-sm sm:text-base min-w-0 max-w-full"
+                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block p-2 sm:p-2.5 text-sm sm:text-base w-full"
                 placeholder="Johndoe@gmail.com"
                 required
                 value={email}
@@ -101,7 +100,7 @@ const SignUp = () => {
               <input
                 type="password"
                 placeholder="Enter your password"
-                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2 sm:p-2.5 text-sm sm:text-base min-w-0 max-w-full"
+                className="placeholder-gray-400 h-[45px] sm:h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-teal-200 block w-full p-2 sm:p-2.5 text-sm sm:text-base"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -158,7 +157,6 @@ const SignUp = () => {
                 {message}
               </p>
             )}
-          </fieldset>
         </form>
       </section>
     </main>

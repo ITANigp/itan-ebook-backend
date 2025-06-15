@@ -39,7 +39,7 @@ export async function handlePaymentCallback(
 
 export async function checkPaymentStatus(reference) {
   const response = await api.get(
-    `/api/v1/purchases/check_status?reference=${reference}`
+    `/purchases/check_status?reference=${reference}`
   );
   return response.data.data;
 }

@@ -21,7 +21,7 @@ export async function loadBookContent(
   }
 
   try {
-    const response = await fetch(`/api/v1/books/${bookId}/content`, {
+    const response = await fetch(`/books/${bookId}/content`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

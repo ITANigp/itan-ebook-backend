@@ -27,10 +27,9 @@ export default function SignIn() {
 
     try {
       const reader = await signInReader(email, password);
-    
+      localStorage.setItem("access_token", reader.data.token);
       console.log("Reader log in successfully: ", reader.data);
       if (reader?.data?.id) {
-        // setMessage("Registration successful! You can now log in.");
         router.push("/reader/home")
       }
     } catch (error) {
