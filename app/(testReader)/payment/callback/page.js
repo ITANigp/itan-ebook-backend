@@ -31,7 +31,7 @@ export default function PaymentCallback() {
 
         const { purchase_status, book_title } = res.data.data;
 
-        console.log("")
+        console.log("API response:", res.data);
 
         if (purchase_status === "completed") {
           setStatus(`Payment successful for "${book_title}".`);

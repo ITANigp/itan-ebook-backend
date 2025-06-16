@@ -12,6 +12,7 @@ export default function BuyButton({ bookId = "bab84240-adff-4f2b-ba08-be6cc1445f
       const response = await api.post(
         "/purchases",
         {
+          // amount: 3.5,
           book_id: bookId,
           content_type: "ebook", // or "audiobook"
         },
