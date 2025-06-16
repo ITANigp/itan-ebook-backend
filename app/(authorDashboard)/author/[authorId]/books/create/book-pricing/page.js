@@ -133,6 +133,7 @@ export default function BookPricing() {
 
       Object.entries(formData).forEach(([key, value]) => {
         if (
+          key !== "ebook_price" &&
           key !== "ebook_file" &&
           key !== "cover_image" &&
           value !== undefined
@@ -143,14 +144,15 @@ export default function BookPricing() {
           } else {
             formDataToSend.append(`book[${key}]`, value);
           }
+        } else if (key === "ebook_price") {
+          // Ensure price is sent as decimal string with 2 decimal places
+          const priceValue =
+            typeof value === "number" ? value.toFixed(2) : value;
+          formDataToSend.append(`book[${key}]`, priceValue);
+          console.log("Price being sent:", priceValue);
         }
       });
       
-
-
-
-
-
       if (ebookSignedId)
         formDataToSend.append("book[ebook_file]", ebookSignedId);
       if (coverImageSignedId)
@@ -187,14 +189,27 @@ export default function BookPricing() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h3 className="font-bold text-lg mt-5">Price</h3>
-      <input
-        type="text"
-        value={formData.ebook_price || ""}
-        onChange={(e) => updateFormData({ ebook_price: e.target.value })}
-        className="border border-gray-600 rounded-md w-full max-w-96 h-9 px-3"
-        placeholder="Ebook Price"
-      />
+      <div className="relative mt-5">
+        <h3 className="font-bold text-lg mb-2">Price</h3>
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
+            $
+          </span>
+          <input
+            type="number"
+            step="0.01"
+            min="0"
+            value={formData.ebook_price || ""}
+            onChange={(e) => {
+              const value =
+                e.target.value === "" ? "" : parseFloat(e.target.value);
+              updateFormData({ ebook_price: value });
+            }}
+            className="border border-gray-600 rounded-md w-full max-w-96 h-9 pl-7 pr-3"
+            placeholder="0.00"
+          />
+        </div>
+      </div>
 
       <h3 className="font-bold text-lg mt-5">Terms and Conditions</h3>
       <p className="text-sm max-w-[700px]">

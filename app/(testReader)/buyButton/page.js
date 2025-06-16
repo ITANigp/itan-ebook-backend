@@ -3,7 +3,7 @@
 import { api } from "@/utils/auth/readerApi";
 import { useRouter } from "next/navigation";
 
-export default function BuyButton({ bookId = "bab84240-adff-4f2b-ba08-be6cc1445fa1",}) {
+export default function BuyButton({ bookId = "52445bc9-b65f-469f-afbd-cd4a649a2a22",}) {
   const router = useRouter();
 
   const handlePurchase = async () => {
