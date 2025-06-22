@@ -57,17 +57,17 @@ export default function Home() {
           </div>
 
           {/* Main headline */}
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
             Home of Black Fiction Novels
           </h1>
 
           {/* Subheadline */}
-          <p className="text-lg md:text-xl mb-6 max-w-xl leading-relaxed">
+          <p className="text-lg md:text-2xl mb-6 leading-relaxed mt-5">
             Explore the richest collection of black fiction in one app
           </p>
 
           {/* CTA Button */}
-          <Link href="/reader/sign_up" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition">
+          <Link href="/reader/sign_up" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5">
             Get started
           </Link>
         </div>

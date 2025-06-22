@@ -1,15 +1,28 @@
 import Image from "next/image";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faBook, // Romance fallback
+  faBookOpen, // Children Books
+  faTheaterMasks, // Literature & Fiction
+  faStar, // Comics, Manga
+  faFingerprint, // Mystery
+  faBible, // Religion & Spirituality
+  faWandMagicSparkles, // Speculative
+} from "@fortawesome/free-solid-svg-icons";
+import StarRating from "../../(components)/StarRating";
+
+
 export default function Home() {
 
     const genres = [
-      "Romance",
-      "Children Books",
-      "Literature & Fiction",
-      "Comics, Manga & Graphic Novels",
-      "Mystery, Thriller & Suspense",
-      "Religion & Spirituality",
-      "Speculative",
+      { genreName: "Romance", icon: faBook },
+      { genreName: "Children Books", icon: faBookOpen },
+      { genreName: "Literature & Fiction", icon: faTheaterMasks },
+      { genreName: "Comics, Manga & Graphic Novels", icon: faStar },
+      { genreName: "Mystery, Thriller & Suspense", icon: faFingerprint },
+      { genreName: "Religion & Spirituality", icon: faBible },
+      { genreName: "Speculative", icon: faWandMagicSparkles },
     ];
 
     const books = [
@@ -95,10 +108,17 @@ export default function Home() {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {genres.map((genre) => (
             <div
-              key={genre}
-              className="border border-red-200 p-4 rounded-md text-center hover:shadow-md cursor-pointer"
+              key={genre.genreName}
+              className="flex flex-col justify-center border border-red-200 p-4 rounded-md text-center hover:shadow-md cursor-pointer "
             >
-              <div className="text-xl font-medium text-gray-700">{genre}</div>
+              <div className="flex justify-center items-center space-x-2 text-xl font-medium text-gray-700">
+                <FontAwesomeIcon
+                  icon={genre.icon}
+                  size="2x"
+                  className="text-gray-600 "
+                />
+                <p>{genre.genreName}</p>
+              </div>
             </div>
           ))}
         </div>
@@ -151,24 +171,29 @@ export default function Home() {
           {books.map((book, index) => (
             <div
               key={index}
-              className="bg-white rounded-md shadow hover:shadow-lg p-4"
+              className="bg-white rounded-md shadow hover:shadow-lg p-2 w-[200px]"
             >
               <Image
                 src={book.image}
                 alt={book.title}
                 width={200}
                 height={300}
-                className="mb-4 mx-auto"
+                className="mb-4"
               />
-              <h3 className="font-semibold text-md mb-1">{book.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-              <p className="text-red-600 font-bold">{book.price}</p>
-              <a
-                href="#"
-                className="block text-sm text-red-600 mt-2 hover:underline"
-              >
-                View details
-              </a>
+              <div>
+                <StarRating rating={3.4} />
+                <h3 className="font-semibold text-md mb-1">{book.title}</h3>
+                <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
+                <div className="flex justify-between items-center">
+                  <p className="text-red-600 font-bold">{book.price}</p>
+                  <a
+                    href="#"
+                    className="block text-sm text-red-600 mt-2 hover:underline"
+                  >
+                    View details
+                  </a>
+                </div>
+              </div>
             </div>
           ))}
         </div>

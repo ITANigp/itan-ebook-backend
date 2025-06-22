@@ -1,9 +1,24 @@
+"use client";
+
+import {useState} from "react";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, } from "lucide-react";
 
-export default function Home() {
+export default function Home({ readerToken, bookId }) {
+  const [authUrl, setAuthUrl] = useState("");
+
+  const handlePurchase = async () => {
+    try {
+      const res = await createPurchase(readerToken, bookId);
+      setAuthUrl(res.authorization_url);
+      window.location.href = res.authorization_url; // redirect to Paystack
+    } catch (err) {
+      console.error("Purchase failed:", err);
+    }
+  };
+
   const books = [
     {
       title: "Rise of the Jumbies",
@@ -33,7 +48,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       {/* Hero Section */}
       <div className="w-full h-64 md:h-96 relative">
         <Image
@@ -79,16 +93,16 @@ export default function Home() {
             See more →
           </a>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 ">
           {books.map((book, idx) => (
-            <Card key={idx} className="relative">
-              <Heart className="absolute top-2 right-2 text-gray-500 w-5 h-5 cursor-pointer" />
-              <CardContent className="p-4">
+            <Card key={idx} className="relative w-[200px]">
+              <Heart className="absolute top-2 right-2 text-gray-500 w-6 h-6 cursor-pointer bg-slate-100 rounded-full p-1" />
+              <CardContent className="py-2">
                 <Image
                   src={book.image}
                   alt={book.title}
                   width={150}
-                  height={200}
+                  height={250}
                   className="mx-auto mb-3"
                 />
                 <h3 className="font-bold text-sm text-center">{book.title}</h3>

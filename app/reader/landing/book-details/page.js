@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
+import BuyButton from "@/components/reader/BuyButton";
+
 export default function BookDetails() {
   return (
     <div className="space-y-10 px-6">
@@ -22,7 +24,14 @@ export default function BookDetails() {
           <div className="text-red-600 text-lg">★★★★★ (1,800 Ratings)</div>
 
           <div className="flex gap-4 mt-4">
-            <Button className="bg-red-600 hover:bg-red-700">Buy now</Button>
+            <BuyButton
+              bookId={"52445bc9-b65f-469f-afbd-cd4a649a2a22"}
+              // contentType="audiobook"
+              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              Buy now
+            </BuyButton>
+            {/* <Button className="bg-red-600 hover:bg-red-700">Buy now</Button> */}
             <Button variant="outline">Add to Wishlist</Button>
             <Button variant="secondary">Read Sample</Button>
           </div>

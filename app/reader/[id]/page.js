@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { loadBookContent } from "@/utils/reader/contentLoader";
+import { loadBookContent } from "@/utils/readerTest/contentLoader";
 import { showError } from "@/utils/toast";
 
 export default function ReaderPage() {
