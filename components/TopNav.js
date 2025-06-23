@@ -70,6 +70,8 @@ const TopNav = ({ styles }) => {
     { title: "Publish", href: "/publish", icon: faBookOpen },
     { title: "Monetize", href: "/monetize", icon: faDollarSign },
     { title: "Help", href: "/help", icon: faQuestionCircle },
+    
+    { title: "Blog-Page", href: "/blogpage", icon: faQuestionCircle },
   ];
 
   const pathname = usePathname();
@@ -77,6 +79,7 @@ const TopNav = ({ styles }) => {
   const publishPath = pathname.endsWith("/publish");
   const monetizePath = pathname.endsWith("/monetize");
   const helpPath = pathname.endsWith("/help");
+  const blogpagePath = pathname.endsWith("/blogpage");
 
   return (
     <div
@@ -290,6 +293,13 @@ const TopNav = ({ styles }) => {
             className={` ${helpPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             Help
+          </Link>
+
+           <Link
+            href="/blogpage"
+            className={` ${helpPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+          >
+            BlogPage
           </Link>
         </ul>
         <div className="overflow-hidden whitespace-nowrap -mr-7 w-72">
