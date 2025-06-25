@@ -49,7 +49,7 @@ export default function BlogPage() {
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold mb-10 text-center">Blog Posts</h1>
+      <h1 className="text-4xl font-bold mb-10 text-center">Blog Posts...</h1>
 
       {posts.map(post => {
         const { words, minutes } = calculateReadingTime(post.body || [])
