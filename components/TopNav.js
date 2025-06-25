@@ -71,7 +71,7 @@ const TopNav = ({ styles }) => {
     { title: "Monetize", href: "/monetize", icon: faDollarSign },
     { title: "Help", href: "/help", icon: faQuestionCircle },
     
-    { title: "Blog-Page", href: "/blogpage", icon: faQuestionCircle },
+    { title: "Blog", href: "/blogpage", icon: faQuestionCircle },
   ];
 
   const pathname = usePathname();
