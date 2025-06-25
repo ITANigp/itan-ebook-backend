@@ -1,71 +1,62 @@
-// app/(authorLandingPage)/blogpage/[slug]/page.js
-
-export const dynamic = 'force-dynamic' // 👈 Add this at the top
 import { client, urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
+import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
-import { notFound, redirect } from 'next/navigation'
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch(`*[_type == "post"]{ slug }`)
-  const paths = slugs.map(post => ({ slug: post.slug.current }))
-  console.log("✅ Available slugs:", paths)
-  return paths
+  const query = `*[_type == "post"]{ "slug": slug.current }`
+  const posts = await client.fetch(query)
+  return posts.map(post => ({ slug: post.slug }))
 }
 
 export default async function BlogPost({ params }) {
-  const requestedSlug = params.slug
+  const query = `*[_type == "post" && slug.current == $slug][0]{
+    title,
+    body,
+    mainImage,
+    publishedAt,
+    author->{
+      name,
+      image
+    }
+  }`
+  const post = await client.fetch(query, { slug: params.slug })
 
-  const post = await client.fetch(
-    `*[_type == "post" && slug.current == $slug][0]{
-      title,
-      publishedAt,
-      mainImage,
-      body,
-      slug,
-      author->{name, image},
-      categories[]->{title}
-    }`,
-    { slug: requestedSlug }
-  )
+  if (!post) notFound()
 
-  if (post && post.slug.current !== requestedSlug) {
-    redirect(`/blogpage/${post.slug.current}`)
+  const components = {
+    types: {
+      image: ({ value }) => (
+        <img
+          src={urlFor(value).width(800).url()}
+          alt="Blog image"
+          className="my-6 rounded-lg"
+        />
+      ),
+    },
+    block: {
+      normal: ({ children }) => <p className="mb-4">{children}</p>,
+    },
   }
-
-  if (!post) {
-    console.warn("⚠️ Post not found for slug:", requestedSlug)
-    return notFound()
-  }
-
-  console.log("✅ Fetched post:", post)
 
   return (
-    <div className="p-8 max-w-3xl mx-auto">
-      <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
 
-      <div className="text-gray-500 mb-4 text-sm">
-        By {post.author?.name} · {format(new Date(post.publishedAt), 'PPP')}
+      <div className="text-sm text-gray-500 mb-4">
+        {post.author?.name && <>By {post.author.name}</>}
+        {post.publishedAt && <> · {format(new Date(post.publishedAt), 'PPP')}</>}
       </div>
-
-      {post.categories?.map(cat => (
-        <span
-          key={cat.title}
-          className="bg-gray-200 text-gray-800 text-xs px-2 py-1 rounded mr-2"
-        >
-          {cat.title}
-        </span>
-      ))}
 
       {post.mainImage && (
         <img
-          src={urlFor(post.mainImage).width(1200).url()}
+          src={urlFor(post.mainImage).width(900).url()}
           alt={post.title}
-          className="rounded-xl my-6"
+          className="rounded mb-6 shadow"
         />
       )}
 
-      <PortableText value={post.body} />
+      <PortableText value={post.body} components={components} />
     </div>
   )
 }

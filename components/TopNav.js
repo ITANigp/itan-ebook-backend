@@ -299,7 +299,7 @@ const TopNav = ({ styles }) => {
             href="/blogpage"
             className={` ${helpPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
-            BlogPage
+            Blog
           </Link>
         </ul>
         <div className="overflow-hidden whitespace-nowrap -mr-7 w-72">
