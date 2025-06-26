@@ -58,7 +58,7 @@ export default function BlogPage() {
         return (
           <div key={post._id} className="mb-12 border-b pb-10">
             {/* Title */}
-            <Link href={`/blogpage/${post.slug.current}`}>
+            <Link href={`/blog/${post.slug.current}`}>
               <h2 className="text-2xl font-bold text-black underline hover:text-gray-800 transition mb-3">
                 {post.title}
               </h2>
@@ -66,7 +66,7 @@ export default function BlogPage() {
 
             {/* Image */}
             {post.mainImage && (
-              <Link href={`/blogpage/${post.slug.current}`}>
+              <Link href={`/blog/${post.slug.current}`}>
                 <img
                   src={urlFor(post.mainImage).width(800).url()}
                   alt={post.title}
@@ -96,7 +96,7 @@ export default function BlogPage() {
 
             {/* Read more */}
             <Link
-              href={`/blogpage/${post.slug.current}`}
+              href={`/blog/${post.slug.current}`}
               className="text-blue-600 text-sm font-medium hover:underline"
             >
               Read more →

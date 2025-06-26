@@ -71,7 +71,7 @@ const TopNav = ({ styles }) => {
     { title: "Monetize", href: "/monetize", icon: faDollarSign },
     { title: "Help", href: "/help", icon: faQuestionCircle },
     
-    { title: "Blog", href: "/blogpage", icon: faQuestionCircle },
+    { title: "Blog", href: "/blog", icon: faQuestionCircle },
   ];
 
   const pathname = usePathname();
@@ -79,7 +79,7 @@ const TopNav = ({ styles }) => {
   const publishPath = pathname.endsWith("/publish");
   const monetizePath = pathname.endsWith("/monetize");
   const helpPath = pathname.endsWith("/help");
-  const blogpagePath = pathname.endsWith("/blogpage");
+  const blogPath = pathname.endsWith("/blog");
 
   return (
     <div
@@ -296,8 +296,8 @@ const TopNav = ({ styles }) => {
           </Link>
 
            <Link
-            href="/blogpage"
-            className={` ${blogpagePath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
+            href="/blog"
+            className={` ${blogPath ? "border-b-2 border-b-red-600" : ""} hover:border-b-2 hover:border-b-red-600 cursor-pointer px-2`}
           >
             Blog
           </Link>
