@@ -4,18 +4,15 @@ import { client, urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
-
-export const revalidate = 60; // seconds
-
-
+export const revalidate = 60; // ISR
 
 export async function generateStaticParams() {
-  const slugs = await client.fetch(`*[_type == "post"]{ slug }`)
+  const slugs = await client.fetch(`*[_type == "post" && defined(slug.current)]{ slug }`)
   return slugs.map(({ slug }) => ({ slug: slug.current }))
 }
 
 export default async function Page({ params }) {
-  const slug = await params?.slug // ✅ FIXED: no await here
+  const slug = params?.slug;
 
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
@@ -28,29 +25,27 @@ export default async function Page({ params }) {
     }
   }`
 
-  const post = await client.fetch(query, { slug })
+  const post = await client.fetch(query, { slug });
 
-  if (!post) return notFound()
+  if (!post) return notFound();
 
   const components = {
- types: {
-  image: ({ value }) => {
-    if (!value?.asset?._ref) return null; // 🛡️ prevent crash on missing image
-
-    return (
-      <img
-        src={urlFor(value).width(800).url()}
-        alt="Blog image"
-        className="my-6 rounded-lg"
-      />
-    );
-  },
-},
-
+    types: {
+      image: ({ value }) => {
+        if (!value?.asset?._ref) return null;
+        return (
+          <img
+            src={urlFor(value).width(800).url()}
+            alt="Blog image"
+            className="my-6 rounded-lg"
+          />
+        );
+      },
+    },
     block: {
       normal: ({ children }) => <p className="mb-4">{children}</p>,
     },
-  }
+  };
 
   return (
     <div className="max-w-4xl mx-auto p-6">

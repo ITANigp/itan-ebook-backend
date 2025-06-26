@@ -7,17 +7,18 @@ import { client, urlFor } from '@/lib/sanity'
 export const revalidate = 60 // ✅ ISR
 
 export default async function BlogPage() {
-  const query = `*[_type == "post"] | order(_createdAt desc){
-    _id,
-    title,
-    slug,
-    body,
-    mainImage,
-    author->{
-      name,
-      image
-    }
-  }`
+ const query = `*[_type == "post" && defined(slug.current)] | order(_createdAt desc){
+  _id,
+  title,
+  slug,
+  body,
+  mainImage,
+  author->{
+    name,
+    image
+  }
+}`
+
   const posts = await client.fetch(query)
 
   const calculateReadingTime = (text) => {
