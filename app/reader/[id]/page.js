@@ -1,6 +1,7 @@
 // pages/reader/[id].jsx
+"use client";
 
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { loadBookContent } from "@/utils/readerTest/contentLoader";
 import { showError } from "@/utils/toast";
