@@ -5,6 +5,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { client, urlFor } from '@/lib/sanity'
 
+
+export const revalidate = 60; // <-- ✅ ISR enabled: re-generate page every 60 seconds
+
 export default function BlogPage() {
   const [posts, setPosts] = useState([])
 
