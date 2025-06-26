@@ -1,35 +1,24 @@
-'use client'
+// app/(authorLandingPage)/blog/page.jsx
 
-import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { client, urlFor } from '@/lib/sanity'
 
+export const revalidate = 60 // ✅ ISR
 
-export const revalidate = 60; // <-- ✅ ISR enabled: re-generate page every 60 seconds
-
-export default function BlogPage() {
-  const [posts, setPosts] = useState([])
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const query = `*[_type == "post"] | order(_createdAt desc){
-        _id,
-        title,
-        slug,
-        body,
-        mainImage,
-        author->{
-          name,
-          image
-        }
-      }`
-      const data = await client.fetch(query)
-      setPosts(data)
+export default async function BlogPage() {
+  const query = `*[_type == "post"] | order(_createdAt desc){
+    _id,
+    title,
+    slug,
+    body,
+    mainImage,
+    author->{
+      name,
+      image
     }
-
-    fetchPosts()
-  }, [])
+  }`
+  const posts = await client.fetch(query)
 
   const calculateReadingTime = (text) => {
     const wordsPerMinute = 200
@@ -60,14 +49,12 @@ export default function BlogPage() {
 
         return (
           <div key={post._id} className="mb-12 border-b pb-10">
-            {/* Title */}
             <Link href={`/blog/${post.slug.current}`}>
               <h2 className="text-2xl font-bold text-black underline hover:text-gray-800 transition mb-3">
                 {post.title}
               </h2>
             </Link>
 
-            {/* Image */}
             {post.mainImage && (
               <Link href={`/blog/${post.slug.current}`}>
                 <img
@@ -78,10 +65,8 @@ export default function BlogPage() {
               </Link>
             )}
 
-            {/* Snippet */}
             <p className="text-gray-700 mb-4">{snippet}</p>
 
-            {/* Author + Reading Time */}
             <div className="flex items-center gap-3 text-sm text-gray-600 mb-2">
               {post.author?.image && (
                 <Image
@@ -97,7 +82,6 @@ export default function BlogPage() {
               </span>
             </div>
 
-            {/* Read more */}
             <Link
               href={`/blog/${post.slug.current}`}
               className="text-blue-600 text-sm font-medium hover:underline"

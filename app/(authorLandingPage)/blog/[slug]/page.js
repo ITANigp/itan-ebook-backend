@@ -7,6 +7,8 @@ import { format } from 'date-fns'
 
 export const revalidate = 60; // seconds
 
+
+
 export async function generateStaticParams() {
   const slugs = await client.fetch(`*[_type == "post"]{ slug }`)
   return slugs.map(({ slug }) => ({ slug: slug.current }))
