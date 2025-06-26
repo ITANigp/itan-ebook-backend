@@ -4,7 +4,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { loadBookContent } from "@/utils/readerTest/contentLoader";
-import { showError } from "@/utils/toast";
 
 export default function ReaderPage() {
   const router = useRouter();
@@ -13,7 +12,7 @@ export default function ReaderPage() {
   useEffect(() => {
     if (bookId) {
       loadBookContent(bookId, {
-        showError,
+
         loadPdfViewer: (url) => {
           // Your PDF.js integration here
           window.open(url, "_blank"); // Example
