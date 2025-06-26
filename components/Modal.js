@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose}) => {
       <div className='w-96 bg-slate-200 rounded-md shadow-lg'>
         <div className='flex justify-between items-center h-8 bg-slate-300  rounded-t-md'>
             <p/>
-            <p className='mr-3'>Your eBoo has been submitted</p> 
+            <p className='mr-3'>Your eBook has been submitted</p> 
         <img  
           src="/images/close-btn.png" 
           alt="close" 
