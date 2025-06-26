@@ -1,15 +1,18 @@
+// app/(authorLandingPage)/blogpage/[slug]/page.js
+
 import { client, urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
 
 export async function generateStaticParams() {
-  const query = `*[_type == "post"]{ "slug": slug.current }`
-  const posts = await client.fetch(query)
-  return posts.map(post => ({ slug: post.slug }))
+  const slugs = await client.fetch(`*[_type == "post"]{ slug }`)
+  return slugs.map(({ slug }) => ({ slug: slug.current }))
 }
 
-export default async function BlogPost({ params }) {
+export default async function Page({ params }) {
+  const slug = await params?.slug // ✅ FIXED: no await here
+
   const query = `*[_type == "post" && slug.current == $slug][0]{
     title,
     body,
@@ -20,9 +23,10 @@ export default async function BlogPost({ params }) {
       image
     }
   }`
-  const post = await client.fetch(query, { slug: params.slug })
 
-  if (!post) notFound()
+  const post = await client.fetch(query, { slug })
+
+  if (!post) return notFound()
 
   const components = {
     types: {
