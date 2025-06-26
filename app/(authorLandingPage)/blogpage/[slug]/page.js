@@ -29,15 +29,20 @@ export default async function Page({ params }) {
   if (!post) return notFound()
 
   const components = {
-    types: {
-      image: ({ value }) => (
-        <img
-          src={urlFor(value).width(800).url()}
-          alt="Blog image"
-          className="my-6 rounded-lg"
-        />
-      ),
-    },
+ types: {
+  image: ({ value }) => {
+    if (!value?.asset?._ref) return null; // 🛡️ prevent crash on missing image
+
+    return (
+      <img
+        src={urlFor(value).width(800).url()}
+        alt="Blog image"
+        className="my-6 rounded-lg"
+      />
+    );
+  },
+},
+
     block: {
       normal: ({ children }) => <p className="mb-4">{children}</p>,
     },
