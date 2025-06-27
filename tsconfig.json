@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+        // 🔽 Add these lines below
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    },
     "target": "ES2017",
     "lib": [
       "dom",
