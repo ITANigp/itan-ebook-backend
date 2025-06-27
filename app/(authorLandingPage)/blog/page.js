@@ -3,21 +3,22 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { client, urlFor } from '@/lib/sanity'
+import { Suspense } from 'react'
 
 export const revalidate = 60 // ✅ ISR
 
 export default async function BlogPage() {
- const query = `*[_type == "post" && defined(slug.current)] | order(_createdAt desc){
-  _id,
-  title,
-  slug,
-  body,
-  mainImage,
-  author->{
-    name,
-    image
-  }
-}`
+  const query = `*[_type == "post" && defined(slug.current)] | order(_createdAt desc){
+    _id,
+    title,
+    slug,
+    body,
+    mainImage,
+    author->{
+      name,
+      image
+    }
+  }`
 
   const posts = await client.fetch(query)
 
@@ -92,6 +93,34 @@ export default async function BlogPage() {
           </div>
         )
       })}
+
+      {/* Subscription Form Section */}
+      <div className="mt-20 border-t pt-10">
+        <h2 className="text-2xl font-bold mb-4 text-center">Join Our Newsletter</h2>
+        <p className="text-center text-gray-600 mb-6">
+          Get updates about new blog posts, publishing tips, and more.
+        </p>
+
+        <form
+          action="/api/subscribe" // Your API route for ConvertKit (or external action URL)
+          method="POST"
+          className="max-w-md mx-auto flex flex-col sm:flex-row items-center gap-4"
+        >
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            required
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            type="submit"
+            className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
+          >
+            Subscribe
+          </button>
+        </form>
+      </div>
     </div>
   )
 }
