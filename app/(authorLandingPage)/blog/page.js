@@ -115,7 +115,7 @@ export default async function BlogPage() {
           />
           <button
             type="submit"
-            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-blue-700 transition"
+            className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
           >
             Subscribe
           </button>
