@@ -48,16 +48,26 @@ const Footer = ({ styles }) => {
           </p>
         </div>
 
-        <div className="relative z-10 flex justify-center w-[90%] xs:w-[85%] medium:w-[70%] large:w-[60%] xl:w-[50%] p-1 bg-white backdrop-blur-md rounded-md">
-          <input
-            type="email"
-            placeholder="Enter email address"
-            className="w-10 flex-1 border-0 outline-none ring-0 focus:ring-0 text-xs xs:text-sm medium:text-base px-2"
-          />
-          <button className="text-gray-200 bg-[#E50913] border border-black px-3 xs:px-4 medium:px-6 py-1.5 medium:py-2 text-xs xs:text-sm medium:text-base rounded-md cursor-pointer">
-            Subscribe
-          </button>
-        </div>
+      <form
+  action="/api/subscribe"
+  method="POST"
+  className="relative z-10 flex justify-center w-[90%] xs:w-[85%] medium:w-[70%] large:w-[60%] xl:w-[50%] p-1 bg-white backdrop-blur-md rounded-md"
+>
+  <input
+    type="email"
+    name="email"
+    placeholder="Enter email address"
+    required
+    className="w-10 flex-1 border-0 outline-none ring-0 focus:ring-0 text-xs xs:text-sm medium:text-base px-2"
+  />
+  <button
+    type="submit"
+    className="text-gray-200 bg-[#E50913] border border-black px-3 xs:px-4 medium:px-6 py-1.5 medium:py-2 text-xs xs:text-sm medium:text-base rounded-md cursor-pointer"
+  >
+    Subscribe
+  </button>
+</form>
+
       </section>
 
       <section className="bg-[#111928] md:mx-5">
