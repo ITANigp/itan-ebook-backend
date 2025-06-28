@@ -3,7 +3,9 @@
 import { api } from "@/utils/auth/readerApi";
 import { useRouter } from "next/navigation";
 
-export default function BuyButton({ bookId = "52445bc9-b65f-469f-afbd-cd4a649a2a22",}) {
+export default function BuyButton({
+  bookId = "e316f636-5cd3-4b57-a45a-9f6a70abe52a",
+}) {
   const router = useRouter();
 
   const handlePurchase = async () => {
@@ -24,7 +26,7 @@ export default function BuyButton({ bookId = "52445bc9-b65f-469f-afbd-cd4a649a2a
         }
       );
 
-      console.log("Payment success: ", response.data)
+      console.log("Payment success: ", response.data);
 
       const { reference, authorization_url } = response.data.data;
 
