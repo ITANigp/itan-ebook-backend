@@ -1,6 +1,6 @@
 import { api } from "@/utils/auth/adminApi"
 
-// Get all books
+// Get all book
 
 export async function getAllBooks () {
    try {
