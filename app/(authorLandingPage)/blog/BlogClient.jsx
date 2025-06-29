@@ -86,8 +86,6 @@ export default function BlogClient({ posts }) {
         <p className="text-gray-600 mb-6">
           Get early access to big things.
         </p>
-        
-        <h2 className="text-2xl font-bold mb-4">Enter your email</h2>
         <button
           onClick={() => setShowModal(true)}
           className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
