@@ -5,6 +5,8 @@ import { client } from '@/lib/sanity'
 
 export const revalidate = 60
 
+
+
 export default async function BlogPage() {
   const query = `*[_type == "post" && defined(slug.current)] | order(_createdAt desc){
     _id,
@@ -12,13 +14,19 @@ export default async function BlogPage() {
     slug,
     body,
     mainImage,
+      publishedAt,
     author->{
       name,
       image
-    }
+    },
+     categories[]->{
+    title,
+    description
+  }
   }`
 
   const posts = await client.fetch(query)
+
 
   return <BlogClient posts={posts} />
 }
