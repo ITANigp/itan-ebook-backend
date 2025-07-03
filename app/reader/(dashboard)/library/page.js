@@ -116,7 +116,7 @@ export default function Library() {
                   <div className="text-sm font-semibold text-red-600 mb-1">
                     ${book.price}
                   </div>
-                  <Button className="w-full">Buy now</Button>
+                  <Button className="w-full bg-[#E50913]">Read Book</Button>
                 </div>
               )}
             </CardContent>

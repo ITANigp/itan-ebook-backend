@@ -35,6 +35,7 @@ export default function PaymentCallback() {
 
         if (purchase_status === "completed") {
           setStatus(`Payment successful for "${book_title}".`);
+          localStorage.setItem("purchaseBook", res.data.data);
         } else {
           setStatus("Payment not completed.");
         }

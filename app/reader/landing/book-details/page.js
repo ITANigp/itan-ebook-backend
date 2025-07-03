@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 import BuyButton from "@/components/reader/BuyButton";
+// import { api, getAllBooks } from "@/utils/auth/adminApi";
 
 export default function BookDetails() {
   return (
@@ -25,7 +26,7 @@ export default function BookDetails() {
 
           <div className="flex gap-4 mt-4">
             <BuyButton
-              bookId={"52445bc9-b65f-469f-afbd-cd4a649a2a22"}
+              bookId={"2e14fe48-832d-46b1-bdcc-1b3b2838a55e"}
               // contentType="audiobook"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >

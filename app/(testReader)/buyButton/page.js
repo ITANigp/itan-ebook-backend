@@ -1,6 +1,5 @@
 "use client";
 
-import { api } from "@/utils/auth/readerApi";
 import { useRouter } from "next/navigation";
 
 export default function BuyButton({
