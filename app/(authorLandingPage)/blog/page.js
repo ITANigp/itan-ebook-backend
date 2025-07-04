@@ -3,7 +3,8 @@
 import BlogClient from './BlogClient'
 import { client } from '@/lib/sanity'
 
-export const revalidate = 60
+
+export const dynamic = 'force-dynamic' // <- this forces SSR
 
 
 
