@@ -1,7 +1,7 @@
 // components/Modal.js
 import React from "react";
 
-const Modal = ({
+const DeleteModal = ({
   onHandleDeleteBook,
   onHandleSetDeleteModalClose,
 }) => {
@@ -27,17 +27,18 @@ const Modal = ({
           </p>
           <div className="sm:mt-6  flex justify-between w-72">
             <button
-              href="/author/sign_in"
+              type="button"
               className="ml-2 h-8 border border-[#EF5353] text-[#EF5353] hover:bg-[#EF5353] hover:text-white rounded-md py-1 px-4"
               onClick={onHandleSetDeleteModalClose}
             >
               No
             </button>
             <button
+              type="button"
               className="mr-2 h-8 bg-[#EF5353] text-white rounded-md py-1 px-4"
               onClick={() => {
-                onHandleSetDeleteModalClose();
                 onHandleDeleteBook();
+                onHandleSetDeleteModalClose();
               }}
             >
               Yes
@@ -49,4 +50,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default DeleteModal;
