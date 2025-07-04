@@ -4,12 +4,8 @@ import { client, urlFor } from '@/lib/sanity'
 import { PortableText } from '@portabletext/react'
 import { notFound } from 'next/navigation'
 import { format } from 'date-fns'
-export const revalidate = 60; // ISR
 
-export async function generateStaticParams() {
-  const slugs = await client.fetch(`*[_type == "post" && defined(slug.current)]{ slug }`)
-  return slugs.map(({ slug }) => ({ slug: slug.current }))
-}
+export const dynamic = 'force-dynamic'; // SSR instead of ISR
 
 export default async function Page({ params }) {
   const slug = params?.slug;
@@ -50,7 +46,6 @@ export default async function Page({ params }) {
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-
       <div className="text-sm text-gray-500 mb-4">
         {post.author?.name && <>By {post.author.name}</>}
         {post.publishedAt && <> · {format(new Date(post.publishedAt), 'PPP')}</>}
