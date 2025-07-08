@@ -1,4 +1,7 @@
+import axios from "axios";
 import { api } from "@/utils/auth/readerApi"
+
+const BASE_API = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 export async function refreshReadingToken(readerToken, purchaseId) {
 
@@ -47,3 +50,22 @@ export async function getBookContent(readingToken, bookId) {
     throw error;
   }
 }
+
+// Get all the book
+
+export async function getAllBook() {
+  try {
+    const response = await axios.get(`${BASE_API}/books/`);
+
+    const data = response.data; // ✅ Correct for Axios
+    console.log("Fetched All Books: ", data);
+
+    return data;
+  } catch (error) {
+    console.error("Error fetching All Books:", error);
+    throw error;
+  }
+}
+
+
+

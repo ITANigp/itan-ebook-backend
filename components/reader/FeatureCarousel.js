@@ -58,7 +58,7 @@ export default function FeatureCarousel() {
       >
         {features.map((feature, idx) => (
           <SwiperSlide key={idx}>
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-800 p-6 rounded-xl shadow-lg h-full">
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-800 p-6 rounded-xl shadow-lg h-[200px] w-[300px]">
               <h4 className="text-lg font-semibold mb-2">{feature.title}</h4>
               <p className="text-sm">{feature.description}</p>
             </div>

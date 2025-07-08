@@ -67,7 +67,7 @@ export default function Home() {
           </p>
 
           {/* CTA Button */}
-          <Link href="/reader/sign_up" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5">
+          <Link href="/reader/landing/book-store" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5">
             Get started
           </Link>
         </div>
@@ -203,7 +203,7 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
+        <div className="absolute inset-0 bg-black bg-opacity-20" />
 
         <div className="relative z-10 text-center px-4">
           <h2 className="text-2xl md:text-3xl font-semibold mb-4">

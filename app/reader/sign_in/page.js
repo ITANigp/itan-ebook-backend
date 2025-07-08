@@ -86,7 +86,7 @@ export default function SignIn() {
             <input
               type="email"
               id="email"
-              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-blue-300 block w-full p-2.5"
               placeholder="Enter Email Address"
               required
               value={email}
@@ -103,7 +103,7 @@ export default function SignIn() {
               type={showPassword ? "text" : "password"}
               id="password"
               placeholder="Enter Passwords"
-              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-blue-300 block w-full p-2.5"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
