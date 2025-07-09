@@ -7,12 +7,14 @@ import FAQ from "@/components/reader/FQA";
 import Link from "next/link";
 
 // Dynamically import FeatureCarousel with SSR disabled
-const FeatureCarousel = dynamic(() => import("@/components/reader/FeatureCarousel"), {
-  ssr: false,
-});
+const FeatureCarousel = dynamic(
+  () => import("@/components/reader/FeatureCarousel"),
+  {
+    ssr: false,
+  }
+);
 
 export default function Home() {
-
   return (
     <div>
       <section className="relative h-[600px] bg-black text-white overflow-hidden">
@@ -21,11 +23,15 @@ export default function Home() {
           <Image
             src="/images/reader-hero.png"
             alt="Books background"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="100vw"
+            priority
+            quality={85}
+            placeholder="blur"
+            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-60" />
+          <div className="absolute inset-0 bg-black bg-opacity-7" />
         </div>
 
         {/* Red Wave Pattern at Bottom */}
@@ -42,8 +48,14 @@ export default function Home() {
         {/* Top branding and CTA */}
         <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
           {/* Logo top-left */}
-          <div className="absolute top-6 left-6 text-4xl font-bold text-red-600">
-            ITAN
+          <div className="absolute top-6 left-6">
+            <Image
+              src="/logo.svg"
+              alt="ITAN Logo"
+              width={200}
+              height={80}
+              className="h-20 w-auto"
+            />
           </div>
 
           {/* Sign Up button top-right */}
@@ -67,7 +79,10 @@ export default function Home() {
           </p>
 
           {/* CTA Button */}
-          <Link href="/reader/sign_up" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5">
+          <Link
+            href="/reader/sign_up"
+            className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5"
+          >
             Get started
           </Link>
         </div>
@@ -213,7 +228,10 @@ export default function Home() {
             With ITAN Global Publishing, authors can self-publish their works,
             manage their books, and royalties all in one platform.
           </p>
-          <Link href="/" className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium">
+          <Link
+            href="/"
+            className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium"
+          >
             Learn More
           </Link>
         </div>
