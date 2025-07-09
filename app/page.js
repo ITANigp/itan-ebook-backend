@@ -31,7 +31,7 @@ export default function Home() {
             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-black bg-opacity-7" />
+          <div className="absolute inset-0 bg-black bg-opacity-65" />
         </div>
 
         {/* Red Wave Pattern at Bottom */}
@@ -48,7 +48,7 @@ export default function Home() {
         {/* Top branding and CTA */}
         <div className="relative z-20 h-full flex flex-col items-center justify-center text-center px-4">
           {/* Logo top-left */}
-          <div className="absolute top-6 left-6">
+          <div className="absolute top-6 left-6 flex items-center h-12">
             <Image
               src="/logo.svg"
               alt="ITAN Logo"
@@ -59,10 +59,10 @@ export default function Home() {
           </div>
 
           {/* Sign Up button top-right */}
-          <div className="absolute top-6 right-6">
+          <div className="absolute top-6 right-6 flex items-center h-12">
             <Link
               href="/reader/sign_up"
-              className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 transition shadow"
+              className="bg-red-600 text-white px-5 py-2 rounded-md hover:bg-red-700 transition shadow h-10 flex items-center"
             >
               Sign Up
             </Link>
