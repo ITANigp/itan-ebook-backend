@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { api } from "@/utils/auth/readerApi";
+import { api } from "@/utils/auth/readerApi"; // Assuming 'api' is an Axios instance or similar
 
 /**
  * LikeButton Component
@@ -49,24 +49,21 @@ const LikeButton = ({ bookId, userToken }) => {
       setError(null);
 
       try {
-        // IMPORTANT: You might need to implement a new endpoint in your backend
-        // (e.g., GET /api/v1/likes/status?book_id=UUID) that checks if the
-        // authenticated user has liked a specific book and returns the like_id.
-        // For this example, we assume such an endpoint exists.
-        const response = await fetch(
-          `${API_BASE_URL}/likes/status?book_id=${bookId}`,
-          {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${userToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        // IMPORTANT: Ensure your backend has an endpoint like GET /api/v1/likes/status?book_id=UUID
+        // that returns { isLiked: boolean, likeId: string | null } for the authenticated user.
+        // Or, if your GET /likes/:id endpoint checks for the current user's like by that book ID,
+        // then the current route structure `/likes/${bookId}` might be fine.
+        // Assuming /likes/status?book_id=... is a more robust way to check initial status.
+        const response = await api.get(`/likes/status`, {
+          params: { book_id: bookId }, // Use 'params' for query parameters with Axios
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
 
-        if (response.ok) {
-          const data = await response.json();
-          // Assuming the backend returns { isLiked: boolean, likeId: string | null }
+        if (response.status === 200) {
+          // Assuming 200 OK for success
+          const data = response.data; // Axios puts response data on .data property
           setIsLiked(data.isLiked);
           setLikeId(data.likeId);
         } else if (response.status === 404) {
@@ -74,14 +71,17 @@ const LikeButton = ({ bookId, userToken }) => {
           setIsLiked(false);
           setLikeId(null);
         } else {
-          const errorData = await response.json();
+          // Handle other potential error statuses
+          const errorData = response.data; // Axios error data
           setError(
-            `Failed to fetch like status: ${errorData.message || response.statusText}`
+            `Failed to fetch like status: ${errorData?.message || response.statusText || response.status}`
           );
           console.error("Error fetching initial like status:", errorData);
         }
       } catch (err) {
-        setError(`Network error: ${err.message}`);
+        // Axios errors have a 'response' object if it's an HTTP error
+        const errorMessage = err.response?.data?.message || err.message;
+        setError(`Network error: ${errorMessage}`);
         console.error("Network error fetching initial like status:", err);
       } finally {
         setIsLoading(false);
@@ -112,50 +112,57 @@ const LikeButton = ({ bookId, userToken }) => {
           return;
         }
 
+        // CORRECTED: DELETE request should target the specific 'like' record by its ID
         const response = await api.delete(`/likes/${likeId}`, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         });
 
-        if (response.ok) {
+        if (response.status === 204 || response.status === 200) {
+          // 204 No Content is common for successful DELETE
           setIsLiked(false);
           setLikeId(null); // Clear likeId as the like record no longer exists
           console.log("Book unliked successfully!");
         } else {
-          const errorData = await response.json();
+          const errorData = response.data;
           setError(
-            `Failed to unlike book: ${errorData.message || response.statusText}`
+            `Failed to unlike book: ${errorData?.message || response.statusText || response.status}`
           );
           console.error("Failed to unlike book:", errorData);
         }
       } else {
         // User wants to LIKE the book (POST request)
-        const response = await api.post(`${API_BASE_URL}/likes`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ book_id: bookId }),
-        });
+        // CORRECTED: Pass the data payload directly as the second argument for Axios POST
+        const response = await api.post(
+          `/likes`,
+          { book_id: bookId }, // Data payload for the request body
+          {
+            headers: {
+              Authorization: `Bearer ${userToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
 
-        if (response.ok) {
-          const data = await response.json();
+        if (response.status === 201) {
+          // 201 Created is common for successful POST
+          const data = response.data;
           // Assuming your POST endpoint returns the newly created like's ID
-          // e.g., { message: "Like created", like_id: "new-like-uuid" }
           setIsLiked(true);
-          setLikeId(data.like_id); // Store the returned like_id
+          setLikeId(data.id || data.like_id); // Use 'id' or 'like_id' based on backend response
           console.log("Book liked successfully!", data);
         } else {
-          const errorData = await response.json();
+          const errorData = response.data;
           setError(
-            `Failed to like book: ${errorData.message || response.statusText}`
+            `Failed to like book: ${errorData?.message || response.statusText || response.status}`
           );
           console.error("Failed to like book:", errorData);
         }
       }
     } catch (err) {
-      setError(`Network error: ${err.message}`);
+      const errorMessage = err.response?.data?.message || err.message;
+      setError(`Network error: ${errorMessage}`);
       console.error("Network error during like/unlike:", err);
     } finally {
       setIsLoading(false);

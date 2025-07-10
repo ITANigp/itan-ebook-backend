@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import LikeButton from "@/components/LikeButton"; // Adjust path as per your project structure
 import BuyButton from "@/components/reader/BuyButton";
 
+
 export default function Home({ initialReaderToken, initialBookId }) {
   // Placeholder for userToken. In a real app, this would come from your auth context/store.
   const [userToken, setUserToken] = useState(initialReaderToken || null);
@@ -42,6 +43,7 @@ export default function Home({ initialReaderToken, initialBookId }) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const result = await response.json();
+        console.log("All books from the Home: ", result)
         const formattedBooks = result.data.map((book) => ({
           id: book.id,
           type: book.type, // Keep type if needed
