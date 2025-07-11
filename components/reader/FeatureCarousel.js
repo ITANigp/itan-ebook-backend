@@ -1,11 +1,5 @@
 "use client";
 
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/pagination";
-import "swiper/css/autoplay";
-import { Autoplay, Pagination } from "swiper/modules";
-
 const features = [
   {
     title: "Enjoy on all your devices",
@@ -43,28 +37,25 @@ const features = [
 export default function FeatureCarousel() {
   return (
     <section className="bg-black py-16 px-4 text-white">
-      <Swiper
-        modules={[Autoplay, Pagination]}
-        spaceBetween={20}
-        slidesPerView={1.2}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        breakpoints={{
-          640: { slidesPerView: 1.5 },
-          768: { slidesPerView: 2.5 },
-          1024: { slidesPerView: 3 },
-        }}
-        className="pb-8"
-      >
+      <h2 className="text-center text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-12 tracking-tight">
+        Stories for Everyone, Everywhere
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 xl:gap-10 max-w-6xl mx-auto">
         {features.map((feature, idx) => (
-          <SwiperSlide key={idx}>
-            <div className="bg-gradient-to-br from-blue-600 to-indigo-800 p-6 rounded-xl shadow-lg h-full">
-              <h4 className="text-lg font-semibold mb-2">{feature.title}</h4>
-              <p className="text-sm">{feature.description}</p>
-            </div>
-          </SwiperSlide>
+          <div
+            key={idx}
+            className="w-full max-w-[400px] mx-auto bg-gradient-to-br border-red-500 p-7 rounded-2xl shadow-xl flex flex-col justify-between border border-blue-700/40"
+            style={{ minHeight: 220 }}
+          >
+            <h4 className="text-xl font-semibold mb-3 drop-shadow-sm">
+              {feature.title}
+            </h4>
+            <p className="text-base md:text-lg opacity-90 leading-relaxed">
+              {feature.description}
+            </p>
+          </div>
         ))}
-      </Swiper>
+      </div>
     </section>
   );
 }
