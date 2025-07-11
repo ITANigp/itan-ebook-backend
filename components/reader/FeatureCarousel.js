@@ -38,7 +38,7 @@ export default function FeatureCarousel() {
   return (
     <section className="bg-black py-16 px-4 text-white">
       <h2 className="text-center text-2xl sm:text-3xl md:text-4xl xl:text-5xl font-bold mb-12 tracking-tight">
-        Stories for Everyone, Everywhere
+        Stories for Everyone, <span className="text-red-600">Everywhere</span>
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 xl:gap-10 max-w-6xl mx-auto">
         {features.map((feature, idx) => (
