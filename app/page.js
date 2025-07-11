@@ -1,6 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import { motion, useAnimation } from "framer-motion";
+import { useRef, useEffect } from "react";
+import { useInView } from "framer-motion";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -74,105 +77,169 @@ export default function Home() {
 
         {/* Hero Text & CTA */}
         <div className="relative z-20 flex flex-col items-center text-center h-full px-4 pt-8 md:pt-16">
-          <h1 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-3">
+          <motion.h1
+            className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold mb-3"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+          >
             Home of Black Fiction Novels
-          </h1>
-          <p className="text-lg md:text-2xl xl:text-3xl mb-5 leading-relaxed">
+          </motion.h1>
+          <motion.p
+            className="text-lg md:text-2xl xl:text-3xl mb-5 leading-relaxed"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.3, ease: "easeOut" }}
+          >
             Explore the richest collection of black <br /> fiction in one app
-          </p>
-          <Link
-            href="/reader/sign_up"
-            className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition"
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: "easeOut" }}
           >
-            Get started
-          </Link>
+            <Link
+              href="/reader/sign_up"
+              className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition"
+            >
+              Get started
+            </Link>
+          </motion.div>
         </div>
       </section>
 
-      <section className="py-8 md:py-10 xl:py-14 bg-black">
-        <h3 className="px-8 text-2xl md:text-4xl text-center text-white mb-14">
-          Find your Match in More than 100 <br /> Genres and Categories
-        </h3>
-
-        {/* Book Covers Carousel */}
-        <div className="max-w-5xl mx-auto px-2 md:px-8 xl:mx-auto">
-          <Swiper
-            modules={[Autoplay, Pagination]}
-            spaceBetween={8}
-            slidesPerView={2}
-            pagination={{ clickable: true }}
-            autoplay={{ delay: 3500, disableOnInteraction: false }}
-            breakpoints={{
-              430: { spaceBetween: 8, slidesPerView: 2.2 },
-              490: { spaceBetween: 10, slidesPerView: 2.5 },
-              640: { spaceBetween: 12, slidesPerView: 3 },
-              768: { spaceBetween: 14, slidesPerView: 4 },
-              1024: { spaceBetween: 16, slidesPerView: 5 },
-            }}
-            className=""
-          >
-            {[
-              {
-                src: "/images/readers/onboarding/ancestral-code.png",
-                alt: "ancestral code",
-              },
-              {
-                src: "/images/readers/onboarding/Lazarus.png",
-                alt: "Lazarus Convergence",
-              },
-              {
-                src: "/images/readers/onboarding/titan-race.png",
-                alt: "Titan race",
-              },
-              {
-                src: "/images/readers/onboarding/in-bed-with-her-guy.png",
-                alt: "in bed with her guy",
-              },
-              {
-                src: "/images/readers/onboarding/sons-of-the-7th-dawn.png",
-                alt: "sons of the 7th dawn",
-              },
-            ].map((img, idx) => (
-              <SwiperSlide key={idx} className="flex justify-center">
-                <Image
-                  src={img.src}
-                  alt={img.alt}
-                  width={150}
-                  height={400}
-                  className="rounded-lg shadow-lg object-cover"
-                  priority={idx === 0}
-                  sizes="(max-width: 768px) 120px, 150px"
-                  quality={85}
-                  loading={idx === 0 ? "eager" : "lazy"}
-                  placeholder="blur"
-                  blurDataURL="/images/readers/onboarding/blur-placeholder.png"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-          <div className="w-full flex justify-center mt-4">
-            <div className="swiper-pagination !static" />
-          </div>
-          <style>{`
-            /* Swiper pagination bullets custom color */
-            .swiper-pagination-bullet {
-              background: #ffffff;
-              opacity: 0.5;
-            }
-            .swiper-pagination-bullet-active {
-              background: #ffffff;
-              opacity: 1;
-            }
-            .swiper-pagination {
-              position: static !important;
-              margin-top: 0.5rem;
-            }
-          `}</style>
-        </div>
-      </section>
+      {/* Animated Section: Find your Match */}
+      {(() => {
+        const ref = useRef(null);
+        const inView = useInView(ref, { once: true, margin: "-100px" });
+        const controls = useAnimation();
+        useEffect(() => {
+          if (inView) controls.start("visible");
+        }, [inView, controls]);
+        return (
+          <motion.section ref={ref} className="py-8 md:py-10 xl:py-14 bg-black">
+            <motion.h3
+              className="px-8 text-2xl md:text-4xl text-center text-white mb-14"
+              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 60, scale: 0.95 }}
+              viewport={{ once: false, amount: 0.7 }}
+              transition={{
+                duration: 0.9,
+                type: "spring",
+                stiffness: 60,
+                damping: 18,
+              }}
+            >
+              Find your Match in More than 100 <br /> Genres and Categories
+            </motion.h3>
+            <div className="max-w-5xl mx-auto px-2 md:px-8 xl:mx-auto">
+              <Swiper
+                modules={[Autoplay, Pagination]}
+                spaceBetween={8}
+                slidesPerView={2}
+                pagination={{ clickable: true }}
+                autoplay={{ delay: 3500, disableOnInteraction: false }}
+                breakpoints={{
+                  430: { spaceBetween: 8, slidesPerView: 2.2 },
+                  490: { spaceBetween: 10, slidesPerView: 2.5 },
+                  640: { spaceBetween: 12, slidesPerView: 3 },
+                  768: { spaceBetween: 14, slidesPerView: 4 },
+                  1024: { spaceBetween: 16, slidesPerView: 5 },
+                }}
+                className=""
+              >
+                {[
+                  {
+                    src: "/images/readers/onboarding/ancestral-code.png",
+                    alt: "ancestral code",
+                  },
+                  {
+                    src: "/images/readers/onboarding/Lazarus.png",
+                    alt: "Lazarus Convergence",
+                  },
+                  {
+                    src: "/images/readers/onboarding/titan-race.png",
+                    alt: "Titan race",
+                  },
+                  {
+                    src: "/images/readers/onboarding/in-bed-with-her-guy.png",
+                    alt: "in bed with her guy",
+                  },
+                  {
+                    src: "/images/readers/onboarding/sons-of-the-7th-dawn.png",
+                    alt: "sons of the 7th dawn",
+                  },
+                ].map((img, idx) => (
+                  <SwiperSlide key={idx} className="flex justify-center">
+                    <motion.div
+                      initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 40, scale: 0.95 }}
+                      viewport={{ once: false, amount: 0.5 }}
+                      transition={{
+                        duration: 0.7,
+                        delay: idx * 0.13,
+                        type: "spring",
+                        stiffness: 70,
+                        damping: 20,
+                      }}
+                      style={{ willChange: "opacity, transform" }}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={img.alt}
+                        width={150}
+                        height={400}
+                        className="rounded-lg shadow-lg object-cover"
+                        priority={idx === 0}
+                        sizes="(max-width: 768px) 120px, 150px"
+                        quality={85}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                        placeholder="blur"
+                        blurDataURL="/images/readers/onboarding/blur-placeholder.png"
+                      />
+                    </motion.div>
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <div className="w-full flex justify-center mt-4">
+                <div className="swiper-pagination !static" />
+              </div>
+              <style>{`
+                /* Swiper pagination bullets custom color */
+                .swiper-pagination-bullet {
+                  background: #ffffff;
+                  opacity: 0.5;
+                }
+                .swiper-pagination-bullet-active {
+                  background: #ffffff;
+                  opacity: 1;
+                }
+                .swiper-pagination {
+                  position: static !important;
+                  margin-top: 0.5rem;
+                }
+              `}</style>
+            </div>
+          </motion.section>
+        );
+      })()}
 
       <section className="relative bg-black py-8 md:py-10 xl:py-40 overflow-hidden text-center text-white">
-        <div className="absolute inset-0 z-10 transform rotateX-12 perspective-1000">
+        <motion.div
+          className="absolute inset-0 z-10 transform rotateX-12 perspective-1000"
+          initial={{ y: 0, x: 0 }}
+          animate={{
+            y: [0, 10, -10, 0],
+            x: [0, 10, -10, 0],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
           <Image
             src="/images/readers/onboarding/rotating-red-wave.png"
             alt="Rotating red wave background"
@@ -180,10 +247,10 @@ export default function Home() {
             className="object-cover opacity-70 border-none outline-none"
             style={{ border: "none", outline: "none" }}
           />
-        </div>
+        </motion.div>
 
         <div className="relative z-10 xl:px-4">
-          <div className="px-4 text-2xl md:text-4xl lg:text-5xl font-medium md:font-semibold xl:font-semibold leading-10">
+          <div className="px-4 text-2xl md:text-3xl lg:text-5xl font-medium md:font-semibold xl:font-semibold leading-10">
             <p>Feel the Fire of Black storytelling</p>
             <p className="xl:my-5">where every book is a portal and </p>
             <p>every word is power</p>
@@ -290,10 +357,7 @@ export default function Home() {
             With ITAN Global Publishing, authors can self-publish their works,
             manage their books, and royalties all in one platform.
           </p>
-          <Link
-            href="/"
-            className="bg-red-700 px-6 py-2 rounded font-medium"
-          >
+          <Link href="/" className="bg-red-700 px-6 py-2 rounded font-medium">
             Learn More
           </Link>
         </div>
