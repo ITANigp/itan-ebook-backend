@@ -105,6 +105,22 @@ export default function Home() {
               Get started
             </Link>
           </motion.div>
+          </div>
+
+          {/* Main headline */}
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            Home of Black Fiction Novels
+          </h1>
+
+          {/* Subheadline */}
+          <p className="text-lg md:text-2xl mb-6 leading-relaxed mt-5">
+            Explore the richest collection of black fiction in one app
+          </p>
+
+          {/* CTA Button */}
+          <Link href="/reader/landing/book-store" className="bg-red-600 text-white px-6 py-3 rounded-md shadow-md hover:bg-red-700 transition mt-5">
+            Get started
+          </Link>
         </div>
       </section>
 
@@ -347,7 +363,7 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
+        <div className="absolute inset-0 bg-black bg-opacity-20" />
 
         <div className="relative z-10 text-center px-4">
           <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold mb-4">

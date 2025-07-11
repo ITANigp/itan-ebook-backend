@@ -1,4 +1,8 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link"; // Import Link for navigation
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -10,60 +14,84 @@ import {
   faBible, // Religion & Spirituality
   faWandMagicSparkles, // Speculative
 } from "@fortawesome/free-solid-svg-icons";
-import StarRating from "../../(components)/StarRating";
+import StarRating from "../../(components)/StarRating"; // Assuming StarRating exists
 
+import { getAllBook } from "@/utils/bookApi";
 
 export default function Home() {
+  const [categorizedBooks, setCategorizedBooks] = useState({});
 
-    const genres = [
-      { genreName: "Romance", icon: faBook },
-      { genreName: "Children Books", icon: faBookOpen },
-      { genreName: "Literature & Fiction", icon: faTheaterMasks },
-      { genreName: "Comics, Manga & Graphic Novels", icon: faStar },
-      { genreName: "Mystery, Thriller & Suspense", icon: faFingerprint },
-      { genreName: "Religion & Spirituality", icon: faBible },
-      { genreName: "Speculative", icon: faWandMagicSparkles },
-    ];
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await getAllBook();
+        if (response && response.data) {
+          const booksData = response.data;
+          const newCategorizedBooks = {};
 
-    const books = [
-      {
-        title: "Rise of the Jumbies",
-        author: "Tracey Baptiste",
-        price: "$40",
-        image: "/images/books/book1.png",
-      },
-      {
-        title: "Glory",
-        author: "NoViolet Bulawayo",
-        price: "$30",
-        image: "/images/books/book2.png",
-      },
-      {
-        title: "You made a Fool...",
-        author: "Akwaeke Emezi",
-        price: "$20",
-        image: "/images/books/book3.png",
-      },
-      {
-        title: "Gaslight",
-        author: "Femi Kayode",
-        price: "$25",
-        image: "/images/books/book4.png",
-      },
-    ];
-      
+          booksData.forEach((bookWrapper) => {
+            // Access the attributes object
+            const book = bookWrapper.attributes;
+            const bookId = bookWrapper.id; // The unique ID is at the top level of the wrapper object
+
+            if (book && book.categories && book.categories.length > 0) {
+              const mainCategory = book.categories[0].main;
+              if (mainCategory) {
+                if (!newCategorizedBooks[mainCategory]) {
+                  newCategorizedBooks[mainCategory] = [];
+                }
+
+                // Handle author name: check if book.author exists and if name is not an empty string
+                const authorName =
+                  book.author &&
+                  book.author.name &&
+                  book.author.name.trim() !== ""
+                    ? book.author.name
+                    : "Unknown Author";
+
+                newCategorizedBooks[mainCategory].push({
+                  id: bookId, // Use the ID from the wrapper object
+                  title: book.title,
+                  author: authorName, // Use the determined author name
+                  price: book.ebook_price ? `$${book.ebook_price}` : "N/A",
+                  image: book.cover_image_url || "/images/placeholder.png",
+                  rating: book.average_rating || 0, // Provide a default if no rating
+                });
+              }
+            }
+          });
+          setCategorizedBooks(newCategorizedBooks);
+        }
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  const genres = [
+    { genreName: "Romance", icon: faBook },
+    { genreName: "Children Books", icon: faBookOpen },
+    { genreName: "Literature & Fiction", icon: faTheaterMasks },
+    { genreName: "Comics, Manga & Graphic Novels", icon: faStar },
+    { genreName: "Mystery, Thriller & Suspense", icon: faFingerprint },
+    { genreName: "Religion & Spirituality", icon: faBible },
+    { genreName: "Speculative", icon: faWandMagicSparkles },
+  ];
+
   return (
     <main className="min-h-screen bg-white text-gray-900">
       <header className="flex items-center justify-between px-6 py-4 border-b">
         <div className="text-red-600 text-xl font-bold">ITAN</div>
 
         <nav className="flex space-x-6 items-center">
-          <a href="#" className="text-gray-700 hover:text-black font-medium">
+          <Link href="#" className="text-gray-700 hover:text-black font-medium">
             Home
-          </a>
-          <a href="#" className="text-gray-700 hover:text-black font-medium">
+          </Link>
+          <Link href="#" className="text-gray-700 hover:text-black font-medium">
             Library
-          </a>
+          </Link>
           <input
             type="text"
             placeholder="Search for books using: ISBN, Keywords, Tags......"
@@ -103,6 +131,7 @@ export default function Home() {
           />
         </div>
       </section>
+
       <section className="bg-gray-50 px-6 py-16">
         <h2 className="text-2xl font-semibold mb-8">Explore our Genres</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -124,148 +153,57 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-blue-50 px-6 py-16">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">
-            Mystery, Thriller & Suspense
-          </h2>
-          <a href="#" className="text-red-600 text-sm font-medium">
-            See more →
-          </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {books.map((book, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow hover:shadow-lg p-4"
-            >
-              <Image
-                src={book.image}
-                alt={book.title}
-                width={200}
-                height={300}
-                className="mb-4 mx-auto"
-              />
-              <h3 className="font-semibold text-md mb-1">{book.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-              <p className="text-red-600 font-bold">{book.price}</p>
-              <a
-                href="#"
-                className="block text-sm text-red-600 mt-2 hover:underline"
-              >
-                View details
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
+      {/* Dynamically render sections for each category with books */}
+      {genres.map((genre, index) => {
+        const booksForGenre = categorizedBooks[genre.genreName] || [];
+        if (booksForGenre.length === 0) {
+          return null; // Don't render section if no books in this category
+        }
 
-      <section className="bg-pink-100 px-6 py-16">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Speculative</h2>
-          <a href="#" className="text-red-600 text-sm font-medium">
-            See more →
-          </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {books.map((book, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow hover:shadow-lg p-2 w-[200px]"
-            >
-              <Image
-                src={book.image}
-                alt={book.title}
-                width={200}
-                height={300}
-                className="mb-4"
-              />
-              <div>
-                <StarRating rating={3.4} />
-                <h3 className="font-semibold text-md mb-1">{book.title}</h3>
-                <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-                <div className="flex justify-between items-center">
+        const sectionBgColor = index % 2 === 0 ? "bg-blue-50" : "bg-pink-100"; // Alternate background colors
+
+        return (
+          <section
+            key={genre.genreName}
+            className={`${sectionBgColor} px-6 py-16`}
+          >
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-semibold">{genre.genreName}</h2>
+              <Link href="#" className="text-red-600 text-sm font-medium">
+                See more →
+              </Link>
+            </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {booksForGenre.map((book) => (
+                <div
+                  key={book.id} // Use book.id as key
+                  className="bg-white rounded-md shadow hover:shadow-lg p-4"
+                >
+                  <Image
+                    src={book.image}
+                    alt={book.title}
+                    width={200}
+                    height={300}
+                    className="mb-4 mx-auto"
+                  />
+                  {/* Render StarRating only if rating is available and greater than 0 */}
+                  {book.rating > 0 && <StarRating rating={book.rating} />}
+                  <h3 className="font-semibold text-md mb-1">{book.title}</h3>
+                  <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
                   <p className="text-red-600 font-bold">{book.price}</p>
-                  <a
-                    href="#"
+                  <Link
+                    href={`/reader/landing/book-details/${book.id}`} // Ensure this matches your BookDetails page path
                     className="block text-sm text-red-600 mt-2 hover:underline"
                   >
                     View details
-                  </a>
+                  </Link>
                 </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
+        );
+      })}
 
-      <section className="bg-blue-50 px-6 py-16">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Literature & Fiction</h2>
-          <a href="#" className="text-red-600 text-sm font-medium">
-            See more →
-          </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {books.map((book, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow hover:shadow-lg p-4"
-            >
-              <Image
-                src={book.image}
-                alt={book.title}
-                width={200}
-                height={300}
-                className="mb-4 mx-auto"
-              />
-              <h3 className="font-semibold text-md mb-1">{book.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-              <p className="text-red-600 font-bold">{book.price}</p>
-              <a
-                href="#"
-                className="block text-sm text-red-600 mt-2 hover:underline"
-              >
-                View details
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="bg-blue-50 px-6 py-16">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-semibold">Literature & Fiction</h2>
-          <a href="#" className="text-red-600 text-sm font-medium">
-            See more →
-          </a>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {books.map((book, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-md shadow hover:shadow-lg p-4"
-            >
-              <Image
-                src={book.image}
-                alt={book.title}
-                width={200}
-                height={300}
-                className="mb-4 mx-auto"
-              />
-              <h3 className="font-semibold text-md mb-1">{book.title}</h3>
-              <p className="text-sm text-gray-600 mb-2">By {book.author}</p>
-              <p className="text-red-600 font-bold">{book.price}</p>
-              <a
-                href="#"
-                className="block text-sm text-red-600 mt-2 hover:underline"
-              >
-                View details
-              </a>
-            </div>
-          ))}
-        </div>
-      </section>
       <div className="text-center cursor-pointer bg-[#E50913] text-white py-2">
         <p>Back to top</p>
       </div>

@@ -63,6 +63,10 @@ export default function FeatureCarousel() {
               <h4 className="text-xl md:text-2xl font-semibold drop-shadow-sm tracking-tight">
                 {feature.title}
               </h4>
+          
+            <div className="bg-gradient-to-br from-blue-600 to-indigo-800 p-6 rounded-xl shadow-lg h-[200px] w-[300px]">
+              <h4 className="text-lg font-semibold mb-2">{feature.title}</h4>
+              <p className="text-sm">{feature.description}</p>
             </div>
             <p className="text-base md:text-lg opacity-95 leading-relaxed font-medium tracking-tight">
               {feature.description}

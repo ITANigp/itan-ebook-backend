@@ -1,4 +1,18 @@
+"use client";
+
 import React from "react";
+import { useRouter } from "next/navigation";
+
+import dynamic from "next/dynamic";
+
+// Dynamically import the PdfFlipbook component with ssr: false
+// This ensures it only runs on the client, as react-pdf and react-pageflip
+// rely on browser APIs.
+const PdfFlipbook = dynamic(() => import("@/components/PdfFlipbook"), {
+  ssr: false,
+  loading: () => <p>Loading flipbook viewer...</p>, // Optional loading state
+});
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Heart, PlayCircle } from "lucide-react";
@@ -63,6 +77,7 @@ const books = [
 ];
 
 export default function Library() {
+  const router = useRouter();
   return (
     <div className="p-6">
       <h1 className="text-3xl font-bold mb-6">Library</h1>
@@ -116,7 +131,12 @@ export default function Library() {
                   <div className="text-sm font-semibold text-red-600 mb-1">
                     ${book.price}
                   </div>
-                  <Button className="w-full bg-[#E50913]">Read Book</Button>
+                  <Button
+                    onClick={() => <PdfFlipbook pdfUrl="/CYBERSECURITY.pdf" />}
+                    className="w-full bg-[#E50913]"
+                  >
+                    Read Book
+                  </Button>
                 </div>
               )}
             </CardContent>

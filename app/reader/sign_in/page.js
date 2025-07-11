@@ -8,6 +8,7 @@ import { Eye, EyeOff } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
+import { useAuth } from "@/contexts/AuthContext";
 import { signInReader } from "@/utils/auth/readerApi";
 import Image from "next/image";
 
@@ -16,9 +17,10 @@ export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  // const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const { setAuth } = useAuth();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -28,8 +30,11 @@ export default function SignIn() {
     try {
       const reader = await signInReader(email, password);
       localStorage.setItem("access_token", reader.data.token);
+      localStorage.setItem("currentUserId", reader.data.id);
       console.log("Reader log in successfully: ", reader.data);
+      console.log("Reader's id: ", reader.data.id);
       if (reader?.data?.id) {
+        setAuth(reader.data.token, reader.data.id);
         router.push("/reader/home")
       }
     } catch (error) {
@@ -86,7 +91,7 @@ export default function SignIn() {
             <input
               type="email"
               id="email"
-              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-[#E50913] block w-full p-2.5"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-blue-300 block w-full p-2.5"
               placeholder="Enter Email Address"
               required
               value={email}
@@ -103,7 +108,7 @@ export default function SignIn() {
               type={showPassword ? "text" : "password"}
               id="password"
               placeholder="Enter Passwords"
-              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:ring-[#E50913] focus:border-[#E50913] block w-full p-2.5"
+              className="placeholder:text-gray-300 pl-10 h-[50px] bg-gray-50 border-0 border-gray-300 text-gray-900 rounded-lg focus:ring-1 focus:outline-none focus:ring-blue-300 block w-full p-2.5"
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
