@@ -283,7 +283,7 @@ export default function Home() {
         <div className="absolute inset-0 bg-black bg-opacity-40" />
 
         <div className="relative z-10 text-center px-4">
-          <h2 className="text-2xl md:text-3xl font-semibold mb-4">
+          <h2 className="text-3xl md:text-4xl xl:text-5xl font-semibold mb-4">
             Are you an Author?
           </h2>
           <p className="max-w-xl mx-auto mb-6 text-gray-300">
@@ -292,7 +292,7 @@ export default function Home() {
           </p>
           <Link
             href="/"
-            className="bg-red-600 hover:bg-red-700 px-6 py-2 rounded font-medium"
+            className="bg-red-700 px-6 py-2 rounded font-medium"
           >
             Learn More
           </Link>

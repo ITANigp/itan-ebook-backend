@@ -30,7 +30,7 @@ const Footer = ({ hiddenPage }) => {
       <section className="bg-[#050A30] w-full max-w-7xl mx-auto px-4 pt-8 pb-0 flex flex-col gap-8">
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-8">
           {/* Logo & Socials */}
-          <div className="flex flex-col items-center sm:items-start gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center items-center gap-4 sm:gap-6">
             <Link href="/">
               <Image
                 src="/logo.svg"
@@ -42,46 +42,44 @@ const Footer = ({ hiddenPage }) => {
                 sizes="140px"
               />
             </Link>
-            <div className="flex flex-col items-center text-gray-200">
-              <div className="flex items-center justify-center sm:justify-start sm:ml-0 w-full">
-                <div className="flex space-x-2">
-                  <Link href="#" target="_blank" rel="noopener noreferrer">
-                    <FontAwesomeIcon
-                      icon={faLinkedinIn}
-                      className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
-                    />
-                  </Link>
-                  <Link
-                    href="https://x.com/ItanGlobal"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon
-                      icon={faXTwitter}
-                      className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
-                    />
-                  </Link>
-                  <Link
-                    href="https://web.facebook.com/itanglobalpublishing/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon
-                      icon={faFacebookF}
-                      className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
-                    />
-                  </Link>
-                  <Link
-                    href="https://www.instagram.com/itanglobalpublishing"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <FontAwesomeIcon
-                      icon={faInstagram}
-                      className="w-[15px] h-3 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
-                    />
-                  </Link>
-                </div>
+            <div className="flex items-center text-gray-200">
+              <div className="flex space-x-2">
+                <Link href="#" target="_blank" rel="noopener noreferrer">
+                  <FontAwesomeIcon
+                    icon={faLinkedinIn}
+                    className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+                <Link
+                  href="https://x.com/ItanGlobal"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon
+                    icon={faXTwitter}
+                    className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+                <Link
+                  href="https://web.facebook.com/itanglobalpublishing/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon
+                    icon={faFacebookF}
+                    className="w-[15px] h-5 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353]"
+                  />
+                </Link>
+                <Link
+                  href="https://www.instagram.com/itanglobalpublishing"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <FontAwesomeIcon
+                    icon={faInstagram}
+                    className="w-[15px] h-3 p-2 rounded-full border-2 border-[#EF5353] hover:bg-[#EF5353] hover:scale-110 transition-all duration-300"
+                  />
+                </Link>
               </div>
             </div>
             {/* Mobile links */}
