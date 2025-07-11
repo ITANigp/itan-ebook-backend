@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-
-import { api } from "@/utils/auth/readerApi"; // Assuming 'api' is an Axios instance or similar
+import { api } from "@/utils/auth/readerApi";
 
 /**
  * LikeButton Component
@@ -49,40 +48,32 @@ const LikeButton = ({ bookId, userToken }) => {
       setError(null);
 
       try {
-        // IMPORTANT: Ensure your backend has an endpoint like GET /api/v1/likes/status?book_id=UUID
-        // that returns { isLiked: boolean, likeId: string | null } for the authenticated user.
-        // Or, if your GET /likes/:id endpoint checks for the current user's like by that book ID,
-        // then the current route structure `/likes/${bookId}` might be fine.
-        // Assuming /likes/status?book_id=... is a more robust way to check initial status.
-        const response = await api.get(`/likes/status`, {
-          params: { book_id: bookId }, // Use 'params' for query parameters with Axios
+        // IMPORTANT: The GET /likes/:bookId endpoint should return a 200 OK
+        // with the like data if found, or a 404 Not Found if not liked.
+        const response = await api.get(`/likes/${bookId}`, {
           headers: {
             Authorization: `Bearer ${userToken}`,
           },
         });
 
+        // If the request succeeds (Axios only resolves for 2xx status codes by default)
         if (response.status === 200) {
-          // Assuming 200 OK for success
           const data = response.data; // Axios puts response data on .data property
-          setIsLiked(data.isLiked);
-          setLikeId(data.likeId);
-        } else if (response.status === 404) {
-          // If the status endpoint returns 404, it might mean no like found
-          setIsLiked(false);
-          setLikeId(null);
-        } else {
-          // Handle other potential error statuses
-          const errorData = response.data; // Axios error data
-          setError(
-            `Failed to fetch like status: ${errorData?.message || response.statusText || response.status}`
-          );
-          console.error("Error fetching initial like status:", errorData);
+          setIsLiked(true); // User has liked the book
+          setLikeId(data.id); // Store the like ID for unliking
         }
       } catch (err) {
         // Axios errors have a 'response' object if it's an HTTP error
-        const errorMessage = err.response?.data?.message || err.message;
-        setError(`Network error: ${errorMessage}`);
-        console.error("Network error fetching initial like status:", err);
+        if (err.response && err.response.status === 404) {
+          // If the status endpoint returns 404, it means no like found
+          setIsLiked(false); // User has NOT liked the book
+          setLikeId(null); // No like ID to store
+        } else {
+          // Handle other errors (network issues, 401 Unauthorized, 5xx server errors, etc.)
+          const errorMessage = err.response?.data?.message || err.message;
+          setError(`Error fetching like status: ${errorMessage}`);
+          console.error("Error fetching initial like status:", err);
+        }
       } finally {
         setIsLoading(false);
       }
@@ -125,6 +116,7 @@ const LikeButton = ({ bookId, userToken }) => {
           setLikeId(null); // Clear likeId as the like record no longer exists
           console.log("Book unliked successfully!");
         } else {
+          // This else block might be redundant if Axios throws for non-2xx statuses
           const errorData = response.data;
           setError(
             `Failed to unlike book: ${errorData?.message || response.statusText || response.status}`
@@ -153,6 +145,7 @@ const LikeButton = ({ bookId, userToken }) => {
           setLikeId(data.id || data.like_id); // Use 'id' or 'like_id' based on backend response
           console.log("Book liked successfully!", data);
         } else {
+          // This else block might be redundant if Axios throws for non-2xx statuses
           const errorData = response.data;
           setError(
             `Failed to like book: ${errorData?.message || response.statusText || response.status}`
@@ -220,9 +213,9 @@ const LikeButton = ({ bookId, userToken }) => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             className="h-6 w-6"
-            fill={isLiked ? "currentColor" : "none"}
+            fill={isLiked ? "red" : "none"} // Fill with red if liked, else none
             viewBox="0 0 24 24"
-            stroke="currentColor"
+            stroke={isLiked ? "red" : "currentColor"} // Stroke with red if liked, else currentColor
             strokeWidth="2"
           >
             <path
