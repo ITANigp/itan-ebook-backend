@@ -42,7 +42,7 @@ const Footer = ({ hiddenPage }) => {
                 sizes="140px"
               />
             </Link>
-            <div className="flex flex-col items-center text-gray-200 mt-4">
+            <div className="flex flex-col items-center text-gray-200">
               <div className="flex items-center justify-center sm:justify-start sm:ml-0 w-full">
                 <div className="flex space-x-2">
                   <Link href="#" target="_blank" rel="noopener noreferrer">
@@ -85,7 +85,7 @@ const Footer = ({ hiddenPage }) => {
               </div>
             </div>
             {/* Mobile links */}
-            <div className="flex flex-col items-center sm:hidden text-[13px] text-gray-400 gap-2">
+            <div className="flex flex-col items-center sm:hidden mt-3 text-[13px] text-gray-400 gap-2">
               <Link
                 href="https://itanglobalpublishing.substack.com/"
                 target="_blank"
@@ -191,29 +191,28 @@ const Footer = ({ hiddenPage }) => {
           </div>
         </div>
 
-        {/* terms & condition and privacy & policy */}
-        <div className="text-white text-center"> 
-          <Link
-            href="/terms&conditions"
-            className="cursor-pointer hover:text-[#EF5353]"
-          >
-            Terms &amp; Conditions
-          </Link>
-          <Link
-            href="/privacy-policies"
-            className="cursor-pointer hover:text-[#EF5353]"
-          >
-            Privacy &amp; Policy
-          </Link>
-        </div>
-
-        {/* Separator */}
-        <div className="w-full">
-          <span className="block h-[2px] w-full bg-[#EF5353]/30"></span>
+        {/* Separator with terms & conditions and privacy & policy links overlayed, responsive */}
+        <div className="relative w-full flex items-center justify-center my-2">
+          <span className="block h-[2px] w-full bg-[#EF5353]/30 absolute left-0 top-1/2 -translate-y-1/2 z-0"></span>
+          <div className="relative z-10 bg-[#050A30] px-2 sm:px-3 flex flex-wrap items-center justify-center gap-2 sm:gap-4 text-gray-200 text-xs sm:text-sm font-light max-w-full">
+            <Link
+              href="/terms&conditions"
+              className="cursor-pointer hover:text-[#EF5353] whitespace-nowrap"
+            >
+              Terms &amp; Conditions
+            </Link>
+            <span className="text-[#EF5353]">|</span>
+            <Link
+              href="/privacy-policies"
+              className="cursor-pointer hover:text-[#EF5353] whitespace-nowrap"
+            >
+              Privacy &amp; Policy
+            </Link>
+          </div>
         </div>
 
         {/* Copyright */}
-        <div className="text-gray-200 flex justify-center w-full mt-2 pb-4 text-xs sm:text-sm md:text-base">
+        <div className="text-gray-200 flex justify-center w-full pb-4 text-xs sm:text-sm md:text-base">
           <p style={{ fontFamily: "Lato, sans-serif" }}>
             ITAN Technologies Ltd. &copy; 2025. All Rights Reserved
           </p>
