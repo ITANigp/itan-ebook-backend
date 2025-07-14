@@ -33,9 +33,16 @@ export default function RootLayout({ children }) {
     pathname.endsWith("/reset-password");
 
   const adminPage = pathname.startsWith("/admin")
+
+  const readerPage = pathname.startsWith("/reader")
     
     const shouldHideHeader =
-      authorPages || privacyPages || PasswordPage || adminPage || authPages
+      authorPages ||
+      privacyPages ||
+      PasswordPage ||
+      adminPage ||
+      authPages ||
+      readerPage
         ? "hidden"
         : "";
 
@@ -55,7 +62,7 @@ export default function RootLayout({ children }) {
           <div>
             {/* <AnimatedLayout> */}
             <div className="">
-              <TopNav styles={shouldHideHeader} />
+              <TopNav styles={shouldHideHeader } />
               <div>{children}</div>
               <Footer styles={shouldHideHeader} />
               {/* <ScrollToTop styles={hideIfAuthorPage} /> */}

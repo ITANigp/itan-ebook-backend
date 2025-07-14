@@ -1,4 +1,3 @@
-import { useRouter } from "next/navigation";
 import axios from "axios";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -83,9 +82,6 @@ export const signOutAuthor = async () => {
     await api.delete("/authors/sign_out");
     localStorage.removeItem("authorInfo");
 
-    const router = useRouter();
-    router.push("/author/sign_in");
-
     return { success: true };
   } catch (error) {
     console.error("Sign-out failed:", error.response?.data || error);
@@ -154,3 +150,23 @@ export const updateAuthorProfile = async (authorData, imageFile) => {
   }
 };
 
+// Update Author Profile (PUT or PATCH /authors/profile)
+export const updateAuthorProfileImg = async (imageFile) => {
+  try {
+    const formData = new FormData();
+    if (imageFile) {
+      formData.append("author[author_profile_image]", imageFile);
+    }
+
+    const response = await api.patch("/authors/profile", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to update profile:", error.response?.data || error);
+    throw error;
+  }
+};

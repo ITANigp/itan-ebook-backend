@@ -1,15 +1,15 @@
 // components/Modal.js
 import React from "react";
 
-const Modal = ({
+const DeleteModal = ({
   onHandleDeleteBook,
   onHandleSetDeleteModalClose,
 }) => {
   //   if (!isOpen) return null; // Don't render if modal is closed
 
   return (
-    <div className=" lg:ml-64 fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-      <div className="w-96 bg-amber-200  rounded-md shadow-lg">
+    <div className=" lg:ml-64 fixed z-50 inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+      <div className="w-96 lg:mt-12 bg-amber-200  rounded-md shadow-lg mx-2">
         <div className="flex justify-between items-center h-8 bg-amber-300  rounded-t-md">
           <p />
           <p className="mr-3">Delete eBook</p>
@@ -27,17 +27,18 @@ const Modal = ({
           </p>
           <div className="sm:mt-6  flex justify-between w-72">
             <button
-              href="/author/sign_in"
-              className="h-8 border border-[#EF5353] text-[#EF5353] hover:bg-[#EF5353] hover:text-white rounded-md py-1 px-4"
+              type="button"
+              className="ml-2 h-8 border border-[#EF5353] text-[#EF5353] hover:bg-[#EF5353] hover:text-white rounded-md py-1 px-4"
               onClick={onHandleSetDeleteModalClose}
             >
               No
             </button>
             <button
-              className="h-8 bg-[#EF5353] text-white rounded-md py-1 px-4"
+              type="button"
+              className="mr-2 h-8 bg-[#EF5353] text-white rounded-md py-1 px-4"
               onClick={() => {
-                onHandleSetDeleteModalClose();
                 onHandleDeleteBook();
+                onHandleSetDeleteModalClose();
               }}
             >
               Yes
@@ -49,4 +50,4 @@ const Modal = ({
   );
 };
 
-export default Modal;
+export default DeleteModal;

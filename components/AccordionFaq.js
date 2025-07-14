@@ -39,25 +39,31 @@ export default function AccordionFaq() {
   return (
     <section className="text-sm md:text-base md:mt-24">
       <div className="mt-8 font-semibold md:text-xl text-center text-gray-500">
-        <h3>Frequently Asked Questions <br className="md:hidden"/> (FAQs)</h3>
+        <h3>
+          Frequently Asked Questions <br className="md:hidden" /> (FAQs)
+        </h3>
       </div>
 
-      <div className="divide-y divide-gray-200 rounded-lg xl:mb-8">
+      <div className="divide-y divide-gray-200 rounded-lg xl:mb-8 max-w-4xl mx-auto">
         {faqItems.map((item, index) => (
           <div key={index}>
             <button
               onClick={() => toggleAccordion(index)}
-              className="flex items-center justify-between w-full p-5 font-medium text-gray-500 hover:bg-gray-100 gap-3"
+              // CHANGED: Added responsive padding to prevent over-spreading on large screens
+              className="flex items-center justify-between w-full p-5 lg:p-6 xl:p-7 font-medium text-gray-500 hover:bg-gray-100 gap-3 lg:gap-4 xl:gap-5"
             >
-              <span className="flex-1 text-left font-semibold">
+              {/* CHANGED: Added responsive text sizing */}
+              <span className="flex-1 text-left font-semibold lg:text-lg xl:text-xl">
                 {item.question}
               </span>
-              <div className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 medium:w-8 medium:h-8 rounded-full bg-[#FEE6E6] text-[#EF5353] flex-shrink-0 transition-all duration-300">
+              {/* CHANGED: Added larger screen sizing for icons */}
+              <div className="flex items-center justify-center w-6 h-6 xs:w-7 xs:h-7 medium:w-8 medium:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 rounded-full bg-[#FEE6E6] text-[#EF5353] flex-shrink-0 transition-all duration-300">
                 {activeIndex === index ? (
                   // Minus icon when expanded
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 xs:w-5 xs:h-5 medium:w-6 medium:h-6"
+                    // CHANGED: Added larger screen icon sizing
+                    className="w-4 h-4 xs:w-5 xs:h-5 medium:w-6 medium:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -73,7 +79,8 @@ export default function AccordionFaq() {
                   // Plus icon when collapsed
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    className="w-4 h-4 xs:w-5 xs:h-5 medium:w-6 medium:h-6"
+                    // CHANGED: Added larger screen icon sizing
+                    className="w-4 h-4 xs:w-5 xs:h-5 medium:w-6 medium:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -93,8 +100,12 @@ export default function AccordionFaq() {
                 activeIndex === index ? "max-h-96" : "max-h-0"
               }`}
             >
-              <div className="p-5">
-                <p className="text-gray-500">{item.answer}</p>
+              {/* CHANGED: Added responsive padding for content */}
+              <div className="p-5 lg:p-6 xl:p-7">
+                {/* CHANGED: Added responsive text sizing */}
+                <p className="text-gray-500 lg:text-lg xl:text-xl leading-relaxed">
+                  {item.answer}
+                </p>
               </div>
             </div>
           </div>

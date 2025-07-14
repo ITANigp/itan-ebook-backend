@@ -51,7 +51,8 @@ const BookPage = () => {
               <p className="text-gray-600">
                 by:{" "}
                 <span className="font-bold">
-                  {book?.author_name || "Author's Name"}
+                  {book?.first_name || "Author's FirstName"}{" "}
+                  {book?.last_name || "Author's LastName"}
                 </span>
               </p>
             </div>
@@ -60,6 +61,14 @@ const BookPage = () => {
           <p className="mt-4">
             {book?.description || "No description available."}
           </p>
+          <Link
+            href={book?.ebook_file_url || "#"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-blue-500 py-1 px-2 rounded-md text-white mt-3"
+          >
+            Read
+          </Link>
         </div>
       </div>
     </div>

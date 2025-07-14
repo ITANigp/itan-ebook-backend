@@ -1,5 +1,5 @@
 const genreData = {
-  "Literature & Fiction": {
+  "Afrocentric Literature & Fiction": {
     "Literary Fiction": [
       "Action and Adventure",
       "Anthologies and Literature Collections",
@@ -15,21 +15,21 @@ const genreData = {
     ],
   },
 
-  "Children Books": [
+  "Afrocentric Children Books": [
     "Action and Adventure",
     "Animals",
     "Biographical Stories",
     "Comics",
     "Graphic Novels",
   ],
-  "Comics, Manga and Graphic Novels": [
+  "Afrocentric Comics, Manga and Graphic Novels": [
     "Comic Strips and Cartoons",
     "Fantasy",
     "Science Fiction",
     "Superhero",
   ],
 
-  "Religious Fiction": {
+  "Afrocentric Religious Fiction": {
     Christian: [
       "Apocalypse",
       "Contemporary",
@@ -62,7 +62,7 @@ const genreData = {
       "Supernatural",
     ],
   },
-  "Mystery, Thriller and Suspense": {
+  "Afrocentric Mystery, Thriller and Suspense": {
     "Crime Fiction": [
       "General",
       "Heist",
@@ -71,10 +71,7 @@ const genreData = {
       "Police Procedurals",
       "Private Investigators",
     ],
-    Suspense: [
-      "Occult", 
-      "Ghosts", 
-      "Political"],
+    Suspense: ["Occult", "Ghosts", "Political"],
     Thriller: [
       "Assasination",
       "Conspiracies",
@@ -94,13 +91,9 @@ const genreData = {
       "Private Inv",
       "women sleuth",
     ],
-    "Science Fiction": [
-      "Futuristic", 
-      "Space/Time travel",
-      "Speculative", 
-    ],
+    "Science Fiction": ["Futuristic", "Space/Time travel", "Speculative"],
   },
-  Romance: {
+  "Afrocentric Romance": {
     others: [
       "Action & Adventure",
       "Adaptations",
@@ -121,7 +114,7 @@ const genreData = {
     ],
     "Young Adult": ["Coming of Age", "Teen"],
   },
-  "Science Fiction & Fantasy": {
+  "Afrocentric Science Fiction & Fantasy": {
     Fantasy: [
       "Afrofuturism",
       "Apocalyptic",

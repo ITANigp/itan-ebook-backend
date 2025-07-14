@@ -44,7 +44,7 @@ export default async function Page({ params }) {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 py-24">
       <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
       <div className="text-sm text-gray-500 mb-4">
         {post.author?.name && <>By {post.author.name}</>}

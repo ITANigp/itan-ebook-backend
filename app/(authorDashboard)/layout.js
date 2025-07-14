@@ -2,7 +2,9 @@
 
 import { useRef, useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import { ChevronRight } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartPie,
@@ -11,18 +13,20 @@ import {
   faShoppingCart,
   faQuestionCircle,
   faUser,
-  faSignOut,
   faBars,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { getAuthorProfile } from "@/utils/auth/authorApi";
+
 export default function AuthorDashboardLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [openSales, setOpenSales] = useState(false);
   const [authorId, setAuthorId] = useState(null);
+  const [profile, setProfile] = useState({});
   const sidebarRef = useRef(null);
   const pathName = usePathname();
   const router = useRouter();
-  const inputRef = useRef(null);
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("authorInfo") || "{}");
@@ -33,6 +37,20 @@ export default function AuthorDashboardLayout({ children }) {
       setAuthorId(stored.id);
     }
   }, [router]);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await getAuthorProfile();
+        setProfile(data);
+        console.log("Fetched Profile Data: ", data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchProfile();
+  }, []);
 
   if (!authorId) {
     return null;
@@ -73,9 +91,16 @@ export default function AuthorDashboardLayout({ children }) {
         } w-full h-16 py-2 shadow-md z-10 bg-white`}
       >
         <div className="flex-1 relative mr-8">
-          <img
-            src="/images/picture.png"
-            className="w-12 absolute right-0 -top-6"
+          <Image
+            width={50}
+            height={50}
+            className={`w-12 h-12 absolute right-0 -top-6 rounded-full bg-slate-400 object-cover ${profile.author_profile_image_url ? "" : "bg-slate-400 p-2"}`}
+            alt="Profile"
+            src={
+              profile.author_profile_image_url
+                ? profile.author_profile_image_url
+                : `/images/avatar.png`
+            }
           />
         </div>
       </div>
@@ -101,7 +126,7 @@ export default function AuthorDashboardLayout({ children }) {
         </div>
         <div className="h-full px-4 py-4 overflow-y-auto bg-gray-900 dark:bg-gray-800">
           <Link href="/">
-            <img src="/images/logo.png" className="w-16 mb-8 ml-3" />
+            <img src="/images/logo.png" className="w-16 mb-8 ml-3" alt="Logo" />
           </Link>
           <ul className="space-y-2 font-medium">
             <li>
@@ -163,16 +188,41 @@ export default function AuthorDashboardLayout({ children }) {
             <li>
               <Link
                 href="#"
-                className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                onClick={() => setOpenSales(!openSales)}
+                className="flex justify-between items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
-                <FontAwesomeIcon
-                  icon={faShoppingCart}
-                  className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                <div>
+                  <FontAwesomeIcon
+                    icon={faShoppingCart}
+                    className="text-gray-300 text-lg group-hover:text-[#E50913]"
+                  />
+                  <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
+                    Sales
+                  </span>
+                </div>
+                <ChevronRight
+                  className={`transition-transform duration-300 group-hover:text-[#E50913] ${openSales ? "rotate-90" : "rotate-0"}`}
                 />
-                <span className="ml-2 text-[#C5C5C5] group-hover:text-[#E50913]">
-                  Sales
-                </span>
               </Link>
+              {/* Dropdown */}
+              <div
+                className={`${openSales ? "block" : "hidden"} ml-10 mt-1 space-y-1`}
+              >
+                <div className="flex flex-col">
+                  <Link
+                    href="/author/analytics"
+                    className="text-[#C5C5C5] hover:text-[#E50913] cursor-pointer"
+                  >
+                    Analytics
+                  </Link>
+                  <Link
+                    href="/author/withdrawal"
+                    className="text-[#C5C5C5] hover:text-[#E50913] cursor-pointer mt-4"
+                  >
+                    Withdrawal
+                  </Link>
+                </div>
+              </div>
             </li>
             <li>
               <Link
@@ -190,8 +240,7 @@ export default function AuthorDashboardLayout({ children }) {
             </li>
             <li>
               <Link
-                // href={`/author/${authorId}/profile`}
-                href={`/author/1/profile`}
+                href={`/author/${authorId}/profile`}
                 className="flex items-center p-2 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <FontAwesomeIcon

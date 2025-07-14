@@ -8,39 +8,21 @@ import FadeIn from "@/components/FadeIn";
 
 const Monetize = () => {
   return (
-    <div className="md:bg-slate-200 md:p-12">
-      <section className="relative overflow-hidden bg-[#111928] md:bg-white md:mx-5 md:mt-3 md:mb-16 md:rounded-3xl">
-        {/* Background decorative elements - pattern removed */}
-        {/* Red accent line removed */}
-
-        <div className="mx-auto px-4 py-5 ">
-          <div className="flex flex-col md:flex-row-reverse md:items-center md:justify-between">
-            {/* Image column */}
-            <div className="w-[800px] justify-center md:mr-12">
-              {/* Direct image with no container */}
-              <div className="hidden w-full md md:block transform transition-transform duration-700 hover:scale-[1.04] md:rounded-xl overflow-hidden">
-                <Image
-                  src="/images/monetize_4.png"
-                  width={380}
-                  height={380}
-                  alt="Monetize your books with ITAN"
-                  className="w-[500px] h-[400px]"
-                  priority={true}
-                />
-              </div>
-            </div>
-
-            {/* Content column */}
-            <div className="w-full mt-1 md:mt-0 text-center md:text-left text-white md:text-[#111928] md:h-[445px] md:mx-5 p-5 pr-9 md:rounded-2xl">
+    <div className="md:bg-slate-200">
+      <section className="mt-10 medium:mt-14 large:mt-16 xl:mt-18 relative overflow-hidden bg-[#111928]">
+        <div className="mx-auto px-4 py-5">
+          <div className="flex flex-col items-center justify-center">
+            {/* Content column - centered and maintaining medium screen styles */}
+            <div className="w-full mt-10 medium:mt-12 large:mt-14 xl:mt-18 text-center text-white p-5 max-w-4xl">
               <h1
-                className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight tracking-tight mb-4 md:mb-6 px-2 md:px-0"
+                className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight tracking-tight mb-4 md:mb-6 px-2 md:px-0"
                 style={{ fontFamily: "Georgia, Times New Roman, Times, serif" }}
               >
                 Monetize your digital books with IGP
               </h1>
 
               <p
-                className="text-sm sm:text-base md:text-lg md:pr-6 lg:text-xl max-w-xl mx-auto md:mx-0 mb-8 md:mb-10 px-4 md:px-0"
+                className="text-sm sm:text-base md:text-lg max-w-xl mx-auto mb-8 md:mb-10 px-4 md:px-0"
                 style={{ fontFamily: "Helvetica, Arial, sans-serif" }}
               >
                 ITAN provides authors with free publishing and multiple royalty
@@ -108,7 +90,7 @@ const Monetize = () => {
                 </h3>
                 <p className="text-gray-700 mb-4">
                   <span className="text-[#E50913] font-bold text-xl sm:text-2xl">
-                    60%
+                    70%
                   </span>{" "}
                   royalties on all your ebook sales
                 </p>

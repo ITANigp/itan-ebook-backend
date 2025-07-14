@@ -2,84 +2,81 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Image from "next/image";
-import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 
 import { api } from "@/utils/auth/authorApi";
+import { getTwoFactorStatus } from "@/utils/twoFactorAuth";
 
 const Profile = () => {
   const router = useRouter();
+  const [twoFactorStatus, setTwoFactorStatus] = useState(null);
 
-  const [active, setActive] = useState(null);
-
-  // Handle API update whenever active changes
+  // Fetch 2FA status on mount
   useEffect(() => {
-    const update2FA = async () => {
-      if (!active) return;
-
-      const author = {
-        two_factor_enabled: true,
-        preferred_2fa_method: active,
-      };
-
+    const fetchStatus = async () => {
       try {
-        const response = await api.patch("/authors/profile", { author });
-        console.log("2FA updated:", response);
+        const status = await getTwoFactorStatus();
+        console.log("2FA Status:", status);
+        setTwoFactorStatus(status);
       } catch (err) {
-        console.error("2FA update error:", err);
+        console.error("Failed to fetch 2FA status:", err);
       }
     };
 
-    update2FA();
-  }, [active]);
+    fetchStatus();
+  }, []);
 
-  const isEmailEnabled = active === "email";
-  const isPhoneEnabled = active === "phone";
+  const isEmailEnabled =
+    twoFactorStatus?.preferred_method === "email" &&
+    twoFactorStatus?.two_factor_enabled === true;
+
+  const isLoading = twoFactorStatus === null;
+
+  const handleEmailToggle = async (val) => {
+    const author = {
+      two_factor_enabled: val,
+      preferred_2fa_method: val ? "email" : null,
+    };
+
+    try {
+      const response = await api.patch("/authors/profile", { author });
+      console.log("2FA updated:", response);
+      setTwoFactorStatus((prev) => ({
+        ...prev,
+        two_factor_enabled: author.two_factor_enabled,
+        preferred_method: author.preferred_2fa_method,
+      }));
+    } catch (err) {
+      console.error("2FA update error:", err);
+    }
+  };
 
   return (
     <div>
       <section className="text-center mx-auto">
-        <div className="flex justify-between ">
-          <FontAwesomeIcon
-            icon={faChevronLeft}
-            onClick={() => router.back()}
-            className="ml-3 p-2 py-1 rounded-md cursor-pointer hover:bg-gray-400"
-          />
-          <h2 className="font-bold text-xl ">Privacy and Security</h2>
+        <div className="flex justify-between">
+          <div className="hidden lg:block"/>
+          <div className="lg:hidden">
+            <FontAwesomeIcon
+              icon={faChevronLeft}
+              onClick={() => router.back()}
+              className="ml-3 p-2 py-1 rounded-md cursor-pointer hover:bg-gray-400"
+            />
+          </div>
+          <h2 className="font-bold text-xl">Privacy and Security</h2>
           <p className="mr-7" />
         </div>
       </section>
 
       <section>
-        <div className="relative flex mx-auto flex-col items-center max-w-lg bg-white shadow-md rounded-lg mt-16  px-2 text-sm">
+        <div className="relative flex mx-auto flex-col items-center max-w-lg bg-white shadow-md rounded-lg mt-16 px-2 text-sm">
           <h3 className="absolute left-0 -top-6 text-lg">
             Multi-factor Authentication
           </h3>
-          <div className="flex justify-between items-center w-full my-2">
-            <div>
-              <p className="text-lg text-gray-800">Phone</p>
-              <p className="pt-1 text-xs text-gray-500">
-                Secure sign-in with phone verification.
-              </p>
-            </div>
-            <div className="cursor-pointer">
-              <Switch
-                checked={isPhoneEnabled}
-                onCheckedChange={(val) => setActive(val ? "phone" : null)}
-                className={cn(
-                  isPhoneEnabled && "bg-green-500",
-                  "data-[state=checked]:bg-green-500"
-                )}
-              />
-              <p className="text-xs text-gray-500">
-                {isPhoneEnabled ? "Enabled" : "Disabled"}
-              </p>
-            </div>
-          </div>
 
           <div className="flex justify-between items-center w-full mb-2">
             <div>
@@ -91,14 +88,15 @@ const Profile = () => {
             <div className="cursor-pointer">
               <Switch
                 checked={isEmailEnabled}
-                onCheckedChange={(val) => setActive(val ? "email" : null)}
+                onCheckedChange={handleEmailToggle}
+                disabled={isLoading}
                 className={cn(
                   isEmailEnabled && "bg-green-500",
-                  "data-[state=checked]:bg-green-500"
+                  "data-[state=checked]:bg-green-500 my-2"
                 )}
               />
               <p className="text-xs text-gray-500">
-                {isEmailEnabled ? "Enabled" : "Disabled"}
+                {isEmailEnabled ? "Disabled" : "Enabled"}
               </p>
             </div>
           </div>

@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+
+import toast from "react-hot-toast";
+
 import { signInAuthor } from "@/utils/auth/authorApi"; // Ensure this is correctly set up
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -10,6 +13,7 @@ const SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 
 const SignIn = () => {
   const [captchaToken, setCaptchaToken] = useState("");
+  const recaptchaRef = useRef(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -27,12 +31,17 @@ const SignIn = () => {
       const author = await signInAuthor(email, password, captchaToken);
       console.log("Author Sign-in Data:", author);
 
+      if (author.status.code === 202 && author.status.requires_verification == true) {
+        router.push("/auth/mfa/verify")
+      }
+
       if (author?.data?.id) {
         localStorage.setItem("authorInfo", JSON.stringify(author.data));
         router.push(`/dashboard/author/${author.data.id}`);
+        toast.success("Logged in successfully")
       }
     } catch (error) {
-      setMessage(
+      toast.error(
         error.response?.data?.error ||
           "Sign-in failed. Please check your credentials."
       );
@@ -46,16 +55,16 @@ const SignIn = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_API_BASE_URL}/authors/auth/google_oauth2`;
   };
 
-  useEffect(() => {
-    if (message) {
-      const timer = setTimeout(() => setMessage(""), 3000);
-      return () => clearTimeout(timer);
+  useEffect(() => {    
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset();
+      setCaptchaToken(""); 
     }
-  }, [message]);
+  }, [email, password]);
 
   return (
-    <main className="w-full mb-9">
-      <section className="bg-white max-w-[410px] rounded-2xl p-2  sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
+    <main className="w-full mb-9 px-4 sm:px-0">
+      <section className="bg-white w-full max-w-[350px] sm:max-w-[410px] rounded-2xl p-4 sm:py-5 sm:px-6 sm:w-[600px] mt-24 mx-auto border">
         <Link href="/">
           <img
             src="/images/logo.png"
@@ -65,9 +74,9 @@ const SignIn = () => {
         </Link>
 
         <header className="text-center">
-          <h1 className="md:text-2xl font-bold">Welcome Back</h1>
+          <h1 className="text-lg md:text-2xl font-bold">Welcome Back</h1>
           <p className="text-xs md:text-sm mb-4">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <Link
               href="/author/sign_up"
               className="font-bold hover:text-blue-700"
@@ -116,10 +125,27 @@ const SignIn = () => {
 
           {/* reCAPTCHA placed BEFORE the submit button */}
           <div className="my-4">
-            <ReCAPTCHA
-              sitekey={SITE_KEY}
-              onChange={(token) => setCaptchaToken(token || "")}
-            />
+            <div className="w-full overflow-hidden">
+              <div className="transform scale-75 sm:scale-90 md:scale-100 origin-left w-full">
+                {SITE_KEY ? (
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    sitekey={SITE_KEY}
+                    onChange={(token) => setCaptchaToken(token || "")}
+                    onError={(err) => {
+                      console.error("reCAPTCHA error:", err);
+                      toast.error(
+                        "reCAPTCHA failed to load. Please refresh the page."
+                      );
+                    }}
+                  />
+                ) : (
+                  <div className="p-3 text-red-500 text-sm border border-red-200 rounded bg-red-50">
+                    reCAPTCHA configuration error - Please try again
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
           <div className="relative">
@@ -155,18 +181,18 @@ const SignIn = () => {
             type="button"
             onClick={handleLoginWithGoogle}
             disabled={googleLoading}
-            className="h-[50px] hover:text-white text-[#4e4c4c] space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
+            className="h-[50px] hover:text-white text-[#4e4c4c] space-x-3 sm:space-x-5 flex w-full px-3 py-2 font-medium text-center items-center justify-center bg-gray-200 rounded-lg hover:bg-gray-400 focus:ring-1 focus:outline-none focus:ring-[#E50913]"
           >
             {googleLoading ? (
-              <p>Redirecting...</p>
+              <p className="text-sm sm:text-base">Redirecting...</p>
             ) : (
               <>
                 <img
                   src="/images/google.png"
-                  className="w-6 h-6"
+                  className="w-5 h-5 sm:w-6 sm:h-6"
                   alt="Google Logo"
                 />
-                <p>Continue with Google</p>
+                <p className="text-sm sm:text-base">Continue with Google</p>
               </>
             )}
           </button>
