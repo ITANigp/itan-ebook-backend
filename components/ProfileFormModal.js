@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
+
 import { getAuthorProfile, updateAuthorProfile } from "@/utils/auth/authorApi";
+import Image from "next/image";
 
 const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
   const [profile, setProfile] = useState({
@@ -75,16 +81,16 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
       aria-modal="true"
       aria-labelledby="modal-title"
     >
-      <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <img
-          src="/images/close-btn.png"
+      <div className="bg-white max-h-[90vh] overflow-y-auto  rounded-lg shadow-lg w-full max-w-md p-6 relative ">
+        <FontAwesomeIcon
+          icon={faXmark}
           alt="close"
-          className="w-5 h-5 absolute top-3 right-3 border-2 rounded-full border-amber-300 hover:border-red-200 cursor-pointer"
+          className="w-3 h-5 text-red-600 absolute top-3 right-3 cursor-pointer"
           onClick={onClose}
         />
 
         <div className="flex items-center space-x-2 mb-6">
-          <div className="text-2xl font-bold text-black">itan</div>
+          <Image width={50} height={30} src="/images/logo.png" alt="logo" />
         </div>
 
         <h2 id="modal-title" className="text-center text-xl font-semibold mb-6">
@@ -102,7 +108,7 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               name="first_name"
               value={profile.first_name}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200"
             />
           </div>
 
@@ -113,7 +119,7 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               name="last_name"
               value={profile.last_name}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200 rounded"
             />
           </div>
 
@@ -124,7 +130,7 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               placeholder="Describe yourself..."
               value={profile.bio}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 placeholder-gray-300 focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200 rounded"
               rows={3}
             />
           </div>
@@ -136,7 +142,7 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               name="phone_number"
               value={profile.phone_number}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200 rounded"
             />
           </div>
 
@@ -149,7 +155,7 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               name="country"
               value={profile.country}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200 rounded"
             />
           </div>
 
@@ -160,14 +166,14 @@ const Modal = ({ isOpen, onClose, onProfileUpdate }) => {
               name="location"
               value={profile.location}
               onChange={handleChange}
-              className="w-full p-2 border border-red-300 rounded"
+              className="w-full p-2 border border-gray-300 focus:border-none focus:ring-1 focus:outline-none focus:ring-teal-200 rounded"
             />
           </div>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-red-400 hover:bg-red-500 text-white font-bold py-2 rounded mt-4 disabled:opacity-50"
+            className="w-full bg-teal-600 hover:bg-teal-500 text-white font-bold py-2 rounded mt-4 disabled:opacity-50"
           >
             {loading ? "Saving..." : "Save Edit"}
           </button>

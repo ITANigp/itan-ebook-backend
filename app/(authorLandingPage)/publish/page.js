@@ -50,7 +50,7 @@ const Publish = () => {
           <div className="absolute bottom-1/4 left-1/3 w-64 h-64 bg-[#E50913] rounded-full filter blur-[100px] opacity-10 -z-10"></div>
 
           {/* Main content container with better padding for all screens */}
-          <div className="relative w-full px-5 xs:px-6 medium:px-8 large:px-10 xl:max-w-6xl xl:mx-auto pt-16 xs:pt-20 medium:pt-24 large:pt-28 xl:pt-32 pb-20 xs:pb-24 medium:pb-28 large:pb-32 xl:pb-36 z-10">
+          <div className="relative w-full px-5 xs:px-6 medium:px-8 large:px-10 xl:max-w-6xl xl:mx-auto pt-16 mt-10 medium:mt-14 large:mt-16 xl:mt-18 xs:pt-20 medium:pt-24 large:pt-28 xl:pt-32 pb-20 xs:pb-24 medium:pb-28 large:pb-32 xl:pb-36 z-10">
             {/* Centered content for all screen sizes */}
             <div className="w-full max-w-3xl mx-auto text-center">
               <FadeIn delay={0.3} direction="up" distance={15} duration={0.8}>
@@ -84,7 +84,10 @@ const Publish = () => {
                 </p>
 
                 <div className="mt-8 xs:mt-9 medium:mt-10 large:mt-12 xl:mt-14 flex flex-wrap justify-center gap-4 xs:gap-5">
-                  <Link href="/author/sign_in" className="flex items-center justify-center space-x-2 bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4 shadow-lg">
+                  <Link
+                    href="/author/sign_in"
+                    className="flex items-center justify-center space-x-2 bg-[#E50913] hover:bg-[#c20810] transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4 shadow-lg"
+                  >
                     <span className="font-medium text-sm xs:text-base medium:text-lg large:text-lg xl:text-lg">
                       Start Publishing
                     </span>
@@ -93,7 +96,10 @@ const Publish = () => {
                       className="w-3.5 h-3.5 xs:w-4 xs:h-4 medium:w-5 medium:h-5"
                     />
                   </Link>
-                  <Link href="/help" className="flex items-center justify-center space-x-2 bg-transparent border-2 border-white/30 hover:border-white/50 transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4">
+                  <Link
+                    href="/help"
+                    className="flex items-center justify-center space-x-2 bg-transparent border-2 border-white/30 hover:border-white/50 transition-colors duration-300 text-white rounded-md px-6 xs:px-7 medium:px-8 py-3 xs:py-3.5 medium:py-4"
+                  >
                     <span className="font-medium text-sm xs:text-base medium:text-lg">
                       Learn More
                     </span>
@@ -222,7 +228,7 @@ const Publish = () => {
         <div className="bg-white rounded-lg shadow-sm p-5 xs:p-6 medium:p-8 large:p-10">
           <FadeIn delay={0.1} direction="up" distance={15} duration={0.8}>
             <h3 className="text-xl xs:text-2xl medium:text-2xl large:text-3xl xl:text-4xl font-semibold mb-4 xs:mb-5 medium:mb-6 large:mb-6 xl:w-full xl:text-left xl:pr-0">
-              Step 2: Promote your books - Make them visible
+              Step 2 : Publish in Multiple Formats
             </h3>
           </FadeIn>
 
@@ -325,7 +331,7 @@ const Publish = () => {
                       <rect width="12" height="12" fill="#000000" />
                     </svg>
                     <span className="font-medium">
-                      Submit your prepared manuscript and cover and review.
+                      Submit your prepared manuscript, cover and review.
                     </span>
                   </li>
                 </FadeIn>
@@ -423,7 +429,7 @@ const Publish = () => {
               </p>
             </FadeIn>
 
-            <ul className="space-y-3 xs:space-y-4 medium:space-y-5 large:space-y-4 xl:space-y-5">
+            <ul className="space-y-3 xs:space-y-4 medium:space-y-5 large:space-y-4 xl:space-y-5 text-base xs:text-lg medium:text-xl large:text-xl xl:text-xl">
               <FadeIn delay={0.3} direction="left" distance={20} duration={0.7}>
                 <li className="flex items-start">
                   <svg

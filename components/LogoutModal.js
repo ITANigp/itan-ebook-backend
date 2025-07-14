@@ -1,15 +1,23 @@
 import React from "react";
 
-const LogoutModal = ({ isOpen, onClose, onLogout }) => {
+const LogoutModal = ({ isOpen, onClose, onLogout, type }) => {
     if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-xl shadow-xl w-[300px] text-center">
-        <p className="mb-4 text-gray-800">
-          Great job on your reading session! Time to log out and take a
-          well-deserved break. See you back here soon!
-        </p>
+        {type === "admin" ? (
+          <p>
+            Great job today Admin! Time to log out and take a well-deserved
+            break. See you back here soon!
+          </p>
+        ) : (
+            <p className="mb-4 text-gray-800">
+              Great job on your reading session! Time to log out and take a
+              well-deserved break. See you back here soon!
+            </p>
+        )}
+
         <div className="flex justify-between mt-4">
           <button
             className="px-4 py-2 rounded-md border border-gray-300 hover:bg-gray-100"

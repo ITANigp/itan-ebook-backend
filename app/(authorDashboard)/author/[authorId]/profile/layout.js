@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 
+import toast from "react-hot-toast";
+
 import LogoutModal from "@/components/LogoutModal";
 import { getAuthorProfile } from "@/utils/auth/authorApi";
 import { signOutAuthor } from "@/utils/auth/authorApi";
@@ -20,10 +22,10 @@ const layout = ({ children }) => {
     try {
       await signOutAuthor();
       setShowModal(false);
-      alert("You have been logged out!");
-      window.location.href = "/";
+      toast.success("Logged out successfully!");
+      window.location.href = "/author/sign_in";
     } catch (error) {
-      alert("Failed to log out. Please try again.");
+      toast.error("Failed to log out. Please try again.");
     }
   };
 
@@ -46,8 +48,7 @@ const layout = ({ children }) => {
       <div className="lg:flex lg:space-x-6 p-4 bg-gray-100 rounded-md">
         <nav className="hidden lg:flex">
           <ul className="space-y-7">
-            {/* <Link href={`/author/${profile.id}/profile`}> */}
-            <Link href={`/author/1/profile`}>
+            <Link href={`/author/${profile.id}/profile`}>
               <li
                 className={`hover:text-red-500 cursor-pointer ${isProfilePage ? "text-red-500 " : ""} `}
               >

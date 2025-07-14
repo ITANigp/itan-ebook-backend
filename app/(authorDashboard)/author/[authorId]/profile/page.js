@@ -1,161 +1,90 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 
 import FormModal from "@/components/ProfileFormModal";
-
-import CryptoJS from "crypto-js";
-import {
-  createAuthorProfile,
-  getAuthorProfile,
-  updateAuthorProfile,
-} from "@/utils/auth/authorApi";
-import { api } from "@/utils/auth/authorApi"; // Ensure this is imported
+import directUploadFile from "@/utils/updateAuthorImg";
+import { getAuthorProfile, api } from "@/utils/auth/authorApi";
 
 const Profile = () => {
   const [openModal, setOpenModal] = useState(false);
   const [profile, setProfile] = useState({});
-  const router = useRouter();
-  // const [profileImg, setProfileImg] = useState(null);
-  // const [editing, setEditing] = useState(false); // Track whether the user is editing
   const [error, setError] = useState("");
 
-  // async function computeChecksum(file) {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsArrayBuffer(file);
-  //     reader.onload = () => {
-  //       const wordArray = CryptoJS.lib.WordArray.create(reader.result);
-  //       const base64 = CryptoJS.enc.Base64.stringify(CryptoJS.MD5(wordArray));
-  //       resolve(base64);
-  //     };
-  //     reader.onerror = (error) => reject(error);
-  //   });
-  // }
+  const [imageFile, setImageFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState("/images/avatar.png");
+  const [editing, setEditing] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const inputRef = useRef(null);
+  const router = useRouter();
 
-  // async function directUploadFile(file) {
-  //   try {
-  //     const checksum = await computeChecksum(file);
+  useEffect(() => {
+    fetchProfile();
+  }, []);
 
-  //     const response = await api.post("/direct_uploads", {
-  //       blob: {
-  //         filename: file.name,
-  //         byte_size: file.size,
-  //         checksum: checksum,
-  //         content_type: file.type,
-  //       },
-  //     });
+  const fetchProfile = async () => {
+    try {
+      const { data } = await getAuthorProfile();
+      setProfile(data);
+      setPreviewUrl(data?.author_profile_image_url || "/images/avatar.png");
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch author profile.");
+    }
+  };
 
-  //     const { signed_id, direct_upload } = response.data;
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setImageFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setEditing(true);
+  };
 
-  //     if (!direct_upload?.url) {
-  //       throw new Error("Invalid direct upload response");
-  //     }
+  const handleSubmitImg = async () => {
+    if (!imageFile) return;
+    setUploading(true);
 
-  //     const uploadResponse = await fetch(direct_upload.url, {
-  //       method: "PUT",
-  //       headers: {
-  //         ...direct_upload.headers,
-  //         // "Content-Type": file.type,
-  //         "Content-Length": file.size.toString(),
-  //         "Content-MD5": checksum,
-  //       },
-  //       body: file,
-  //     });
+    try {
+      const signedId = await directUploadFile(imageFile);
 
-  //     if (!uploadResponse.ok) {
-  //       const errorText = await uploadResponse.text();
-  //       throw new Error(`S3 upload failed: ${uploadResponse.status}`);
-  //     }
+      const formData = new FormData();
+      formData.append("author[author_profile_image]", signedId);
 
-  //     console.log(`✅ Successfully uploaded ${file.name} to S3`);
-  //     return signed_id;
-  //   } catch (error) {
-  //     console.error("Direct upload failed:", error);
-  //     throw error;
-  //   }
-  // }
+      await api.patch("/authors/profile", formData);
 
-  // Fetch and set profile data when the component mounts
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       const { data } = await getAuthorProfile();
-  //       setProfile(data);
-  //     } catch (err) {
-  //       setError("Failed to fetch author profile.");
-  //       console.error(err);
-  //     }
-  //   };
+      alert("✅ Image updated!");
+      setEditing(false);
+      fetchProfile(); // refresh profile info
+    } catch (err) {
+      console.error("Upload failed", err);
+      alert("Upload failed");
+    } finally {
+      setUploading(false);
+    }
+  };
 
-  //   fetchProfile();
-  // }, []);
+  const handleCancel = () => {
+    setEditing(false);
+    setImageFile(null);
+    setPreviewUrl(profile?.author_profile_image_url || "/images/avatar.png");
+  };
 
-  // const handleFileImage = (e) => {
-  //   if (e.target.files && e.target.files[0]) {
-  //     setProfileImg(e.target.files[0]);
-  //   }
-  // };
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     if (!profileImg && !editing) {
-  //       alert("Please select a profile image.");
-  //       return;
-  //     }
-
-  //     const profileImage = profileImg
-  //       ? await directUploadFile(profileImg)
-  //       : profile.profile_image;
-
-  //     if (editing) {
-  //       // If editing, update the profile
-  //       const updatedProfile = await updateAuthorProfile(profile, profileImage);
-  //       console.log("Updated Profile: ", updatedProfile);
-  //       setProfile(updatedProfile);
-  //     } else {
-  //       // If creating, create a new profile
-  //       const createdProfile = await createAuthorProfile(profile, profileImage);
-  //       console.log("Created Profile: ", createdProfile);
-  //       setProfile(createdProfile);
-  //     }
-  //     setEditing(false); // Reset the editing flag after submission
-  //   } catch (error) {
-  //     console.error("Profile Error: ", error);
-  //   }
-  // };
-
-  // const handleEditClick = () => {
-  //   setEditing(true); // Set the editing flag to true when edit is clicked
-  // };
+  const triggerFileInput = () => {
+    inputRef.current.click();
+  };
 
   if (error) {
     return <div className="text-red-600">{error}</div>;
   }
 
-  // Fetch and set profile data when the component mounts
-  const fetchProfile = async () => {
-    try {
-      const { data } = await getAuthorProfile();
-      setProfile(data);
-      console.log("Fetched Profile Data: ", data);
-    } catch (err) {
-      // setError("Failed to fetch author profile.");
-      console.error(err);
-    }
-  };
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
   return (
-    <div>
+    <div className="h-screen">
       <section className="text-center mx-auto">
         <div className="flex justify-between lg:hidden">
           <FontAwesomeIcon
@@ -166,39 +95,84 @@ const Profile = () => {
           <h2 className="font-bold text-xl mb-5">Profile</h2>
           <p className="mr-7 lg:hidden" />
         </div>
-        <div className="lg:flex max-w-lg lg:shadow-md lg:rounded-lg lg:bg-white space-x-2 p-3 mx-auto mb-5">
-          <div className="flex justify-center lg:justify-start">
-            <Image
-              width={100}
-              height={100}
-              className="h-24 w-24 rounded-full object-cover"
-              alt="Profile"
-              src="/images/picture.png"
+
+        <div className="lg:flex max-w-lg lg:items-center lg:shadow-md lg:rounded-lg lg:bg-white space-x-2 p-3 mx-auto mb-5">
+          <div className="flex flex-col items-center lg:flex-row lg:items-center group relative">
+            <div className="relative w-16 h-16">
+              <Image
+                width={64}
+                height={64}
+                className={`h-16 w-16 rounded-full object-cover ${
+                  profile?.author_profile_image_url ? "" : "p-2 bg-slate-400"
+                }`}
+                alt="Profile"
+                src={previewUrl}
+              />
+
+              <button
+                type="button"
+                onClick={triggerFileInput}
+                className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-sm rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+              >
+                Edit
+              </button>
+            </div>
+
+            <input
+              ref={inputRef}
+              type="file"
+              id="profileImg"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="hidden"
             />
+
+            {editing && (
+              <div className="mt-2 flex gap-2 lg:ml-4">
+                <button
+                  type="button"
+                  onClick={handleSubmitImg}
+                  disabled={uploading}
+                  className="bg-blue-600 text-white px-3 py-1 rounded-md text-sm hover:bg-blue-700 disabled:opacity-50"
+                >
+                  {uploading ? "Saving..." : "Save"}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={handleCancel}
+                  disabled={uploading}
+                  className="bg-gray-400 text-white px-3 py-1 rounded-md text-sm hover:bg-gray-500 disabled:opacity-50"
+                >
+                  Cancel
+                </button>
+              </div>
+            )}
           </div>
+
           <div className="lg:flex lg:flex-col lg:items-start">
             <h3 className="mt-4 font-semibold">
               {profile.first_name} {profile.last_name}
             </h3>
             <p className="text-gray-400">Author</p>
-            <p className="text-gray-400 italic">
-              {profile.email}
-            </p>
+            <p className="text-gray-400 italic">{profile.email}</p>
           </div>
         </div>
       </section>
 
       <section className="flex mx-auto flex-col items-center max-w-lg shadow-md rounded-lg bg-white lg:mt-0 lg:mb-5 m-16 pt-1 p-2 text-sm">
         <div className="flex justify-between w-full mb-5">
-          <p className="py-1">Personal Information</p>{" "}
-          <div className="h-6 pt-[2px] my-auto px-[7px] hover:bg-red-100 rounded-md cursor-pointer space-x-1 -mx-2">
+          <p className="py-1">Personal Information</p>
+          <div
+            onClick={() => setOpenModal(true)}
+            className="h-6 pt-[2px] my-auto px-[7px] hover:bg-red-100 rounded-md cursor-pointer space-x-1 -mx-2"
+          >
             <Image
               width={12}
               height={15}
-              className=" inline"
+              className="inline"
               src="/images/edit-profile.png"
               alt="edit"
-              onClick={() => setOpenModal(true)}
             />
             <p className="text-red-500 text-sm inline">Edit</p>
           </div>
@@ -206,42 +180,34 @@ const Profile = () => {
 
         <div className="flex justify-between w-full border-b mb-2">
           <p>First Name</p>
-          <p className="text-gray-400">
-            {profile.first_name}
-          </p>
+          <p className="text-gray-400">{profile.first_name}</p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-2">
           <p>Last Name</p>
-          <p className="text-gray-400">
-            {profile.last_name}
-          </p>
+          <p className="text-gray-400">{profile.last_name}</p>
         </div>
+
         <div className="flex justify-between w-full border-b mb-2">
           <p>Bio</p>
           <p className="text-gray-400">{profile.bio}</p>
         </div>
+
         <div className="flex justify-between w-full border-b mb-3">
           <p>Phone Number</p>
-          <p className="text-gray-400">
-            {profile.phone_number}
-          </p>
+          <p className="text-gray-400">{profile.phone_number}</p>
         </div>
       </section>
 
       <section className="flex flex-col items-center max-w-lg mx-auto shadow-md rounded-lg bg-white m-5 lg:mt-0 pt-1 p-2 text-sm">
         <div className="flex justify-between w-full mb-5">
           <p className="py-1">Address</p>
-          <div className="h-6 pt-[2px] my-auto px-[7px] hover:bg-red-100 rounded-md cursor-pointer space-x-1 -mx-2">
-            <div />
-          </div>
+          <div className="h-6 pt-[2px] my-auto px-[7px] hover:bg-red-100 rounded-md cursor-pointer space-x-1 -mx-2"></div>
         </div>
 
         <div className="flex justify-between w-full border-b mb-2">
           <p>Country</p>
-          <p className="text-gray-400">
-            {profile.country}
-          </p>
+          <p className="text-gray-400">{profile.country}</p>
         </div>
 
         <div className="flex justify-between w-full border-b mb-3">
@@ -251,6 +217,7 @@ const Profile = () => {
           </p>
         </div>
       </section>
+
       <FormModal
         isOpen={openModal}
         onClose={() => setOpenModal(false)}

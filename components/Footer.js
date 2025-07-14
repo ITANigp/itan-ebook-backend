@@ -78,14 +78,14 @@ const Footer = ({ styles }) => {
               width={60}
               height={20}
               alt="itan logo"
-              className="lg:w-16 -ml-4 lg:-mb-3"
+              className="lg:w-12 -ml-4 lg:-mb-2"
             />
           </Link>
-          <p
+          {/* <p
             className={`${bricolage.className} text-gray-200 text-[21px] md:text-[24px] lg:text-3xl font-bold -mb-1 lg:-mb-3 -ml-3`}
           >
             Global Publishing
-          </p>
+          </p> */}
         </div>
 
         {/* About Itan */}
