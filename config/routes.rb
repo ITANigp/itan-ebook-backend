@@ -101,6 +101,7 @@ Rails.application.routes.draw do
         resource :banking_details, only: [:show, :update] do
           post :verify
           get :banks
+          post :verify_account_preview
         end
       end
 
