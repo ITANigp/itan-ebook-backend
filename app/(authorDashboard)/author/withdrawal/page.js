@@ -9,7 +9,6 @@ import { getPaymentSummary } from "@/utils/payment";
 
 
 export default function WalletPage() {
-  // ──────────────────────────────────────────────────────────────────────
   const [showModal, setShowModal] = useState(false);
 
   const [banks, setBanks] = useState([]);
@@ -83,7 +82,8 @@ useEffect(() => {
 
       try {
         const res = await api.post(
-          "http://localhost:3000/api/v1/author/banking_details/verify",
+          // "/author/banking_details/verify",
+          "/author/banking_details/verify_account_preview",
           {
             bank_code: bankCode,
             account_number: accountNumber,
@@ -132,8 +132,6 @@ useEffect(() => {
       return;
     }
 
-    // This check becomes less critical if auto-populating, but still good as a fallback
-    // In a real scenario, you might entirely rely on the verifiedAccountName for submission
     if (
       verifiedAccountName &&
       verifiedAccountName.toLowerCase() !== accountName.toLowerCase()
@@ -146,24 +144,28 @@ useEffect(() => {
     }
 
     try {
+      // Find the selected bank object by bankCode
+      const selectedBank = banks.find((b) => b.code === bankCode);
+
       const res = await api.put(
         "/author/banking_details",
         {
           banking_detail: {
             bank_code: bankCode,
+            bank_name: selectedBank?.name || "",
+            currency: selectedBank?.currency || "",
             account_number: accountNumber,
-            account_name: accountName, // Using the (potentially auto-filled) user-entered account name
+            account_name: accountName,
           },
         },
         { "Content-Type": "application/json" }
       );
 
-      if (res.data?.active) {
+      if (res.data?.success) {
         setMessage(res.data.message || "Banking details updated!");
-        // Clear form / force re-fetch wallet balance here if needed
-        setShowModal(false);
+        setShowModal(false); // Optionally close the modal
       } else {
-        console.log("Bank Details Err: ", res)
+        console.log("Bank Details Err: ", res);
         setError("Something went wrong.");
       }
     } catch (err) {
@@ -172,6 +174,7 @@ useEffect(() => {
       setSubmitting(false);
     }
   };
+
 
   return (
     <main className="relative mt-12 flex min-h-screen flex-col items-center justify-start bg-white px-4 py-10">
