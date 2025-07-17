@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purchase Receipt</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+      .header {
+        background-color: #2c3e50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-radius: 8px 8px 0 0;
+      }
+      .content {
+        background-color: #f9f9f9;
+        padding: 30px;
+        border-radius: 0 0 8px 8px;
+      }
+      .receipt-details {
+        background-color: white;
+        padding: 20px;
+        margin: 20px 0;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      }
+      .book-info {
+        background-color: #e8f5e8;
+        padding: 15px;
+        margin: 15px 0;
+        border-radius: 6px;
+        border-left: 4px solid #27ae60;
+      }
+      .amount {
+        font-size: 24px;
+        font-weight: bold;
+        color: #27ae60;
+        text-align: center;
+        margin: 20px 0;
+      }
+      .reading-link {
+        background-color: #3498db;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        border-radius: 6px;
+        display: inline-block;
+        margin: 20px 0;
+      }
+      .footer {
+        margin-top: 30px;
+        text-align: center;
+        font-size: 12px;
+        color: #666;
+      }
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 10px 0;
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+      }
+      .detail-label {
+        font-weight: bold;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>📚 Purchase Receipt</h1>
+      <p>Thank you for your purchase!</p>
+    </div>
+    <div class="content">
+      <p>Hello <%= @reader.first_name %>,</p>
+      <p>Your purchase has been successfully processed. Here are the details:</p>
+      <div class="receipt-details">
+        <div class="detail-row">
+          <span class="detail-label">Transaction Reference:</span>
+          <span><%= @transaction_reference %></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Purchase Date:</span>
+          <span><%= @purchase_date %></span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Content Type:</span>
+          <span><%= @content_type %></span>
+        </div>
+        <div class="amount">
+          Total: $<%= @amount %>
+        </div>
+      </div>
+      <div class="book-info">
+        <h3>📖 Book Details</h3>
+        <p><strong>Title:</strong> <%= @book.title %></p>
+        <p><strong>Author:</strong> <%= @author.first_name %> <%= @author.last_name %></p>
+        <% if @book.description.present? %>
+          <p><strong>Description:</strong> <%= truncate(@book.description, length: 200) %></p>
+        <% end %>
+      </div>
+      <div style="text-align: center; margin: 30px 0;">
+        <p><strong>Ready to start reading?</strong></p>
+        <a href="<%= ENV['FRONTEND_URL'] %>/read/<%= @book.id %>?token=<%= @reading_token %>" class="reading-link">
+          🚀 Start Reading Now
+        </a>
+        <p style="font-size: 12px; color: #666; margin-top: 10px;">
+          This reading link is valid for 4 hours. You can always access your book from your library.
+        </p>
+      </div>
+      <div style="background-color: #fff3cd; padding: 15px; border-radius: 6px; margin: 20px 0;">
+        <h4>📱 Access Your Library</h4>
+        <p>You can access this book anytime from your personal library at:</p>
+        <p><a href="<%= ENV['FRONTEND_URL'] %>/library"><%= ENV['FRONTEND_URL'] %>/library</a></p>
+      </div>
+      <div class="footer">
+        <p>Thank you for choosing our platform!</p>
+        <p>If you have any questions, please contact our support team.</p>
+        <p>
+          <strong>ITAN E-Book Platform</strong><br>
+          Email: support@itan-ebook.com
+        </p>
+      </div>
+    </div>
+  </body>
+</html>
