@@ -46,6 +46,10 @@ class Api::V1::PurchasesController < ApplicationController
     # 3. Update purchase status directly - IMPORTANT: No validation checks
     if purchase.update(purchase_status: 'completed')      
       RevenueCalculationService.new(purchase).calculate
+      
+      # Send purchase receipt email to reader
+      ReaderMailer.purchase_receipt(purchase).deliver_later
+      
       render json: {
         status: { code: 200, message: 'Payment verified successfully' },
         data: { purchase_id: purchase.id }
