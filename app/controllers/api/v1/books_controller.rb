@@ -102,10 +102,14 @@ class Api::V1::BooksController < ApplicationController
         return render json: { error: 'Invalid or expired token' }, status: :forbidden
       end   
       
+      # Find the reader from the token
+      reader = Reader.find(payload['sub'])
+      
       # Serve different content based on type
       book = Book.find(params[:id])
       
-      unless current_reader&.trial_active? || current_reader&.owns_book?(book)
+      # Check access: either trial is active OR reader owns the book
+      unless reader.trial_active? || reader.owns_book?(book)
         return render json: { error: 'Access denied. Please purchase this book or use your free trial.' }, status: :payment_required
       end
       
@@ -149,6 +153,9 @@ class Api::V1::BooksController < ApplicationController
       end
     rescue JWT::DecodeError
       render json: { error: 'Invalid reading token' }, status: :unauthorized
+    rescue ActiveRecord::RecordNotFound => e
+      Rails.logger.error "Record not found in content method: #{e.message}"
+      render json: { error: 'Resource not found' }, status: :not_found
     rescue StandardError => e
       Rails.logger.error "Error serving book content: #{e.message}\n#{e.backtrace.join("\n")}"
       render json: { error: 'Error retrieving book content' }, status: :internal_server_error
