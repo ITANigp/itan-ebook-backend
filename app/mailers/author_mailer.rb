@@ -32,9 +32,9 @@ class AuthorMailer < Devise::Mailer
     # Properly calculate business days with error handling
     begin
       # This is the correct syntax for the business_time gem
-      @estimated_transfer_date = (@payment_date + 30.days).strftime('%B %d, %Y')
+      @estimated_transfer_date = (@payment_date + 14.days).strftime('%B %d, %Y')
     rescue => e      
-      @estimated_deposit_date = (@payment_date + 30.days).strftime('%B %d, %Y')
+      @estimated_deposit_date = (@payment_date + 14.days).strftime('%B %d, %Y')
     end
     
     mail(

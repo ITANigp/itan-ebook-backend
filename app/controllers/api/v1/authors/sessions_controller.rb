@@ -93,10 +93,10 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
 
   def verify_recaptcha_token(token)
       # Skip verification in development environment
-    # if Rails.env.development?
-    #   Rails.logger.warn "⚠️ BYPASSING reCAPTCHA verification in development!"
-    #   return true
-    # end
+    if Rails.env.development?
+      Rails.logger.warn "⚠️ BYPASSING reCAPTCHA verification in development!"
+      return true
+    end
         
     uri = URI('https://www.google.com/recaptcha/api/siteverify')
     
