@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_06_102255) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_16_203159) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -66,6 +66,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_06_102255) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "resolved_account_name"
+    t.string "bank_name"
     t.index ["author_id"], name: "index_author_banking_details_on_author_id"
     t.index ["recipient_code"], name: "index_author_banking_details_on_recipient_code", unique: true
   end

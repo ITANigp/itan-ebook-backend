@@ -2,6 +2,9 @@ class AuthorBankingDetail < ApplicationRecord
     # Associations
     belongs_to :author
     
+    # Callbacks
+    before_save :clear_verification_if_account_changed
+    
     # Validations
     validates :account_name, presence: true
     validates :account_number, presence: true, 
@@ -89,6 +92,17 @@ class AuthorBankingDetail < ApplicationRecord
         Rails.logger.error "Exception during verification: #{e.message}"
         errors.add(:base, "Verification service error: #{e.message}")
         return false
+      end
+    end
+
+    private
+
+    def clear_verification_if_account_changed
+      # If account_number or bank_code is changed, clear the verification
+      if account_number_changed? || bank_code_changed?
+        self.verified_at = nil
+        self.recipient_code = nil
+        self.resolved_account_name = nil
       end
     end
   end
