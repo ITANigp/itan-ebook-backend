@@ -59,4 +59,4 @@ EXPOSE 3000
 CMD ["./bin/rails", "server"]
 
 # And make sure this line exists (or replace CMD):
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "8080"]
+CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
