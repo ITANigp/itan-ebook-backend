@@ -117,9 +117,6 @@ class PaymentVerificationService
     
     Rails.logger.info "Payment completed and revenue calculated for purchase: #{purchase.id}"
   end
-    
-    Rails.logger.info "Payment completed for purchase: #{purchase.id}"
-  end
   
   def mark_as_failed!(reason)
     Purchase.transaction do
