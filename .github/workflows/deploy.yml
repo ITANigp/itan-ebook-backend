@@ -1,4 +1,4 @@
-name: Build and Deploy
+name: Build and Deploy to ECR
 
 on:
   push:
@@ -7,11 +7,10 @@ on:
 
 jobs:
   build-and-push:
-    name: Build and Push Docker Image to ECR
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Configure AWS credentials
@@ -25,25 +24,21 @@ jobs:
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build Docker image
+      - name: Build Docker image WITHOUT broken ENTRYPOINT
         run: |
-          docker build -t itan:latest .
+          docker build \
+            --tag itan:latest \
+            --build-arg RAILS_ENV=production \
+            --entrypoint "" .
 
-      - name: Tag Docker image for ECR
+      - name: Tag image for ECR
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY=itan
           IMAGE_TAG=latest
           docker tag itan:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-      - name: Override Dockerfile ENTRYPOINT (strip it)
-        run: |
-          docker tag itan:latest itan-temp
-          docker create --name temp itan-temp
-          docker export temp | docker import - itan:latest
-          docker rm temp
-
-      - name: Push Docker image to ECR
+      - name: Push to Amazon ECR
         run: |
           ECR_REGISTRY=${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY=itan
