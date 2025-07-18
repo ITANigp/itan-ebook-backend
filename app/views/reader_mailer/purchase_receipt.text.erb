@@ -1,0 +1,24 @@
+PURCHASE RECEIPT
+===============
+Hello <%= @reader.first_name %>,
+Your purchase has been successfully processed. Here are the details:
+TRANSACTION DETAILS:
+- Transaction Reference: <%= @transaction_reference %>
+- Purchase Date: <%= @purchase_date %>
+- Content Type: <%= @content_type %>
+- Total Amount: $<%= @amount %>
+BOOK DETAILS:
+- Title: <%= @book.title %>
+- Author: <%= @author.first_name %> <%= @author.last_name %>
+<% if @book.description.present? %>
+  - Description: <%= truncate(@book.description, length: 200) %>
+<% end %>
+READING ACCESS:
+You can start reading immediately using this link:
+<%= ENV['FRONTEND_URL'] %>/read/<%= @book.id %>?token=<%= @reading_token %>
+This reading link is valid for 4 hours. You can always access your book from your library at:
+<%= ENV['FRONTEND_URL'] %>/library
+Thank you for choosing our platform!
+If you have any questions, please contact our support team.
+ITAN E-Book Platform
+Email: support@itan.app

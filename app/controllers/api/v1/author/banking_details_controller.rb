@@ -18,10 +18,30 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
   def update
     banking_detail = current_author.author_banking_detail || current_author.build_author_banking_detail
     
+    # First update the banking details
     if banking_detail.update(banking_detail_params)
-      render json: banking_detail, status: :ok
+      # Always verify the account for banking details updates
+      if banking_detail.verify_account!
+        render json: { 
+          success: true,
+          banking_detail: banking_detail.as_json,
+          account_name: banking_detail.resolved_account_name,
+          verified: true,
+          message: "Banking details updated and account verified successfully"
+        }
+      else
+        render json: { 
+          success: false, 
+          banking_detail: banking_detail.as_json,
+          verified: false,
+          errors: banking_detail.errors.full_messages 
+        }, status: :unprocessable_entity
+      end
     else
-      render json: { errors: banking_detail.errors.full_messages }, status: :unprocessable_entity
+      render json: { 
+        success: false,
+        errors: banking_detail.errors.full_messages 
+      }, status: :unprocessable_entity
     end
   end
   
@@ -64,12 +84,52 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
       }, status: :service_unavailable
     end
   end
+
+  # New endpoint for real-time account verification during form filling
+  def verify_account_preview
+    account_number = params[:account_number]
+    bank_code = params[:bank_code]
+    
+    if account_number.blank? || bank_code.blank?
+      render json: { 
+        success: false, 
+        error: "Account number and bank code are required" 
+      }, status: :bad_request
+      return
+    end
+    
+    begin
+      Rails.logger.info "Previewing account verification: #{account_number}, #{bank_code}"
+      response = PaystackService.resolve_account(account_number, bank_code)
+      
+      if response["status"] == true
+        render json: { 
+          success: true,
+          account_name: response["data"]["account_name"],
+          account_number: account_number,
+          bank_code: bank_code,
+          message: "Account verified successfully"
+        }
+      else
+        error_message = response["message"] || "Unknown error"
+        render json: { 
+          success: false, 
+          error: error_message 
+        }, status: :unprocessable_entity
+      end
+    rescue => e
+      Rails.logger.error "Exception during account preview: #{e.message}"
+      render json: { 
+        success: false, 
+        error: "Verification service error: #{e.message}" 
+      }, status: :service_unavailable
+    end
+  end
   
   private
   
   def banking_detail_params
-    params.require(:banking_detail).permit(:bank_name, :account_number, :account_name, 
-                                          :bank_code, :swift_code, :routing_number, :currency)
+  params.require(:banking_detail).permit(:bank_name, :account_number, :account_name, :bank_code)
   end
 
   def authenticate_author!
