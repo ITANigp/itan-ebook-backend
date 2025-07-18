@@ -53,6 +53,7 @@ Rails.application.routes.draw do
             post :process_payments
             post :transfer_funds
             get :processed_batches
+            get :transferred_batches
             get :transferred_authors
           end
         end
@@ -101,6 +102,7 @@ Rails.application.routes.draw do
         resource :banking_details, only: [:show, :update] do
           post :verify
           get :banks
+          post :verify_account_preview
         end
       end
 

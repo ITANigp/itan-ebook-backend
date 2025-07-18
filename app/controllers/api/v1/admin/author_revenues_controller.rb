@@ -39,35 +39,60 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
   end
 
   def processed_batches
-    # Get all batch IDs that have at least one transferred record
-    transferred_batch_ids = AuthorRevenue.where(status: 'transferred').distinct.pluck(:payment_batch_id)
-  
-    # Get only batches that have approved records and are NOT in transferred batches
-    processed_batches = AuthorRevenue.where(status: 'approved')
-                                     .where.not(payment_batch_id: transferred_batch_ids)
-                                     .group(:payment_batch_id)
-                                     .select('payment_batch_id, SUM(amount) as total_amount, COUNT(*) as items_count, MIN(paid_at) as approved_date')
-                                     .order('approved_date DESC')
-                                     .page(params[:page]).per(20)
+    # Get all batches that have been processed (approved or transferred)
+    batch_results = AuthorRevenue.where(status: ['approved', 'transferred'])
+                                .where.not(payment_batch_id: nil)
+                                .group(:payment_batch_id)
+                                .select('payment_batch_id, SUM(amount) as total_amount, COUNT(*) as items_count, MIN(paid_at) as approved_date, 
+                                        COUNT(CASE WHEN status = \'approved\' THEN 1 END) as approved_count,
+                                        COUNT(CASE WHEN status = \'transferred\' THEN 1 END) as transferred_count')
+                                .order('MIN(paid_at) DESC')
+                                .to_a
+    
+    # Paginate manually
+    total_count = batch_results.length
+    page = (params[:page] || 1).to_i
+    per_page = 20
+    
+    total_pages = (total_count.to_f / per_page).ceil
+    offset = (page - 1) * per_page
+    paginated_batches = batch_results[offset, per_page] || []
   
     render json: {
-      processed_batches: processed_batches.map { |batch|
-        authors = Author.joins(:author_revenues)
-                        .where(author_revenues: { payment_batch_id: batch.payment_batch_id })
-                        .distinct
-  
-        {
-          batch_id: batch.payment_batch_id,
-          total_amount: batch.total_amount,
-          items_count: batch.items_count,
-          approved_date: batch.approved_date&.iso8601,
-          authors: authors.map { |a| { id: a.id, name: "#{a.first_name} #{a.last_name}", email: a.email } }
-        }
-      },
+      processed_batches: build_processed_batches_response(paginated_batches),
       pagination: {
-        total_pages: processed_batches.total_pages,
-        current_page: processed_batches.current_page,
-        total_count: processed_batches.total_count
+        total_pages: total_pages,
+        current_page: page,
+        total_count: total_count
+      }
+    }
+  end
+
+  def transferred_batches
+    # Get only batches that have been fully transferred
+    batch_results = AuthorRevenue.where(status: 'transferred')
+                                .where.not(payment_batch_id: nil)
+                                .group(:payment_batch_id)
+                                .select('payment_batch_id, SUM(amount) as total_amount, COUNT(*) as items_count, 
+                                        MIN(paid_at) as approved_date, MAX(updated_at) as transferred_date')
+                                .order('MAX(updated_at) DESC')
+                                .to_a
+    
+    # Paginate manually
+    total_count = batch_results.length
+    page = (params[:page] || 1).to_i
+    per_page = 20
+    
+    total_pages = (total_count.to_f / per_page).ceil
+    offset = (page - 1) * per_page
+    paginated_batches = batch_results[offset, per_page] || []
+  
+    render json: {
+      transferred_batches: build_transferred_batches_response(paginated_batches),
+      pagination: {
+        total_pages: total_pages,
+        current_page: page,
+        total_count: total_count
       }
     }
   end
@@ -234,11 +259,11 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
     # Check if payments in this batch are ready for transfer
     earliest_approval = batch_payments.minimum(:paid_at)
     
-    if earliest_approval && earliest_approval > 30.days.ago
-      days_remaining = (earliest_approval + 30.days - Time.current).to_i / 1.day
+    if earliest_approval && earliest_approval > 14.days.ago
+      days_remaining = (earliest_approval + 14.days - Time.current).to_i / 1.day
       render json: { 
         error: "Payments not yet eligible for transfer", 
-        eligible_date: (earliest_approval + 30.days).strftime('%Y-%m-%d'),
+        eligible_date: (earliest_approval + 14.days).strftime('%Y-%m-%d'),
         days_remaining: days_remaining
       }, status: :unprocessable_entity
       return
@@ -291,10 +316,59 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
     end.round(2)
   end
 
-  def authenticate_admin!
-    unless current_admin
-      render json: { error: "Unauthorized" }, status: :unauthorized
-      return
+  def build_processed_batches_response(processed_batches)
+    processed_batches.map do |batch|
+      authors = Author.joins(:author_revenues)
+                      .where(author_revenues: { payment_batch_id: batch.payment_batch_id })
+                      .distinct
+
+      # Determine batch status based on counts
+      batch_status = if batch.try(:transferred_count) && batch.transferred_count > 0
+                      batch.approved_count > 0 ? 'partially_transferred' : 'transferred'
+                    else
+                      'approved'
+                    end
+
+      {
+        batch_id: batch.payment_batch_id,
+        total_amount: batch.total_amount,
+        items_count: batch.items_count,
+        approved_date: batch.approved_date&.iso8601,
+        status: batch_status,
+        approved_count: batch.try(:approved_count) || 0,
+        transferred_count: batch.try(:transferred_count) || 0,
+        authors: authors.map do |author|
+          {
+            id: author.id,
+            name: "#{author.first_name} #{author.last_name}",
+            email: author.email
+          }
+        end
+      }
+    end
+  end
+
+  def build_transferred_batches_response(transferred_batches)
+    transferred_batches.map do |batch|
+      authors = Author.joins(:author_revenues)
+                      .where(author_revenues: { payment_batch_id: batch.payment_batch_id, status: 'transferred' })
+                      .distinct
+
+      {
+        batch_id: batch.payment_batch_id,
+        total_amount: batch.total_amount,
+        items_count: batch.items_count,
+        approved_date: batch.approved_date&.iso8601,
+        transferred_date: batch.transferred_date&.iso8601,
+        status: 'transferred',
+        authors: authors.map do |author|
+          {
+            id: author.id,
+            name: "#{author.first_name} #{author.last_name}",
+            email: author.email
+          }
+        end
+      }
     end
   end
 end
