@@ -47,11 +47,4 @@ class Api::V1::Admin::AuthorsController < ApplicationController
       
       render json: response
     end
-
-    def authenticate_admin!
-      unless current_admin
-        render json: { error: "Unauthorized" }, status: :unauthorized
-        return
-      end
-    end
   end
