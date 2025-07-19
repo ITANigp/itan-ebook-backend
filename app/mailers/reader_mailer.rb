@@ -11,7 +11,7 @@ class ReaderMailer < ApplicationMailer
     @purchase_date = @purchase.created_at.strftime('%B %d, %Y at %I:%M %p')
     @transaction_reference = @purchase.transaction_reference
     @content_type = @purchase.content_type.capitalize
-    @amount = sprintf('%.2f', @purchase.amount)
+    @amount = sprintf('%.2f', @purchase.amount/100.0)
     
     # Generate reading token for immediate access
     @reading_token = generate_reading_token(@purchase)
