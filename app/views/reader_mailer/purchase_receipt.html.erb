@@ -96,7 +96,7 @@
           <span><%= @content_type %></span>
         </div>
         <div class="amount">
-          Total: $<%= @amount %>
+          Total: $<%= sprintf("%.2f", @amount / 100.0) %>
         </div>
       </div>
       <div class="book-info">
