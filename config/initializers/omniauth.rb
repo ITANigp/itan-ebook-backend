@@ -8,9 +8,13 @@ OmniAuth.config.request_validation_phase = Proc.new do |env|
   Rails.logger.info "OAuth attempt from IP: #{env['REMOTE_ADDR']}"
 end
 
-# Remove CSRF protection for OAuth callbacks in development
+# Development-specific configurations
 if Rails.env.development?
-  OmniAuth.config.test_mode = false
+  # Allow HTTP in development (HTTPS required in production)
+  OmniAuth.config.full_host = nil
+  
+  # Optional: Enable test mode for automated testing
+  # OmniAuth.config.test_mode = true  # Uncomment only for testing
 end
 
 # Production security settings
