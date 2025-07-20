@@ -5,8 +5,14 @@ Rails.application.routes.draw do
     confirmations: 'api/v1/authors/confirmations',
     passwords: 'api/v1/authors/passwords',
     omniauth_callbacks: 'api/v1/authors/omniauth_callbacks'
-  }, defaults: { format: :json },
-     path: 'api/v1/authors'
+  }, path: 'api/v1/authors'
+
+  # Specific JSON routes for API endpoints
+  devise_scope :author do
+    post '/api/v1/authors/sign_in', to: 'api/v1/authors/sessions#create', defaults: { format: :json }
+    delete '/api/v1/authors/sign_out', to: 'api/v1/authors/sessions#destroy', defaults: { format: :json }
+    post '/api/v1/authors', to: 'api/v1/authors/registrations#create', defaults: { format: :json }
+  end
 
   devise_for :admins, controllers: {
     sessions: 'api/v1/admins/sessions'
