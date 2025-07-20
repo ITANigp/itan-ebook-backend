@@ -90,22 +90,22 @@ class Api::V1::BooksController < ApplicationController
     token = request.headers['Authorization']&.split(' ')&.last
     
     unless token
-      return render json: { error: 'Reading token required' }, status: :unauthorized
+      return render json: { error: 'Authentication token required' }, status: :unauthorized
     end
     
     begin
       # Decode and verify token
       payload = JWT.decode(token, ENV['DEVISE_JWT_SECRET_KEY'], true, { algorithm: 'HS256' })[0]
       
-      # Check if token is for requested book and not expired
-      if payload['book_id'] != params[:id] || Time.at(payload['exp']) < Time.current
-        return render json: { error: 'Invalid or expired token' }, status: :forbidden
-      end   
+      # Check if token has expired
+       if Time.at(payload['exp']) < Time.current
+        return render json: { error: 'Token has expired' }, status: :unauthorized
+      end
       
       # Find the reader from the token
       reader = Reader.find(payload['sub'])
       
-      # Serve different content based on type
+      # Get the book
       book = Book.find(params[:id])
       
       # Check access: either trial is active OR reader owns the book
@@ -113,7 +113,13 @@ class Api::V1::BooksController < ApplicationController
         return render json: { error: 'Access denied. Please purchase this book or use your free trial.' }, status: :payment_required
       end
       
+      if payload['content_type'].present?
+        # This is a reading token (from purchase)
       content_type = payload['content_type']
+        else
+      # This is a regular reader token (from login) - default for trial
+      content_type = ENV.fetch('DEFAULT_TRIAL_CONTENT_TYPE', 'ebook')
+      end
       
       if content_type == 'ebook'
         # For ebooks: Return file URL or relevant data
