@@ -72,17 +72,38 @@ class Author < ApplicationRecord
     end
   end
 
-  # Add this method for OAuth functionality
+  # Add this method for OAuth functionality with security validations
   def self.from_omniauth(auth)
+    # Security validations
+    return nil unless auth&.info&.email&.present?
+    return nil unless auth.info.email.match?(URI::MailTo::EMAIL_REGEXP)
+    
+    # Optional: Restrict to specific email domains in production
+    if Rails.env.production?
+      allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com'] # Add your allowed domains
+      email_domain = auth.info.email.split('@').last.downcase
+      return nil unless allowed_domains.include?(email_domain)
+    end
+
+    # Log OAuth attempt for monitoring
+    Rails.logger.info "OAuth login attempt for email: #{auth.info.email}"
+
     where(provider: auth.provider, uid: auth.uid).first_or_create do |author|
       author.email = auth.info.email
       author.password = Devise.friendly_token[0, 20]
-      author.first_name = auth.info.first_name
-      author.last_name = auth.info.last_name
+      author.first_name = auth.info.first_name || auth.info.name&.split&.first
+      author.last_name = auth.info.last_name || auth.info.name&.split&.last
+      
+      # Auto-confirm OAuth users since their email is verified by the provider
+      author.confirmed_at = Time.current
+      author.skip_confirmation!
 
       # Attach profile image if available
       attach_profile_image(author, auth.info.image) if auth.info.image
     end
+  rescue => e
+    Rails.logger.error "OAuth error: #{e.message}"
+    nil
   end
 
   def self.attach_profile_image(author, image_url)
@@ -100,6 +121,13 @@ class Author < ApplicationRecord
     Rails.logger.error "Profile image download failed: #{e.message}"
   ensure
     temp_file&.close if temp_file.respond_to?(:close)
+  end
+
+  # Override password required for OAuth users
+  def password_required?
+    # Don't require password for OAuth users during updates unless they're setting one
+    return false if provider.present? && encrypted_password.blank? && password.blank?
+    super
   end
 
   def total_earnings
