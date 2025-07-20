@@ -48,14 +48,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
     password_value = params[:author][:password]
     password_confirmation_value = params[:author][:password_confirmation]
     
-    # Debug logging to see what we're getting
-    Rails.logger.info "OAuth password reset - Password length: #{password_value&.length}, Confirmation length: #{password_confirmation_value&.length}"
-    Rails.logger.info "Password (first 3 chars): '#{password_value&.first(3)}', Confirmation (first 3 chars): '#{password_confirmation_value&.first(3)}'"
-    Rails.logger.info "Password (last 3 chars): '#{password_value&.last(3)}', Confirmation (last 3 chars): '#{password_confirmation_value&.last(3)}'"
-    Rails.logger.info "Passwords match: #{password_value == password_confirmation_value}"
-    
-    # For OAuth users, we'll be more lenient with password confirmation
-    # If password meets minimum requirements, allow setting it
+  
     if password_value.present? && password_value.length >= 6
       # Use direct password setting for OAuth users
       author.password = password_value
