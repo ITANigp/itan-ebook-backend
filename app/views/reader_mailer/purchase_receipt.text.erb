@@ -6,7 +6,7 @@ TRANSACTION DETAILS:
 - Transaction Reference: <%= @transaction_reference %>
 - Purchase Date: <%= @purchase_date %>
 - Content Type: <%= @content_type %>
-- Total Amount: $<%= @amount %>
+- Total Amount: $<%= sprintf("%.2f", @amount / 100.0) %>
 BOOK DETAILS:
 - Title: <%= @book.title %>
 - Author: <%= @author.first_name %> <%= @author.last_name %>
