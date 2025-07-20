@@ -1,4 +1,9 @@
-class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksController  
+  # Handle OAuth initiation - let parent class handle it
+  def passthru
+    super
+  end
+
   # Google OAuth callback
   def google_oauth2
     author = Author.from_omniauth(request.env['omniauth.auth'])
@@ -10,41 +15,26 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
         # Send verification code
         author.send_two_factor_code
 
-        # Return partial sign-in response
-        render json: {
-          status: {
-            code: 202,
-            message: "Verification code sent to your #{author.preferred_2fa_method}",
-            requires_verification: true,
-            method: author.preferred_2fa_method
-          }
-        }
+        # Redirect to frontend with 2FA requirement
+        frontend_url = Rails.env.production? ? "https://publish.itan.app" : "http://localhost:9000"
+        redirect_to "#{frontend_url}/auth/verify-2fa"
       else
-        # Sign in without immediate redirect
+        # Sign in and redirect to frontend
         sign_in(author)
-
-        respond_to do |format|
-          format.html { redirect_to after_sign_in_path_for(author) }
-          format.json do
-            render json: {
-              status: { code: 200, message: 'Signed in successfully' },
-              data: AuthorSerializer.new(author).serializable_hash[:data][:attributes]
-            }
-          end
-        end
+        
+        frontend_url = Rails.env.production? ? "https://publish.itan.app" : "http://localhost:9000"
+        redirect_to "#{frontend_url}/auth/callback"
       end
     else
       # Handle case where author couldn't be created/found
-      render json: {
-        status: { code: 422, message: 'Google authentication failed' }
-      }, status: :unprocessable_entity
+      frontend_url = Rails.env.production? ? "https://publish.itan.app" : "http://localhost:9000"
+      redirect_to "#{frontend_url}/author/sign_up?error=oauth_failed"
     end
   end
 
   # Handle general OAuth failures
   def failure
-    render json: {
-      status: { code: 401, message: "Authentication failed: #{params[:message]}" }
-    }, status: :unauthorized
+    frontend_url = Rails.env.production? ? "https://publish.itan.app" : "http://localhost:9000"
+    redirect_to "#{frontend_url}/author/sign_up?error=#{params[:message]}"
   end
 end
