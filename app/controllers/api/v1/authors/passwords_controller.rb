@@ -23,7 +23,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
   def update
     # Find the author by reset token first
     author = Author.with_reset_password_token(params[:author][:reset_password_token])
-    
+
     if author && author.reset_password_period_valid?
       # For OAuth users, we need to handle password reset differently
       if author.provider.present?
@@ -46,21 +46,22 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
   def handle_oauth_password_reset(author)
     # Extract password values from the correct parameter structure
     password_value = params[:author][:password]
-    password_confirmation_value = params[:author][:password_confirmation]
-    
-  
+    params[:author][:password_confirmation]
+
+
     if password_value.present? && password_value.length >= 6
       # Use direct password setting for OAuth users
       author.password = password_value
-      author.password_confirmation = password_value  # Force confirmation to match
+      author.password_confirmation = password_value # Force confirmation to match
       author.reset_password_token = nil
       author.reset_password_sent_at = nil
       author.confirmed_at = Time.current if author.confirmed_at.nil?
-      
+
       if author.save
         Rails.logger.info "Password successfully set for OAuth user: #{author.email}"
         render json: {
-          status: { code: 200, message: 'Password reset successfully. You can now sign in with your email and new password.' }
+          status: { code: 200,
+                    message: 'Password reset successfully. You can now sign in with your email and new password.' }
         }
       else
         Rails.logger.error "Password reset failed for OAuth user #{author.email}: #{author.errors.full_messages}"
@@ -90,8 +91,6 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
       }, status: :unprocessable_entity
     end
   end
-
-  private
 
   def resource_params
     params.require(:author).permit(:email, :password, :password_confirmation, :reset_password_token)
