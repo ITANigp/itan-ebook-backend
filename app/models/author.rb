@@ -77,7 +77,7 @@ class Author < ApplicationRecord
     # Security validations
     return nil unless auth&.info&.email&.present?
     return nil unless auth.info.email.match?(URI::MailTo::EMAIL_REGEXP)
-    
+
     # Optional: Restrict to specific email domains in production
     if Rails.env.production?
       allowed_domains = ['gmail.com', 'yahoo.com', 'outlook.com'] # Add your allowed domains
@@ -93,7 +93,7 @@ class Author < ApplicationRecord
       author.password = Devise.friendly_token[0, 20]
       author.first_name = auth.info.first_name || auth.info.name&.split&.first
       author.last_name = auth.info.last_name || auth.info.name&.split&.last
-      
+
       # Auto-confirm OAuth users since their email is verified by the provider
       author.confirmed_at = Time.current
       author.skip_confirmation!
@@ -101,7 +101,7 @@ class Author < ApplicationRecord
       # Attach profile image if available
       attach_profile_image(author, auth.info.image) if auth.info.image
     end
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
     nil
   end
@@ -127,37 +127,38 @@ class Author < ApplicationRecord
   def password_required?
     # Don't require password for OAuth users during updates unless they're setting one
     return false if provider.present? && encrypted_password.blank? && password.blank?
+
     super
   end
 
   def total_earnings
     author_revenues.sum(:amount)
   end
-  
+
   def pending_earnings
     author_revenues.pending.sum(:amount)
   end
-  
+
   def approved_earnings
     author_revenues.approved.sum(:amount)
   end
-  
+
   def monthly_earnings(year = Date.current.year)
     result = {}
-    
+
     raw_data = author_revenues
       .where('extract(year from created_at) = ?', year)
-      .group("extract(month from created_at)")
+      .group('extract(month from created_at)')
       .sum(:amount)
-      
+
     raw_data.each do |month_num, amount|
       month_name = Date::MONTHNAMES[month_num.to_i]
       result[month_name] = amount
     end
-    
+
     result
   end
-  
+
   def book_earnings
     author_revenues
       .joins(purchase: :book)
@@ -167,9 +168,9 @@ class Author < ApplicationRecord
 
   def next_payment_date
     # Calculate next payment date (end of current month + 30 days)
-    (Date.today.end_of_month + 30.days).strftime("%B %d, %Y")
+    (Date.today.end_of_month + 30.days).strftime('%B %d, %Y')
   end
-  
+
   private
 
   def send_code_via_email(code)
