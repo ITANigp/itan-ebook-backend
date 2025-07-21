@@ -5,8 +5,7 @@ Rails.application.routes.draw do
     confirmations: 'api/v1/authors/confirmations',
     passwords: 'api/v1/authors/passwords',
     omniauth_callbacks: 'api/v1/authors/omniauth_callbacks'
-  }, defaults: { format: :json },
-     path: 'api/v1/authors'
+  }, path: 'api/v1/authors'
 
   devise_for :admins, controllers: {
     sessions: 'api/v1/admins/sessions'
@@ -130,7 +129,7 @@ Rails.application.routes.draw do
 
       #Reviews & likes
       resources :reviews, only: [:create, :destroy]
-      resources :likes, only: [:index, :create, :destroy]        
+      resources :likes, only: [:index, :create, :destroy]          
       resource :direct_uploads, only: [:create]
     end
   end
