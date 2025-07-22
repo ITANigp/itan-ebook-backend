@@ -19,6 +19,12 @@ end
 
 # Production security settings
 if Rails.env.production?
-  # Only allow HTTPS in production
-  OmniAuth.config.full_host = "https://your-backend-domain.com"
+  # Set the full host to ensure correct redirect URI generation  
+  backend_url = ENV['BACKEND_URL']
+  if backend_url.present?
+    OmniAuth.config.full_host = backend_url
+    Rails.logger.info "OmniAuth full_host set to: #{backend_url}"
+  else
+    Rails.logger.warn "BACKEND_URL not set - OmniAuth may generate incorrect redirect URIs"
+  end
 end
