@@ -88,21 +88,63 @@ class Author < ApplicationRecord
     # Log OAuth attempt for monitoring
     Rails.logger.info "OAuth login attempt for email: #{auth.info.email}"
 
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |author|
-      author.email = auth.info.email
-      author.password = Devise.friendly_token[0, 20]
-      author.first_name = auth.info.first_name || auth.info.name&.split&.first
-      author.last_name = auth.info.last_name || auth.info.name&.split&.last
+    # First, try to find existing OAuth user
+    author = where(provider: auth.provider, uid: auth.uid).first
 
-      # Auto-confirm OAuth users since their email is verified by the provider
-      author.confirmed_at = Time.current
-      author.skip_confirmation!
-
-      # Attach profile image if available
-      attach_profile_image(author, auth.info.image) if auth.info.image
+    if author
+      # Existing OAuth user - just return them
+      Rails.logger.info "Existing OAuth user found: #{author.email}"
+      return author
     end
+
+    # Check if author with this email already exists (regular signup)
+    existing_author = find_by(email: auth.info.email)
+    
+    if existing_author
+      # Link OAuth to existing author account
+      Rails.logger.info "Linking OAuth to existing author: #{existing_author.email}"
+      existing_author.update!(
+        provider: auth.provider,
+        uid: auth.uid,
+        confirmed_at: Time.current  # Ensure they're confirmed
+      )
+      
+      # Update profile info if missing
+      existing_author.update!(
+        first_name: auth.info.first_name || auth.info.name&.split&.first
+      ) if existing_author.first_name.blank?
+      
+      existing_author.update!(
+        last_name: auth.info.last_name || auth.info.name&.split&.last
+      ) if existing_author.last_name.blank?
+
+      # Attach profile image if available and not already set
+      if auth.info.image && !existing_author.author_profile_image.attached?
+        attach_profile_image(existing_author, auth.info.image)
+      end
+
+      return existing_author
+    end
+
+    # Create new OAuth user
+    Rails.logger.info "Creating new OAuth user: #{auth.info.email}"
+    create!(
+      provider: auth.provider,
+      uid: auth.uid,
+      email: auth.info.email,
+      password: Devise.friendly_token[0, 20],
+      first_name: auth.info.first_name || auth.info.name&.split&.first,
+      last_name: auth.info.last_name || auth.info.name&.split&.last,
+      confirmed_at: Time.current
+    ).tap do |new_author|
+      new_author.skip_confirmation!
+      # Attach profile image if available
+      attach_profile_image(new_author, auth.info.image) if auth.info.image
+    end
+
   rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
+    Rails.logger.error "Auth info: provider=#{auth.provider}, uid=#{auth.uid}, email=#{auth.info.email}"
     nil
   end
 
