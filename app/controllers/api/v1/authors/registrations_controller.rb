@@ -79,7 +79,6 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   def create_author_with_confirmation_check
     # Build the author without saving to database yet
     self.resource = resource_class.new(sign_up_params)
-    resource.skip_confirmation_notification! # Prevent automatic email sending
     
     # Validate the author first
     unless resource.valid?
@@ -88,35 +87,41 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
       return
     end
 
-    # Test email sending capability before saving to database
-    Rails.logger.info "Testing email delivery capability..."
+    # Use database transaction to ensure atomicity
+    Rails.logger.info "Creating author with email confirmation check..."
     
     begin
-      # Generate confirmation token without saving
-      resource.confirmation_token = resource.class.confirmation_token
-      resource.confirmation_sent_at = Time.current
-      
-      # Try to send the confirmation email
-      resource.send_confirmation_instructions
-      Rails.logger.info "Confirmation email sent successfully"
-      
-      # Only save to database after email is successfully sent
-      if resource.save
-        Rails.logger.info "Author saved to database successfully after email confirmation"
-        respond_with(resource, {})
-      else
-        Rails.logger.error "Failed to save author after email sent: #{resource.errors.full_messages.join(', ')}"
-        respond_with(resource, {})
+      ActiveRecord::Base.transaction do
+        # Save the author to generate proper confirmation token
+        resource.save!
+        Rails.logger.info "Author saved to database successfully"
+        
+        # Try to send confirmation email
+        resource.send_confirmation_instructions
+        Rails.logger.info "Confirmation email sent successfully"
+        
+        # If we get here, both save and email sending succeeded
       end
+      
+      # Respond with success only after transaction completes
+      respond_with(resource, {})
       
     rescue Net::SMTPError, Net::OpenTimeout, Net::ReadTimeout => e
       Rails.logger.error "Email delivery failed: #{e.message}"
-      # Add custom error to resource without saving to database
-      resource.errors.add(:email, "could not be delivered. Please check your email address.")
+      # Transaction will rollback automatically, removing the author from database
+      # Create a new resource instance for error response since the original was rolled back
+      self.resource = resource_class.new(sign_up_params)
+      resource.validate # Populate any validation errors
+      resource.errors.add(:email, "could not be delivered. Please check your email address and try again.")
       respond_with(resource, {})
     rescue StandardError => e
-      Rails.logger.error "Unexpected error during email sending: #{e.message}"
-      resource.errors.add(:base, "Registration failed due to email delivery issues. Please try again.")
+      Rails.logger.error "Unexpected error during registration: #{e.message}"
+      Rails.logger.error "Error backtrace: #{e.backtrace.first(3).join('\n')}"
+      # Transaction will rollback automatically
+      # Create a new resource instance for error response
+      self.resource = resource_class.new(sign_up_params)
+      resource.validate # Populate any validation errors
+      resource.errors.add(:base, "Registration failed. Please try again.")
       respond_with(resource, {})
     end
   end
