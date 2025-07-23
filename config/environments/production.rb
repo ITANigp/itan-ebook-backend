@@ -37,8 +37,8 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { 
-  host: 'itan-ebook-backend.onrender.com',
-  protocol: 'https' 
+    host: ENV['BACKEND_URL'] || 'wwbdrkum9h.eu-west-1.awsapprunner.com',
+    protocol: 'https' 
   } 
   
   config.action_mailer.smtp_settings = {
@@ -56,7 +56,7 @@ Rails.application.configure do
 
   config.active_storage.direct_upload = true
 
-  Rails.application.routes.default_url_options[:host] = 'itan-ebook-backend.onrender.com'
+  Rails.application.routes.default_url_options[:host] = ENV['BACKEND_URL'] || 'wwbdrkum9h.eu-west-1.awsapprunner.com'
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
