@@ -13,7 +13,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     # Do nothing as flash is not available in API-only apps
   end
 
-  # Override the create method to add reCAPTCHA verification
+  # Override the create method to add reCAPTCHA verification and ensure email confirmation
   def create
     # Add more verbose debugging
     params_token = params[:author][:captchaToken]
@@ -39,7 +39,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
 
     # Continue with your existing code...
     if recaptcha_valid
-      # Remove captchaToken from params before calling super
+      # Remove captchaToken from params before processing
       params[:author].delete(:captchaToken)
       
       begin
@@ -50,7 +50,9 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
         ActiveRecord::Base.connection.execute('SELECT 1')
         Rails.logger.info "Database connection successful!"
         
-        super
+        # Custom registration logic to ensure email is sent before saving
+        create_author_with_confirmation_check
+        
       rescue PG::Error => e
         Rails.logger.error "PostgreSQL error during registration: #{e.message}"
         render json: {
@@ -72,6 +74,52 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   end
 
   private
+
+  # Custom method to create author with confirmation email check
+  def create_author_with_confirmation_check
+    # Build the author without saving to database yet
+    self.resource = resource_class.new(sign_up_params)
+    resource.skip_confirmation_notification! # Prevent automatic email sending
+    
+    # Validate the author first
+    unless resource.valid?
+      Rails.logger.error "Author validation failed: #{resource.errors.full_messages.join(', ')}"
+      respond_with(resource, {})
+      return
+    end
+
+    # Test email sending capability before saving to database
+    Rails.logger.info "Testing email delivery capability..."
+    
+    begin
+      # Generate confirmation token without saving
+      resource.confirmation_token = resource.class.confirmation_token
+      resource.confirmation_sent_at = Time.current
+      
+      # Try to send the confirmation email
+      resource.send_confirmation_instructions
+      Rails.logger.info "Confirmation email sent successfully"
+      
+      # Only save to database after email is successfully sent
+      if resource.save
+        Rails.logger.info "Author saved to database successfully after email confirmation"
+        respond_with(resource, {})
+      else
+        Rails.logger.error "Failed to save author after email sent: #{resource.errors.full_messages.join(', ')}"
+        respond_with(resource, {})
+      end
+      
+    rescue Net::SMTPError, Net::OpenTimeout, Net::ReadTimeout => e
+      Rails.logger.error "Email delivery failed: #{e.message}"
+      # Add custom error to resource without saving to database
+      resource.errors.add(:email, "could not be delivered. Please check your email address.")
+      respond_with(resource, {})
+    rescue StandardError => e
+      Rails.logger.error "Unexpected error during email sending: #{e.message}"
+      resource.errors.add(:base, "Registration failed due to email delivery issues. Please try again.")
+      respond_with(resource, {})
+    end
+  end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
@@ -97,6 +145,6 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   end
 
   def sign_up_params
-    params.require(:author).permit(:email, :password, :captchaToken)
+    params.require(:author).permit(:email, :password, :password_confirmation, :first_name, :last_name, :captchaToken)
   end
 end
