@@ -7,15 +7,20 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://develop.dh6o3qh0ijr1u.amplifyapp.com", "https://itan.app", "https://publish.itan.app", "http://localhost:9000", "http://localhost:7000"
+    origins "https://develop.dh6o3qh0ijr1u.amplifyapp.com", 
+            "https://itan.app", 
+            "https://publish.itan.app", 
+            "http://localhost:9000", 
+            "http://localhost:7000"
 
     # Explicitly specify the ActiveStorage paths
     resource "/rails/active_storage/direct_uploads",
       headers: :any,
-      methods: [:post],
+      methods: [:post, :options],
       credentials: true,
       expose: ['ETag']
     
+    # Allow all API endpoints with OPTIONS for preflight
     resource "*",
       headers: :any,
       methods: [:get, :post, :put, :patch, :delete, :options, :head], 
