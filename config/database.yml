@@ -82,8 +82,8 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
-  database: itan_audiobook_backend_production
-  username: postgres
-  password: <%= ENV["APP_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
   url: <%= ENV['DATABASE_URL'] %>
