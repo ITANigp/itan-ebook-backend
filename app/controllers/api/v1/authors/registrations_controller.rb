@@ -41,7 +41,29 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     if recaptcha_valid
       # Remove captchaToken from params before calling super
       params[:author].delete(:captchaToken)
-      super
+      
+      begin
+        Rails.logger.info "Attempting to create author with email: #{params[:author][:email]}"
+        
+        # Test database connection first
+        Rails.logger.info "Testing database connection..."
+        ActiveRecord::Base.connection.execute('SELECT 1')
+        Rails.logger.info "Database connection successful!"
+        
+        super
+      rescue PG::Error => e
+        Rails.logger.error "PostgreSQL error during registration: #{e.message}"
+        render json: {
+          status: { code: '500', message: 'Database connection failed. Please try again.' }
+        }, status: :internal_server_error
+      rescue StandardError => e
+        Rails.logger.error "General error during registration: #{e.message}"
+        Rails.logger.error "Error class: #{e.class}"
+        Rails.logger.error "Backtrace: #{e.backtrace.first(5).join('\n')}"
+        render json: {
+          status: { code: '500', message: 'Registration failed due to server error. Please try again.' }
+        }, status: :internal_server_error
+      end
     else
       render json: {
         status: { code: '422', message: 'reCAPTCHA verification failed' }

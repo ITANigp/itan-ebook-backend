@@ -1,0 +1,17 @@
+#!/bin/bash
+set -e
+
+echo "=== App Runner Startup Script ==="
+echo "Current directory: $(pwd)"
+echo "DATABASE_URL is set: $(if [ -n "$DATABASE_URL" ]; then echo "YES"; else echo "NO"; fi)"
+echo "RAILS_ENV: $RAILS_ENV"
+
+echo "=== Running database migrations ==="
+if bundle exec rails db:migrate; then
+  echo "=== Migrations completed successfully ==="
+else
+  echo "=== Migration failed, but continuing startup ==="
+fi
+
+echo "=== Starting Rails server ==="
+exec bundle exec rails server -b 0.0.0.0 -p $PORT
