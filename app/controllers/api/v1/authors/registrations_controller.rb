@@ -41,7 +41,16 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     if recaptcha_valid
       # Remove captchaToken from params before calling super
       params[:author].delete(:captchaToken)
-      super
+      
+      begin
+        Rails.logger.info "Attempting to create author with email: #{params[:author][:email]}"
+        super
+      rescue StandardError => e
+        Rails.logger.error "Database error during registration: #{e.message}"
+        render json: {
+          status: { code: '500', message: 'Registration failed due to server error. Please try again.' }
+        }, status: :internal_server_error
+      end
     else
       render json: {
         status: { code: '422', message: 'reCAPTCHA verification failed' }
