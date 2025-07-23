@@ -12,7 +12,7 @@ build:
 
 run:
   runtime-version: 3.1.2
-  command: bundle exec rails server -b 0.0.0.0
+  command: chmod +x bin/migrate-and-start && bin/migrate-and-start
   network:
     port: 3000
   env:
@@ -57,4 +57,3 @@ run:
       value-from: arn:aws:ssm:eu-west-1:941377147136:parameter/myapp/DB_USERNAME
     - name: DB_PASSWORD
       value-from: arn:aws:ssm:eu-west-1:941377147136:parameter/myapp/DB_PASSWORD
-
