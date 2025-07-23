@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Author Login</title>
+  </head>
+  <body>
+    <h1>Author Login</h1>
+
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <div>
+        <%= f.label :email %><br>
+        <%= f.email_field :email, autofocus: true %>
+      </div>
+
+      <div>
+        <%= f.label :password %><br>
+        <%= f.password_field :password %>
+      </div>
+
+      <div>
+        <%= f.submit "Log in" %>
+      </div>
+    <% end %>
+
+    <%= link_to "Sign in with Google", author_google_oauth2_omniauth_authorize_path %>
+  </body>
+</html>

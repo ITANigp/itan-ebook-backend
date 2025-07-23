@@ -24,6 +24,8 @@ class Book < ApplicationRecord
   # validate  :keywords_must_be_valid
   # validate :contributors_must_be_valid
   # validate :categories_must_be_valid
+  validates :slug, uniqueness: true
+  before_update :lock_slug, if: :slug_changed?
 
   enum approval_status: {
     pending: 'pending',
@@ -109,7 +111,15 @@ class Book < ApplicationRecord
   #   end
   # end
 
+
   private
+
+  def lock_slug
+    return unless slug_changed? && !slug_was.nil?
+
+    errors.add(:slug, 'cannot be changed once set')
+    throw(:abort)
+  end
 
   def ensure_arrays_format
     self.keywords = keywords.split(',').map(&:strip) if keywords.present? && !keywords.is_a?(Array)
