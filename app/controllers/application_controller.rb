@@ -23,4 +23,25 @@ class ApplicationController < ActionController::API
 
     Rails.logger.info "✅ Admin access granted: #{current_admin.email}"
   end
+
+  # Centralized author authentication
+  def authenticate_author!
+    unless current_author
+      Rails.logger.warn "❌ Author authentication failed for direct upload"
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+      return
+    end
+
+    Rails.logger.info "✅ Author access granted: #{current_author.email}"
+  end
+
+  # Centralized reader authentication  
+  def authenticate_reader!
+    unless current_reader
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+      return
+    end
+
+    Rails.logger.info "✅ Reader access granted: #{current_reader.email}"
+  end
 end
