@@ -3,8 +3,11 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   skip_before_action :verify_authenticity_token
 
   before_action :authenticate_author!
+  before_action :log_authentication_debug
 
   def create
+    Rails.logger.info "Direct upload attempt by author: #{current_author.email}"
+    
     blob = ActiveStorage::Blob.create_before_direct_upload!(
       filename: blob_args[:filename],
       byte_size: blob_args[:byte_size],
@@ -13,6 +16,7 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
       metadata: blob_args[:metadata] || {}
     )
 
+    Rails.logger.info "Direct upload blob created successfully: #{blob.id}"
     render json: direct_upload_json(blob)
   rescue ActionController::ParameterMissing => e
     Rails.logger.error "Direct upload parameter error: #{e.message}"
@@ -26,6 +30,14 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   end
 
   private
+
+  def log_authentication_debug
+    Rails.logger.info "Direct upload authentication debug:"
+    Rails.logger.info "- Session ID: #{session.id}"
+    Rails.logger.info "- Author session present: #{session['warden.user.author.key'].present?}"
+    Rails.logger.info "- Current author ID: #{current_author&.id}"
+    Rails.logger.info "- Request headers: #{request.headers.select { |k, v| k.include?('Cookie') || k.include?('Authorization') }}"
+  end
 
   def blob_args
     params.require(:blob).permit(:filename, :byte_size, :checksum, :content_type, :metadata).to_h.symbolize_keys
