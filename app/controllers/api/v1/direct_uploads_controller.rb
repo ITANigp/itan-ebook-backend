@@ -1,9 +1,13 @@
 class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
+  # Only add minimal session support needed for file uploads
+  include ActionController::Cookies
+  
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
-  before_action :authenticate_author!
+  # Temporary debug logging to diagnose production issue
   before_action :log_authentication_debug
+  before_action :authenticate_author_for_upload!
 
   def create
     Rails.logger.info "Direct upload attempt by author: #{current_author.email}"
@@ -31,12 +35,27 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
 
   private
 
+  # Local authentication method - doesn't affect other controllers
+  def authenticate_author_for_upload!
+    unless current_author
+      Rails.logger.warn "❌ Upload authentication failed - no current_author"
+      render json: { error: 'Unauthorized' }, status: :unauthorized
+      return
+    end
+
+    Rails.logger.info "✅ Upload authentication successful: #{current_author.email}"
+  end
+
   def log_authentication_debug
-    Rails.logger.info "Direct upload authentication debug:"
-    Rails.logger.info "- Session ID: #{session.id}"
-    Rails.logger.info "- Author session present: #{session['warden.user.author.key'].present?}"
-    Rails.logger.info "- Current author ID: #{current_author&.id}"
-    Rails.logger.info "- Request headers: #{request.headers.select { |k, v| k.include?('Cookie') || k.include?('Authorization') }}"
+    Rails.logger.info "=== Direct upload authentication debug ==="
+    Rails.logger.info "- Session ID: #{session.id rescue 'No session'}"
+    Rails.logger.info "- Session data: #{session.to_hash rescue 'Session error'}"
+    Rails.logger.info "- Author session key present: #{session['warden.user.author.key'].present? rescue 'Session access error'}"
+    Rails.logger.info "- Current author ID: #{current_author&.id rescue 'Current author error'}"
+    Rails.logger.info "- Cookies present: #{request.cookies.keys}"
+    Rails.logger.info "- User agent: #{request.user_agent}"
+    Rails.logger.info "- Referer: #{request.referer}"
+    Rails.logger.info "================================================"
   end
 
   def blob_args
