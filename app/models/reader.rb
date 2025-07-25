@@ -25,6 +25,8 @@ class Reader < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
 
+  # after_create :send_welcome_email
+
   # Helper methods for access checking
   def owns_book?(book)
     purchased_books.include?(book)
@@ -50,5 +52,12 @@ class Reader < ApplicationRecord
       trial_start: Time.current,
       trial_end: days.days.from_now
     )
+  end
+
+  private
+  def send_welcome_email
+    ReaderMailer.welcome_email(self).deliver_now
+  rescue StandardError => e
+    Rails.logger.error "Failed to send welcome email to #{email}: #{e.message}" 
   end
 end

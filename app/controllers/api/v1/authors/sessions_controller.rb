@@ -23,7 +23,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
     unless verify_recaptcha_token(params[:author][:captchaToken])
       return
     end
-  
+
     # Remove captchaToken to prevent Devise errors
     params[:author].delete(:captchaToken) if params[:author]&.key?(:captchaToken)
 
@@ -31,12 +31,16 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
       # First stage authentication with email/password
       self.resource = warden.authenticate!(auth_options)
 
-      # Handle authentication based on 2FA status
       if resource.two_factor_enabled?
+        # Handle 2FA if enabled
         handle_two_factor_authentication
       else
         # No 2FA required, complete login
         sign_in(resource_name, resource)
+
+        # ✅ Send welcome email asynchronously
+        AuthorMailer.welcome_email(resource).deliver_later
+
         respond_with(resource)
       end
     rescue => e
@@ -46,6 +50,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
       }, status: :unauthorized
     end
   end
+
 
 # Helper method for 2FA handling
   def handle_two_factor_authentication
