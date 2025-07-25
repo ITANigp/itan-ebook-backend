@@ -116,16 +116,6 @@ Rails.application.configure do
     expire_after: 24.hours    # Set expiration
   }
 
-  # Add session middleware explicitly for production
-  config.middleware.use ActionDispatch::Session::CookieStore, {
-    key: '_itan_session',
-    domain: nil,
-    secure: true,
-    httponly: false,
-    same_site: :none,
-    expire_after: 24.hours
-  }
-
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
