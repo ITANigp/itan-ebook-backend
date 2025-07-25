@@ -46,6 +46,10 @@ module ItanAudiobookBackend
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
 
+    # Ensure session and cookies middleware are loaded for OmniAuth
+    config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
+
     config.active_storage.variant_processor = :mini_magick
 
     config.middleware.use Rack::MethodOverride
