@@ -44,8 +44,6 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
     Rails.logger.info "✅ Upload authentication successful: #{current_author.email}"
   end
 
-  private
-
   def blob_args
     params.require(:blob).permit(:filename, :byte_size, :checksum, :content_type, :metadata).to_h.symbolize_keys
   end
