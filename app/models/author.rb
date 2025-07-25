@@ -3,24 +3,26 @@ class Author < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable,
+  :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-
-  # Email validation
+         
+         # Email validation
   validates :email, presence: true,
                     format: { with: URI::MailTo::EMAIL_REGEXP, message: 'must be a valid email address' },
                     uniqueness: { case_sensitive: false }
   validates :phone_number, format: { with: /\A\+?[\d\s\-\(\)]+\z/, allow_blank: true }
-
+  
   # associations
   has_many :notifications
   has_many :books
   has_many :author_revenues
   has_many :purchases, through: :books
   has_one :author_banking_detail, dependent: :destroy
-
+  
   # Active storage attachment
   has_one_attached :author_profile_image
+  
+  # after_create :send_welcome_email
 
   # 2FA methods
   def generate_two_factor_code!
@@ -146,6 +148,11 @@ class Author < ApplicationRecord
 
   def send_code_via_email(code)
     AuthorMailer.verification_code(self, code).deliver_now
+  end
+
+
+  def send_welcome_email
+    AuthorMailer.welcome_email(self).deliver_now
   end
 
   def send_code_via_sms(code)

@@ -1,7 +1,8 @@
 class AuthorMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers
   default template_path: 'devise/mailer'
-  default from: 'omololuayk@gmail.com'
+  # default from: 'omololuayk@gmail.com'
+   default from: 'no-reply@itan.app' # SES-verified sender
 
   def confirmation_instructions(record, token, opts = {})
     @confirmation_url = "#{ENV['FRONTEND_URL']}/auth/confirm-email?confirmation_token=#{token}&email=#{record.email}"
@@ -40,6 +41,15 @@ class AuthorMailer < Devise::Mailer
     mail(
       to: @author.email,
       subject: "Your payment of $#{sprintf('%.2f', amount)} has been approved"
+    )
+  end
+
+   def welcome_email(author)
+    @author = author
+    mail(
+      to: @author.email,
+      subject: 'Welcome to ITAN Global Publishing!',
+      template_path: 'author_mailer'
     )
   end
 end
