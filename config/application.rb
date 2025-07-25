@@ -51,6 +51,6 @@ module ItanAudiobookBackend
     config.middleware.use Rack::MethodOverride
     config.middleware.use ActionDispatch::Flash
     config.middleware.use ActionDispatch::Cookies
-    # Session store configured per environment
+    # Session store configured in config/initializers/session_store.rb
   end
 end

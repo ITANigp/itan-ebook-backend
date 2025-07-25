@@ -8,8 +8,6 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   before_action :authenticate_author_for_upload!
 
   def create
-    Rails.logger.info "Direct upload attempt by author: #{current_author.email}"
-    
     blob = ActiveStorage::Blob.create_before_direct_upload!(
       filename: blob_args[:filename],
       byte_size: blob_args[:byte_size],
@@ -18,7 +16,6 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
       metadata: blob_args[:metadata] || {}
     )
 
-    Rails.logger.info "Direct upload blob created successfully: #{blob.id}"
     render json: direct_upload_json(blob)
   rescue ActionController::ParameterMissing => e
     Rails.logger.error "Direct upload parameter error: #{e.message}"
@@ -36,12 +33,9 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   # Local authentication method - doesn't affect other controllers
   def authenticate_author_for_upload!
     unless current_author
-      Rails.logger.warn "❌ Upload authentication failed - no current_author"
       render json: { error: 'Unauthorized' }, status: :unauthorized
       return
     end
-
-    Rails.logger.info "✅ Upload authentication successful: #{current_author.email}"
   end
 
   def blob_args

@@ -93,13 +93,4 @@ Rails.application.configure do
     read_timeout: 5.minutes
   }
 
-  # Configure session for development
-  config.session_store :cookie_store, {
-    key: '_itan_session_dev',
-    secure: false,           # HTTP allowed in dev
-    httponly: false,         # Allow JS access
-    same_site: :lax,         # More permissive for dev
-    expire_after: 24.hours
-  }
-
 end
