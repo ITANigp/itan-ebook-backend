@@ -47,15 +47,8 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   end
 
   def log_authentication_debug
-    Rails.logger.info "=== Direct upload authentication debug ==="
-    Rails.logger.info "- Session ID: #{session.id rescue 'No session'}"
-    Rails.logger.info "- Session data: #{session.to_hash rescue 'Session error'}"
-    Rails.logger.info "- Author session key present: #{session['warden.user.author.key'].present? rescue 'Session access error'}"
-    Rails.logger.info "- Current author ID: #{current_author&.id rescue 'Current author error'}"
-    Rails.logger.info "- Cookies present: #{request.cookies.keys}"
-    Rails.logger.info "- User agent: #{request.user_agent}"
-    Rails.logger.info "- Referer: #{request.referer}"
-    Rails.logger.info "================================================"
+    # Minimal debug logging for production issue diagnosis
+    Rails.logger.info "Direct upload auth debug: Session=#{session.id.present? ? 'Present' : 'Missing'}, Author=#{current_author&.id || 'None'}"
   end
 
   def blob_args

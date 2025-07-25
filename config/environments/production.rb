@@ -106,6 +106,26 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+  # Configure session cookies for cross-domain requests
+  config.session_store :cookie_store, {
+    key: '_itan_session',
+    domain: nil,              # Allow cross-domain
+    secure: true,             # HTTPS only
+    httponly: false,          # Must be false for cross-domain JS access
+    same_site: :none,         # Required for cross-domain
+    expire_after: 24.hours    # Set expiration
+  }
+
+  # Add session middleware explicitly for production
+  config.middleware.use ActionDispatch::Session::CookieStore, {
+    key: '_itan_session',
+    domain: nil,
+    secure: true,
+    httponly: false,
+    same_site: :none,
+    expire_after: 24.hours
+  }
+
   # Enable DNS rebinding protection and other `Host` header attacks.
   # config.hosts = [
   #   "example.com",     # Allow requests from example.com
