@@ -1,11 +1,8 @@
 class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
-  # Only add minimal session support needed for file uploads
-  include ActionController::Cookies
-  
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
-  before_action :authenticate_author_for_upload!
+  before_action :authenticate_author!
 
   def create
     blob = ActiveStorage::Blob.create_before_direct_upload!(
@@ -29,14 +26,6 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   end
 
   private
-
-  # Local authentication method - doesn't affect other controllers
-  def authenticate_author_for_upload!
-    unless current_author
-      render json: { error: 'Unauthorized' }, status: :unauthorized
-      return
-    end
-  end
 
   def blob_args
     params.require(:blob).permit(:filename, :byte_size, :checksum, :content_type, :metadata).to_h.symbolize_keys
