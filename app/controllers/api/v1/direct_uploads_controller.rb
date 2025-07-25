@@ -5,8 +5,6 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
 
-  # Temporary debug logging to diagnose production issue
-  before_action :log_authentication_debug
   before_action :authenticate_author_for_upload!
 
   def create
@@ -46,10 +44,7 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
     Rails.logger.info "✅ Upload authentication successful: #{current_author.email}"
   end
 
-  def log_authentication_debug
-    # Minimal debug logging for production issue diagnosis
-    Rails.logger.info "Direct upload auth debug: Session=#{session.id.present? ? 'Present' : 'Missing'}, Author=#{current_author&.id || 'None'}"
-  end
+  private
 
   def blob_args
     params.require(:blob).permit(:filename, :byte_size, :checksum, :content_type, :metadata).to_h.symbolize_keys

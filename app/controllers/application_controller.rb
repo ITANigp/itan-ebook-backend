@@ -26,14 +26,6 @@ class ApplicationController < ActionController::API
 
   # Centralized author authentication
   def authenticate_author!
-    # Debug session information only in production if needed
-    if Rails.env.production?
-      Rails.logger.info "🔍 Session debug - Author auth check:"
-      Rails.logger.info "- Session ID: #{session.id rescue 'No session'}"
-      Rails.logger.info "- Author session present: #{session['warden.user.author.key'].present?}"
-      Rails.logger.info "- Cookies: #{request.cookies['_itan_session'].present? ? 'Present' : 'Missing'}"
-    end
-    
     unless current_author
       Rails.logger.warn "❌ Author authentication failed"
       render json: { error: 'Unauthorized' }, status: :unauthorized
