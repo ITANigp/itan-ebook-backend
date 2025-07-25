@@ -7,7 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://develop.d2mmxpmsj4euww.amplifyapp.com/", 
+    origins "https://develop.d2mmxpmsj4euww.amplifyapp.com", 
             "https://itan.app", 
             "https://publish.itan.app", 
             "http://localhost:9000", 
