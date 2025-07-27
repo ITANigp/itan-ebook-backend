@@ -2,6 +2,8 @@ class Book < ApplicationRecord
   before_create :generate_unique_ids
   before_validation :ensure_arrays_format
   # before_save :check_price_size_ratio
+  before_update :lock_slug, if: :slug_changed?
+  before_update :generate_slug_if_approved
 
   belongs_to :author
   has_many :purchases
@@ -24,7 +26,9 @@ class Book < ApplicationRecord
   # validate  :keywords_must_be_valid
   # validate :contributors_must_be_valid
   # validate :categories_must_be_valid
-  validates :slug, uniqueness: true
+  # validates :slug, uniqueness: true
+  validates :slug, uniqueness: true, allow_nil: true
+
   before_update :lock_slug, if: :slug_changed?
 
   enum approval_status: {
@@ -112,15 +116,6 @@ class Book < ApplicationRecord
   # end
 
 
-  private
-
-  def lock_slug
-    return unless slug_changed? && !slug_was.nil?
-
-    errors.add(:slug, 'cannot be changed once set')
-    throw(:abort)
-  end
-
   def ensure_arrays_format
     self.keywords = keywords.split(',').map(&:strip) if keywords.present? && !keywords.is_a?(Array)
 
@@ -189,4 +184,26 @@ class Book < ApplicationRecord
   #     end
   #   end
   # end
+
+  private
+
+  def lock_slug
+    return unless slug_changed? && !slug_was.nil?
+
+    errors.add(:slug, 'cannot be changed once set')
+    throw(:abort)
+  end
+
+  def generate_slug_if_approved
+    return unless will_save_change_to_approval_status? && approved? && slug.blank?
+
+    author_name = "#{author.first_name}-#{author.last_name}".parameterize
+    book_name = title.to_s.parameterize
+    base_slug = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}"
+
+    # Ensure uniqueness
+    base_slug = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}" while Book.exists?(slug: base_slug)
+
+    self.slug = base_slug
+  end
 end
