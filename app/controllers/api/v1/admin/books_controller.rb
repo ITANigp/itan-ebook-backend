@@ -33,9 +33,6 @@ class Api::V1::Admin::BooksController < ApplicationController
     # Process data consistently
     process_book_attributes
 
-    # Generate slug only if it doesn't already exist
-    @book.slug ||= generate_slug(@book)
-
     if @book.update(
       approval_status: 'approved',
       admin_feedback: params[:admin_feedback]
@@ -109,12 +106,5 @@ class Api::V1::Admin::BooksController < ApplicationController
     return unless @book.tags.present? && !@book.tags.is_a?(Array)
 
     @book.tags = @book.tags.split(',').map(&:strip)
-  end
-
-  # 🔑 Generate a slug based on author and book title
-  def generate_slug(book)
-    author_name = "#{book.author.first_name}-#{book.author.last_name}".parameterize
-    book_name = book.title.parameterize
-    "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}" # Add random hex for uniqueness
   end
 end
