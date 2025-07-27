@@ -3,4 +3,4 @@ Rails.application.config.session_store :cookie_store,
   same_site: :none,
   secure: true,
   httponly: true,
-  domain: '.itan.app'
+  domain: 'wwbdrkum9h.eu-west-1.awsapprunner.com'
