@@ -12,6 +12,17 @@ class Author < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :phone_number, format: { with: /\A\+?[\d\s\-\(\)]+\z/, allow_blank: true }
 
+  # Ensure traditional signup authors are confirmed before they can sign in
+  # This is a safety net in case confirmation email fails
+  def active_for_authentication?
+    super && (provider.present? || confirmed?)
+  end
+
+  def inactive_message
+    return :unconfirmed unless confirmed? || provider.present?
+    super
+  end
+
   # associations
   has_many :notifications
   has_many :books
