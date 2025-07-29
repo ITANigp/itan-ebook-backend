@@ -10,6 +10,7 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
     origins "https://admin.itan.app", 
             "https://itan.app", 
             "https://publish.itan.app", 
+            "https://www.itan.app", 
             "http://localhost:9000", 
             "http://localhost:7000"
 
