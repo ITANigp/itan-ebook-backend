@@ -43,6 +43,8 @@ gem 'kaminari'
 
 gem 'business_time'
 
+gem 'activerecord-session_store'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem 'rails', '~> 7.1.5', '>= 7.1.5.1'
 
