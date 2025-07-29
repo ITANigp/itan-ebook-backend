@@ -32,12 +32,14 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
 
+  config.active_storage.default_url_options = { host: ENV['BACKEND_URL'] || 'https://api.itan.app' }
+
   # Added to send emails
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { 
-    host: ENV['BACKEND_URL'] || 'wwbdrkum9h.eu-west-1.awsapprunner.com',
+    host: ENV['BACKEND_URL'] || 'api.itan.app',
     protocol: 'https' 
   } 
   
@@ -56,7 +58,7 @@ Rails.application.configure do
 
   config.active_storage.direct_upload = true
 
-  Rails.application.routes.default_url_options[:host] = ENV['BACKEND_URL'] || 'wwbdrkum9h.eu-west-1.awsapprunner.com'
+  Rails.application.routes.default_url_options[:host] = ENV['BACKEND_URL'] || 'api.itan.app'
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
