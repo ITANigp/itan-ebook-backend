@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_28_154607) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_30_104849) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -119,6 +119,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_28_154607) do
     t.string "provider"
     t.string "uid"
     t.integer "kyc_step", default: 0, null: false
+    t.boolean "accepted_terms", default: false, null: false
     t.index ["confirmation_token"], name: "index_authors_on_confirmation_token", unique: true
     t.index ["email"], name: "index_authors_on_email", unique: true
     t.index ["reset_password_token"], name: "index_authors_on_reset_password_token", unique: true
@@ -255,6 +256,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_28_154607) do
     t.uuid "reader_id"
     t.index ["book_id"], name: "index_reviews_on_book_id"
     t.index ["reader_id"], name: "index_reviews_on_reader_id"
+  end
+
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
