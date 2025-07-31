@@ -11,7 +11,7 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
   def google_oauth2
     author = Author.from_omniauth(request.env['omniauth.auth'])
 
-    if author.persisted?
+    if author && author.persisted?
       if author.two_factor_enabled
         # Store author ID for verification
         session[:author_id_for_2fa] = author.id
