@@ -27,7 +27,12 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
         redirect_to "#{frontend_url}/auth/callback", allow_other_host: true
       end
     else
-      # Handle case where author couldn't be created/found
+      Rails.logger.error "OAuth user creation failed. Auth hash: #{request.env['omniauth.auth'].inspect}"
+      if author.nil?
+        Rails.logger.error "Author.from_omniauth returned nil."
+      else
+        Rails.logger.error "Author validation errors: #{author.errors.full_messages.join(', ')}"
+      end
       redirect_to "#{frontend_url}/author/sign_in?error=oauth_failed", allow_other_host: true
     end
   end
