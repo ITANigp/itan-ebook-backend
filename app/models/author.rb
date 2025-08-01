@@ -146,7 +146,9 @@ class Author < ApplicationRecord
       password: Devise.friendly_token[0, 20],
       first_name: auth.info.first_name || auth.info.name&.split&.first,
       last_name: auth.info.last_name || auth.info.name&.split&.last,
-      confirmed_at: Time.current
+      confirmed_at: Time.current,
+      kyc_step: 1,           
+      accepted_terms: false   
     ).tap do |new_author|
       new_author.skip_confirmation!
       # Attach profile image if available
