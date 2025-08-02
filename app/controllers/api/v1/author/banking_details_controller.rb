@@ -71,10 +71,11 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
     Rails.logger.info 'Fetching banks from Paystack...'
     response = PaystackService.list_banks
 
-    Rails.logger.info "Banks response: #{response.inspect}"
-
     if response['status'] == true && response['data'].present?
-      render json: { banks: response['data'] }
+      filtered_banks = response['data'].map do |bank|
+        { name: bank['name'], code: bank['code'] }
+      end
+      render json: { banks: filtered_banks }, status: :ok
     else
       error_message = response['message'] || 'Could not fetch banks'
       Rails.logger.error "Failed to fetch banks: #{error_message}"
