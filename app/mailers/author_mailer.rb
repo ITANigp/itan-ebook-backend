@@ -1,7 +1,7 @@
 class AuthorMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers
   default template_path: 'devise/mailer'
-  default from: 'omololuayk@gmail.com'
+  default from: 'noreply@itan.app', reply_to: 'noreply@itan.app'
 
   def confirmation_instructions(record, token, opts = {})
     @confirmation_url = "#{ENV.fetch('FRONTEND_URL',
