@@ -75,53 +75,18 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
 
   private
 
-  # Custom method to create author with confirmation email check
+  # Simplified method that works with Devise's intended flow
   def create_author_with_confirmation_check
-    # Build the author without saving to database yet
+    Rails.logger.info "Creating author with email: #{sign_up_params[:email]}"
+    
+    # Build and save the author - let Devise handle the confirmation flow
     self.resource = resource_class.new(sign_up_params)
     
-    # Validate the author first
-    unless resource.valid?
-      Rails.logger.error "Author validation failed: #{resource.errors.full_messages.join(', ')}"
+    if resource.save
+      Rails.logger.info "Author created successfully - confirmation email will be sent automatically"
       respond_with(resource, {})
-      return
-    end
-
-    # Use database transaction to ensure atomicity
-    Rails.logger.info "Creating author with email confirmation check..."
-    
-    begin
-      ActiveRecord::Base.transaction do
-        # Save the author to generate proper confirmation token
-        resource.save!
-        Rails.logger.info "Author saved to database successfully"
-        
-        # Try to send confirmation email
-        resource.send_confirmation_instructions
-        Rails.logger.info "Confirmation email sent successfully"
-        
-        # If we get here, both save and email sending succeeded
-      end
-      
-      # Respond with success only after transaction completes
-      respond_with(resource, {})
-      
-    rescue Net::SMTPError, Net::OpenTimeout, Net::ReadTimeout => e
-      Rails.logger.error "Email delivery failed: #{e.message}"
-      # Transaction will rollback automatically, removing the author from database
-      # Create a new resource instance for error response since the original was rolled back
-      self.resource = resource_class.new(sign_up_params)
-      resource.validate # Populate any validation errors
-      resource.errors.add(:email, "could not be delivered. Please check your email address and try again.")
-      respond_with(resource, {})
-    rescue StandardError => e
-      Rails.logger.error "Unexpected error during registration: #{e.message}"
-      Rails.logger.error "Error backtrace: #{e.backtrace.first(3).join('\n')}"
-      # Transaction will rollback automatically
-      # Create a new resource instance for error response
-      self.resource = resource_class.new(sign_up_params)
-      resource.validate # Populate any validation errors
-      resource.errors.add(:base, "Registration failed. Please try again.")
+    else
+      Rails.logger.error "Author creation failed: #{resource.errors.full_messages.join(', ')}"
       respond_with(resource, {})
     end
   end
@@ -130,7 +95,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     if resource.persisted?
       Rails.logger.info "Registration successful for #{resource.email}"
       render json: {
-        status: { code: 200, message: 'Author registered successfully.' },
+        status: { code: 200, message: 'Author registered successfully. Please check your email for confirmation instructions.' },
         data: AuthorSerializer.new(resource).serializable_hash[:data][:attributes]
       }
     else
