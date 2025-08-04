@@ -33,6 +33,9 @@ class Author < ApplicationRecord
   # Active storage attachment
   has_one_attached :author_profile_image
 
+  # Callbacks
+  before_create :set_default_kyc_values
+
   # 2FA methods
   def generate_two_factor_code!
     # Generate a 6-digit code
@@ -147,7 +150,7 @@ class Author < ApplicationRecord
       first_name: auth.info.first_name || auth.info.name&.split&.first,
       last_name: auth.info.last_name || auth.info.name&.split&.last,
       confirmed_at: Time.current,
-      kyc_step: 1,           
+      kyc_step: 0,           
       accepted_terms: false   
     ).tap do |new_author|
       new_author.skip_confirmation!
@@ -226,7 +229,32 @@ class Author < ApplicationRecord
     (Date.today.end_of_month + 30.days).strftime('%B %d, %Y')
   end
 
+  # KYC helper methods
+  def kyc_completed?
+    kyc_step >= 3 # Assuming 3 is the final KYC step
+  end
+
+  def current_kyc_step_ui
+    # Returns which KYC step UI to show based on completed steps
+    case kyc_step
+    when 0 then 1 # Show step 1 (nothing completed yet)
+    when 1 then 2 # Show step 2 (step 1 completed)
+    when 2 then 3 # Show step 3 (step 2 completed)
+    else nil      # KYC completed, show dashboard
+    end
+  end
+
   private
+
+  def set_default_kyc_values
+    # KYC Step Logic:
+    # 0 = No steps completed yet (show step 1 UI)
+    # 1 = Step 1 completed (show step 2 UI) 
+    # 2 = Step 2 completed (show step 3 UI)
+    # 3 = All KYC steps completed (allow dashboard access)
+    self.kyc_step = 0 if kyc_step.nil?
+    self.accepted_terms = false if accepted_terms.nil?
+  end
 
   def send_code_via_email(code)
     AuthorMailer.verification_code(self, code).deliver_now
