@@ -100,14 +100,14 @@ class Author < ApplicationRecord
     end
 
     # Log OAuth attempt for monitoring
-    Rails.logger.info "OAuth login attempt for email: #{auth.info.email}"
+    Rails.logger.info "OAuth login attempt from IP: #{request&.remote_ip || 'unknown'}"
 
     # First, try to find existing OAuth user
     author = where(provider: auth.provider, uid: auth.uid).first
 
     if author
       # Existing OAuth user - just return them
-      Rails.logger.info "Existing OAuth user found: #{author.email}"
+      Rails.logger.info "Existing OAuth user found with ID: #{author.id}"
       return author
     end
 
@@ -116,7 +116,7 @@ class Author < ApplicationRecord
     
     if existing_author
       # Link OAuth to existing author account
-      Rails.logger.info "Linking OAuth to existing author: #{existing_author.email}"
+      Rails.logger.info "Linking OAuth to existing author with ID: #{existing_author.id}"
       existing_author.update!(
         provider: auth.provider,
         uid: auth.uid,
@@ -141,7 +141,7 @@ class Author < ApplicationRecord
     end
 
     # Create new OAuth user
-    Rails.logger.info "Creating new OAuth user: #{auth.info.email}"
+    Rails.logger.info "Creating new OAuth user from provider: #{auth.provider}"
     create!(
       provider: auth.provider,
       uid: auth.uid,
@@ -160,7 +160,7 @@ class Author < ApplicationRecord
 
   rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
-    Rails.logger.error "Auth info: provider=#{auth.provider}, uid=#{auth.uid}, email=#{auth.info.email}"
+    Rails.logger.error "OAuth provider: #{auth.provider}, Error class: #{e.class}"
     nil
   end
 
