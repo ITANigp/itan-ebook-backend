@@ -73,4 +73,29 @@ class BookSerializer
   attribute :likes_count do |book|
     book.likes.count
   end
+
+  # File size attributes
+  attribute :ebook_file_size do |book|
+    book.ebook_file_size
+  end
+
+  attribute :ebook_file_size_human do |book|
+    book.ebook_file_size_human
+  end
+
+  # attribute :audiobook_file_size do |book|
+  #   book.audiobook_file_size
+  # end
+
+  # attribute :audiobook_file_size_human do |book|
+  #   book.audiobook_file_size_human
+  # end
+
+  # attribute :cover_image_size do |book|
+  #   book.cover_image_size
+  # end
+
+  # attribute :cover_image_size_human do |book|
+  #   book.cover_image_size_human
+  # end
 end
