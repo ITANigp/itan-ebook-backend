@@ -100,9 +100,6 @@ class Author < ApplicationRecord
       return nil unless allowed_domains.include?(email_domain)
     end
 
-    # Log OAuth attempt for monitoring
-    Rails.logger.info "OAuth login attempt from IP: #{request&.remote_ip || 'unknown'}"
-
     # First, try to find existing OAuth user
     author = where(provider: auth.provider, uid: auth.uid).first
 
