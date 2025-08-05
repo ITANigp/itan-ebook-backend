@@ -130,7 +130,7 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
   private
 
   def banking_detail_params
-    params.require(:banking_detail).permit(:bank_name, :account_number, :account_name, :bank_code)
+    params.require(:banking_detail).permit(:bank_name, :account_number, :account_name, :bank_code, :currency)
   end
 
   def authenticate_author!
