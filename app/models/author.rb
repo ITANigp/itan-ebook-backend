@@ -35,6 +35,7 @@ class Author < ApplicationRecord
 
   # Callbacks
   before_create :set_default_kyc_values
+  after_update :send_welcome_email_if_confirmed
 
   # 2FA methods
   def generate_two_factor_code!
@@ -156,6 +157,14 @@ class Author < ApplicationRecord
       new_author.skip_confirmation!
       # Attach profile image if available
       attach_profile_image(new_author, auth.info.image) if auth.info.image
+      
+      # Send welcome email for new OAuth users
+      begin
+        AuthorMailer.welcome_email(new_author).deliver_later
+        Rails.logger.info "Welcome email queued for new OAuth author ID: #{new_author.id}"
+      rescue StandardError => e
+        Rails.logger.error "Failed to send welcome email to OAuth author ID: #{new_author.id}, Error: #{e.message}"
+      end
     end
 
   rescue StandardError => e
@@ -271,5 +280,20 @@ class Author < ApplicationRecord
     Rails.logger.error "SMS sending failed: #{e.message}"
     # Fallback to email
     send_code_via_email(code)
+  end
+
+  private
+
+  def send_welcome_email_if_confirmed
+    # Send welcome email when author confirms their email for the first time
+    # This ensures they only get the welcome email once, after email confirmation
+    if saved_change_to_confirmed_at? && confirmed_at.present? && !provider.present?
+      begin
+        AuthorMailer.welcome_email(self).deliver_later
+        Rails.logger.info "Welcome email queued for author ID: #{id}"
+      rescue StandardError => e
+        Rails.logger.error "Failed to send welcome email to author ID: #{id}, Error: #{e.message}"
+      end
+    end
   end
 end

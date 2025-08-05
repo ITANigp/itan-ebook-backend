@@ -43,4 +43,15 @@ class AuthorMailer < Devise::Mailer
       subject: "Your payment of $#{format('%.2f', amount)} has been approved"
     )
   end
+
+  def welcome_email(author)
+    @author = author
+    @frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:3002')
+    mail(
+      to: @author.email,
+      subject: "A bold beginning awaits",
+      template_path: 'author_mailer',
+      template_name: 'welcome_email'
+    )
+  end
 end
