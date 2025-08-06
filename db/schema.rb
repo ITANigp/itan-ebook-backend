@@ -156,10 +156,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
     t.string "last_name"
     t.string "tags", default: [], array: true
     t.integer "total_pages"
+    t.string "slug"
     t.index ["author_id"], name: "index_books_on_author_id"
     t.index ["categories"], name: "index_books_on_categories", using: :gin
     t.index ["contributors"], name: "index_books_on_contributors", using: :gin
     t.index ["keywords"], name: "index_books_on_keywords", using: :gin
+    t.index ["slug"], name: "index_books_on_slug", unique: true
     t.index ["tags"], name: "index_books_on_tags", using: :gin
     t.index ["unique_audio_id"], name: "index_books_on_unique_audio_id", unique: true
     t.index ["unique_book_id"], name: "index_books_on_unique_book_id", unique: true
