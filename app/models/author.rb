@@ -12,6 +12,17 @@ class Author < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   validates :phone_number, format: { with: /\A\+?[\d\s\-\(\)]+\z/, allow_blank: true }
 
+  # Ensure traditional signup authors are confirmed before they can sign in
+  # This is a safety net in case confirmation email fails
+  def active_for_authentication?
+    super && (provider.present? || confirmed?)
+  end
+
+  def inactive_message
+    return :unconfirmed unless confirmed? || provider.present?
+    super
+  end
+
   # associations
   has_many :notifications
   has_many :books
@@ -21,6 +32,10 @@ class Author < ApplicationRecord
 
   # Active storage attachment
   has_one_attached :author_profile_image
+
+  # Callbacks
+  before_create :set_default_kyc_values
+  after_update :send_welcome_email_if_confirmed
 
   # 2FA methods
   def generate_two_factor_code!
@@ -85,15 +100,12 @@ class Author < ApplicationRecord
       return nil unless allowed_domains.include?(email_domain)
     end
 
-    # Log OAuth attempt for monitoring
-    Rails.logger.info "OAuth login attempt for email: #{auth.info.email}"
-
     # First, try to find existing OAuth user
     author = where(provider: auth.provider, uid: auth.uid).first
 
     if author
       # Existing OAuth user - just return them
-      Rails.logger.info "Existing OAuth user found: #{author.email}"
+      Rails.logger.info "Existing OAuth user found with ID: #{author.id}"
       return author
     end
 
@@ -102,7 +114,7 @@ class Author < ApplicationRecord
     
     if existing_author
       # Link OAuth to existing author account
-      Rails.logger.info "Linking OAuth to existing author: #{existing_author.email}"
+      Rails.logger.info "Linking OAuth to existing author with ID: #{existing_author.id}"
       existing_author.update!(
         provider: auth.provider,
         uid: auth.uid,
@@ -127,7 +139,7 @@ class Author < ApplicationRecord
     end
 
     # Create new OAuth user
-    Rails.logger.info "Creating new OAuth user: #{auth.info.email}"
+    Rails.logger.info "Creating new OAuth user from provider: #{auth.provider}"
     create!(
       provider: auth.provider,
       uid: auth.uid,
@@ -135,16 +147,26 @@ class Author < ApplicationRecord
       password: Devise.friendly_token[0, 20],
       first_name: auth.info.first_name || auth.info.name&.split&.first,
       last_name: auth.info.last_name || auth.info.name&.split&.last,
-      confirmed_at: Time.current
+      confirmed_at: Time.current,
+      kyc_step: 0,           
+      accepted_terms: false   
     ).tap do |new_author|
       new_author.skip_confirmation!
       # Attach profile image if available
       attach_profile_image(new_author, auth.info.image) if auth.info.image
+      
+      # Send welcome email for new OAuth users
+      begin
+        AuthorMailer.welcome_email(new_author).deliver_later
+        Rails.logger.info "Welcome email queued for new OAuth author ID: #{new_author.id}"
+      rescue StandardError => e
+        Rails.logger.error "Failed to send welcome email to OAuth author ID: #{new_author.id}, Error: #{e.message}"
+      end
     end
 
   rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
-    Rails.logger.error "Auth info: provider=#{auth.provider}, uid=#{auth.uid}, email=#{auth.info.email}"
+    Rails.logger.error "OAuth provider: #{auth.provider}, Error class: #{e.class}"
     nil
   end
 
@@ -213,7 +235,32 @@ class Author < ApplicationRecord
     (Date.today.end_of_month + 30.days).strftime('%B %d, %Y')
   end
 
+  # KYC helper methods
+  def kyc_completed?
+    kyc_step >= 3 # Assuming 3 is the final KYC step
+  end
+
+  def current_kyc_step_ui
+    # Returns which KYC step UI to show based on completed steps
+    case kyc_step
+    when 0 then 1 # Show step 1 (nothing completed yet)
+    when 1 then 2 # Show step 2 (step 1 completed)
+    when 2 then 3 # Show step 3 (step 2 completed)
+    else nil      # KYC completed, show dashboard
+    end
+  end
+
   private
+
+  def set_default_kyc_values
+    # KYC Step Logic:
+    # 0 = No steps completed yet (show step 1 UI)
+    # 1 = Step 1 completed (show step 2 UI) 
+    # 2 = Step 2 completed (show step 3 UI)
+    # 3 = All KYC steps completed (allow dashboard access)
+    self.kyc_step = 0 if kyc_step.nil?
+    self.accepted_terms = false if accepted_terms.nil?
+  end
 
   def send_code_via_email(code)
     AuthorMailer.verification_code(self, code).deliver_now
@@ -230,5 +277,20 @@ class Author < ApplicationRecord
     Rails.logger.error "SMS sending failed: #{e.message}"
     # Fallback to email
     send_code_via_email(code)
+  end
+
+  private
+
+  def send_welcome_email_if_confirmed
+    # Send welcome email when author confirms their email for the first time
+    # This ensures they only get the welcome email once, after email confirmation
+    if saved_change_to_confirmed_at? && confirmed_at.present? && !provider.present?
+      begin
+        AuthorMailer.welcome_email(self).deliver_later
+        Rails.logger.info "Welcome email queued for author ID: #{id}"
+      rescue StandardError => e
+        Rails.logger.error "Failed to send welcome email to author ID: #{id}, Error: #{e.message}"
+      end
+    end
   end
 end

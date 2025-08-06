@@ -13,7 +13,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     # Do nothing as flash is not available in API-only apps
   end
 
-  # Override the create method to add reCAPTCHA verification
+  # Override the create method to add reCAPTCHA verification and ensure email confirmation
   def create
     # Add more verbose debugging
     params_token = params[:author][:captchaToken]
@@ -39,7 +39,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
 
     # Continue with your existing code...
     if recaptcha_valid
-      # Remove captchaToken from params before calling super
+      # Remove captchaToken from params before processing
       params[:author].delete(:captchaToken)
       
       begin
@@ -50,7 +50,9 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
         ActiveRecord::Base.connection.execute('SELECT 1')
         Rails.logger.info "Database connection successful!"
         
-        super
+        # Custom registration logic to ensure email is sent before saving
+        create_author_with_confirmation_check
+        
       rescue PG::Error => e
         Rails.logger.error "PostgreSQL error during registration: #{e.message}"
         render json: {
@@ -73,11 +75,27 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
 
   private
 
+  # Simplified method that works with Devise's intended flow
+  def create_author_with_confirmation_check
+    Rails.logger.info "Creating author with email: #{sign_up_params[:email]}"
+    
+    # Build and save the author - let Devise handle the confirmation flow
+    self.resource = resource_class.new(sign_up_params)
+    
+    if resource.save
+      Rails.logger.info "Author created successfully - confirmation email will be sent automatically"
+      respond_with(resource, {})
+    else
+      Rails.logger.error "Author creation failed: #{resource.errors.full_messages.join(', ')}"
+      respond_with(resource, {})
+    end
+  end
+
   def respond_with(resource, _opts = {})
     if resource.persisted?
       Rails.logger.info "Registration successful for #{resource.email}"
       render json: {
-        status: { code: 200, message: 'Author registered successfully.' },
+        status: { code: 200, message: 'Author registered successfully. Please check your email for confirmation instructions.' },
         data: AuthorSerializer.new(resource).serializable_hash[:data][:attributes]
       }
     else
@@ -97,6 +115,6 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   end
 
   def sign_up_params
-    params.require(:author).permit(:email, :password, :captchaToken)
+    params.require(:author).permit(:email, :password, :password_confirmation, :first_name, :last_name, :captchaToken)
   end
 end

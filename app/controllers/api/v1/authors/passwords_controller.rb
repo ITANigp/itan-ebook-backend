@@ -55,7 +55,8 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
       author.password_confirmation = password_value # Force confirmation to match
       author.reset_password_token = nil
       author.reset_password_sent_at = nil
-      author.confirmed_at = Time.current if author.confirmed_at.nil?
+      # DO NOT auto-confirm unconfirmed users during password reset
+      # author.confirmed_at = Time.current if author.confirmed_at.nil? # REMOVED
 
       if author.save
         Rails.logger.info "Password successfully set for OAuth user: #{author.email}"

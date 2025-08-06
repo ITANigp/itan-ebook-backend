@@ -44,6 +44,31 @@ class Book < ApplicationRecord
   # Only show approved books to the public
   scope :publicly_visible, -> { approved }
 
+  # File size methods
+  def ebook_file_size
+    return nil unless ebook_file.attached?
+    
+    ebook_file.blob.byte_size
+  end
+
+  # Human readable file sizes
+  def ebook_file_size_human
+    return nil unless ebook_file_size
+    
+    number_to_human_size(ebook_file_size)
+  end
+
+  def number_to_human_size(size)
+    units = ['B', 'KB', 'MB', 'GB', 'TB']
+    return '0 B' if size.zero?
+
+    index = (Math.log(size) / Math.log(1024)).floor
+    index = [index, units.length - 1].min
+    
+    size_in_unit = size.to_f / (1024 ** index)
+    "#{size_in_unit.round(2)} #{units[index]}"
+  end
+
   # Enable nested attributes
   # accepts_nested_attributes_for :book_contributors,
   #                               allow_destroy: true,
@@ -140,49 +165,30 @@ class Book < ApplicationRecord
       self.unique_book_id = "BOO#{next_number}"
       self.unique_audio_id = "AOO#{next_number}"
     end
-  end
+  end  
 
-  # def tags_must_be_valid
-  #   if tags.present?
-  #     if !tags.is_a?(Array)
-  #       errors.add(:tags, "must be an array")
-  #     elsif tags.any? { |tag| !tag.is_a?(String) || tag.blank? }
-  #       errors.add(:tags, "can only contain non-empty strings")
-  #     end
-  #   end
+  # def audiobook_file_size
+  #   return nil unless audiobook_file.attached?
+    
+  #   audiobook_file.blob.byte_size
   # end
 
-  # def keywords_must_be_valid
-  #   if keywords.present?
-  #     if !keywords.is_a?(Array)
-  #       errors.add(:keywords, "must be an array")
-  #     elsif keywords.any? { |keyword| !keyword.is_a?(String) || keyword.blank? }
-  #       errors.add(:keywords, "can only contain non-empty strings")
-  #     end
-  #   end
+  # def cover_image_size
+  #   return nil unless cover_image.attached?
+    
+  #   cover_image.blob.byte_size
   # end
 
-  # def contributors_must_be_valid
-  #   if contributors.present?
-  #     unless contributors.is_a?(Array)
-  #       errors.add(:contributors, "must be an array")
-  #       return
-  #     end
-
-  #     if contributors.empty?
-  #       errors.add(:contributors, "must have at least one contributor")
-  #       return
-  #     end
-  #   end
+  # def audiobook_file_size_human
+  #   return nil unless audiobook_file_size
+    
+  #   number_to_human_size(audiobook_file_size)
   # end
 
-  # def categories_must_be_valid
-  #   if categories.present?
-  #     unless categories.is_a?(Array)
-  #       errors.add(:categories, "must be an array")
-  #       return
-  #     end
-  #   end
+  # def cover_image_size_human
+  #   return nil unless cover_image_size
+    
+  #   number_to_human_size(cover_image_size)
   # end
 
   private

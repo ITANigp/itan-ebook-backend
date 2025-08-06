@@ -30,7 +30,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'please-change-me-at-config-initializers-devise@example.com'
+  config.mailer_sender = 'noreply@itan.app'
 
   # Configure the class responsible to send e-mails.
   config.mailer = 'AuthorMailer'
@@ -196,6 +196,8 @@ Devise.setup do |config|
   # one (and only one) @ exists in the given string. This is mainly
   # to give user feedback and not to assert the e-mail validity.
   config.email_regexp = /\A[^@\s]+@[^@\s]+\z/
+
+  config.rememberable_options = { secure: true, same_site: :none }
 
   # ==> Configuration for :timeoutable
   # The time you want to timeout the user session without activity. After this

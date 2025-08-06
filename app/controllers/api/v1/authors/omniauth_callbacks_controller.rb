@@ -11,7 +11,7 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
   def google_oauth2
     author = Author.from_omniauth(request.env['omniauth.auth'])
 
-    if author.persisted?
+    if author && author.persisted?
       if author.two_factor_enabled
         # Store author ID for verification
         session[:author_id_for_2fa] = author.id
@@ -19,22 +19,27 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
         author.send_two_factor_code
 
         # Redirect to frontend with 2FA requirement
-        redirect_to "#{frontend_url}/auth/mfa/verify"
+        redirect_to "#{frontend_url}/auth/mfa/verify", allow_other_host: true
       else
         # Sign in and redirect to frontend
         sign_in(author)
 
-        redirect_to "#{frontend_url}/auth/callback"
+        redirect_to "#{frontend_url}/auth/callback", allow_other_host: true
       end
     else
-      # Handle case where author couldn't be created/found
-      redirect_to "#{frontend_url}/author/sign_in?error=oauth_failed"
+      Rails.logger.error "OAuth user creation failed. Auth hash: #{request.env['omniauth.auth'].inspect}"
+      if author.nil?
+        Rails.logger.error "Author.from_omniauth returned nil."
+      else
+        Rails.logger.error "Author validation errors: #{author.errors.full_messages.join(', ')}"
+      end
+      redirect_to "#{frontend_url}/author/sign_in?error=oauth_failed", allow_other_host: true
     end
   end
 
   # Handle general OAuth failures
   def failure
-    redirect_to "#{frontend_url}/author/sign_in?error=#{params[:message]}"
+    redirect_to "#{frontend_url}/author/sign_in?error=#{params[:message]}", allow_other_host: true
   end
 
   private
@@ -75,6 +80,6 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
   end
 
   def redirect_to_frontend_with_error(error_message)
-    redirect_to "#{frontend_url}/author/sign_in?error=#{error_message}"
+    redirect_to "#{frontend_url}/author/sign_in?error=#{error_message}", allow_other_host: true
   end
 end
