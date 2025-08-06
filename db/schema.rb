@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
     t.datetime "updated_at", null: false
     t.string "resolved_account_name"
     t.string "bank_name"
+    t.string "currency"
     t.index ["author_id"], name: "index_author_banking_details_on_author_id"
     t.index ["recipient_code"], name: "index_author_banking_details_on_recipient_code", unique: true
   end
@@ -118,6 +119,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
     t.integer "two_factor_attempts", default: 0
     t.string "provider"
     t.string "uid"
+    t.integer "kyc_step", default: 0, null: false
+    t.boolean "accepted_terms", default: false, null: false
+    t.datetime "welcome_email_sent_at"
     t.index ["confirmation_token"], name: "index_authors_on_confirmation_token", unique: true
     t.index ["email"], name: "index_authors_on_email", unique: true
     t.index ["reset_password_token"], name: "index_authors_on_reset_password_token", unique: true
@@ -157,7 +161,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
     t.index ["categories"], name: "index_books_on_categories", using: :gin
     t.index ["contributors"], name: "index_books_on_contributors", using: :gin
     t.index ["keywords"], name: "index_books_on_keywords", using: :gin
-    t.index ["slug"], name: "index_books_on_slug", unique: true, where: "(slug IS NOT NULL)"
     t.index ["tags"], name: "index_books_on_tags", using: :gin
     t.index ["unique_audio_id"], name: "index_books_on_unique_audio_id", unique: true
     t.index ["unique_book_id"], name: "index_books_on_unique_book_id", unique: true
@@ -178,6 +181,22 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
     t.uuid "reader_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "login_attempts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "author_id", null: false
+    t.string "ip_address"
+    t.text "user_agent"
+    t.boolean "successful", default: false
+    t.datetime "attempted_at"
+    t.string "failure_reason"
+    t.string "session_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id", "attempted_at"], name: "index_login_attempts_on_author_id_and_attempted_at"
+    t.index ["author_id"], name: "index_login_attempts_on_author_id"
+    t.index ["ip_address", "attempted_at"], name: "index_login_attempts_on_ip_address_and_attempted_at"
+    t.index ["successful"], name: "index_login_attempts_on_successful"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -251,6 +270,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
     t.index ["reader_id"], name: "index_reviews_on_reader_id"
   end
 
+  create_table "sessions", force: :cascade do |t|
+    t.string "session_id", null: false
+    t.text "data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["session_id"], name: "index_sessions_on_session_id", unique: true
+    t.index ["updated_at"], name: "index_sessions_on_updated_at"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "author_banking_details", "authors"
@@ -258,6 +286,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_26_201301) do
   add_foreign_key "author_revenues", "purchases"
   add_foreign_key "books", "authors"
   add_foreign_key "chapters", "books"
+  add_foreign_key "login_attempts", "authors"
   add_foreign_key "purchases", "books"
   add_foreign_key "purchases", "readers"
   add_foreign_key "reviews", "books"

@@ -76,6 +76,7 @@ Rails.application.routes.draw do
         resource :profile, only: %i[show update create]
         post 'verify', to: 'verifications#verify'
         post 'resend_verification', to: 'verifications#resend_verification'
+        patch 'kyc/update-step', to: 'kyc#update_step'
 
         resource :two_factor, only: [] do
           get :status

@@ -1,7 +1,7 @@
 class AuthorMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers
   default template_path: 'devise/mailer'
-  default from: 'omololuayk@gmail.com'
+  default from: 'noreply@itan.app', reply_to: 'noreply@itan.app'
 
   def confirmation_instructions(record, token, opts = {})
     @confirmation_url = "#{ENV.fetch('FRONTEND_URL',
@@ -41,6 +41,17 @@ class AuthorMailer < Devise::Mailer
     mail(
       to: @author.email,
       subject: "Your payment of $#{format('%.2f', amount)} has been approved"
+    )
+  end
+
+  def welcome_email(author)
+    @author = author
+    @frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:3002')
+    mail(
+      to: @author.email,
+      subject: "A bold beginning awaits",
+      template_path: 'author_mailer',
+      template_name: 'welcome_email'
     )
   end
 end
