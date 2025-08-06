@@ -1,10 +1,14 @@
 class Book < ApplicationRecord
+  # === Callbacks ===
   before_create :generate_unique_ids
   before_validation :ensure_arrays_format
-  # before_save :check_price_size_ratio
-  before_update :lock_slug, if: :slug_changed?
-  before_update :generate_slug_if_approved
-
+  
+  # === Validations ===
+  validates :title, presence: true
+  validates :slug, uniqueness: true, allow_nil: true
+  validate :lock_slug
+  
+  # === Associations ===
   belongs_to :author
   has_many :purchases
   has_many :readers, through: :purchases
@@ -13,35 +17,21 @@ class Book < ApplicationRecord
   has_many :likes
   has_many :liked_by_readers, through: :likes, source: :reader
 
-  # Active Storage attachments
   has_one_attached :ebook_file
   has_one_attached :audiobook_file
   has_one_attached :cover_image
 
-  # Validations
-  validates :title, presence: true
-  # validates :unique_book_id, uniqueness: true, allow_nil: true
-  # validates :unique_audio_id, uniqueness: true, allow_nil: true
-  # validate  :tags_must_be_valid
-  # validate  :keywords_must_be_valid
-  # validate :contributors_must_be_valid
-  # validate :categories_must_be_valid
-  # validates :slug, uniqueness: true
-  validates :slug, uniqueness: true, allow_nil: true
-
-  before_update :lock_slug, if: :slug_changed?
-
+  # === Enums ===
   enum approval_status: {
     pending: 'pending',
     approved: 'approved',
     rejected: 'rejected'
   }, _default: 'pending'
 
-  # Scopes to filter books by status
+  # === Scopes ===
   scope :pending, -> { where(approval_status: 'pending') }
   scope :approved, -> { where(approval_status: 'approved') }
   scope :rejected, -> { where(approval_status: 'rejected') }
-  # Only show approved books to the public
   scope :publicly_visible, -> { approved }
 
   # File size methods
@@ -57,11 +47,11 @@ class Book < ApplicationRecord
     
     number_to_human_size(ebook_file_size)
   end
-
+  
   def number_to_human_size(size)
     units = ['B', 'KB', 'MB', 'GB', 'TB']
     return '0 B' if size.zero?
-
+    
     index = (Math.log(size) / Math.log(1024)).floor
     index = [index, units.length - 1].min
     
@@ -96,11 +86,11 @@ class Book < ApplicationRecord
   #     ).processed.url
   #   end
   # end
-
+  
   # Add smaller versions for different contexts
   # def cover_thumbnail_url
   #   return nil unless cover_image.attached?
-
+  
   #   cover_image.variant(
   #     resize_to_fill: [300, 188],
   #     format: :jpg,
@@ -108,9 +98,9 @@ class Book < ApplicationRecord
   #     saver: { quality: 80 }
   #   ).processed.url
   # end
-
+  
   # In Book model
-
+  
   # def check_price_size_ratio
   #   return unless ebook.attached? || audiobook.attached?
 
@@ -139,7 +129,7 @@ class Book < ApplicationRecord
   #     end
   #   end
   # end
-
+  
 
   def ensure_arrays_format
     self.keywords = keywords.split(',').map(&:strip) if keywords.present? && !keywords.is_a?(Array)
@@ -172,7 +162,7 @@ class Book < ApplicationRecord
     
   #   audiobook_file.blob.byte_size
   # end
-
+  
   # def cover_image_size
   #   return nil unless cover_image.attached?
     
@@ -181,35 +171,55 @@ class Book < ApplicationRecord
 
   # def audiobook_file_size_human
   #   return nil unless audiobook_file_size
-    
+  
   #   number_to_human_size(audiobook_file_size)
   # end
-
+  
   # def cover_image_size_human
   #   return nil unless cover_image_size
-    
+  
   #   number_to_human_size(cover_image_size)
   # end
 
-  private
+ # === Callbacks ===
+before_update :generate_slug_if_approved
+before_update :regenerate_slug_if_title_changed, if: -> { !approved? }
+before_update :lock_slug
 
-  def lock_slug
-    return unless slug_changed? && !slug_was.nil?
+# === Slug Logic ===
+private
 
-    errors.add(:slug, 'cannot be changed once set')
-    throw(:abort)
+def lock_slug
+  return unless slug_changed? && slug_was.present?
+
+  errors.add(:slug, 'cannot be changed once set')
+  throw(:abort)
+end
+
+def generate_slug_if_approved
+  return unless persisted?
+  return unless will_save_change_to_approval_status? && approved?
+  return if slug.present? # Don't overwrite existing slug
+
+  self.slug = build_unique_slug
+end
+
+def regenerate_slug_if_title_changed
+  return unless persisted?
+  return unless will_save_change_to_title?
+  return if slug.present? # Prevent changing already locked slug
+
+  self.slug = build_unique_slug
+end
+
+def build_unique_slug
+  author_name = "#{author.first_name}-#{author.last_name}".parameterize
+  book_name = title.to_s.parameterize
+
+  loop do
+    slug_candidate = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}"
+    break slug_candidate unless Book.exists?(slug: slug_candidate)
   end
+end
 
-  def generate_slug_if_approved
-    return unless will_save_change_to_approval_status? && approved? && slug.blank?
-
-    author_name = "#{author.first_name}-#{author.last_name}".parameterize
-    book_name = title.to_s.parameterize
-    base_slug = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}"
-
-    # Ensure uniqueness
-    base_slug = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}" while Book.exists?(slug: base_slug)
-
-    self.slug = base_slug
-  end
 end

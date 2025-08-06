@@ -1,7 +1,7 @@
 class BookSerializer
   include JSONAPI::Serializer
 
-  attributes :id, :title, :description, :edition_number, :contributors,
+  attributes :id, :title, :slug, :description, :edition_number, :contributors,
              :primary_audience, :publishing_rights, :ebook_price, :audiobook_price,
              :unique_book_id, :unique_audio_id, :created_at, :updated_at,
              :ai_generated_image, :explicit_images, :subtitle, :bio,
