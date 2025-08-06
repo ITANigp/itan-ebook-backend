@@ -44,6 +44,8 @@ Rails.application.configure do
     host: ENV['BACKEND_URL'] || 'api.itan.app',
     protocol: 'https' 
   } 
+
+  config.action_mailer.default_options = { from: 'omololuayk@gmail.com' }
   
   config.action_mailer.smtp_settings = {
     address:       'smtp.gmail.com',
