@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Welcome to ITAN!</title>
+    <style>
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f5f5f5;
+        padding: 20px;
+        margin: 0;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+      .header {
+        padding: 20px;
+        background-color: #e8f4f8;
+        border-bottom: 1px solid #ddd;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+      }
+      .content {
+        padding: 30px 20px;
+      }
+      .content h2 {
+        margin-top: 0;
+        font-size: 20px;
+        color: #dc3545;
+      }
+      .content p {
+        margin: 15px 0;
+        line-height: 1.6;
+      }
+      .cta-button {
+        display: inline-block;
+        background-color: #dc3545;
+        color: #fff !important;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+      .footer {
+        padding: 20px;
+        font-size: 12px;
+        text-align: center;
+        color: #888;
+        border-top: 1px solid #eee;
+        background-color: #fafafa;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>Welcome to ITAN, Reader!</h1>
+      </div>
+      <div class="content">
+        <h2>Hello <%= @reader.first_name || 'there' %> 👋</h2>
+        <p>Thank you for joining <strong>ITAN Global Publishing</strong> — the home of African stories.</p>
+        <p>You're now part of a growing community of readers who believe in the power of local storytelling and support African authors.</p>
+        <p>As a reader on ITAN, you can:</p>
+        <ul>
+          <li>Discover and enjoy powerful African literature</li>
+          <li>Support authors directly through your purchases</li>
+          <li>Get secure access to your books anytime, anywhere</li>
+        </ul>
+        <p>We’re thrilled to have you on board!</p>
+        <a href="<%= @frontend_url %>/reader/sign_in" class="cta-button">Start Reading</a>
+      </div>
+      <div class="footer">
+        If you need help, contact us at <a href="mailto:support@itan.app">support@itan.app</a><br>
+        Visit ITAN: <%= @frontend_url %>
+      </div>
+    </div>
+  </body>
+</html>
