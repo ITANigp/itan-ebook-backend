@@ -96,7 +96,7 @@
           <span><%= @content_type %></span>
         </div>
         <div class="amount">
-          Total: $<%= sprintf("%.2f", @amount / 100.0) %>
+          Total: $<%= @amount %>
         </div>
       </div>
       <div class="book-info">
@@ -109,7 +109,7 @@
       </div>
       <div style="text-align: center; margin: 30px 0;">
         <p><strong>Ready to start reading?</strong></p>
-        <a href="<%= ENV['FRONTEND_URL'] %>/read/<%= @book.id %>?token=<%= @reading_token %>" class="reading-link">
+        <a href="<%= ENV['READER_FRONTEND_URL'] %>/read/<%= @book.id %>?token=<%= @reading_token %>" class="reading-link">
           🚀 Start Reading Now
         </a>
         <p style="font-size: 12px; color: #666; margin-top: 10px;">
