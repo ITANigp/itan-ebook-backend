@@ -109,11 +109,11 @@
       </div>
       <div style="text-align: center; margin: 30px 0;">
         <p><strong>Ready to start reading?</strong></p>
-        <a href="<%= ENV['READER_FRONTEND_URL'] %>/read/<%= @book.id %>?token=<%= @reading_token %>" class="reading-link">
-          🚀 Start Reading Now
+        <a href="<%= ENV['READER_FRONTEND_URL'] || 'http://localhost:3003' %>/reader/sign_in" class="reading-link">
+          🚀 Sign In to Read Your Book
         </a>
         <p style="font-size: 12px; color: #666; margin-top: 10px;">
-          This reading link is valid for 4 hours. You can always access your book from your library.
+          Sign in to access your purchased book from your library.
         </p>
       </div>
       <div style="background-color: #fff3cd; padding: 15px; border-radius: 6px; margin: 20px 0;">
