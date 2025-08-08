@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Assuming you have not yet modified this file, each configuration option below
 # is set to its default value. Note that some are commented out while others
 # are not: uncommented lines are intended to protect your configuration from
@@ -10,7 +8,7 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
     jwt.dispatch_requests = [
       ['POST', %r{^/api/v1/readers/sign_in$}]
     ]
@@ -23,8 +21,6 @@ Devise.setup do |config|
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` as its `secret_key`
-  # by default. You can change it below and use your own secret key.
-  # config.secret_key = '7e3f3692f8935b18339b178d72383f08bc4a1e2792403964f9f4b91471c43f735f88a1612adc9bbed20aa262cd6004ceac48502948c4c2c0d606e50c230be8c9'
 
   # ==> Controller configuration
   # Configure the parent class to the devise controllers.
@@ -135,8 +131,6 @@ Devise.setup do |config|
   # a value of 20 is already extremely slow: approx. 60 seconds for 1 calculation).
   config.stretches = Rails.env.test? ? 1 : 12
 
-  # Set up a pepper to generate the hashed password.
-  # config.pepper = 'df93f447ea2117e189850e4df71d4e698f6045723836ddede3687f1ef39064c2756d78fe3dd5e55a0f9319af2e8314fdf130862518dc36a1328e831c1fc301c0'
 
   # Send a notification to the original email when the user's email is changed.
   # config.send_email_changed_notification = false
@@ -185,15 +179,15 @@ Devise.setup do |config|
   # Options to be passed to the created cookie. For instance, you can set
   # secure: true in order to force SSL only cookies.
   # config/initializers/devise.rb
-  config.rememberable_options = { 
-    secure: Rails.env.production?, 
-    same_site: :none  # For cross-domain requests
+  config.rememberable_options = {
+    secure: Rails.env.production?,
+    same_site: :none # For cross-domain requests
   }
 
-  Rails.application.config.session_store :cookie_store, 
-  key: '_itan_session',
-  secure: Rails.env.production?,
-  same_site: :none
+  Rails.application.config.session_store :cookie_store,
+                                         key: '_itan_session',
+                                         secure: Rails.env.production?,
+                                         same_site: :none
   # ==> Configuration for :validatable
   # Range for password length.
   config.password_length = 6..128
@@ -325,19 +319,20 @@ Devise.setup do |config|
   config.responder.error_status = :unprocessable_entity
   config.responder.redirect_status = :see_other
 
-  config.navigational_formats = []
+  config.navigational_formats = ['*/*', :html, :json]
+
   # ==> Configuration for :registerable
 
   # When set to false, does not sign a user in automatically after their password is
   # changed. Defaults to true, so a user is signed in automatically after changing a password.
   # config.sign_in_after_change_password = true
   config.omniauth :google_oauth2,
-                ENV['GOOGLE_CLIENT_ID'],
-                ENV['GOOGLE_CLIENT_SECRET'],
-                {
-                  scope: 'email,profile',
-                  prompt: 'select_account',
-                  image_aspect_ratio: 'square',
-                  image_size: 50
-                }
+                  ENV.fetch('GOOGLE_CLIENT_ID', nil),
+                  ENV.fetch('GOOGLE_CLIENT_SECRET', nil),
+                  {
+                    scope: 'email,profile',
+                    prompt: 'select_account',
+                    image_aspect_ratio: 'square',
+                    image_size: 50
+                  }
 end

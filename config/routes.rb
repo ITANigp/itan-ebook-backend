@@ -10,30 +10,34 @@ Rails.application.routes.draw do
   devise_for :admins, controllers: {
     sessions: 'api/v1/admins/sessions'
   }, skip: [:registrations],
-     path: 'api/v1/admins'
-  
+                      path: 'api/v1/admins'
+
   devise_for :readers, controllers: {
     sessions: 'api/v1/readers/sessions',
     registrations: 'api/v1/readers/registrations'
   }, defaults: { format: :json },
-     path: 'api/v1/readers'
-     
+                       path: 'api/v1/readers'
+
   # API Routes
   namespace :api do
     namespace :v1 do
       resources :books do
         collection do
-          get :my_books     
-          get :storefront     
+          get :my_books
+          get :storefront
         end
         member do
-          get :storefront  # GET /api/v1/books/:id/storefront
-          get :content #GET /api/v1/books/:id/content
-        end        
+          get :storefront # GET /api/v1/books/:id/storefront
+          get :content # GET /api/v1/books/:id/content
+        end
+      end
+
+      resources :books, only: [] do
+        get 'by-slug/:slug', on: :collection, action: :show_by_slug
       end
 
       # Admin account management
-      resources :admins, only: [:index, :show, :create]
+      resources :admins, only: %i[index show create]
 
       # Admin functionality namespace
       namespace :admin do
@@ -43,11 +47,11 @@ Rails.application.routes.draw do
             patch :reject
           end
         end
-        resources :authors, only: [:index, :show]       
+        resources :authors, only: %i[index show]
       end
 
       namespace :admin do
-        resources :author_revenues, only: [:index, :show] do
+        resources :author_revenues, only: %i[index show] do
           collection do
             post :process_payments
             post :transfer_funds
@@ -58,18 +62,18 @@ Rails.application.routes.draw do
         end
 
         resources :analytics, only: [] do
-            collection do              
-              get :financial_summary
-            end
+          collection do
+            get :financial_summary
+          end
         end
-        
+
         # Analytics dashboard routes
         get 'revenue_dashboard', to: 'dashboard#revenue'
       end
 
-      # Author account management    
+      # Author account management
       namespace :authors do
-        resource :profile, only: [:show, :update, :create]
+        resource :profile, only: %i[show update create]
         post 'verify', to: 'verifications#verify'
         post 'resend_verification', to: 'verifications#resend_verification'
         patch 'kyc/update-step', to: 'kyc#update_step'
@@ -93,13 +97,13 @@ Rails.application.routes.draw do
             get :approved_payments
           end
         end
-        
+
         # Individual payment historys
-        resources :payment_histories, only: [:index, :show]
+        resources :payment_histories, only: %i[index show]
       end
-        
+
       namespace :author do
-        resource :banking_details, only: [:show, :update] do
+        resource :banking_details, only: %i[show update] do
           post :verify
           get :banks
           post :verify_account_preview
@@ -107,7 +111,7 @@ Rails.application.routes.draw do
       end
 
       namespace :readers do
-        resource :profile, only: [:show, :update, :create]
+        resource :profile, only: %i[show update create]
       end
 
       namespace :reader do
@@ -120,17 +124,17 @@ Rails.application.routes.draw do
         resources :finished_books, only: [:index]
       end
 
-      resources :purchases, only: [:create, :index] do
+      resources :purchases, only: %i[create index] do
         collection do
-          post :verify 
+          post :verify
           post :refresh_reading_token
           get :check_status
         end
       end
 
-      #Reviews & likes
-      resources :reviews, only: [:create, :destroy]
-      resources :likes, only: [:index, :create, :destroy]          
+      # Reviews & likes
+      resources :reviews, only: %i[create destroy]
+      resources :likes, only: %i[index create destroy]
       resource :direct_uploads, only: [:create]
     end
   end
@@ -139,7 +143,7 @@ Rails.application.routes.draw do
   devise_scope :author do
     post '/api/v1/authors/confirmation/confirm', to: 'api/v1/authors/confirmations#confirm'
   end
-  
-  get "up" => "rails/health#show", as: :rails_health_check
-  root "api/v1/status#index"
+
+  get 'up' => 'rails/health#show', as: :rails_health_check
+  root 'api/v1/status#index'
 end

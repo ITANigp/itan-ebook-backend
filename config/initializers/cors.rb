@@ -17,17 +17,16 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
             "http://localhost:3003"
 
     # Explicitly specify the ActiveStorage paths
-    resource "/rails/active_storage/direct_uploads",
-      headers: :any,
-      methods: [:post, :options],
-      credentials: true,
-      expose: ['ETag']
-    
-    # Allow all API endpoints with OPTIONS for preflight
-    resource "*",
-      headers: :any,
-      methods: [:get, :post, :put, :patch, :delete, :options, :head], 
-      expose: ['access-token', 'expiry', 'token-type', 'Authorization'],      
-      credentials: true
+    resource '/rails/active_storage/direct_uploads',
+             headers: :any,
+             methods: [:post],
+             credentials: true,
+             expose: ['ETag']
+
+    resource '*',
+             headers: :any,
+             methods: %i[get post put patch delete options head],
+             expose: %w[access-token expiry token-type Authorization],
+             credentials: true
   end
 end

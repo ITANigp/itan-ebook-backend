@@ -161,7 +161,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
     t.index ["categories"], name: "index_books_on_categories", using: :gin
     t.index ["contributors"], name: "index_books_on_contributors", using: :gin
     t.index ["keywords"], name: "index_books_on_keywords", using: :gin
-    t.index ["slug"], name: "index_books_on_slug", unique: true
     t.index ["tags"], name: "index_books_on_tags", using: :gin
     t.index ["unique_audio_id"], name: "index_books_on_unique_audio_id", unique: true
     t.index ["unique_book_id"], name: "index_books_on_unique_book_id", unique: true
@@ -175,13 +174,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["book_id"], name: "index_chapters_on_book_id"
-  end
-
-  create_table "favourites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "reader_id"
-    t.uuid "book_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
