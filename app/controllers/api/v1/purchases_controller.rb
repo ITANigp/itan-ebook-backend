@@ -127,29 +127,47 @@ class Api::V1::PurchasesController < ApplicationController
   end
 
   def refresh_reading_token
+    book_id = params[:book_id]
     purchase_id = params[:purchase_id]
 
-    unless purchase_id
+    # Accept either book_id or purchase_id
+    unless book_id || purchase_id
       return render json: {
-        status: { code: 400, message: 'Purchase ID is required' }
+        status: { code: 400, message: 'Book ID or Purchase ID is required' }
       }, status: :bad_request
     end
 
     begin
-      purchase = current_reader.purchases.find(purchase_id)
-
-      if purchase.purchase_status == 'completed'
-        render json: {
-          status: { code: 200 },
-          data: {
-            reading_token: generate_reading_token(purchase)
-          }
-        }
+      if book_id
+        # Find the most recent completed purchase for this book
+        purchase = current_reader.purchases
+          .joins(:book)
+          .where(books: { id: book_id }, purchase_status: 'completed')
+          .order(created_at: :desc)
+          .first
+        
+        unless purchase
+          return render json: {
+            status: { code: 404, message: 'No completed purchase found for this book' }
+          }, status: :not_found
+        end
       else
-        render json: {
-          status: { code: 403, message: 'Access denied' }
-        }, status: :forbidden
+        # Find by purchase_id (original behavior)
+        purchase = current_reader.purchases.find(purchase_id)
+        
+        unless purchase.purchase_status == 'completed'
+          return render json: {
+            status: { code: 403, message: 'Access denied' }
+          }, status: :forbidden
+        end
       end
+
+      render json: {
+        status: { code: 200 },
+        data: {
+          reading_token: generate_reading_token(purchase)
+        }
+      }
     rescue ActiveRecord::RecordNotFound
       render json: {
         status: { code: 404, message: 'Purchase not found' }
