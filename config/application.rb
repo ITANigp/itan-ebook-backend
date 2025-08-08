@@ -42,7 +42,7 @@ module ItanAudiobookBackend
     # Only loads a smaller set of middleware suitable for API only apps.
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
-    config.api_only = false
+    config.api_only = true
 
     # Ensure session and cookies middleware are loaded for OmniAuth
     config.middleware.use ActionDispatch::Cookies
