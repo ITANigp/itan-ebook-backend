@@ -129,6 +129,7 @@ class Api::V1::PurchasesController < ApplicationController
   def refresh_reading_token
     book_id = params[:book_id]
     purchase_id = params[:purchase_id]
+    content_type = params[:content_type] || ENV.fetch('DEFAULT_TRIAL_CONTENT_TYPE', 'ebook')
 
     # Accept either book_id or purchase_id
     unless book_id || purchase_id
@@ -139,17 +140,33 @@ class Api::V1::PurchasesController < ApplicationController
 
     begin
       if book_id
-        # Find the most recent completed purchase for this book
+        # Get the book first
+        book = Book.find(book_id)
+        
+        # Check if reader has access (either owns book or has active trial)
+        unless current_reader.trial_active? || current_reader.owns_book?(book)
+          return render json: {
+            status: { code: 402, message: 'Access denied. Please purchase this book or use your free trial.' }
+          }, status: :payment_required
+        end
+
+        # Try to find a completed purchase first
         purchase = current_reader.purchases
           .joins(:book)
           .where(books: { id: book_id }, purchase_status: 'completed')
           .order(created_at: :desc)
           .first
         
-        unless purchase
+        if purchase
+          # User owns the book - generate token with purchase info
+          token = generate_reading_token(purchase)
+        elsif current_reader.trial_active?
+          # User is on trial - generate trial token
+          token = generate_trial_reading_token(current_reader, book, content_type)
+        else
           return render json: {
-            status: { code: 404, message: 'No completed purchase found for this book' }
-          }, status: :not_found
+            status: { code: 402, message: 'Trial expired. Please purchase this book to continue reading.' }
+          }, status: :payment_required
         end
       else
         # Find by purchase_id (original behavior)
@@ -160,17 +177,19 @@ class Api::V1::PurchasesController < ApplicationController
             status: { code: 403, message: 'Access denied' }
           }, status: :forbidden
         end
+        
+        token = generate_reading_token(purchase)
       end
 
       render json: {
         status: { code: 200 },
         data: {
-          reading_token: generate_reading_token(purchase)
+          reading_token: token
         }
       }
     rescue ActiveRecord::RecordNotFound
       render json: {
-        status: { code: 404, message: 'Purchase not found' }
+        status: { code: 404, message: 'Resource not found' }
       }, status: :not_found
     end
   end
@@ -243,6 +262,20 @@ class Api::V1::PurchasesController < ApplicationController
         content_type: purchase.content_type,
         book_id: purchase.book.id,
         exp: 4.hours.from_now.to_i # 4 hours reading session
+      },
+      ENV.fetch('DEVISE_JWT_SECRET_KEY', nil),
+      'HS256'
+    )
+  end
+
+  def generate_trial_reading_token(reader, book, content_type)
+    JWT.encode(
+      {
+        sub: reader.id, # Reader ID as subject
+        book_id: book.id,
+        content_type: content_type,
+        trial_access: true,
+        exp: 4.hours.from_now.to_i # 4 hours reading session for trial
       },
       ENV.fetch('DEVISE_JWT_SECRET_KEY', nil),
       'HS256'

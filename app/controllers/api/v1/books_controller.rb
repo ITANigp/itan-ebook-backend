@@ -112,6 +112,7 @@ class Api::V1::BooksController < ApplicationController
       Rails.logger.info "Book: #{book.title}"
       Rails.logger.info "Trial active: #{reader.trial_active?}"
       Rails.logger.info "Owns book: #{reader.owns_book?(book)}"
+      Rails.logger.info "Direct URL requested: #{params[:direct_url] == 'true'}"
       Rails.logger.info "Purchased books count: #{reader.purchased_books.count}"
       Rails.logger.info "All purchases for this book: #{reader.purchases.where(book: book).pluck(:purchase_status)}"
 
@@ -129,11 +130,14 @@ class Api::V1::BooksController < ApplicationController
                        ENV.fetch('DEFAULT_TRIAL_CONTENT_TYPE', 'ebook')
                      end
 
+      # Determine if direct URLs are requested
+      use_direct_urls = params[:direct_url] == 'true'
+
       if content_type == 'ebook'
         # For ebooks: Return file URL or relevant data
         if book.ebook_file.attached?
-          # Generate a temporary URL for the file
-          url = Rails.application.routes.url_helpers.rails_blob_url(book.ebook_file, only_path: false)
+          # Generate URL based on request type
+          url = generate_file_url(book.ebook_file, use_direct: use_direct_urls, reader: reader)
 
           render json: {
             title: book.title,
@@ -149,7 +153,7 @@ class Api::V1::BooksController < ApplicationController
         end
       elsif book.audiobook_file.attached?
         # For audiobooks: Return streaming URL or file URLs
-        url = Rails.application.routes.url_helpers.rails_blob_url(book.audiobook_file, only_path: false)
+        url = generate_file_url(book.audiobook_file, use_direct: use_direct_urls, reader: reader)
 
         render json: {
           title: book.title,
