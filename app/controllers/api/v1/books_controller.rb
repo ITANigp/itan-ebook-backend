@@ -106,6 +106,15 @@ class Api::V1::BooksController < ApplicationController
       # Get the book
       book = Book.find(params[:id])
 
+      # Debug logging
+      Rails.logger.info "=== CONTENT ACCESS DEBUG ==="
+      Rails.logger.info "Reader: #{reader.email}"
+      Rails.logger.info "Book: #{book.title}"
+      Rails.logger.info "Trial active: #{reader.trial_active?}"
+      Rails.logger.info "Owns book: #{reader.owns_book?(book)}"
+      Rails.logger.info "Purchased books count: #{reader.purchased_books.count}"
+      Rails.logger.info "All purchases for this book: #{reader.purchases.where(book: book).pluck(:purchase_status)}"
+
       # Check access: either trial is active OR reader owns the book
       unless reader.trial_active? || reader.owns_book?(book)
         return render json: { error: 'Access denied. Please purchase this book or use your free trial.' },
