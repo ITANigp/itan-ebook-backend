@@ -33,12 +33,11 @@ class Api::V1::Admin::BooksController < ApplicationController
     # Process data consistently
     process_book_attributes
 
-    # Include feedback in the update if needed
     if @book.update(
       approval_status: 'approved',
       admin_feedback: params[:admin_feedback]
     )
-      render_books_json(@book, 'Book approved successfully.')
+      render_books_json(@book, 'Book approved successfully. Slug has been generated.', 200)
     else
       render json: {
         status: { code: 422, message: @book.errors.full_messages.join(', ') }
