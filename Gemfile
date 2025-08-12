@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-# ruby '3.2.2'
-# Accept any Ruby version >= 3.2.0 but < 4.0
 ruby '~> 3.0'
 
 gem 'dotenv-rails'
