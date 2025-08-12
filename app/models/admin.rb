@@ -7,4 +7,5 @@ class Admin < ApplicationRecord
 
   # associations
   has_many :notifications, as: :user
+  has_many :books
 end

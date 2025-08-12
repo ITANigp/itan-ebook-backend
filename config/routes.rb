@@ -29,8 +29,15 @@ Rails.application.routes.draw do
         member do
           get :storefront # GET /api/v1/books/:id/storefront
           get :content # GET /api/v1/books/:id/content
+          patch :approve
         end
       end
+      # config/routes.rb
+      # resources :books do
+      #   member do
+      #     patch :approve
+      #   end
+      # end
 
       resources :books, only: [] do
         get 'by-slug/:slug', on: :collection, action: :show_by_slug
