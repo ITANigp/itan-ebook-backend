@@ -101,7 +101,7 @@ class PurchaseService
         content_type: @content_type,
         book_title: @book.title
       },
-      callback_url: "#{ENV.fetch('FRONTEND_URL')}/payment/callback"
+      callback_url: "#{ENV.fetch('READER_FRONTEND_URL', ENV.fetch('FRONTEND_URL'))}/payment/callback"
     )
   end
 
