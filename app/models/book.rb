@@ -24,6 +24,8 @@ class Book < ApplicationRecord
   # validate  :keywords_must_be_valid
   # validate :contributors_must_be_valid
   # validate :categories_must_be_valid
+  validates :slug, uniqueness: true, allow_nil: true
+  validate :lock_slug
 
   enum approval_status: {
     pending: 'pending',
@@ -134,6 +136,11 @@ class Book < ApplicationRecord
   #   end
   # end
 
+  # === Callbacks ===
+before_update :generate_slug_if_approved
+before_update :regenerate_slug_if_title_changed, if: -> { !approved? }
+before_update :lock_slug
+
   private
 
   def ensure_arrays_format
@@ -185,4 +192,40 @@ class Book < ApplicationRecord
     
   #   number_to_human_size(cover_image_size)
   # end
+
+
+# === Slug Logic ===
+def lock_slug
+  return unless slug_changed? && slug_was.present?
+
+  errors.add(:slug, 'cannot be changed once set')
+  throw(:abort)
+end
+
+def generate_slug_if_approved
+  return unless persisted?
+  return unless will_save_change_to_approval_status? && approved?
+  return if slug.present? # Don't overwrite existing slug
+
+  self.slug = build_unique_slug
+end
+
+def regenerate_slug_if_title_changed
+  return unless persisted?
+  return unless will_save_change_to_title?
+  return if slug.present? # Prevent changing already locked slug
+
+  self.slug = build_unique_slug
+end
+
+def build_unique_slug
+  author_name = "#{author.first_name}-#{author.last_name}".parameterize
+  book_name = title.to_s.parameterize
+
+  loop do
+    slug_candidate = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}"
+    break slug_candidate unless Book.exists?(slug: slug_candidate)
+  end
+end
+
 end
