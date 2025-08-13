@@ -11,7 +11,7 @@ class Reader < ApplicationRecord
 
   # Associations
   has_many :purchases, dependent: :destroy
-  has_many :purchased_books, through: :purchases, source: :book
+  has_many :purchased_books, -> { where(purchases: { purchase_status: 'completed' }) }, through: :purchases, source: :book
   has_many :accessible_chapters, through: :purchased_books, source: :chapters
   has_many :reading_statuses, dependent: :destroy
   has_many :notifications, dependent: :destroy
