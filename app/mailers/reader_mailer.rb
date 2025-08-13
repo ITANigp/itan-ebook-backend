@@ -1,5 +1,5 @@
 class ReaderMailer < ApplicationMailer
-  default from: 'omololuayk@gmail.com'
+  default from: 'no-reply@itan.app'
 
   def purchase_receipt(purchase)
     @purchase = purchase
