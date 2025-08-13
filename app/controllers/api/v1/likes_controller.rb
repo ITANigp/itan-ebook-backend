@@ -23,34 +23,52 @@ class Api::V1::LikesController < ApplicationController
   end
 
   def create
-    like = Like.new(book_id: params[:book_id], reader_id: current_reader.id)
-    if like.save
-      render json: like, status: :created
+    @like = Like.find_or_create_by(reader: current_reader, book_id: params[:book_id])
+    
+    if @like.persisted?
+      render json: { 
+        message: 'Book liked successfully', 
+        liked: true,
+        like_id: @like.id
+      }, status: :ok
     else
-      render json: { errors: like.errors.full_messages }, status: :unprocessable_entity
+      render json: { 
+        errors: @like.errors.full_messages 
+      }, status: :unprocessable_entity
     end
   end
 
   def show
-    like = current_reader.likes.find_by(book_id: params[:book_id])
+    # Handle both /api/v1/likes/book-id and /api/v1/likes?book_id=book-id
+    book_id = params[:id] || params[:book_id]
+    like = current_reader.likes.find_by(book_id: book_id)
+    
     if like
       render json: {
         id: like.id,
         book_id: like.book_id,
-        liked_at: like.created_at
+        liked_at: like.created_at,
+        liked: true
       }
     else
-      render json: { error: 'Like not found' }, status: :not_found
+      render json: { 
+        error: 'Like not found',
+        liked: false 
+      }, status: :not_found
     end
   end
 
   def destroy
     like = Like.find_by(id: params[:id], reader_id: current_reader.id)
+    
     if like
       like.destroy
-      head :no_content
+      render json: { 
+        message: 'Book unliked successfully', 
+        liked: false 
+      }, status: :ok
     else
-      render json: { error: 'Not found' }, status: :not_found
+      render json: { error: 'Like not found' }, status: :not_found
     end
   end
 end
