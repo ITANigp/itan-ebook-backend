@@ -1,5 +1,24 @@
-class ReaderMailer < ApplicationMailer
-  default from: 'omololuayk@gmail.com'
+class ReaderMailer < Devise::Mailer
+   default from: 'no-reply@itan.app'
+  
+  # include Devise::Controllers::UrlHelpers
+  default template_path: 'devise/mailer' # Uses Devise email templates for confirmation
+
+  # === 1) Devise confirmation instructions ===
+  def confirmation_instructions(record, token, opts = {})
+    opts[:from] = 'no-reply@itan.app'
+    opts[:subject] = 'Confirm your Itan account'
+    super
+  end
+
+  # === 2) Welcome email after confirmation ===
+  def welcome_email(reader)
+    @reader = reader
+    mail(
+      to: @reader.email,
+      subject: 'Welcome to Itan!'
+    )
+  end
 
   def purchase_receipt(purchase)
     @purchase = purchase

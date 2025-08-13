@@ -120,6 +120,16 @@ Rails.application.routes.draw do
         resources :finished_books, only: [:index]
       end
 
+      namespace :readers do
+        resource :two_factors, only: [] do
+          get :status
+          post :enable_email
+          post :setup_sms
+          post :verify_sms
+          post :disable
+        end
+      end
+
       resources :purchases, only: [:create, :index] do
         collection do
           post :verify 
