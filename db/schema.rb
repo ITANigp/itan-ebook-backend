@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_13_191805) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -161,7 +161,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
     t.index ["categories"], name: "index_books_on_categories", using: :gin
     t.index ["contributors"], name: "index_books_on_contributors", using: :gin
     t.index ["keywords"], name: "index_books_on_keywords", using: :gin
-    t.index ["slug"], name: "index_books_on_slug", unique: true
+    t.index ["slug"], name: "index_books_on_slug", unique: true, where: "(slug IS NOT NULL)"
     t.index ["tags"], name: "index_books_on_tags", using: :gin
     t.index ["unique_audio_id"], name: "index_books_on_unique_audio_id", unique: true
     t.index ["unique_book_id"], name: "index_books_on_unique_book_id", unique: true
@@ -252,6 +252,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_04_154601) do
     t.string "jti", null: false
     t.datetime "trial_start"
     t.datetime "trial_end"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.boolean "two_factor_enabled"
+    t.string "preferred_2fa_method"
+    t.string "phone_number"
+    t.boolean "phone_verified"
+    t.string "two_factor_code"
+    t.datetime "two_factor_expires_at"
+    t.index ["confirmation_token"], name: "index_readers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_readers_on_email", unique: true
     t.index ["jti"], name: "index_readers_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_readers_on_reset_password_token", unique: true
