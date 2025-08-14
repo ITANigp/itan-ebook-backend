@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '3.2.2'
+ruby '~> 3.0'
 
 gem 'dotenv-rails'
 
@@ -29,6 +29,8 @@ gem 'groupdate'
 gem 'devise-two-factor' # For TOTP (Time-based One-Time Password)
 
 gem 'twilio-ruby', '~> 7.5', '>= 7.5.2' # For SMS-based 2FA
+
+gem "activestorage", ">= 7.1.5.2"
 
 # For OAuth authentication
 gem 'omniauth'
