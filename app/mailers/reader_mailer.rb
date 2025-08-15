@@ -1,4 +1,4 @@
-class ReaderMailer < ApplicationMailer
+class ReaderMailer < Devise::Mailer
   default from: 'no-reply@itan.app'
 
   def purchase_receipt(purchase)
