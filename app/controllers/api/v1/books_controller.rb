@@ -176,13 +176,13 @@ class Api::V1::BooksController < ApplicationController
     # Join array if Rails routed slug as splat parameter
     slug_param = params[:slug]
     slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
-  
-    book = Book.find_by(slug: slug)
-  
+
+    book = Book.find_by(slug: slug, approval_status: 'approved')
+
     if book
-      render json: book, serializer: BookSerializer
+      render json: BookSerializer.new(book).serializable_hash[:data][:attributes]
     else
-      render json: { error: "Book not found" }, status: :not_found
+      render json: { error: "Book not found or not approved" }, status: :not_found
     end
   end
   
