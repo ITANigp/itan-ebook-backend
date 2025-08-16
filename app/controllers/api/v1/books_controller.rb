@@ -181,9 +181,9 @@ class Api::V1::BooksController < ApplicationController
   def show_by_slug
     # Join array if Rails routed slug as splat parameter
     slug_param = params[:slug]
-    slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
+    # slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
 
-    book = Book.find_by(slug: slug, approval_status: 'approved')
+    book = Book.find_by(slug: slug_param, approval_status: 'approved')
 
     if book
       render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
