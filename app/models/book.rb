@@ -223,7 +223,7 @@ def build_unique_slug
   book_name = title.to_s.parameterize
 
   loop do
-    slug_candidate = "#{author_name}/#{book_name}-#{SecureRandom.hex(4)}"
+    slug_candidate = "#{author_name}-#{book_name}-#{SecureRandom.hex(4)}"
     break slug_candidate unless Book.exists?(slug: slug_candidate)
   end
 end
