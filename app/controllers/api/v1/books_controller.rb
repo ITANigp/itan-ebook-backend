@@ -172,6 +172,20 @@ class Api::V1::BooksController < ApplicationController
   #   render json: { categories: mains.map { |name| { name: name } } }
   # end
 
+  def show_by_slug
+    # Join array if Rails routed slug as splat parameter
+    slug_param = params[:slug]
+    slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
+  
+    book = Book.find_by(slug: slug)
+  
+    if book
+      render json: book, serializer: BookSerializer
+    else
+      render json: { error: "Book not found" }, status: :not_found
+    end
+  end
+  
   private
 
   def create_book_with_attachments
@@ -231,8 +245,8 @@ class Api::V1::BooksController < ApplicationController
                         # Collection of books
                         BookSerializer.new(books).serializable_hash[:data].map { |book| book[:attributes] }
                       end
-
-    render json: response
+                      
+                      render json: response
   end
 
   # Used to manage error, record not found
@@ -243,16 +257,16 @@ class Api::V1::BooksController < ApplicationController
       status: { code: 404, message: 'Book not found' }
     }, status: :not_found
   end
-
+  
   def authorize_author!
     return if @book.author_id == current_author.id
-
+    
     render json: {
       status: { code: 403, message: 'You are not authorized to perform this action' }
-    }, status: :forbidden
-  end
-
-  def audio_url(file)
+      }, status: :forbidden
+    end
+    
+    def audio_url(file)
     # Replace with appropriate URL generation for your storage solution
     # For ActiveStorage:
     # Rails.application.routes.url_helpers.rails_blob_url(file, only_path: false)
@@ -272,10 +286,10 @@ class Api::V1::BooksController < ApplicationController
       end
     end
   end
-
+  
   def convert_price_to_cents
     return unless params[:book][:ebook_price].present?
-
+    
     begin
       # Convert from decimal dollars to integer cents
       dollars = BigDecimal(params[:book][:ebook_price])
@@ -298,4 +312,6 @@ class Api::V1::BooksController < ApplicationController
       keywords: [], tags: []
     )
   end
+
+
 end
