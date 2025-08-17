@@ -38,7 +38,7 @@ Devise.setup do |config|
 
   # Configure the class responsible to send e-mails.
   config.mailer = 'AuthorMailer'
-  config.mailer = 'ReaderMailer'
+  # config.mailer = 'ReaderMailer'
 
   # Configure the parent class responsible to send e-mails.
   config.parent_mailer = 'ActionMailer::Base'

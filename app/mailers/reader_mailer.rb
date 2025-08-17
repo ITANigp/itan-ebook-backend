@@ -1,5 +1,9 @@
-class ReaderMailer < ApplicationMailer
+class ReaderMailer < Devise::Mailer
   default from: 'no-reply@itan.app'
+
+  def confirmation_instructions(record, token, opts = {})
+    super
+  end
 
   def purchase_receipt(purchase)
     @purchase = purchase
