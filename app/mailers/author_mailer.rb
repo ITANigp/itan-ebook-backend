@@ -49,7 +49,7 @@ class AuthorMailer < Devise::Mailer
     @frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:3002')
     mail(
       to: @author.email,
-      subject: "You’re Officially an ITAN Author! Here’s What’s Next",
+      subject: "Welcome to ITAN Global Publishing",
       template_path: 'author_mailer',
       template_name: 'welcome_email'
     )
