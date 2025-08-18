@@ -35,6 +35,10 @@ Rails.application.routes.draw do
       # Admin account management
       resources :admins, only: [:index, :show, :create]
 
+      resources :books, only: [] do
+        get 'by-slug/:slug', on: :collection, action: :show_by_slug
+      end
+
       # Admin functionality namespace
       namespace :admin do
         resources :books do
@@ -130,7 +134,7 @@ Rails.application.routes.draw do
 
       #Reviews & likes
       resources :reviews, only: [:create, :destroy]
-      resources :likes, only: [:index, :create, :destroy]          
+      resources :likes, only: [:index, :create, :show, :destroy]          
       resource :direct_uploads, only: [:create]
     end
   end
