@@ -71,6 +71,16 @@ class Reader < ApplicationRecord
     owns_book?(chapter.book)
   end
 
+
+  def just_confirmed?
+    saved_change_to_confirmed_at? && confirmed_at.present?
+  end
+
+  def send_welcome_email
+    ReaderMailer.welcome_email(self).deliver_later
+  end
+
+
   private
 
   def just_confirmed?

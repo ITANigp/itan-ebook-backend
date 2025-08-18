@@ -78,11 +78,11 @@ Rails.application.configure do
    # Added to send emails
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-  # config.action_mailer.delivery_method = :letter_opener 
+  config.action_mailer.delivery_method = :smtp
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 
 config.action_mailer.smtp_settings = {
-  address:              "email-smtp.us-east-1.amazonaws.com", # Replace with your AWS region host
+  address:              "email-smtp.eu-north-1.amazonaws.com", # Replace with your AWS region host
   port:                 587,
   user_name:            ENV["SES_SMTP_USERNAME"],
   password:             ENV["SES_SMTP_PASSWORD"],

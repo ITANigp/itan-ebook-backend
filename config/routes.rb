@@ -13,8 +13,10 @@ Rails.application.routes.draw do
      path: 'api/v1/admins'
   
   devise_for :readers, controllers: {
+    confirmations: 'api/v1/readers/confirmations',
     sessions: 'api/v1/readers/sessions',
-    registrations: 'api/v1/readers/registrations'
+    registrations: 'api/v1/readers/registrations',
+    passwords: 'api/v1/readers/passwords' 
   }, defaults: { format: :json },
      path: 'api/v1/readers'
      
