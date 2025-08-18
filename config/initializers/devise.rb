@@ -34,10 +34,11 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = 'omololuayk@gmail.com'
+  config.mailer_sender = 'no-reply@itan.app'
 
   # Configure the class responsible to send e-mails.
   config.mailer = 'AuthorMailer'
+  # config.mailer = 'ReaderMailer'
 
   # Configure the parent class responsible to send e-mails.
   config.parent_mailer = 'ActionMailer::Base'
@@ -340,4 +341,5 @@ Devise.setup do |config|
                   image_aspect_ratio: 'square',
                   image_size: 50
                 }
+
 end
