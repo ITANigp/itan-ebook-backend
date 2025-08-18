@@ -45,20 +45,17 @@ Rails.application.configure do
     protocol: 'https' 
   } 
 
-  config.action_mailer.default_options = { from: 'omololuayk@gmail.com' }
+  config.action_mailer.default_options = { from: 'no-reply@itan.app' }
   
-  config.action_mailer.smtp_settings = {
-    address:       'smtp.gmail.com',
-    port:          587,
-    domain:         'gmail.com', 
-    user_name:      ENV['SENDMAIL_USERNAME'],
-    password:       ENV['APP_SPEC_PASSWORD'],
-    authentication: :plain,
-    enable_starttls_auto: true,
-    openssl_verify_mode: 'none',
-    open_timeout: 5.minutes,
-    read_timeout: 5.minutes
-  }
+config.action_mailer.smtp_settings = {
+  address: "email-smtp.eu-north-1.amazonaws.com",
+  port: 587,
+  user_name: ENV['SES_SMTP_USERNAME'],
+  password: ENV['SES_SMTP_PASSWORD'],
+  authentication: :login,
+  enable_starttls_auto: true
+}
+
 
   config.active_storage.direct_upload = true
 
