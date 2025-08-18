@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0;">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f9f9f9; padding: 40px 0;">
+      <tr>
+        <td align="center">
+          <table width="600" cellpadding="0" cellspacing="0" border="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            <tr>
+              <td style="background-color: #2a3d45; padding: 20px; text-align: center;">
+                <h1 style="color: #ffffff; margin: 0; font-size: 24px;">Welcome to Itan 📚</h1>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding: 30px;">
+                <h2 style="color: #333333; margin-top: 0;">Hello <%= @reader.first_name %>,</h2>
+                <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+                  We’re thrilled to have you join <strong>Itan</strong> — the home of African literature.  
+                  From timeless classics to modern voices, Itan connects readers like you with stories that inspire, educate, and celebrate African culture.
+                </p>
+
+                <p style="color: #555555; font-size: 16px; line-height: 1.6;">
+                  Your account has been confirmed and you can now start exploring books, supporting authors, and enjoying a world of African storytelling.
+                </p>
+
+                <div style="text-align: center; margin: 30px 0;">
+                  <a href="<%= ENV.fetch('FRONTEND_URL', 'https://itan.app') %>" 
+                     style="background-color: #2a3d45; color: #ffffff; padding: 12px 24px; border-radius: 4px; text-decoration: none; font-size: 16px;">
+                    Start Reading
+                  </a>
+                </div>
+
+                <p style="color: #777777; font-size: 14px;">
+                  Welcome aboard,  
+                  <br/>
+                  — The Itan Team
+                </p>
+              </td>
+            </tr>
+            <tr>
+              <td style="background-color: #f2f2f2; padding: 20px; text-align: center; font-size: 12px; color: #999999;">
+                © <%= Time.current.year %> Itan. All rights reserved.
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

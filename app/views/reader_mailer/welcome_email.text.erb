@@ -1,0 +1,13 @@
+Hello <%= @reader.first_name %>,
+
+Welcome to Itan 📚 — the home of African literature!
+
+We’re excited to have you with us. Your account is now confirmed and ready to use. 
+You can start exploring books, supporting authors, and discovering stories from across Africa.
+
+👉 Get started here: <%= ENV.fetch('READER_FRONTEND_URL', 'https://itan.app') %>
+
+Welcome aboard,
+The Itan Team
+
+© <%= Time.current.year %> Itan. All rights reserved.
