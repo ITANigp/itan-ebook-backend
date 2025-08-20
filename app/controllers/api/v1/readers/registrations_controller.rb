@@ -14,7 +14,7 @@ class Api::V1::Readers::RegistrationsController < Devise::RegistrationsControlle
       render json: {
         status: { code: 422, message: 'Reader could not be created.' },
         errors: resource.errors.full_messages
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
