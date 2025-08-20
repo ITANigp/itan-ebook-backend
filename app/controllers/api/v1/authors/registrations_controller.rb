@@ -110,7 +110,7 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
           message: error_messages,
           details: resource.errors.details
         }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
