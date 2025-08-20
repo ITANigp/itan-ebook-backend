@@ -12,7 +12,7 @@ class Api::V1::Authors::ConfirmationsController < Devise::ConfirmationsControlle
     else
       render json: {
         status: { code: 422, message: resource.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -27,7 +27,7 @@ class Api::V1::Authors::ConfirmationsController < Devise::ConfirmationsControlle
     else
       render json: {
         status: { code: 422, message: resource.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -42,7 +42,7 @@ class Api::V1::Authors::ConfirmationsController < Devise::ConfirmationsControlle
     else
       render json: {
         status: { code: 422, message: resource.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 

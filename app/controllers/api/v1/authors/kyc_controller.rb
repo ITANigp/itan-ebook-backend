@@ -8,7 +8,7 @@ class Api::V1::Authors::KycController < ApplicationController
     if current_author.update(author_params)
       render json: { status: 200, kyc_step: current_author.kyc_step, accepted_terms: current_author.accepted_terms }
     else
-      render json: { status: 422, errors: current_author.errors.full_messages }, status: :unprocessable_entity
+      render json: { status: 422, errors: current_author.errors.full_messages }, status: :unprocessable_content
     end
   end
 end
