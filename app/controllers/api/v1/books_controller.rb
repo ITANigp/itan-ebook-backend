@@ -318,7 +318,7 @@ class Api::V1::BooksController < ApplicationController
       :title, :description, :edition_number, :primary_audience,
       :publishing_rights, :ebook_price, :audiobook_price,
       :cover_image, :audiobook_file, :ebook_file, :ai_generated_image,
-      :explicit_images, :subtitle, :bio, :book_isbn,
+      :explicit_images, :subtitle, :bio, :book_isbn, :total_pages,
       :terms_and_conditions, :publisher, :first_name, :last_name,
       { contributors: %i[role firstName lastName] },
       { categories: %i[main sub detail] },
