@@ -13,8 +13,10 @@ Rails.application.routes.draw do
      path: 'api/v1/admins'
   
   devise_for :readers, controllers: {
+    confirmations: 'api/v1/readers/confirmations',
     sessions: 'api/v1/readers/sessions',
-    registrations: 'api/v1/readers/registrations'
+    registrations: 'api/v1/readers/registrations',
+    passwords: 'api/v1/readers/passwords' 
   }, defaults: { format: :json },
      path: 'api/v1/readers'
      
@@ -122,6 +124,16 @@ Rails.application.routes.draw do
 
       namespace :reader do
         resources :finished_books, only: [:index]
+      end
+
+      namespace :readers do
+        resource :two_factors, only: [] do
+          get :status
+          post :enable_email
+          post :setup_sms
+          post :verify_sms
+          post :disable
+        end
       end
 
       resources :purchases, only: [:create, :index] do

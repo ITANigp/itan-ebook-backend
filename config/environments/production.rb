@@ -48,11 +48,11 @@ Rails.application.configure do
   config.action_mailer.default_options = { from: 'no-reply@itan.app' }
   
 config.action_mailer.smtp_settings = {
-  address: "email-smtp.eu-north-1.amazonaws.com",
-  port: 587,
-  user_name: ENV['SES_SMTP_USERNAME'],
-  password: ENV['SES_SMTP_PASSWORD'],
-  authentication: :login,
+  address:              "email-smtp.eu-north-1.amazonaws.com", # Replace with your AWS region host
+  port:                 587,
+  user_name:            ENV["SES_SMTP_USERNAME"],
+  password:             ENV["SES_SMTP_PASSWORD"],
+  authentication:       :login,
   enable_starttls_auto: true
 }
 
