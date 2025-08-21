@@ -37,6 +37,10 @@ Rails.application.routes.draw do
       # Admin account management
       resources :admins, only: [:index, :show, :create]
 
+      resources :books, only: [] do
+        get 'by-slug/:slug', on: :collection, action: :show_by_slug
+      end
+
       # Admin functionality namespace
       namespace :admin do
         resources :books do

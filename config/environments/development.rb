@@ -89,6 +89,4 @@ config.action_mailer.smtp_settings = {
   authentication:       :login,
   enable_starttls_auto: true
 }
-
-
 end

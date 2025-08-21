@@ -22,7 +22,6 @@ end
       subject: 'Welcome to Itan!',
       template_path: 'reader_mailer'
     )
-  end
 
   def purchase_receipt(purchase)
     @purchase = purchase

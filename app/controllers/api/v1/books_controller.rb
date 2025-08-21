@@ -178,6 +178,20 @@ class Api::V1::BooksController < ApplicationController
     end
   end
 
+  def show_by_slug
+    # Join array if Rails routed slug as splat parameter
+    slug_param = params[:slug]
+    # slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
+
+    book = Book.find_by(slug: slug_param, approval_status: 'approved')
+
+    if book
+      render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
+    else
+      render json: { error: "Book not found or not approved" }, status: :not_found
+    end
+  end
+
   # def categories
   #   all_categories = Book.where(approval_status: 'approved').pluck(:categories).compact
   #   category_objects = all_categories.flatten

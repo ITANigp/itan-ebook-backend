@@ -1,8 +1,8 @@
 class BookSerializer
   include JSONAPI::Serializer
 
-  attributes :id, :title, :description, :edition_number, :contributors,
-             :primary_audience, :publishing_rights, :ebook_price, :audiobook_price,
+  attributes :id, :title, :slug, :description, :edition_number, :contributors,
+             :primary_audience, :publishing_rights, :audiobook_price,
              :unique_book_id, :unique_audio_id, :created_at, :updated_at,
              :ai_generated_image, :explicit_images, :subtitle, :bio,
              :categories, :keywords, :book_isbn, :terms_and_conditions,
@@ -81,6 +81,10 @@ class BookSerializer
 
   attribute :ebook_file_size_human do |book|
     book.ebook_file_size_human
+  end
+
+  attribute :ebook_price do |book|
+    book.ebook_price ? (book.ebook_price / 100.0) : nil
   end
 
   # attribute :audiobook_file_size do |book|

@@ -139,7 +139,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
       unless recaptcha_valid
         render json: {
           status: { code: 422, message: "reCAPTCHA verification failed: #{result['error-codes']}" }
-        }, status: :unprocessable_entity
+        }, status: :unprocessable_content
         return false
       end
       true

@@ -1,7 +1,7 @@
 class BookSummarySerializer
   include JSONAPI::Serializer
 
-  attributes :title, :ebook_price, :categories, :approval_status
+  attributes :title, :slug, :categories, :approval_status
 
   attribute :cover_image_url do |book|
     Rails.application.routes.url_helpers.url_for(book.cover_image) if book.cover_image.attached?
@@ -20,5 +20,9 @@ class BookSummarySerializer
 
   attribute :likes_count do |book|
     book.likes.count
+  end
+
+  attribute :ebook_price do |book|
+    book.ebook_price ? (book.ebook_price / 100.0) : nil
   end
 end
