@@ -14,7 +14,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
       render json: {
         status: { code: 422, message: 'Failed to send reset password instructions.' },
         errors: resource.errors.full_messages
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
       render json: {
         status: { code: 422, message: 'Invalid or expired reset token.' },
         errors: ['Reset password token is invalid or has expired']
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -69,13 +69,13 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
         render json: {
           status: { code: 422, message: 'Failed to reset password.' },
           errors: author.errors.full_messages
-        }, status: :unprocessable_entity
+        }, status: :unprocessable_content
       end
     else
       render json: {
         status: { code: 422, message: 'Password must be at least 6 characters long.' },
         errors: ['Password is too short (minimum is 6 characters)']
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -89,7 +89,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
       render json: {
         status: { code: 422, message: 'Failed to reset password.' },
         errors: resource.errors.full_messages
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
