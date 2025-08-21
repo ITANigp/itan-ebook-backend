@@ -49,7 +49,7 @@ class Api::V1::Authors::TwoFactorsController < ApplicationController
     rescue StandardError => e
       render json: {
         status: { code: 422, message: "Failed to send SMS: #{e.message}" }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -70,7 +70,7 @@ class Api::V1::Authors::TwoFactorsController < ApplicationController
     else
       render json: {
         status: { code: 422, message: 'Invalid verification code' }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
