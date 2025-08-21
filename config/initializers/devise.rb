@@ -39,6 +39,7 @@ Devise.setup do |config|
   # Configure the class responsible to send e-mails.
   config.mailer = 'AuthorMailer'
   config.mailer = 'ReaderMailer'
+  # config.mailer = 'ReaderMailer'
 
   # Configure the parent class responsible to send e-mails.
   config.parent_mailer = 'ActionMailer::Base'
@@ -341,4 +342,5 @@ Devise.setup do |config|
                   image_aspect_ratio: 'square',
                   image_size: 50
                 }
+
 end

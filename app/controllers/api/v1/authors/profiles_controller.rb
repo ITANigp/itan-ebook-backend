@@ -35,7 +35,7 @@ class Api::V1::Authors::ProfilesController < ApplicationController
     else
       render json: {
         status: { code: 422, message: current_author.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
 
     end
   end
