@@ -5,6 +5,24 @@ class Reader < ApplicationRecord
          :recoverable, :validatable, :confirmable, :rememberable,
          :jwt_authenticatable, jwt_revocation_strategy: self
 
+  def self.mailer
+    ReaderMailer
+  end
+
+  def send_confirmation_instructions
+    token = set_confirmation_token
+    ReaderMailer.confirmation_instructions(self, token, {}).deliver_later
+  end
+
+  def self.send_reset_password_instructions(attributes = {})
+    reader = find_or_initialize_by(email: attributes[:email])
+    if reader.persisted?
+      token = reader.send(:set_reset_password_token)
+      ReaderMailer.reset_password_instructions(reader, token, {}).deliver_later
+      token
+    end
+  end
+  
   before_create :set_jti
   after_create :set_trial_period
   after_commit :send_welcome_email, on: :update, if: :just_confirmed?
@@ -82,6 +100,11 @@ class Reader < ApplicationRecord
 
 
   private
+  
+  def set_confirmation_token
+      generate_confirmation_token! unless @raw_confirmation_token
+      @raw_confirmation_token
+  end
 
   def just_confirmed?
     confirmed_at_previously_changed? && confirmed_at.present?

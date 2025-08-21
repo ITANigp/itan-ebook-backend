@@ -5,6 +5,24 @@ class Author < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
+  
+  def self.mailer
+    AuthorMailer
+  end
+
+  def send_confirmation_instructions
+    token = set_confirmation_token
+    AuthorMailer.confirmation_instructions(self, token, {}).deliver_later
+  end
+
+  def self.send_reset_password_instructions(attributes = {})
+    author = find_or_initialize_by(email: attributes[:email])
+    if author.persisted?
+      token = author.send(:set_reset_password_token)
+      AuthorMailer.reset_password_instructions(author, token, {}).deliver_later
+      token
+    end
+  end
 
   # Email validation
   validates :email, presence: true,
@@ -251,6 +269,11 @@ class Author < ApplicationRecord
   end
 
   private
+
+  def set_confirmation_token
+    generate_confirmation_token! unless @raw_confirmation_token
+    @raw_confirmation_token
+  end
 
   def set_default_kyc_values
     # KYC Step Logic:
