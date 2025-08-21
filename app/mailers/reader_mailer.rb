@@ -1,9 +1,27 @@
 class ReaderMailer < Devise::Mailer
-  default from: 'no-reply@itan.app'
+   default from: 'no-reply@itan.app'
+  
+  # include Devise::Controllers::UrlHelpers
+  default template_path: 'devise/mailer' # Uses Devise email templates for confirmation
 
-  def confirmation_instructions(record, token, opts = {})
-    super
-  end
+def confirmation_instructions(reader, token, opts = {})
+  @reader = reader
+  frontend_url = ENV.fetch('READER_FRONTEND_URL', 'http://localhost:3003')
+  @confirmation_url = "#{frontend_url}/reader/confirm_email?confirmation_token=#{CGI.escape(token)}&email=#{CGI.escape(reader.email)}"
+
+  opts[:subject] = 'Confirm your Itan account'
+  mail(to: @reader.email, subject: opts[:subject])
+end
+
+
+  # === 2) Welcome email after confirmation ===
+  def welcome_email(reader)
+    @reader = reader
+    mail(
+      to: @reader.email,
+      subject: 'Welcome to Itan!',
+      template_path: 'reader_mailer'
+    )
 
   def purchase_receipt(purchase)
     @purchase = purchase
