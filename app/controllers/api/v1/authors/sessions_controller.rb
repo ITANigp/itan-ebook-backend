@@ -22,10 +22,6 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
     # Verify reCAPTCHA first
     return unless verify_recaptcha_token(params[:author][:captchaToken])
 
-    # IMPORTANT: Clear any existing sessions to prevent authentication conflicts
-    sign_out_all_scopes
-    reset_session
-
     # Remove captchaToken to prevent Devise errors
     params[:author].delete(:captchaToken) if params[:author]&.key?(:captchaToken)
 
