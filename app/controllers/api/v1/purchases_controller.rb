@@ -14,9 +14,11 @@ class Api::V1::PurchasesController < ApplicationController
         data: result[:data]
       }
     else
+      Rails.logger.error "Purchase failed: #{result[:error]}"
+      Rails.logger.error "Paystack response: #{result[:paystack_response].inspect}" if result[:paystack_response]
       render json: {
         status: { code: 422, message: result[:error] }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -58,7 +60,7 @@ class Api::V1::PurchasesController < ApplicationController
       Rails.logger.error "❌ Failed to update purchase: #{purchase.errors.full_messages.join(', ')}"
       render json: {
         status: { code: 422, message: 'Failed to update purchase status' }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   rescue StandardError => e
     Rails.logger.error "Payment verification error: #{e.message}"
@@ -321,7 +323,7 @@ class Api::V1::PurchasesController < ApplicationController
     when 409 then :conflict
     when 402 then :payment_required
     when 502 then :bad_gateway
-    else :unprocessable_entity
+    else :unprocessable_content
     end
   end
 
