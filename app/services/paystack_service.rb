@@ -18,7 +18,7 @@ class PaystackService
       email: email,
       amount: amount,
       reference: reference,
-      currency: 'USD',
+      currency: 'NGN',
       metadata: metadata
     }
 
