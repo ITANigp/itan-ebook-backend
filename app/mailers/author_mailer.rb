@@ -55,4 +55,14 @@ class AuthorMailer < Devise::Mailer
       template_name: 'welcome_email'
     )
   end
+
+  def book_approval_feedback(book, admin_feedback)
+    @book = book
+    @admin_feedback = admin_feedback
+    @author = book.author
+    mail(
+      to: @author.email,
+      subject: "Your book \"#{@book.title}\" has been #{@book.approval_status}"
+    )
+  end
 end

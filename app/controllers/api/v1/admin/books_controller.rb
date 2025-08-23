@@ -38,11 +38,12 @@ class Api::V1::Admin::BooksController < ApplicationController
       approval_status: 'approved',
       admin_feedback: params[:admin_feedback]
     )
+      AuthorMailer.book_approval_feedback(@book, params[:admin_feedback]).deliver_later
       render_books_json(@book, 'Book approved successfully. Slug has been generated.', 200)
     else
       render json: {
         status: { code: 422, message: @book.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
@@ -63,6 +64,7 @@ class Api::V1::Admin::BooksController < ApplicationController
       approval_status: 'rejected',
       admin_feedback: params[:admin_feedback]
     )
+      AuthorMailer.book_approval_feedback(@book, params[:admin_feedback]).deliver_later
       render json: {
         status: { code: 200, message: 'Book rejected.' },
         data: BookSerializer.new(@book).serializable_hash[:data][:attributes]
@@ -70,7 +72,7 @@ class Api::V1::Admin::BooksController < ApplicationController
     else
       render json: {
         status: { code: 422, message: @book.errors.full_messages.join(', ') }
-      }, status: :unprocessable_entity
+      }, status: :unprocessable_content
     end
   end
 
