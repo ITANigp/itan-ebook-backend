@@ -1,5 +1,5 @@
 class Api::V1::LikesController < ApplicationController
-  before_action :authenticate_reader!
+  # before_action :authenticate_reader!
 
   def index
     likes = current_reader.likes.includes(book: { cover_image_attachment: :blob }).order(created_at: :desc)
