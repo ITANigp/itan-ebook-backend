@@ -132,6 +132,7 @@ Rails.application.routes.draw do
           post :enable_email
           post :setup_sms
           post :verify_sms
+          post :verify_email_code
           post :disable
         end
       end

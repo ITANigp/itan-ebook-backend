@@ -41,6 +41,17 @@ class ReaderMailer < Devise::Mailer
     )
   end
 
+  #=== Two Factor Verification Code ===#
+  def two_factor_code_email
+    @reader = params[:reader]
+    @code   = params[:code]
+
+    mail(
+      to: @reader.email,
+      subject: "Your Itan Verification Code"
+    )
+  end
+
   private
 
   def generate_reading_token(purchase)
