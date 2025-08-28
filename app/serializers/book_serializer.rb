@@ -7,7 +7,8 @@ class BookSerializer
              :ai_generated_image, :explicit_images, :subtitle, :bio,
              :categories, :keywords, :book_isbn, :terms_and_conditions,
              :approval_status, :admin_feedback, :tags, :publisher, :first_name, :last_name,
-             :total_pages
+             :total_pages, :publication_date
+             
 
   attribute :cover_image_url do |book|
     if book.cover_image.attached?
