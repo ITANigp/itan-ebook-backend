@@ -225,7 +225,7 @@ def build_unique_slug
   book_id = unique_book_id.to_s.parameterize
 
   loop do
-    slug_candidate = "#{category_name}/#{book_name}/#{author_name}/#{book_id}"
+    slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
     break slug_candidate unless Book.exists?(slug: slug_candidate)
   end
 end
