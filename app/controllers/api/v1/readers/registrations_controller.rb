@@ -1,5 +1,16 @@
+# app/controllers/api/v1/readers/registrations_controller.rb
 class Api::V1::Readers::RegistrationsController < Devise::RegistrationsController
   respond_to :json
+
+  def create
+    if verify_recaptcha(response: params[:recaptcha_token], secret_key: ENV['RECAPTCHA_SECRET_KEY'])
+      super
+    else
+      render json: {
+        status: { code: 422, message: 'reCAPTCHA verification failed. Please try again.' }
+      }, status: :unprocessable_entity
+    end
+  end
 
   private
 
@@ -14,7 +25,7 @@ class Api::V1::Readers::RegistrationsController < Devise::RegistrationsControlle
       render json: {
         status: { code: 422, message: 'Reader could not be created.' },
         errors: resource.errors.full_messages
-      }, status: :unprocessable_content
+      }, status: :unprocessable_entity
     end
   end
 
