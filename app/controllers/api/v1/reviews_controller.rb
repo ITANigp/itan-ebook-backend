@@ -1,5 +1,5 @@
 class Api::V1::ReviewsController < ApplicationController
-  before_action :authenticate_reader!
+  # before_action :authenticate_reader!
 
   def create
     review = Review.new(review_params.merge(reader_id: current_reader.id))

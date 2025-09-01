@@ -1,0 +1,10 @@
+<p>Hello <%= @author.first_name %>,</p>
+
+<p>Your book "<%= @book.title %>" has been <strong><%= @book.approval_status %></strong> by the admin.</p>
+
+<p>Admin feedback:</p>
+<blockquote>
+  <%= @admin_feedback %>
+</blockquote>
+
+<p>Thank you for publishing with Itan!</p>
