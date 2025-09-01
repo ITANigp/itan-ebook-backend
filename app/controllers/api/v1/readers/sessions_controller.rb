@@ -9,7 +9,7 @@ class Api::V1::Readers::SessionsController < Devise::SessionsController
         status: { code: 401, message: 'reCAPTCHA verification failed.' }
       }, status: :unauthorized
     end
-
+    
     self.resource = warden.authenticate!(auth_options)
     if resource
       token = generate_jwt_token(resource)
