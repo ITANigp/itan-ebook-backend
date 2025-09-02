@@ -11,7 +11,7 @@ class Api::V1::LikesController < ApplicationController
           book: {
             id: like.book.id,
             title: like.book.title,
-            author: "#{like.book.author.first_name} #{like.book.author.last_name}",
+            author_name: "#{like.book.author.first_name} #{like.book.author.last_name}",
             cover_image_url: (
               Rails.application.routes.url_helpers.url_for(like.book.cover_image) if like.book.cover_image.attached?
             )

@@ -107,14 +107,14 @@ class Api::V1::BooksController < ApplicationController
       book = Book.find(params[:id])
 
       # Debug logging
-      Rails.logger.info "=== CONTENT ACCESS DEBUG ==="
-      Rails.logger.info "Reader: #{reader.email}"
-      Rails.logger.info "Book: #{book.title}"
-      Rails.logger.info "Trial active: #{reader.trial_active?}"
-      Rails.logger.info "Owns book: #{reader.owns_book?(book)}"
-      Rails.logger.info "Direct URL requested: #{params[:direct_url] == 'true'}"
-      Rails.logger.info "Purchased books count: #{reader.purchased_books.count}"
-      Rails.logger.info "All purchases for this book: #{reader.purchases.where(book: book).pluck(:purchase_status)}"
+      # Rails.logger.info "=== CONTENT ACCESS DEBUG ==="
+      # Rails.logger.info "Reader: #{reader.email}"
+      # Rails.logger.info "Book: #{book.title}"
+      # Rails.logger.info "Trial active: #{reader.trial_active?}"
+      # Rails.logger.info "Owns book: #{reader.owns_book?(book)}"
+      # Rails.logger.info "Direct URL requested: #{params[:direct_url] == 'true'}"
+      # Rails.logger.info "Purchased books count: #{reader.purchased_books.count}"
+      # Rails.logger.info "All purchases for this book: #{reader.purchases.where(book: book).pluck(:purchase_status)}"
 
       # Check access: either trial is active OR reader owns the book
       unless reader.trial_active? || reader.owns_book?(book)
@@ -232,8 +232,8 @@ class Api::V1::BooksController < ApplicationController
 
   def handle_integrity_error(error)
     @book.destroy if @book.persisted?
-    Rails.logger.error "S3 Integrity Error: #{error.message}"
-    Rails.logger.error "S3 Integrity Error details: #{error.backtrace.join("\n")}"
+    # Rails.logger.error "S3 Integrity Error: #{error.message}"
+    # Rails.logger.error "S3 Integrity Error details: #{error.backtrace.join("\n")}"
     render_error_response('Upload integrity error. Please try again.')
   end
 
