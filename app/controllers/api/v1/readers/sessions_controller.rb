@@ -4,6 +4,7 @@ class Api::V1::Readers::SessionsController < Devise::SessionsController
   skip_before_action :verify_signed_out_user, only: :destroy
 
   def create
+    Rails.logger.info "Sign-in params: #{params.inspect}"
     self.resource = warden.authenticate!(auth_options)
     if resource
       # Generate JWT token manually (more reliable)
