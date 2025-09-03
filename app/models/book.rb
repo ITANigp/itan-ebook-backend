@@ -219,11 +219,13 @@ def regenerate_slug_if_title_changed
 end
 
 def build_unique_slug
-  author_name = "#{author.first_name}-#{author.last_name}".parameterize
+  category_name = categories.to_s.parameterize
   book_name = title.to_s.parameterize
+  author_name = "#{author.first_name}-#{author.last_name}".parameterize
+  book_id = unique_book_id.to_s.parameterize
 
   loop do
-    slug_candidate = "#{author_name}-#{book_name}-#{SecureRandom.hex(4)}"
+    slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
     break slug_candidate unless Book.exists?(slug: slug_candidate)
   end
 end
