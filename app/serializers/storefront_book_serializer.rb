@@ -44,4 +44,8 @@ class StorefrontBookSerializer
   attribute :ebook_price do |book|
     book.ebook_price ? (book.ebook_price / 100.0) : nil
   end
+  
+  attribute :publication_date do |book|
+    book.created_at.strftime('%B %d, %Y') if book.created_at
+  end
 end

@@ -2,7 +2,7 @@ class BookSummarySerializer
   include JSONAPI::Serializer
 
   attributes :title, :slug, :categories, :approval_status,
-             :description, :total_pages, :publication_date, :cover_image_url,
+             :description, :total_pages, :cover_image_url,
              :ebook_file_size_human, :author, :average_rating,
              :ebook_price, :likes_count, :reviews, :reviews_count
 
@@ -17,6 +17,10 @@ class BookSummarySerializer
     }
   end
 
+  attribute :publication_date do |book|
+    book.created_at.strftime('%B %d, %Y') if book.created_at
+  end
+  
   attribute :average_rating do |book|
     book.reviews.average(:rating)&.round(2) || 0
   end

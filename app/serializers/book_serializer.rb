@@ -7,7 +7,7 @@ class BookSerializer
              :ai_generated_image, :explicit_images, :subtitle, :bio,
              :categories, :keywords, :book_isbn, :terms_and_conditions,
              :approval_status, :admin_feedback, :tags, :publisher, :first_name, :last_name,
-             :total_pages, :publication_date
+             :total_pages
              
 
   attribute :cover_image_url do |book|
@@ -103,4 +103,8 @@ class BookSerializer
   # attribute :cover_image_size_human do |book|
   #   book.cover_image_size_human
   # end
+
+  attribute :publication_date do |book|
+    book.created_at.strftime('%B %d, %Y') if book.created_at
+  end
 end

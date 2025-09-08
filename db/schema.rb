@@ -265,12 +265,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.boolean "phone_verified"
     t.string "two_factor_code"
     t.datetime "two_factor_expires_at"
-    t.string "provider"
-    t.string "uid"
     t.index ["confirmation_token"], name: "index_readers_on_confirmation_token", unique: true
     t.index ["email"], name: "index_readers_on_email", unique: true
     t.index ["jti"], name: "index_readers_on_jti", unique: true
-    t.index ["provider", "uid"], name: "index_readers_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_readers_on_reset_password_token", unique: true
   end
 
