@@ -18,6 +18,9 @@ class PurchaseService
       @purchase = create_purchase_record(reference)
       payment_result = initialize_payment(reference)
 
+      # Log the full Paystack API response for every payment attempt
+      Rails.logger.info "Paystack API response: #{payment_result.inspect}"
+
       # If payment initialization fails, rollback everything
       raise StandardError, payment_result[:error] unless payment_result[:success]
 
@@ -35,11 +38,13 @@ class PurchaseService
     end
 
     result
-  rescue ValidationError => e
-    { success: false, error: e.message }
-  rescue StandardError => e
-    Rails.logger.error "Purchase creation failed: #{e.message}"
-    { success: false, error: 'Payment initialization failed' }
+    rescue ValidationError => e
+      { success: false, error: e.message }
+    rescue StandardError => e
+      # Log the last Paystack response if available
+      Rails.logger.error "Purchase creation failed: #{e.message}"
+      Rails.logger.error "Last Paystack API response: #{payment_result.inspect}" if defined?(payment_result)
+      { success: false, error: 'Payment initialization failed' }
   end
 
   private
