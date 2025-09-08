@@ -41,7 +41,7 @@ class Api::V1::Readers::SessionsController < Devise::SessionsController
 
     uri = URI.parse("https://www.google.com/recaptcha/api/siteverify")
     response = Net::HTTP.post_form(uri, {
-      "secret" => ENV["RECAPTCHA_SECRET_KEY"],
+      "secret" => ENV["RECAPTCHA_SECRET_KEY_READER"],
       "response" => token
     })
 

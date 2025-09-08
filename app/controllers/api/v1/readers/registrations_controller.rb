@@ -3,7 +3,7 @@ class Api::V1::Readers::RegistrationsController < Devise::RegistrationsControlle
   respond_to :json
 
   def create
-    if verify_recaptcha(response: params[:recaptcha_token], secret_key: ENV['RECAPTCHA_SECRET_KEY'])
+    if verify_recaptcha(response: params[:recaptcha_token], secret_key: ENV['RECAPTCHA_SECRET_KEY_READER'])
       super
     else
       render json: {
