@@ -1,7 +1,7 @@
 class StorefrontBookSerializer
   include JSONAPI::Serializer
 
-  attributes :title, :description, :created_at, :total_pages, :categories
+  attributes :title, :description, :created_at, :total_pages, :categories, :ebook_file_size_human
 
   attribute :cover_image_url do |book|
     Rails.application.routes.url_helpers.url_for(book.cover_image) if book.cover_image.attached?
