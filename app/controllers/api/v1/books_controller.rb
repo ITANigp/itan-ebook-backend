@@ -186,7 +186,7 @@ class Api::V1::BooksController < ApplicationController
     book = Book.find_by(slug: slug_param, approval_status: 'approved')
 
     if book
-      render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
+       render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
     else
       render json: { error: "Book not found or not approved" }, status: :not_found
     end
