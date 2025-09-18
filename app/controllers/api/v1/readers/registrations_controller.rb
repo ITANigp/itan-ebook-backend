@@ -1,32 +1,40 @@
-# app/controllers/api/v1/readers/registrations_controller.rb
 class Api::V1::Readers::RegistrationsController < Devise::RegistrationsController
   respond_to :json
 
   def create
-    if verify_recaptcha(response: params[:recaptcha_token], secret_key: ENV['RECAPTCHA_SECRET_KEY_READER'])
-      super
-    else
-      render json: {
-        status: { code: 422, message: 'reCAPTCHA verification failed. Please try again.' }
-      }, status: :unprocessable_entity
+    begin
+      recaptcha_valid = verify_recaptcha(response: params[:recaptcha_token], 
+                                        secret_key: ENV['RECAPTCHA_SECRET_KEY_READER'])
+      if recaptcha_valid
+        super
+      else
+        render json: {
+          status: { code: 422, message: 'reCAPTCHA verification failed. Please try again.' }
+        }, status: :unprocessable_entity
+      end
     end
   end
 
   private
 
   def respond_with(resource, _opts = {})
-    if resource.persisted?
+      if resource.persisted?
       serialized = ReaderSerializer.new(resource).serializable_hash[:data]
+      token = generate_jwt_token(resource)
+      
       render json: {
         status: { code: 200, message: 'Signed up successfully.' },
-        data: serialized[:attributes].merge(id: serialized[:id])
+        data: serialized[:attributes].merge(
+          id: serialized[:id],
+          token: token # Include token for auto-login
+        )
       }, status: :ok
     else
       render json: {
         status: { code: 422, message: 'Reader could not be created.' },
         errors: resource.errors.full_messages
       }, status: :unprocessable_entity
-    end
+      end
   end
 
   def sign_up_params
