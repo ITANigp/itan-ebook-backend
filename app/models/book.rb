@@ -219,14 +219,33 @@ def regenerate_slug_if_title_changed
 end
 
 def build_unique_slug
-  category_name = categories.to_s.parameterize
-  book_name = title.to_s.parameterize
-  author_name = "#{author.first_name}-#{author.last_name}".parameterize
-  book_id = unique_book_id.to_s.parameterize
+  begin
+    # Handle array of category objects
+    main_category = if categories.is_a?(Array)
+                      # Get first category object's main value
+                      categories.first["main"]
+                    else
+                      # Fallback for hash format
+                      categories["main"]
+                    end
+                    
+    # Handle if main_category itself is an array
+    main_category = main_category.is_a?(Array) ? main_category.first : main_category
+    
+    category_name = main_category.to_s.parameterize
+    book_name = title.to_s.parameterize
+    author_name = "#{author.first_name}-#{author.last_name}".parameterize
+    book_id = unique_book_id.to_s.parameterize
 
-  loop do
-    slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
-    break slug_candidate unless Book.exists?(slug: slug_candidate)
+    loop do
+      slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
+      break slug_candidate unless Book.exists?(slug: slug_candidate)
+    end
+  rescue => e
+    # Rails.logger.error "ERROR IN SLUG GENERATION: #{e.message}"
+    # Rails.logger.error "CATEGORIES: #{categories.inspect}"
+    # Fallback to a simple slug without category
+    "book-#{title.to_s.parameterize}-#{unique_book_id}"
   end
 end
 
