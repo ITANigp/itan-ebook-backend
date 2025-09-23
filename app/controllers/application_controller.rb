@@ -1,4 +1,6 @@
 class ApplicationController < ActionController::API
+  attr_reader :current_reader #This is the method to access the current reader instance variable in authenticate_reader method. This method makes current_reader globally accessible.
+
   protected
 
   # Helper method to generate appropriate file URL
@@ -68,10 +70,42 @@ class ApplicationController < ActionController::API
   end
 
   # Centralized reader authentication  
-  def authenticate_reader!
-    unless current_reader
-      render json: { error: 'Unauthorized' }, status: :unauthorized
-      return
+    def authenticate_reader!
+      token = extract_token_from_request
+      
+      if token.present?
+        begin
+          # Use the same secret key as used for token generation
+          secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
+          decoded_token = JWT.decode(token, secret, true, { algorithm: 'HS256' })
+          
+          # The JWT includes 'sub' not 'reader_id' according to your generation code
+          reader_id = decoded_token[0]['sub']
+          
+          @current_reader = Reader.find_by(id: reader_id)
+          
+          unless @current_reader
+            Rails.logger.info("No reader found for id: #{reader_id}")
+            render json: { error: 'Unauthorized' }, status: :unauthorized
+            return false
+          end
+        rescue JWT::DecodeError => e
+          Rails.logger.info("JWT decode error: #{e.message}")
+          render json: { error: 'Invalid token' }, status: :unauthorized
+          return false
+        end
+      else
+        Rails.logger.info("No auth token in request")
+        render json: { error: 'Authentication required' }, status: :unauthorized
+        return false
+      end
+      
+      true
     end
+  
+
+  def extract_token_from_request
+    request.headers['Authorization']&.split(' ')&.last
   end
+  
 end
