@@ -84,7 +84,7 @@ class Api::V1::PurchasesController < ApplicationController
           book: {
             id: purchase.book.id,
             title: purchase.book.title,
-            author_first_name: purchase.book.first_name,
+            author_name: "#{purchase.book.author.first_name} #{purchase.book.author.last_name}",
             cover_image_url: (
               if purchase.book.cover_image.attached?
                 Rails.application.routes.url_helpers.url_for(purchase.book.cover_image)
