@@ -49,7 +49,8 @@ Rails.application.routes.draw do
             patch :reject
           end
         end
-        resources :authors, only: [:index, :show]       
+        resources :authors, only: [:index, :show] 
+        resources :readers, only: [:index]      
       end
 
       namespace :admin do
