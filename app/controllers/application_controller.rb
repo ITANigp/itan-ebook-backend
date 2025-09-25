@@ -72,34 +72,46 @@ class ApplicationController < ActionController::API
   # Centralized reader authentication  
     def authenticate_reader!
       token = extract_token_from_request
-      
+    
       if token.present?
         begin
-          # Use the same secret key as used for token generation
-          secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
-          decoded_token = JWT.decode(token, secret, true, { algorithm: 'HS256' })
-          
-          # The JWT includes 'sub' not 'reader_id' according to your generation code
-          reader_id = decoded_token[0]['sub']
-          
-          @current_reader = Reader.find_by(id: reader_id)
-          
-          unless @current_reader
-            Rails.logger.info("No reader found for id: #{reader_id}")
-            render json: { error: 'Unauthorized' }, status: :unauthorized
-            return false
-          end
-        rescue JWT::DecodeError => e
-          Rails.logger.info("JWT decode error: #{e.message}")
-          render json: { error: 'Invalid token' }, status: :unauthorized
+        # Use the same secret key as used for token generation
+        secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
+        decoded_token = JWT.decode(token, secret, true, { algorithm: 'HS256' })
+        
+        # Extract token data
+        reader_id = decoded_token[0]['sub']
+        token_jti = decoded_token[0]['jti']
+        token_email = decoded_token[0]['email']
+        
+        @current_reader = Reader.find_by(id: reader_id)
+        
+        if @current_reader.nil?
+          render json: { error: 'Unauthorized' }, status: :unauthorized
           return false
         end
-      else
-        Rails.logger.info("No auth token in request")
-        render json: { error: 'Authentication required' }, status: :unauthorized
+        
+        # Check if the token's JTI matches the one in the database
+        # This is critical for the JTIMatcher strategy to work properly
+        unless token_jti.present? && @current_reader.jti.present? && token_jti == @current_reader.jti
+          render json: { error: 'Token has been revoked' }, status: :unauthorized
+          return false
+        end
+        
+        # ADDITIONAL SECURITY CHECK: Verify email matches
+        # This ensures the token belongs to the correct user
+        if token_email.present? && token_email != @current_reader.email
+          render json: { error: 'Authentication failed' }, status: :unauthorized
+          return false
+        end
+      rescue JWT::DecodeError
+        render json: { error: 'Invalid token' }, status: :unauthorized
         return false
       end
-      
+      else
+        render json: { error: 'Authentication required' }, status: :unauthorized
+        return false
+      end    
       true
     end
   
