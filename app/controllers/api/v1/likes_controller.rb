@@ -3,15 +3,19 @@ class Api::V1::LikesController < ApplicationController
 
   def index
     likes = current_reader.likes.includes(book: { cover_image_attachment: :blob }).order(created_at: :desc)
+    
+    # Filter out likes where the book doesn't exist anymore
+    valid_likes = likes.select { |like| like.book.present? }
+    
     render json: {
       status: { code: 200 },
-      data: likes.map do |like|
+      data: valid_likes.map do |like|
         {
           id: like.id,
           book: {
             id: like.book.id,
             title: like.book.title,
-            author_name: "#{like.book.author.first_name} #{like.book.author.last_name}",
+            author_name: like.book.author ? "#{like.book.author.first_name} #{like.book.author.last_name}" : "Unknown Author",
             cover_image_url: (
               Rails.application.routes.url_helpers.url_for(like.book.cover_image) if like.book.cover_image.attached?
             )
