@@ -4,7 +4,7 @@ class Api::V1::ReviewsController < ApplicationController
   def create
     review = Review.new(review_params.merge(reader_id: current_reader.id))
     if review.save
-      render json: review, status: :created
+      render json: ReviewerSerializer.new(review), status: :created
     else
       render json: { errors: review.errors.full_messages }, status: :unprocessable_entity
     end
