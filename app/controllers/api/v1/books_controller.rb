@@ -106,16 +106,6 @@ class Api::V1::BooksController < ApplicationController
       # Get the book
       book = Book.find(params[:id])
 
-      # Debug logging
-      # Rails.logger.info "=== CONTENT ACCESS DEBUG ==="
-      # Rails.logger.info "Reader: #{reader.email}"
-      # Rails.logger.info "Book: #{book.title}"
-      # Rails.logger.info "Trial active: #{reader.trial_active?}"
-      # Rails.logger.info "Owns book: #{reader.owns_book?(book)}"
-      # Rails.logger.info "Direct URL requested: #{params[:direct_url] == 'true'}"
-      # Rails.logger.info "Purchased books count: #{reader.purchased_books.count}"
-      # Rails.logger.info "All purchases for this book: #{reader.purchases.where(book: book).pluck(:purchase_status)}"
-
       # Check access: either trial is active OR reader owns the book
       unless reader.trial_active? || reader.owns_book?(book)
         return render json: { error: 'Access denied. Please purchase this book or use your free trial.' },
@@ -129,6 +119,17 @@ class Api::V1::BooksController < ApplicationController
                        # This is a regular reader token (from login) - default for trial
                        ENV.fetch('DEFAULT_TRIAL_CONTENT_TYPE', 'ebook')
                      end
+
+      # Auto-detect EPUB readers and provide binary streaming
+      if content_type == 'ebook' && book.ebook_file.attached? && epub_reader_detected?
+        Rails.logger.info "=== BINARY STREAMING DETECTED ==="
+        Rails.logger.info "User-Agent: #{request.headers['User-Agent']}"
+        Rails.logger.info "Accept: #{request.headers['Accept']}"
+        Rails.logger.info "Binary stream requested for book: #{book.title}"
+        
+        # Stream binary content directly
+        return stream_binary_content(book.ebook_file, book.title)
+      end
 
       # Determine if direct URLs are requested
       use_direct_urls = params[:direct_url] == 'true'
@@ -310,6 +311,61 @@ class Api::V1::BooksController < ApplicationController
       Rails.logger.info "Converted price: $#{dollars} → #{params[:book][:ebook_price]} cents"
     rescue ArgumentError => e
       Rails.logger.warn "Failed to convert price: #{e.message}"
+    end
+  end
+
+  def epub_reader_detected?
+    Rails.logger.debug "Checking EPUB reader detection..."
+    Rails.logger.debug "User-Agent: #{request.user_agent}"
+    Rails.logger.debug "Accept header: #{request.headers['Accept']}"
+    
+    # Check for explicit EPUB request in Accept header
+    epub_accept = request.headers['Accept']&.include?('application/epub+zip')
+    
+    # Check for EPUB reader user agents
+    user_agent = request.user_agent&.downcase || ''
+    epub_user_agent = user_agent.include?('epub') || 
+                      user_agent.include?('readium') ||
+                      user_agent.include?('adobe digital editions') ||
+                      user_agent.include?('foliate')
+    
+    # Check for frontend EPUB viewer (browser-based)
+    frontend_request = request.headers['X-EPUB-Reader'] == 'true' ||
+                       request.referer&.include?('book-viewer') ||
+                       params[:format] == 'epub'
+    
+    result = epub_accept || epub_user_agent || frontend_request
+    Rails.logger.debug "EPUB reader detected: #{result} (accept: #{epub_accept}, user_agent: #{epub_user_agent}, frontend: #{frontend_request})"
+    result
+  end
+
+  def stream_binary_content(attachment, book_title)
+    Rails.logger.info "Streaming binary content for: #{book_title}"
+    
+    # Set CORS headers for cross-origin requests
+    response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Expose-Headers'] = 'Content-Disposition, Content-Type, Content-Length'
+    
+    # Set appropriate headers for EPUB download
+    response.headers['Content-Type'] = 'application/epub+zip'
+    response.headers['Content-Disposition'] = "inline; filename=\"#{book_title.gsub(/[^\w\-_\.]/, '_')}.epub\""
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    
+    if attachment.service_name == :amazon && Rails.env.production?
+      # For S3 in production, redirect to presigned URL with CORS headers
+      presigned_url = attachment.url(expires_in: 1.hour, disposition: :inline)
+      Rails.logger.info "Redirecting to S3 presigned URL: #{presigned_url[0..50]}..."
+      redirect_to presigned_url, allow_other_host: true
+    else
+      # For local development or other storage, stream directly
+      Rails.logger.info "Streaming file directly from #{attachment.service_name}"
+      send_data attachment.download, 
+                type: 'application/epub+zip',
+                disposition: 'inline',
+                filename: "#{book_title.gsub(/[^\w\-_\.]/, '_')}.epub"
     end
   end
 
