@@ -1,11 +1,11 @@
 class ReaderMailer < Devise::Mailer
-   default from: 'no-reply@itan.app'
-  
+  default from: 'no-reply@itan.app'
+
   # include Devise::Controllers::UrlHelpers
-  default template_path: 'reader_mailer' 
+  default template_path: 'reader_mailer'
 
   def confirmation_instructions(reader, token, opts = {})
-    Rails.logger.info "ReaderMailer confirmation_instructions called"
+    Rails.logger.info 'ReaderMailer confirmation_instructions called'
     @confirmation_url = "#{ENV.fetch('READER_FRONTEND_URL', 'http://localhost:3003')}/reader/confirm_email?confirmation_token=#{CGI.escape(token)}&email=#{CGI.escape(reader.email)}"
     super
   end

@@ -3,10 +3,10 @@ class Api::V1::LikesController < ApplicationController
 
   def index
     likes = current_reader.likes.includes(book: { cover_image_attachment: :blob }).order(created_at: :desc)
-    
+
     # Filter out likes where the book doesn't exist anymore
     valid_likes = likes.select { |like| like.book.present? }
-    
+
     render json: {
       status: { code: 200 },
       data: valid_likes.map do |like|
@@ -15,7 +15,7 @@ class Api::V1::LikesController < ApplicationController
           book: {
             id: like.book.id,
             title: like.book.title,
-            author_name: like.book.author ? "#{like.book.author.first_name} #{like.book.author.last_name}" : "Unknown Author",
+            author_name: like.book.author ? "#{like.book.author.first_name} #{like.book.author.last_name}" : 'Unknown Author',
             cover_image_url: (
               Rails.application.routes.url_helpers.url_for(like.book.cover_image) if like.book.cover_image.attached?
             )
@@ -28,16 +28,16 @@ class Api::V1::LikesController < ApplicationController
 
   def create
     @like = Like.find_or_create_by(reader: current_reader, book_id: params[:book_id])
-    
+
     if @like.persisted?
-      render json: { 
-        message: 'Book liked successfully', 
+      render json: {
+        message: 'Book liked successfully',
         liked: true,
         like_id: @like.id
       }, status: :ok
     else
-      render json: { 
-        errors: @like.errors.full_messages 
+      render json: {
+        errors: @like.errors.full_messages
       }, status: :unprocessable_entity
     end
   end
@@ -46,7 +46,7 @@ class Api::V1::LikesController < ApplicationController
     # Handle both /api/v1/likes/book-id and /api/v1/likes?book_id=book-id
     book_id = params[:id] || params[:book_id]
     like = current_reader.likes.find_by(book_id: book_id)
-    
+
     if like
       render json: {
         id: like.id,
@@ -55,21 +55,21 @@ class Api::V1::LikesController < ApplicationController
         liked: true
       }
     else
-      render json: { 
+      render json: {
         error: 'Like not found',
-        liked: false 
+        liked: false
       }, status: :not_found
     end
   end
 
   def destroy
     like = Like.find_by(id: params[:id], reader_id: current_reader.id)
-    
+
     if like
       like.destroy
-      render json: { 
-        message: 'Book unliked successfully', 
-        liked: false 
+      render json: {
+        message: 'Book unliked successfully',
+        liked: false
       }, status: :ok
     else
       render json: { error: 'Like not found' }, status: :not_found

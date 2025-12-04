@@ -5,7 +5,7 @@ class Author < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
-  
+
   def self.mailer
     AuthorMailer
   end
@@ -17,11 +17,11 @@ class Author < ApplicationRecord
 
   def self.send_reset_password_instructions(attributes = {})
     author = find_or_initialize_by(email: attributes[:email])
-    if author.persisted?
-      token = author.send(:set_reset_password_token)
-      AuthorMailer.reset_password_instructions(author, token, {}).deliver_later
-      token
-    end
+    return unless author.persisted?
+
+    token = author.send(:set_reset_password_token)
+    AuthorMailer.reset_password_instructions(author, token, {}).deliver_later
+    token
   end
 
   # Email validation
@@ -38,6 +38,7 @@ class Author < ApplicationRecord
 
   def inactive_message
     return :unconfirmed unless confirmed? || provider.present?
+
     super
   end
 
@@ -129,24 +130,28 @@ class Author < ApplicationRecord
 
     # Check if author with this email already exists (regular signup)
     existing_author = find_by(email: auth.info.email)
-    
+
     if existing_author
       # Link OAuth to existing author account
       Rails.logger.info "Linking OAuth to existing author with ID: #{existing_author.id}"
       existing_author.update!(
         provider: auth.provider,
         uid: auth.uid,
-        confirmed_at: Time.current  # Ensure they're confirmed
+        confirmed_at: Time.current # Ensure they're confirmed
       )
-      
+
       # Update profile info if missing
-      existing_author.update!(
-        first_name: auth.info.first_name || auth.info.name&.split&.first
-      ) if existing_author.first_name.blank?
-      
-      existing_author.update!(
-        last_name: auth.info.last_name || auth.info.name&.split&.last
-      ) if existing_author.last_name.blank?
+      if existing_author.first_name.blank?
+        existing_author.update!(
+          first_name: auth.info.first_name || auth.info.name&.split&.first
+        )
+      end
+
+      if existing_author.last_name.blank?
+        existing_author.update!(
+          last_name: auth.info.last_name || auth.info.name&.split&.last
+        )
+      end
 
       # Attach profile image if available and not already set
       if auth.info.image && !existing_author.author_profile_image.attached?
@@ -166,13 +171,13 @@ class Author < ApplicationRecord
       first_name: auth.info.first_name || auth.info.name&.split&.first,
       last_name: auth.info.last_name || auth.info.name&.split&.last,
       confirmed_at: Time.current,
-      kyc_step: 0,           
-      accepted_terms: false   
+      kyc_step: 0,
+      accepted_terms: false
     ).tap do |new_author|
       new_author.skip_confirmation!
       # Attach profile image if available
       attach_profile_image(new_author, auth.info.image) if auth.info.image
-      
+
       # Send welcome email for new OAuth users
       begin
         AuthorMailer.welcome_email(new_author).deliver_later
@@ -181,7 +186,6 @@ class Author < ApplicationRecord
         Rails.logger.error "Failed to send welcome email to OAuth author ID: #{new_author.id}, Error: #{e.message}"
       end
     end
-
   rescue StandardError => e
     Rails.logger.error "OAuth error: #{e.message}"
     Rails.logger.error "OAuth provider: #{auth.provider}, Error class: #{e.class}"
@@ -264,7 +268,7 @@ class Author < ApplicationRecord
     when 0 then 1 # Show step 1 (nothing completed yet)
     when 1 then 2 # Show step 2 (step 1 completed)
     when 2 then 3 # Show step 3 (step 2 completed)
-    else nil      # KYC completed, show dashboard
+    else nil # KYC completed, show dashboard
     end
   end
 
@@ -278,7 +282,7 @@ class Author < ApplicationRecord
   def set_default_kyc_values
     # KYC Step Logic:
     # 0 = No steps completed yet (show step 1 UI)
-    # 1 = Step 1 completed (show step 2 UI) 
+    # 1 = Step 1 completed (show step 2 UI)
     # 2 = Step 2 completed (show step 3 UI)
     # 3 = All KYC steps completed (allow dashboard access)
     self.kyc_step = 0 if kyc_step.nil?
@@ -302,18 +306,16 @@ class Author < ApplicationRecord
     send_code_via_email(code)
   end
 
-  private
-
   def send_welcome_email_if_confirmed
     # Send welcome email when author confirms their email for the first time
     # This ensures they only get the welcome email once, after email confirmation
-    if saved_change_to_confirmed_at? && confirmed_at.present? && !provider.present?
-      begin
-        AuthorMailer.welcome_email(self).deliver_later
-        Rails.logger.info "Welcome email queued for author ID: #{id}"
-      rescue StandardError => e
-        Rails.logger.error "Failed to send welcome email to author ID: #{id}, Error: #{e.message}"
-      end
+    return unless saved_change_to_confirmed_at? && confirmed_at.present? && !provider.present?
+
+    begin
+      AuthorMailer.welcome_email(self).deliver_later
+      Rails.logger.info "Welcome email queued for author ID: #{id}"
+    rescue StandardError => e
+      Rails.logger.error "Failed to send welcome email to author ID: #{id}, Error: #{e.message}"
     end
   end
 end

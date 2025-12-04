@@ -16,20 +16,22 @@ class Reader < ApplicationRecord
 
   def self.send_reset_password_instructions(attributes = {})
     reader = find_or_initialize_by(email: attributes[:email])
-    if reader.persisted?
-      token = reader.send(:set_reset_password_token)
-      ReaderMailer.reset_password_instructions(reader, token, {}).deliver_later
-      token
-    end
+    return unless reader.persisted?
+
+    token = reader.send(:set_reset_password_token)
+    ReaderMailer.reset_password_instructions(reader, token, {}).deliver_later
+    token
   end
-  
+
   before_create :set_jti
   after_create :set_trial_period
   after_commit :send_welcome_email, on: :update, if: :just_confirmed?
 
   # Associations
   has_many :purchases, dependent: :destroy
-  has_many :purchased_books, -> { where(purchases: { purchase_status: 'completed' }) }, through: :purchases, source: :book
+  has_many :purchased_books, lambda {
+    where(purchases: { purchase_status: 'completed' })
+  }, through: :purchases, source: :book
   has_many :accessible_chapters, through: :purchased_books, source: :chapters
   has_many :reading_statuses, dependent: :destroy
   has_many :notifications, dependent: :destroy
@@ -89,7 +91,6 @@ class Reader < ApplicationRecord
     owns_book?(chapter.book)
   end
 
-
   def just_confirmed?
     saved_change_to_confirmed_at? && confirmed_at.present?
   end
@@ -100,10 +101,10 @@ class Reader < ApplicationRecord
 
 
   private
-  
+
   def set_confirmation_token
-      generate_confirmation_token! unless @raw_confirmation_token
-      @raw_confirmation_token
+    generate_confirmation_token! unless @raw_confirmation_token
+    @raw_confirmation_token
   end
 
   def just_confirmed?

@@ -18,9 +18,9 @@ class BookSummarySerializer
   end
 
   attribute :publication_date do |book|
-    book.created_at.strftime('%B %d, %Y') if book.created_at
+    book.created_at&.strftime('%B %d, %Y')
   end
-  
+
   attribute :average_rating do |book|
     book.reviews.average(:rating)&.round(2) || 0
   end

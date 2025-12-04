@@ -3,15 +3,13 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
   before_action :verify_oauth_state, :check_oauth_rate_limit, only: [:google_oauth2]
 
   # Handle OAuth initiation - let parent class handle it
-  def passthru
-    super
-  end
+
 
   # Google OAuth callback
   def google_oauth2
     author = Author.from_omniauth(request.env['omniauth.auth'])
 
-    if author && author.persisted?
+    if author&.persisted?
       if author.two_factor_enabled
         # Store author ID for verification
         session[:author_id_for_2fa] = author.id
@@ -29,7 +27,7 @@ class Api::V1::Authors::OmniauthCallbacksController < Devise::OmniauthCallbacksC
     else
       Rails.logger.error "OAuth user creation failed. Auth hash: #{request.env['omniauth.auth'].inspect}"
       if author.nil?
-        Rails.logger.error "Author.from_omniauth returned nil."
+        Rails.logger.error 'Author.from_omniauth returned nil.'
       else
         Rails.logger.error "Author validation errors: #{author.errors.full_messages.join(', ')}"
       end

@@ -39,7 +39,7 @@ class Api::V1::Readers::TwoFactorsController < ApplicationController
   # === 3) Generate a 2FA code (can be reused for email or SMS) ===
   def generate_code
     code = generate_two_factor_code(current_reader)
-    
+
     if current_reader.preferred_2fa_method == 'sms' && current_reader.phone_number.present?
       send_sms(current_reader.phone_number, code)
       message = 'Verification code sent via SMS'
@@ -73,7 +73,7 @@ class Api::V1::Readers::TwoFactorsController < ApplicationController
   def setup_sms
     current_reader.update(phone_number: params[:phone_number])
     code = generate_two_factor_code(current_reader)
-    
+
     begin
       send_sms(current_reader.phone_number, code)
       render json: { status: { code: 200, message: 'Verification code sent via SMS' } }
@@ -112,7 +112,7 @@ class Api::V1::Readers::TwoFactorsController < ApplicationController
 
   # Generate 6-digit code and save expiration
   def generate_two_factor_code(reader)
-    code = rand(100000..999999).to_s
+    code = rand(100_000..999_999).to_s
     reader.update(two_factor_code: code, two_factor_expires_at: 10.minutes.from_now)
     code
   end

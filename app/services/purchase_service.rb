@@ -38,13 +38,13 @@ class PurchaseService
     end
 
     result
-    rescue ValidationError => e
-      { success: false, error: e.message }
-    rescue StandardError => e
-      # Log the last Paystack response if available
-      Rails.logger.error "Purchase creation failed: #{e.message}"
-      Rails.logger.error "Last Paystack API response: #{payment_result.inspect}" if defined?(payment_result)
-      { success: false, error: 'Payment initialization failed' }
+  rescue ValidationError => e
+    { success: false, error: e.message }
+  rescue StandardError => e
+    # Log the last Paystack response if available
+    Rails.logger.error "Purchase creation failed: #{e.message}"
+    Rails.logger.error "Last Paystack API response: #{payment_result.inspect}" if defined?(payment_result)
+    { success: false, error: 'Payment initialization failed' }
   end
 
   private

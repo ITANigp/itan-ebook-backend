@@ -28,14 +28,14 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
     begin
       # First stage authentication with email/password
       Rails.logger.info "🔍 Attempting authentication for email: #{params[:author][:email]}"
-      
+
       # Use direct authentication instead of relying on cached sessions
       author = Author.find_for_authentication(email: params[:author][:email])
-      
+
       if author&.valid_password?(params[:author][:password]) && author.active_for_authentication?
         self.resource = author
         Rails.logger.info "🔍 Authentication successful. User ID: #{resource.id}, Email: #{resource.email}"
-        
+
         # Handle authentication based on 2FA status
         if resource.two_factor_enabled?
           handle_two_factor_authentication
@@ -79,7 +79,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
   def respond_with(resource, _opts = {})
     Rails.logger.info "🔍 respond_with called. Resource ID: #{resource.id}, Email: #{resource.email}"
     Rails.logger.info "🔍 Current author in respond_with: #{current_author&.id}"
-    
+
     if resource.persisted?
       render json: {
         status: { code: 200, message: 'Logged in successfully.' },

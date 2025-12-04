@@ -323,8 +323,8 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
         .distinct
 
       # Determine batch status based on counts
-      batch_status = if batch.try(:transferred_count) && batch.transferred_count > 0
-                       batch.approved_count > 0 ? 'partially_transferred' : 'transferred'
+      batch_status = if batch.try(:transferred_count) && batch.transferred_count.positive?
+                       batch.approved_count.positive? ? 'partially_transferred' : 'transferred'
                      else
                        'approved'
                      end

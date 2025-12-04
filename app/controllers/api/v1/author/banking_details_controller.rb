@@ -20,11 +20,11 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
 
     # First update the banking details
     if banking_detail.update(banking_detail_params)
-      
-      # Attempt to verify the account. This line must be kept to run the logic 
+
+      # Attempt to verify the account. This line must be kept to run the logic
       # that updates resolved_account_name and verified_at fields.
       verification_successful = banking_detail.verify_account!
-      
+
       if verification_successful
         # SUCCESS: Verification passed, return 200 OK
         render json: {
@@ -36,13 +36,13 @@ class Api::V1::Author::BankingDetailsController < ApplicationController
         }, status: :ok
       else
         # FIX: Verification failed, but the details were saved to the DB.
-        # Return 200 OK (success: true) to allow the client to advance KYC 
+        # Return 200 OK (success: true) to allow the client to advance KYC
         # for manual verification processing.
         render json: {
           success: true, # NOTE: Changed to true to signal a successful save operation
           banking_detail: banking_detail.as_json,
           # Use the user-provided account_name since the resolved name failed
-          account_name: banking_detail.account_name, 
+          account_name: banking_detail.account_name,
           verified: false,
           message: 'Banking details saved, but account verification failed. Awaiting manual review.'
         }, status: :ok # NOTE: Changed status to :ok (200)

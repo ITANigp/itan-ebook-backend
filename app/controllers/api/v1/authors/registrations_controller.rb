@@ -41,18 +41,17 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
     if recaptcha_valid
       # Remove captchaToken from params before processing
       params[:author].delete(:captchaToken)
-      
+
       begin
         Rails.logger.info "Attempting to create author with email: #{params[:author][:email]}"
-        
+
         # Test database connection first
-        Rails.logger.info "Testing database connection..."
+        Rails.logger.info 'Testing database connection...'
         ActiveRecord::Base.connection.execute('SELECT 1')
-        Rails.logger.info "Database connection successful!"
-        
+        Rails.logger.info 'Database connection successful!'
+
         # Custom registration logic to ensure email is sent before saving
         create_author_with_confirmation_check
-        
       rescue PG::Error => e
         Rails.logger.error "PostgreSQL error during registration: #{e.message}"
         render json: {
@@ -78,24 +77,24 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   # Simplified method that works with Devise's intended flow
   def create_author_with_confirmation_check
     Rails.logger.info "Creating author with email: #{sign_up_params[:email]}"
-    
+
     # Build and save the author - let Devise handle the confirmation flow
     self.resource = resource_class.new(sign_up_params)
-    
+
     if resource.save
-      Rails.logger.info "Author created successfully - confirmation email will be sent automatically"
-      respond_with(resource, {})
+      Rails.logger.info 'Author created successfully - confirmation email will be sent automatically'
     else
       Rails.logger.error "Author creation failed: #{resource.errors.full_messages.join(', ')}"
-      respond_with(resource, {})
     end
+    respond_with(resource, {})
   end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
       Rails.logger.info "Registration successful for #{resource.email}"
       render json: {
-        status: { code: 200, message: 'Author registered successfully. Please check your email for confirmation instructions.' },
+        status: { code: 200,
+                  message: 'Author registered successfully. Please check your email for confirmation instructions.' },
         data: AuthorSerializer.new(resource).serializable_hash[:data][:attributes]
       }
     else

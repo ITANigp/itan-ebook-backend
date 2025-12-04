@@ -24,7 +24,7 @@ class Api::V1::Authors::PasswordsController < Devise::PasswordsController
     # Find the author by reset token first
     author = Author.with_reset_password_token(params[:author][:reset_password_token])
 
-    if author && author.reset_password_period_valid?
+    if author&.reset_password_period_valid?
       # For OAuth users, we need to handle password reset differently
       if author.provider.present?
         handle_oauth_password_reset(author)

@@ -8,7 +8,7 @@ class BookSerializer
              :categories, :keywords, :book_isbn, :terms_and_conditions,
              :approval_status, :admin_feedback, :tags, :publisher, :first_name, :last_name,
              :total_pages
-             
+
 
   attribute :cover_image_url do |book|
     if book.cover_image.attached?
@@ -76,13 +76,9 @@ class BookSerializer
   end
 
   # File size attributes
-  attribute :ebook_file_size do |book|
-    book.ebook_file_size
-  end
+  attribute :ebook_file_size, &:ebook_file_size
 
-  attribute :ebook_file_size_human do |book|
-    book.ebook_file_size_human
-  end
+  attribute :ebook_file_size_human, &:ebook_file_size_human
 
   attribute :ebook_price do |book|
     book.ebook_price ? (book.ebook_price / 100.0) : nil
@@ -105,6 +101,6 @@ class BookSerializer
   # end
 
   attribute :publication_date do |book|
-    book.created_at.strftime('%B %d, %Y') if book.created_at
+    book.created_at&.strftime('%B %d, %Y')
   end
 end
