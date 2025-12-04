@@ -32,5 +32,10 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
+# Ignore SSH keys and certificates
+*.pem
+*.key
+*.cert
+
 # Ignore Vendor
 /vendor/bundle/
