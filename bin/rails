@@ -1,4 +1,8 @@
-#!/usr/bin/env ruby
-APP_PATH = File.expand_path("../config/application", __dir__)
-require_relative "../config/boot"
-require "rails/commands"
+Sentry.init do |config|
+  config.dsn = 'https://2a84d8cbb7a6216a7b66d1f53e54b8c7@o4510458809548800.ingest.us.sentry.io/4510526779883520'
+  config.breadcrumbs_logger = [:active_support_logger, :http_logger]
+
+  # Add data like request headers and IP for users,
+  # see https://docs.sentry.io/platforms/ruby/data-management/data-collected/ for more info
+  config.send_default_pii = true
+end
