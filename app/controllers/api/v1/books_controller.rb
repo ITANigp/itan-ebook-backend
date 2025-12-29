@@ -33,6 +33,17 @@ class Api::V1::BooksController < ApplicationController
     render_books_json(@book)
   end
 
+
+  # GET /api/v1/books/storefront
+def all_storefront
+  books = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
+              .where(approval_status: 'approved')
+              .order(created_at: :desc)
+  
+  # Restart your server after changing the serializer file!
+  render json: BookSummarySerializer.new(books).serializable_hash
+end
+
   # /api/v1/books/:id/storefront
   def storefront
     @book = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)

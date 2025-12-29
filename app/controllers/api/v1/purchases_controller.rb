@@ -83,6 +83,7 @@ class Api::V1::PurchasesController < ApplicationController
           id: purchase.id,
           book: {
             id: purchase.book.id,
+            slug: purchase.book.slug,
             title: purchase.book.title,
             author_name: "#{purchase.book.author.first_name} #{purchase.book.author.last_name}",
             cover_image_url: (
