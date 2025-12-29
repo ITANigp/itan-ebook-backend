@@ -1,10 +1,14 @@
 class BookSummarySerializer
   include JSONAPI::Serializer
 
-  attributes :title, :slug, :categories, :approval_status,
+  attributes :id, :title, :slug, :categories, :approval_status,
              :description, :total_pages, :cover_image_url,
              :ebook_file_size_human, :author, :average_rating,
              :ebook_price, :likes_count, :reviews, :reviews_count
+
+  attribute :slug do |book|
+    book.slug || "no-slug-found"
+  end
 
   attribute :cover_image_url do |book|
     Rails.application.routes.url_helpers.url_for(book.cover_image) if book.cover_image.attached?

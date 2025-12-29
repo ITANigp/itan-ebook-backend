@@ -190,7 +190,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "reader_id"
     t.index ["user_type", "user_id"], name: "index_notifications_on_user"
   end
 
