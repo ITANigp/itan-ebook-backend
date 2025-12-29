@@ -26,7 +26,7 @@ Rails.application.routes.draw do
       resources :books do
         collection do
           get :my_books     
-          get :storefront     
+          get :all_storefront  # GET /api/v1/books/all_storefront     
         end
         member do
           get :storefront  # GET /api/v1/books/:id/storefront
