@@ -218,34 +218,64 @@ def regenerate_slug_if_title_changed
   self.slug = build_unique_slug
 end
 
+# def build_unique_slug
+#   begin
+#     # Handle array of category objects
+#     main_category = if categories.is_a?(Array)
+#                       # Get first category object's main value
+#                       categories.first["main"]
+#                     else
+#                       # Fallback for hash format
+#                       categories["main"]
+#                     end
+                    
+#     # Handle if main_category itself is an array
+#     main_category = main_category.is_a?(Array) ? main_category.first : main_category
+    
+#     category_name = main_category.to_s.parameterize
+#     book_name = title.to_s.parameterize
+#     author_name = "#{author.first_name}-#{author.last_name}".parameterize
+#     book_id = unique_book_id.to_s.parameterize
+
+#     loop do
+#       slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
+#       break slug_candidate unless Book.exists?(slug: slug_candidate)
+#     end
+#   rescue => e
+#     # Rails.logger.error "ERROR IN SLUG GENERATION: #{e.message}"
+#     # Rails.logger.error "CATEGORIES: #{categories.inspect}"
+#     # Fallback to a simple slug without category
+#     "book-#{title.to_s.parameterize}-#{unique_book_id}"
+#   end
+# end
+
 def build_unique_slug
   begin
-    # Handle array of category objects
-    main_category = if categories.is_a?(Array)
-                      # Get first category object's main value
-                      categories.first["main"]
-                    else
-                      # Fallback for hash format
-                      categories["main"]
-                    end
-                    
-    # Handle if main_category itself is an array
-    main_category = main_category.is_a?(Array) ? main_category.first : main_category
+    # Safely extract category name
+    cat_part = "book"
+    if categories.present?
+      first_cat = categories.is_a?(Array) ? categories.first : categories
+      cat_name = first_cat.is_a?(Hash) ? first_cat["main"] : first_cat
+      cat_part = cat_name.to_s.parameterize.presence || "book"
+    end
     
-    category_name = main_category.to_s.parameterize
     book_name = title.to_s.parameterize
-    author_name = "#{author.first_name}-#{author.last_name}".parameterize
+    author_name = "#{first_name}-#{last_name}".parameterize # Use book's own name fields
     book_id = unique_book_id.to_s.parameterize
 
-    loop do
-      slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
-      break slug_candidate unless Book.exists?(slug: slug_candidate)
+    slug_candidate = "#{cat_part}-#{book_name}-#{author_name}-#{book_id}"
+    
+    # Ensure it's unique
+    count = 0
+    final_slug = slug_candidate
+    while Book.exists?(slug: final_slug)
+      count += 1
+      final_slug = "#{slug_candidate}-#{count}"
     end
+    final_slug
   rescue => e
-    # Rails.logger.error "ERROR IN SLUG GENERATION: #{e.message}"
-    # Rails.logger.error "CATEGORIES: #{categories.inspect}"
-    # Fallback to a simple slug without category
-    "book-#{title.to_s.parameterize}-#{unique_book_id}"
+    Rails.logger.error "Slug Generation Failed: #{e.message}"
+    "book-#{title.to_s.parameterize}-#{SecureRandom.hex(4)}"
   end
 end
 

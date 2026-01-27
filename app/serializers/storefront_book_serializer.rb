@@ -1,7 +1,7 @@
 class StorefrontBookSerializer
   include JSONAPI::Serializer
 
-  attributes :title, :description, :created_at, :total_pages, :categories, :ebook_file_size_human
+  attributes :id, :slug, :title, :description, :created_at, :total_pages, :categories, :ebook_file_size_human
 
 
   attribute :cover_image_url do |book|
@@ -49,4 +49,9 @@ class StorefrontBookSerializer
   attribute :publication_date do |book|
     book.created_at.strftime('%B %d, %Y') if book.created_at
   end
+
+  attribute :slug do |book|
+    book.slug || "no-slug-found"
+  end
+  
 end
