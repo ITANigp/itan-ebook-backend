@@ -190,19 +190,32 @@ end
     end
   end
 
+  # def show_by_slug
+  #   # Join array if Rails routed slug as splat parameter
+  #   slug_param = params[:slug]
+  #   # slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
+
+  #   book = Book.find_by(slug: slug_param, approval_status: 'approved')
+
+  #   if book
+  #      render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
+  #   else
+  #     render json: { error: "Book not found or not approved" }, status: :not_found
+  #   end
+  # end
+
   def show_by_slug
-    # Join array if Rails routed slug as splat parameter
-    slug_param = params[:slug]
-    # slug = slug_param.is_a?(Array) ? slug_param.join("/") : slug_param
+  # Eager load to avoid N+1 and include reviews/author
+  book = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
+             .find_by(slug: params[:slug], approval_status: 'approved')
 
-    book = Book.find_by(slug: slug_param, approval_status: 'approved')
-
-    if book
-       render json: BookSummarySerializer.new(book).serializable_hash[:data][:attributes]
-    else
-      render json: { error: "Book not found or not approved" }, status: :not_found
-    end
+  if book
+    # Return the full serializable_hash so the frontend gets "id" and "attributes"
+    render json: BookSummarySerializer.new(book).serializable_hash
+  else
+    render json: { error: "Book not found or not approved" }, status: :not_found
   end
+end
 
   # def categories
   #   all_categories = Book.where(approval_status: 'approved').pluck(:categories).compact
