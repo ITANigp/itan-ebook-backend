@@ -1,0 +1,137 @@
+<%
+=begin%>
+ <h1>New Sale Alert! 📚</h1>
+<p>Hello <%= @author.first_name %>,</p>
+
+<p>Great news! A reader just purchased a copy of <strong><%= @book.title %></strong>.</p>
+
+<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; border-left: 4px solid #28a745;">
+  <p><strong>Sale Details:</strong></p>
+  <ul>
+    <li><strong>Format:</strong> <%= @purchase.content_type.titleize %></li>
+    <li><strong>Price:</strong> $<%= sprintf('%.2f', @purchase.amount) %></li>
+    <li><strong>Date:</strong> <%= Time.current.strftime('%B %d, %Y at %H:%M') %></li>
+  </ul>
+</div>
+
+<p>Your earnings from this sale have been added to your pending balance and will be processed in the next payout cycle.</p>
+
+<p>Keep up the great work!</p>
+<p>Best regards,<br>
+The Itan Team</p> 
+<%
+=end%>
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <style>
+      .email-wrapper {
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        line-height: 1.6;
+        color: #333333;
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f7f6;
+      }
+      .card {
+        background-color: #ffffff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      }
+      .header {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        color: #ffffff;
+        padding: 30px;
+        text-align: center;
+      }
+      .content {
+        padding: 30px;
+      }
+      .stat-box {
+        background-color: #f0fdf4;
+        border: 1px solid #dcfce7;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: center;
+      }
+      .amount-badge {
+        font-size: 28px;
+        font-weight: bold;
+        color: #15803d;
+        display: block;
+      }
+      .detail-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+      }
+      .label { color: #64748b; font-weight: 500; }
+      .value { color: #1e293b; font-weight: 600; }
+      .button {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #2563eb;
+        color: #ffffff !important;
+        text-decoration: none;
+        border-radius: 6px;
+        margin-top: 20px;
+        font-weight: bold;
+      }
+      .footer {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 12px;
+        color: #94a3b8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="email-wrapper">
+      <div class="card">
+        <div class="header">
+          <span style="font-size: 40px;">🎉</span>
+          <h1 style="margin: 10px 0 0 0; font-size: 24px;">New Sale Milestone!</h1>
+        </div>
+        
+        <div class="content">
+          <p>Hello <strong><%= @author.first_name %></strong>,</p>
+          <p>Congratulations! Your work is resonating with readers. A new copy of <strong><%= @book.title %></strong> was just sold.</p>
+
+          <div class="stat-box">
+            <span class="label">Total Sale Value </span>
+            <span class="amount-badge">$<%= sprintf('%.2f', @purchase.amount) %></span>
+          </div>
+
+          <div class="detail-row">
+            <span class="label">Content Format &nbsp;</span>
+            <span class="value"><%= @purchase.content_type.titleize %></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Date &nbsp;</span>
+            <span class="value"><%= Time.current.strftime('%B %d, %Y') %></span>
+          </div>
+          <div class="detail-row">
+            <span class="label">Transaction Ref &nbsp;</span>
+            <span class="value" style="font-family: monospace;"><%= @purchase.transaction_reference.last(10) %>...</span>
+          </div>
+
+          <p style="margin-top: 25px;">Your earnings have been credited to your author dashboard. You can track your full sales history and pending payouts there.</p>
+ <div style="text-align: center;">
+            <a href="<%= ENV['AUTHOR_FRONTEND_URL'] %>/author/sign_in" class="button">View Sales Dashboard</a>
+          </div> 
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>Sent with 💙 from ITAN E-Book Platform</p>
+        <p>Keep writing, the world is waiting for your story.</p>
+      </div>
+    </div>
+  </body>
+</html>

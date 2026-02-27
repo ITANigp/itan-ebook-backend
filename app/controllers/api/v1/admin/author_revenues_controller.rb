@@ -144,17 +144,26 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
   end
 
   def process_payments
-    # Only allow processing in the last 3 days of the month
-    unless Date.today >= Date.today.end_of_month - 2.days
+    # # Only allow processing in the last 3 days of the month
+    # unless Date.today >= Date.today.end_of_month - 2.days
+    #   render json: {
+    #     error: "Payments can only be processed during the last 3 days of the month (#{(Date.today.end_of_month - 2.days).strftime('%B %d')} - #{Date.today.end_of_month.strftime('%B %d')})",
+    #     days_until_processing: (Date.today.end_of_month - 2.days - Date.today).to_i
+    #   }, status: :unprocessable_entity
+    #   return
+    # end
+
+      # Only allow processing in the first 7 days of the month
+    unless Date.today.day <= 7
       render json: {
-        error: "Payments can only be processed during the last 3 days of the month (#{(Date.today.end_of_month - 2.days).strftime('%B %d')} - #{Date.today.end_of_month.strftime('%B %d')})",
-        days_until_processing: (Date.today.end_of_month - 2.days - Date.today).to_i
+      error: "Payments can only be processed during the first 7 days of the month (1 - 7)",
+      days_until_processing: Date.today.day <= 7 ? 0 : (Date.today.end_of_month + 7.days - Date.today).to_i
       }, status: :unprocessable_entity
       return
     end
 
     author_ids = params[:author_ids] || []
-    min_payment_threshold = ENV.fetch('MIN_PAYMENT_THRESHOLD', 10.0).to_f
+    min_payment_threshold = ENV.fetch('MIN_PAYMENT_THRESHOLD', 1.0).to_f
     processed_authors = []
     skipped_authors = []
 
@@ -257,17 +266,17 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
     end
 
     # Check if payments in this batch are ready for transfer
-    earliest_approval = batch_payments.minimum(:paid_at)
+    # earliest_approval = batch_payments.minimum(:paid_at)
 
-    if earliest_approval && earliest_approval > 14.days.ago
-      days_remaining = (earliest_approval + 14.days - Time.current).to_i / 1.day
-      render json: {
-        error: 'Payments not yet eligible for transfer',
-        eligible_date: (earliest_approval + 14.days).strftime('%Y-%m-%d'),
-        days_remaining: days_remaining
-      }, status: :unprocessable_entity
-      return
-    end
+    # if earliest_approval && earliest_approval > 14.days.ago
+    #   days_remaining = (earliest_approval + 14.days - Time.current).to_i / 1.day
+    #   render json: {
+    #     error: 'Payments not yet eligible for transfer',
+    #     eligible_date: (earliest_approval + 14.days).strftime('%Y-%m-%d'),
+    #     days_remaining: days_remaining
+    #   }, status: :unprocessable_entity
+    #   return
+    # end
 
     results = TransferProcessor.process_batch(batch_id)
 

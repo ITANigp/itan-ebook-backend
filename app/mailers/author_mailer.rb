@@ -65,4 +65,15 @@ class AuthorMailer < Devise::Mailer
       subject: "Your book \"#{@book.title}\" has been #{@book.approval_status}"
     )
   end
+
+  def sale_alert(author, book, purchase)
+  @author = author
+  @book = book
+  @purchase = purchase
+  
+  mail(
+    to: @author.email, 
+    subject: "Congratulations! You just sold a copy of #{@book.title} 🎉"
+  )
+  end
 end

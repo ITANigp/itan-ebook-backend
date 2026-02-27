@@ -51,6 +51,16 @@ class Api::V1::PurchasesController < ApplicationController
 
       # Send purchase receipt email to reader
       ReaderMailer.purchase_receipt(purchase).deliver_later
+      
+      # Notify the author for book sales
+      author = purchase.book&.author
+      if author&.email.present?
+        Rails.logger.info "✅ Triggering sale alert for author: #{author.email}"
+        # Use deliver_later for production, deliver_now for local testing
+        AuthorMailer.sale_alert(author, purchase.book, purchase).deliver_later
+      else
+        Rails.logger.warn "⚠️ Sale completed but no author email found for book: #{purchase.book.title}"
+      end
 
       render json: {
         status: { code: 200, message: 'Payment verified successfully' },
