@@ -114,6 +114,7 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
       pending_revenues: @pending_revenues.map do |rev|
         purchase = rev.purchase
         book = purchase&.book
+        reader = purchase&.reader
 
         {
           id: rev.id,
@@ -132,7 +133,11 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
             purchase_date: purchase&.created_at,
             price: purchase&.amount
           },
-          file_size_mb: calculate_file_size(purchase)
+          file_size_mb: calculate_file_size(purchase),
+          reader: {
+            id: reader&.id,
+            reader_name: reader ? "#{reader.first_name} #{reader.last_name}" : nil
+          }
         }
       end,
       pagination: {
