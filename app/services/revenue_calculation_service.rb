@@ -5,7 +5,7 @@ class RevenueCalculationService
   NGN_TO_USD_RATE = 1500.0 # Update as needed - for fallback calculation only
   PAYSTACK_FIXED_FEE_USD = (PAYSTACK_FIXED_FEE_NAIRA / NGN_TO_USD_RATE).round(4)
 
-  DELIVERY_RATE_PER_MB = 0.15
+  DELIVERY_FEE_PERCENTAGE = 0.04
   ADMIN_PERCENTAGE = 0.30
   AUTHOR_PERCENTAGE = 0.70
 
@@ -22,9 +22,6 @@ class RevenueCalculationService
     # Get the gross amount (what customer paid)
     gross_amount = @purchase.amount.to_f / 100.0
 
-    # Calculate file size
-    file_size_mb = get_file_size_in_mb
-
     # Get the ACTUAL settled amount from Paystack
     settlement_data = get_paystack_settlement_amount(@purchase.transaction_reference)
 
@@ -38,8 +35,8 @@ class RevenueCalculationService
     fee_source = settlement_data[:source] || 'unknown'
     Rails.logger.info "🔶 Using #{fee_source} fee data for purchase #{@purchase.id}: $#{paystack_fee}"
 
-    # Calculate delivery fee
-    delivery_fee = calculate_delivery_fee(file_size_mb, gross_amount)
+    # Calculate delivery fee (flat 4% of gross amount)
+    delivery_fee = calculate_delivery_fee(gross_amount)
 
     # Amount for splitting between admin and author
     amount_for_split = [amount_after_paystack - delivery_fee, 0].max
@@ -54,7 +51,6 @@ class RevenueCalculationService
     @purchase.update(
       paystack_fee: paystack_fee,
       delivery_fee: delivery_fee,
-      file_size_mb: file_size_mb,
       admin_revenue: admin_revenue,
       author_revenue_amount: author_revenue,
       fee_data_source: fee_source # Add this column to purchases table
@@ -86,7 +82,6 @@ class RevenueCalculationService
       paystack_fee: paystack_fee,
       fee_data_source: fee_source,
       amount_after_paystack: amount_after_paystack.round(2),
-      file_size_mb: file_size_mb,
       delivery_fee: delivery_fee,
       amount_for_split: amount_for_split.round(2),
       admin_revenue: admin_revenue,
@@ -150,20 +145,7 @@ class RevenueCalculationService
 
   private
 
-  def get_file_size_in_mb
-    if @content_type == 'ebook' && @book.ebook_file.attached?
-      (@book.ebook_file.blob.byte_size.to_f / (1024 * 1024)).round(2)
-    elsif @content_type == 'audiobook' && @book.audiobook_file.attached?
-      (@book.audiobook_file.blob.byte_size.to_f / (1024 * 1024)).round(2)
-    else
-      @content_type == 'audiobook' ? 10.0 : 1.0
-    end
-  rescue StandardError => e
-    Rails.logger.error "Error calculating file size: #{e.message}"
-    @content_type == 'audiobook' ? 10.0 : 1.0
-  end
-
-  def calculate_delivery_fee(file_size_mb, _price)
-    (file_size_mb * DELIVERY_RATE_PER_MB).round(2)
+  def calculate_delivery_fee(gross_amount)
+    (gross_amount * DELIVERY_FEE_PERCENTAGE).round(2)
   end
 end
