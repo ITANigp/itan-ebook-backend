@@ -14,8 +14,6 @@ class Api::V1::PurchasesController < ApplicationController
         data: result[:data]
       }
     else
-      Rails.logger.error "Purchase failed: #{result[:error]}"
-      Rails.logger.error "Paystack response: #{result[:paystack_response].inspect}" if result[:paystack_response]
       render json: {
         status: { code: 422, message: result[:error] }
       }, status: :unprocessable_content
@@ -24,8 +22,6 @@ class Api::V1::PurchasesController < ApplicationController
 
   # Verify payment after Paystack callback
   def verify
-    Rails.logger.info '============ PAYSTACK WEBHOOK RECEIVED ============'
-
     # Extract reference from the correct location
     reference = params[:data][:reference]
 
@@ -55,11 +51,7 @@ class Api::V1::PurchasesController < ApplicationController
       # Notify the author for book sales
       author = purchase.book&.author
       if author&.email.present?
-        Rails.logger.info "✅ Triggering sale alert for author: #{author.email}"
-        # Use deliver_later for production, deliver_now for local testing
         AuthorMailer.sale_alert(author, purchase.book, purchase).deliver_later
-      else
-        Rails.logger.warn "⚠️ Sale completed but no author email found for book: #{purchase.book.title}"
       end
 
       render json: {
@@ -67,14 +59,11 @@ class Api::V1::PurchasesController < ApplicationController
         data: { purchase_id: purchase.id }
       }
     else
-      Rails.logger.error "❌ Failed to update purchase: #{purchase.errors.full_messages.join(', ')}"
       render json: {
         status: { code: 422, message: 'Failed to update purchase status' }
       }, status: :unprocessable_content
     end
-  rescue StandardError => e
-    Rails.logger.error "Payment verification error: #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
+  rescue StandardError
     render json: {
       status: { code: 500, message: 'Internal server error' }
     }, status: :internal_server_error
@@ -213,7 +202,6 @@ class Api::V1::PurchasesController < ApplicationController
     token = request.headers['Authorization']&.split(' ')&.last
 
     unless token
-      Rails.logger.error 'No token provided'
       return render json: {
         status: { code: 401, message: 'Authentication token required' }
       }, status: :unauthorized
@@ -233,13 +221,11 @@ class Api::V1::PurchasesController < ApplicationController
       @current_reader = Reader.find(reader_id)
 
       # Removed sensitive reader email logging
-    rescue JWT::DecodeError => e
-      Rails.logger.error "JWT Decode Error: #{e.message}"
+    rescue JWT::DecodeError
       render json: {
         status: { code: 401, message: 'Invalid authentication token' }
       }, status: :unauthorized
-    rescue ActiveRecord::RecordNotFound => e
-      Rails.logger.error "Reader not found: #{e.message}"
+    rescue ActiveRecord::RecordNotFound
       render json: {
         status: { code: 401, message: 'Reader not found' }
       }, status: :unauthorized
@@ -307,25 +293,12 @@ class Api::V1::PurchasesController < ApplicationController
     payload = request.raw_post
     signature = request.headers['HTTP_X_PAYSTACK_SIGNATURE']
 
-    # Add debug logging
-    Rails.logger.debug 'Webhook received for verification'
-
     return false unless signature.present? && payload.present?
 
     webhook_secret = ENV.fetch('PAYSTACK_SECRET_KEY', nil)
     expected = OpenSSL::HMAC.hexdigest('sha512', webhook_secret, payload)
 
-    result = ActiveSupport::SecurityUtils.secure_compare(signature, expected)
-
-    if result
-      Rails.logger.info '✅ Webhook signature verified successfully'
-    else
-      Rails.logger.error '❌ Webhook signature verification failed'
-      Rails.logger.debug "Expected: #{expected[0..10]}..." if expected
-      Rails.logger.debug "Received: #{signature[0..10]}..." if signature
-    end
-
-    result
+    ActiveSupport::SecurityUtils.secure_compare(signature, expected)
   end
 
   # Map status codes to HTTP symbols

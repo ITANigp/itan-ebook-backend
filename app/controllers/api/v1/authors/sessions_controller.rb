@@ -27,14 +27,10 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
 
     begin
       # First stage authentication with email/password
-      Rails.logger.info "🔍 Attempting authentication for email: #{params[:author][:email]}"
-      
-      # Use direct authentication instead of relying on cached sessions
       author = Author.find_for_authentication(email: params[:author][:email])
       
       if author&.valid_password?(params[:author][:password]) && author.active_for_authentication?
         self.resource = author
-        Rails.logger.info "🔍 Authentication successful. User ID: #{resource.id}, Email: #{resource.email}"
         
         # Handle authentication based on 2FA status
         if resource.two_factor_enabled?
@@ -42,17 +38,15 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
         else
           # No 2FA required, complete login
           sign_in(resource_name, resource)
-          Rails.logger.info "🔍 Sign-in completed. Current author: #{current_author&.id}"
           respond_with(resource)
         end
       else
-        Rails.logger.error "Authentication failed for email: #{params[:author][:email]}"
         render json: {
           status: { code: 401, message: 'Invalid email or password' }
         }, status: :unauthorized
       end
     rescue StandardError => e
-      Rails.logger.error "Authentication error: #{e.message}"
+      Rails.logger.error "Authentication error"
       render json: {
         status: { code: 401, message: 'Invalid email or password' }
       }, status: :unauthorized
@@ -77,9 +71,6 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
   private
 
   def respond_with(resource, _opts = {})
-    Rails.logger.info "🔍 respond_with called. Resource ID: #{resource.id}, Email: #{resource.email}"
-    Rails.logger.info "🔍 Current author in respond_with: #{current_author&.id}"
-    
     if resource.persisted?
       render json: {
         status: { code: 200, message: 'Logged in successfully.' },
@@ -96,8 +87,6 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
 
   def respond_to_on_destroy
     if current_author
-      # Track successful logout if needed
-      logger.info "Author #{current_author.id} signed out successfully"
     end
 
     render json: {
@@ -130,7 +119,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
       result = JSON.parse(response.body)
       recaptcha_valid = result['success'] == true
 
-      Rails.logger.info "reCAPTCHA direct verification: #{result.inspect}"
+
 
       unless recaptcha_valid
         render json: {
@@ -140,7 +129,7 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
       end
       true
     rescue StandardError => e
-      Rails.logger.error "reCAPTCHA verification error: #{e.message}"
+      Rails.logger.error "reCAPTCHA verification error"
       render json: {
         status: { code: 500, message: 'Failed to verify reCAPTCHA' }
       }, status: :internal_server_error

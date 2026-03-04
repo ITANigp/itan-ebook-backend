@@ -14,14 +14,11 @@ class Api::V1::DirectUploadsController < ActiveStorage::DirectUploadsController
     )
 
     render json: direct_upload_json(blob)
-  rescue ActionController::ParameterMissing => e
-    Rails.logger.error "Direct upload parameter error: #{e.message}"
-    render json: { error: "Missing required parameter: #{e.param}" }, status: :bad_request
-  rescue ActiveStorage::IntegrityError => e
-    Rails.logger.error "Direct upload integrity error: #{e.message}"
-    render json: { error: "File integrity error: #{e.message}" }, status: :unprocessable_entity
-  rescue StandardError => e
-    Rails.logger.error "Direct upload error: #{e.message}\n#{e.backtrace.join("\n")}"
+  rescue ActionController::ParameterMissing
+    render json: { error: 'Missing required parameter' }, status: :bad_request
+  rescue ActiveStorage::IntegrityError
+    render json: { error: 'File integrity error' }, status: :unprocessable_entity
+  rescue StandardError
     render json: { error: 'Upload preparation failed. Please try again.' }, status: :internal_server_error
   end
 

@@ -133,12 +133,6 @@ end
 
       # Auto-detect EPUB readers and provide binary streaming
       if content_type == 'ebook' && book.ebook_file.attached? && epub_reader_detected?
-        Rails.logger.info "=== BINARY STREAMING DETECTED ==="
-        Rails.logger.info "User-Agent: #{request.headers['User-Agent']}"
-        Rails.logger.info "Accept: #{request.headers['Accept']}"
-        Rails.logger.info "Binary stream requested for book: #{book.title}"
-        
-        # Stream binary content directly
         return stream_binary_content(book.ebook_file, book.title)
       end
 
@@ -181,11 +175,9 @@ end
       end
     rescue JWT::DecodeError
       render json: { error: 'Invalid reading token' }, status: :unauthorized
-    rescue ActiveRecord::RecordNotFound => e
-      Rails.logger.error "Record not found in content method: #{e.message}"
+    rescue ActiveRecord::RecordNotFound
       render json: { error: 'Resource not found' }, status: :not_found
-    rescue StandardError => e
-      Rails.logger.error "Error serving book content: #{e.message}\n#{e.backtrace.join("\n")}"
+    rescue StandardError
       render json: { error: 'Error retrieving book content' }, status: :internal_server_error
     end
   end
@@ -262,9 +254,8 @@ end
     render_error_response('Upload integrity error. Please try again.')
   end
 
-  def handle_standard_error(error)
-    Rails.logger.error "Error creating book: #{error.message}\n#{error.backtrace.join("\n")}"
-    render_error_response("Server error: #{error.message}", :internal_server_error)
+  def handle_standard_error(_error)
+    render_error_response('Server error. Please try again.', :internal_server_error)
   end
 
   def render_books_json(books, message = nil, status_code = 200)
@@ -319,7 +310,6 @@ end
       begin
         params[:book][field] = JSON.parse(params[:book][field])
       rescue JSON::ParserError
-        Rails.logger.warn("Failed to parse JSON for #{field}")
         params[:book][field] = []
       end
     end
@@ -332,17 +322,12 @@ end
       # Convert from decimal dollars to integer cents
       dollars = BigDecimal(params[:book][:ebook_price])
       params[:book][:ebook_price] = (dollars * 100).round
-      Rails.logger.info "Converted price: $#{dollars} → #{params[:book][:ebook_price]} cents"
-    rescue ArgumentError => e
-      Rails.logger.warn "Failed to convert price: #{e.message}"
+    rescue ArgumentError
+      # Invalid price format, skip conversion
     end
   end
 
   def epub_reader_detected?
-    Rails.logger.debug "Checking EPUB reader detection..."
-    Rails.logger.debug "User-Agent: #{request.user_agent}"
-    Rails.logger.debug "Accept header: #{request.headers['Accept']}"
-    
     # Check for explicit EPUB request in Accept header
     epub_accept = request.headers['Accept']&.include?('application/epub+zip')
     
@@ -358,14 +343,10 @@ end
                        request.referer&.include?('book-viewer') ||
                        params[:format] == 'epub'
     
-    result = epub_accept || epub_user_agent || frontend_request
-    Rails.logger.debug "EPUB reader detected: #{result} (accept: #{epub_accept}, user_agent: #{epub_user_agent}, frontend: #{frontend_request})"
-    result
+    epub_accept || epub_user_agent || frontend_request
   end
 
   def stream_binary_content(attachment, book_title)
-    Rails.logger.info "Streaming binary content for: #{book_title}"
-    
     # Set CORS headers for cross-origin requests
     response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
@@ -381,11 +362,9 @@ end
     if attachment.service_name == :amazon && Rails.env.production?
       # For S3 in production, redirect to presigned URL with CORS headers
       presigned_url = attachment.url(expires_in: 1.hour, disposition: :inline)
-      Rails.logger.info "Redirecting to S3 presigned URL: #{presigned_url[0..50]}..."
       redirect_to presigned_url, allow_other_host: true
     else
       # For local development or other storage, stream directly
-      Rails.logger.info "Streaming file directly from #{attachment.service_name}"
       send_data attachment.download, 
                 type: 'application/epub+zip',
                 disposition: 'inline',
