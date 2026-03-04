@@ -16,24 +16,23 @@ class RevenueCalculationService
   end
 
   def calculate
-    Rails.logger.info "🔶 Starting revenue calculation for purchase #{@purchase.id}"
-    Rails.logger.info "🔶 Book: #{@book.title}, Author ID: #{@book.author_id || 'MISSING!!!'}"
+    # Logging removed for sensitive info
 
     # Get the gross amount (what customer paid)
-    gross_amount = @purchase.amount.to_f / 100.0
+    gross_amount = BigDecimal(@purchase.amount.to_s) / 100
 
     # Get the ACTUAL settled amount from Paystack
     settlement_data = get_paystack_settlement_amount(@purchase.transaction_reference)
 
     # The amount AFTER Paystack has deducted their fees
-    amount_after_paystack = settlement_data[:settled_amount]
+    amount_after_paystack = BigDecimal(settlement_data[:settled_amount].to_s)
 
     # The fee Paystack deducted
-    paystack_fee = settlement_data[:actual_fee]
+    paystack_fee = BigDecimal(settlement_data[:actual_fee].to_s)
 
     # Track fee data source for logging
     fee_source = settlement_data[:source] || 'unknown'
-    Rails.logger.info "🔶 Using #{fee_source} fee data for purchase #{@purchase.id}: $#{paystack_fee}"
+    # Logging removed for sensitive info
 
     # Calculate delivery fee (flat 4% of gross amount)
     delivery_fee = calculate_delivery_fee(gross_amount)
@@ -42,23 +41,22 @@ class RevenueCalculationService
     amount_for_split = [amount_after_paystack - delivery_fee, 0].max
 
     # Split the remaining amount
-    author_revenue = (amount_for_split * AUTHOR_PERCENTAGE).round(2)
-    admin_revenue = (amount_for_split * ADMIN_PERCENTAGE).round(2)
+    author_revenue = truncate_to_3dp(amount_for_split * AUTHOR_PERCENTAGE)
+    admin_revenue = truncate_to_3dp(amount_for_split * ADMIN_PERCENTAGE)
 
-    Rails.logger.info "🔶 Calculated splits - Author: $#{author_revenue}, Admin: $#{admin_revenue}"
 
     # Update purchase with calculated values
     @purchase.update(
-      paystack_fee: paystack_fee,
-      delivery_fee: delivery_fee,
-      admin_revenue: admin_revenue,
-      author_revenue_amount: author_revenue,
+      paystack_fee: paystack_fee.to_f,
+      delivery_fee: delivery_fee.to_f,
+      admin_revenue: admin_revenue.to_f,
+      author_revenue_amount: author_revenue.to_f,
       fee_data_source: fee_source # Add this column to purchases table
     )
 
     # CRITICAL MISSING STEP: Create the AuthorRevenue record
     if @book.author_id.present?
-      Rails.logger.info "🔶 Creating AuthorRevenue record for author_id: #{@book.author_id}"
+      # Logging removed for sensitive info
 
       begin
         author_revenue_record = AuthorRevenue.create!(
@@ -67,25 +65,24 @@ class RevenueCalculationService
           amount: author_revenue,
           status: 'pending'
         )
-        Rails.logger.info "✅ AuthorRevenue record created! ID: #{author_revenue_record.id}"
+        # Logging removed for sensitive info
       rescue StandardError => e
-        Rails.logger.error "❌ FAILED TO CREATE AUTHOR REVENUE RECORD: #{e.message}"
-        Rails.logger.error e.backtrace.join("\n")
+        # Logging removed for sensitive info
       end
     else
-      Rails.logger.error "❌ Cannot create AuthorRevenue - Book #{@book.id} has no author_id!"
+      # Logging removed for sensitive info
     end
 
     # Return detailed breakdown
     {
-      gross_amount: gross_amount,
-      paystack_fee: paystack_fee,
+      gross_amount: gross_amount.to_f,
+      paystack_fee: paystack_fee.to_f,
       fee_data_source: fee_source,
-      amount_after_paystack: amount_after_paystack.round(2),
-      delivery_fee: delivery_fee,
-      amount_for_split: amount_for_split.round(2),
-      admin_revenue: admin_revenue,
-      author_revenue: author_revenue
+      amount_after_paystack: amount_after_paystack.to_f,
+      delivery_fee: delivery_fee.to_f,
+      amount_for_split: amount_for_split.to_f,
+      admin_revenue: admin_revenue.to_f,
+      author_revenue: author_revenue.to_f
     }
   end
 
@@ -100,45 +97,45 @@ class RevenueCalculationService
 
       if response[:success] && response[:data]
         # Convert amount from kobo/cents to naira/dollars
-        amount = response[:data]['amount'].to_f / 100.0
+        amount = BigDecimal(response[:data]['amount'].to_s) / 100
 
         # Get fees from Paystack response
         if response[:data]['fees']
-          actual_fee = response[:data]['fees'].to_f / 100.0
+          actual_fee = BigDecimal(response[:data]['fees'].to_s) / 100
           settled_amount = amount - actual_fee
 
           return {
-            settled_amount: settled_amount.round(2),
-            actual_fee: actual_fee.round(2),
+            settled_amount: settled_amount,
+            actual_fee: actual_fee,
             source: 'paystack_api'
           }
         else
           # No fee information provided, use fallback calculation
           # but mark it clearly as estimated
-          Rails.logger.warn "Paystack didn't provide fee information for transaction: #{reference}"
+          # Logging removed for sensitive info
           paystack_fee = (amount * PAYSTACK_PERCENTAGE) + PAYSTACK_FIXED_FEE_USD
 
           return {
-            settled_amount: (amount - paystack_fee).round(2),
-            actual_fee: paystack_fee.round(2),
+            settled_amount: (amount - paystack_fee),
+            actual_fee: paystack_fee,
             source: 'estimated_missing_fee'
           }
         end
       else
         error_msg = response[:error] || 'Unknown verification error'
-        Rails.logger.error "Paystack verification failed: #{error_msg}"
+        # Logging removed for sensitive info
       end
     rescue StandardError => e
-      Rails.logger.error "Failed to get Paystack settlement: #{e.message}"
+      # Logging removed for sensitive info
     end
 
     # Fallback to calculation if API call completely fails
-    gross_amount = @purchase.amount.to_f / 100.0
+    gross_amount = BigDecimal(@purchase.amount.to_s) / 100
     paystack_fee = (gross_amount * PAYSTACK_PERCENTAGE) + PAYSTACK_FIXED_FEE_USD
 
     {
-      settled_amount: (gross_amount - paystack_fee).round(2),
-      actual_fee: paystack_fee.round(2),
+      settled_amount: (gross_amount - paystack_fee),
+      actual_fee: paystack_fee,
       source: 'estimated_api_failure'
     }
   end
@@ -146,6 +143,10 @@ class RevenueCalculationService
   private
 
   def calculate_delivery_fee(gross_amount)
-    (gross_amount * DELIVERY_FEE_PERCENTAGE).round(2)
+    truncate_to_3dp(gross_amount * DELIVERY_FEE_PERCENTAGE)
+  end
+
+  def truncate_to_3dp(val)
+    BigDecimal(val.to_s).truncate(3).to_f
   end
 end

@@ -9,7 +9,7 @@
   <p><strong>Sale Details:</strong></p>
   <ul>
     <li><strong>Format:</strong> <%= @purchase.content_type.titleize %></li>
-    <li><strong>Price:</strong> $<%= sprintf('%.2f', @purchase.amount) %></li>
+    <li><strong>Price:</strong> $<%= sprintf('%.3f', @purchase.amount / 100.0) %></li>
     <li><strong>Date:</strong> <%= Time.current.strftime('%B %d, %Y at %H:%M') %></li>
   </ul>
 </div>
@@ -105,7 +105,7 @@ The Itan Team</p>
 
           <div class="stat-box">
             <span class="label">Total Sale Value </span>
-            <span class="amount-badge">$<%= sprintf('%.2f', @purchase.amount) %></span>
+            <span class="amount-badge">$<%= sprintf('%.3f', @purchase.amount / 100.0) %></span>
           </div>
 
           <div class="detail-row">

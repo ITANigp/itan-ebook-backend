@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_04_070000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.datetime "updated_at", null: false
     t.string "resolved_account_name"
     t.string "bank_name"
+    t.string "currency"
     t.index ["author_id"], name: "index_author_banking_details_on_author_id"
     t.index ["recipient_code"], name: "index_author_banking_details_on_recipient_code", unique: true
   end
@@ -74,7 +75,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
   create_table "author_revenues", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "author_id", null: false
     t.uuid "purchase_id", null: false
-    t.decimal "amount", precision: 10, scale: 2, null: false
+    t.decimal "amount", precision: 10, scale: 3, null: false
     t.string "status", default: "pending", null: false
     t.datetime "paid_at"
     t.string "payment_batch_id"
@@ -120,6 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.string "uid"
     t.integer "kyc_step", default: 0, null: false
     t.boolean "accepted_terms", default: false, null: false
+    t.datetime "welcome_email_sent_at"
     t.string "state"
     t.index ["confirmation_token"], name: "index_authors_on_confirmation_token", unique: true
     t.index ["email"], name: "index_authors_on_email", unique: true
@@ -177,11 +179,34 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.index ["book_id"], name: "index_chapters_on_book_id"
   end
 
+  create_table "favourites", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "reader_id"
+    t.uuid "book_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "likes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "book_id"
     t.uuid "reader_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "login_attempts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "author_id", null: false
+    t.string "ip_address"
+    t.text "user_agent"
+    t.boolean "successful", default: false
+    t.datetime "attempted_at"
+    t.string "failure_reason"
+    t.string "session_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id", "attempted_at"], name: "index_login_attempts_on_author_id_and_attempted_at"
+    t.index ["author_id"], name: "index_login_attempts_on_author_id"
+    t.index ["ip_address", "attempted_at"], name: "index_login_attempts_on_ip_address_and_attempted_at"
+    t.index ["successful"], name: "index_login_attempts_on_successful"
   end
 
   create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -190,6 +215,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.text "message"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "reader_id"
     t.index ["user_type", "user_id"], name: "index_notifications_on_user"
   end
 
@@ -204,10 +230,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
     t.string "transaction_reference"
     t.datetime "payment_verified_at"
     t.uuid "reader_id"
-    t.decimal "paystack_fee", precision: 10, scale: 2
-    t.decimal "delivery_fee", precision: 10, scale: 2
-    t.decimal "admin_revenue", precision: 10, scale: 2
-    t.decimal "author_revenue_amount", precision: 10, scale: 2
+    t.decimal "paystack_fee", precision: 10, scale: 3
+    t.decimal "delivery_fee", precision: 10, scale: 3
+    t.decimal "admin_revenue", precision: 10, scale: 3
+    t.decimal "author_revenue_amount", precision: 10, scale: 3
     t.float "file_size_mb"
     t.string "fee_data_source"
     t.index ["book_id"], name: "index_purchases_on_book_id"
@@ -282,6 +308,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_28_132422) do
   add_foreign_key "author_revenues", "purchases"
   add_foreign_key "books", "authors"
   add_foreign_key "chapters", "books"
+  add_foreign_key "login_attempts", "authors"
   add_foreign_key "purchases", "books"
   add_foreign_key "purchases", "readers"
   add_foreign_key "reviews", "books"

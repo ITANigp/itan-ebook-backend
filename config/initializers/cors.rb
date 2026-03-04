@@ -15,7 +15,8 @@ Rails.application.config.middleware.insert_before 0, Rack::Cors do
             "http://localhost:3001", 
             "http://localhost:3002",
             "http://localhost:3003",
-            "http://localhost:7000"
+            "http://localhost:7000",
+            "ashton-unstrafed-son.ngrok-free.dev"
 
     # Explicitly specify the ActiveStorage paths
     resource "/rails/active_storage/direct_uploads",

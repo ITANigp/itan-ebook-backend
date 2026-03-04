@@ -14,26 +14,26 @@ class TransferProcessor
       end
 
       if data.nil? || !data['rates'] || !data['rates']['NGN']
-        Rails.logger.error "Exchange rate fetch failed or NGN rate missing. Response: #{response}"
+        # Logging removed for sensitive info
         return nil
       end
 
       data['rates']['NGN']
     rescue StandardError => e
-      Rails.logger.error "Error fetching exchange rate: #{e.message}"
+      # Logging removed for sensitive info
       nil
     end
   end
 
   def self.process_batch(batch_id)
-    Rails.logger.info "Starting process_batch for batch_id: #{batch_id}"
+    # Logging removed for sensitive info
 
     usd_to_ngn = fetch_ngn_rate
     if usd_to_ngn.nil?
-      Rails.logger.error 'Failed to fetch USD to NGN rate. Aborting transfer.'
+      # Logging removed for sensitive info
       return { success: [], failed: [{ reason: 'Could not fetch exchange rate' }] }
     end
-    Rails.logger.info "Current USD to NGN rate: #{usd_to_ngn}"
+    # Logging removed for sensitive info
 
     # Get all approved payments in this batch
     batch_payments = AuthorRevenue.where(
@@ -41,7 +41,7 @@ class TransferProcessor
       status: 'approved'
     ).group_by(&:author_id)
 
-    Rails.logger.info "Found #{batch_payments.keys.size} authors in batch"
+    # Logging removed for sensitive info
 
     results = { success: [], failed: [] }
 
@@ -49,12 +49,11 @@ class TransferProcessor
       author = Author.find(author_id)
       banking_details = author.author_banking_detail
 
-      Rails.logger.info "Processing author: #{author.email}, author_id: #{author_id}"
-      Rails.logger.info "Banking details: #{banking_details.inspect}"
+      # Logging removed for sensitive info
 
       # Skip if no verified banking details
       unless banking_details&.verified?
-        Rails.logger.warn "No verified banking details for author: #{author.email}"
+        # Logging removed for sensitive info
         payments.each do |payment|
           payment.update(
             status: 'transfer_failed',
@@ -70,12 +69,12 @@ class TransferProcessor
       total_ngn = (total_usd * usd_to_ngn).round(2)
       amount_in_kobo = (total_ngn * 100).to_i
 
-      Rails.logger.info "Total USD: #{total_usd}, Total NGN: #{total_ngn}, Amount in kobo: #{amount_in_kobo}"
+      # Logging removed for sensitive info
 
       # Initiate transfer via Paystack
       paystack = PaystackService.new
       transfer_reference = "TRF-#{SecureRandom.hex(8)}"
-      Rails.logger.info "Initiating transfer: recipient_code=#{banking_details.recipient_code}, reference=#{transfer_reference}"
+      # Logging removed for sensitive info
 
       transfer_result = paystack.initiate_transfer(
         banking_details.recipient_code,
@@ -84,7 +83,7 @@ class TransferProcessor
         "Payment for batch #{batch_id}"
       )
 
-      Rails.logger.info "Paystack transfer result: #{transfer_result.inspect}"
+      # Logging removed for sensitive info
 
       if transfer_result[:success]
         # Mark payments as transferred
@@ -99,7 +98,7 @@ class TransferProcessor
       else
         # Log failure
         error_message = transfer_result[:error] || 'Unknown error'
-        Rails.logger.error "Transfer failed for author: #{author.email}, reason: #{error_message}"
+        # Logging removed for sensitive info
         payments.each do |payment|
           payment.update(
             status: 'transfer_failed',
@@ -110,7 +109,7 @@ class TransferProcessor
       end
     end
 
-    Rails.logger.info "process_batch results: #{results.inspect}"
+    # Logging removed for sensitive info
     results
   end
 end

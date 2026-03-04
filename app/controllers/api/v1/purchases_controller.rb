@@ -227,12 +227,12 @@ class Api::V1::PurchasesController < ApplicationController
         { algorithm: 'HS256' }
       )
 
-      Rails.logger.info "Decoded token payload: #{decoded_token[0]}"
+      # Removed sensitive token payload logging
 
       reader_id = decoded_token[0]['sub']
       @current_reader = Reader.find(reader_id)
 
-      Rails.logger.info "Authenticated reader: #{@current_reader.email}"
+      # Removed sensitive reader email logging
     rescue JWT::DecodeError => e
       Rails.logger.error "JWT Decode Error: #{e.message}"
       render json: {

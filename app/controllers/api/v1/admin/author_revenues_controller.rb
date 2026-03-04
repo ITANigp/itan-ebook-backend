@@ -118,7 +118,7 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
 
         {
           id: rev.id,
-          amount: rev.amount,
+          amount: truncate_to_3dp_string(rev.amount),
           status: rev.status,
           created_at: rev.created_at,
           book: {
@@ -316,6 +316,14 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
   end
 
   private
+
+  # Helper to truncate to 3 decimal places and return as string
+  def truncate_to_3dp_string(value)
+    return '0.000' if value.nil?
+    v = value.is_a?(BigDecimal) ? value : BigDecimal(value.to_s)
+    truncated = (v * 1000).floor / BigDecimal('1000')
+    format('%.3f', truncated)
+  end
 
   def calculate_file_size(purchase)
     return 0 unless purchase&.book

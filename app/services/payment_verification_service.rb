@@ -20,8 +20,7 @@ class PaymentVerificationService
   rescue VerificationError => e
     { success: false, error: e.message, status_code: determine_error_code(e.message) }
   rescue StandardError => e
-    Rails.logger.error "Unexpected error in payment verification: #{e.message}"
-    Rails.logger.error e.backtrace.join("\n")
+    # Logging removed for sensitive info
     { success: false, error: 'Internal server error', status_code: 500 }
   end
 
@@ -52,7 +51,7 @@ class PaymentVerificationService
 
   def already_verified?
     if purchase.purchase_status == 'completed'
-      Rails.logger.info "Payment already verified for reference: #{reference}"
+      # Logging removed for sensitive info
       true
     else
       false
@@ -89,7 +88,7 @@ class PaymentVerificationService
 
     return unless paystack_amount != expected_amount
 
-    Rails.logger.error "SECURITY: Amount mismatch for #{purchase.id}. Expected: #{expected_amount}, Got: #{paystack_amount}"
+    # Logging removed for sensitive info
     mark_as_failed!('Amount verification failed')
     raise VerificationError, 'Payment amount verification failed'
   end
@@ -115,14 +114,14 @@ class PaymentVerificationService
       )
     end
 
-    Rails.logger.info "Payment completed and revenue calculated for purchase: #{purchase.id}"
+    # Logging removed for sensitive info
   end
 
   def mark_as_failed!(reason)
     Purchase.transaction do
       purchase.update!(purchase_status: 'failed')
     end
-    Rails.logger.error "Payment failed for #{purchase.id}: #{reason}"
+    # Logging removed for sensitive info
   end
 
   def build_success_response
