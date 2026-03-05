@@ -34,3 +34,6 @@
 
 # Ignore Vendor
 /vendor/bundle/
+
+# Ignore private keys
+*.pem
