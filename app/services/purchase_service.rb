@@ -38,10 +38,10 @@ class PurchaseService
     end
 
     result
-    rescue ValidationError => e
-      { success: false, error: e.message }
-    rescue StandardError
-      { success: false, error: 'Payment initialization failed' }
+  rescue ValidationError => e
+    { success: false, error: e.message }
+  rescue StandardError
+    { success: false, error: 'Payment initialization failed' }
   end
 
   private

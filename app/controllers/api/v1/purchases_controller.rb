@@ -47,12 +47,10 @@ class Api::V1::PurchasesController < ApplicationController
 
       # Send purchase receipt email to reader
       ReaderMailer.purchase_receipt(purchase).deliver_later
-      
+
       # Notify the author for book sales
       author = purchase.book&.author
-      if author&.email.present?
-        AuthorMailer.sale_alert(author, purchase.book, purchase).deliver_later
-      end
+      AuthorMailer.sale_alert(author, purchase.book, purchase).deliver_later if author&.email.present?
 
       render json: {
         status: { code: 200, message: 'Payment verified successfully' },
@@ -144,7 +142,7 @@ class Api::V1::PurchasesController < ApplicationController
       if book_id
         # Get the book first
         book = Book.find(book_id)
-        
+
         # Check if reader has access (either owns book or has active trial)
         unless current_reader.trial_active? || current_reader.owns_book?(book)
           return render json: {
@@ -158,7 +156,7 @@ class Api::V1::PurchasesController < ApplicationController
           .where(books: { id: book_id }, purchase_status: 'completed')
           .order(created_at: :desc)
           .first
-        
+
         if purchase
           # User owns the book - generate token with purchase info
           token = generate_reading_token(purchase)
@@ -173,13 +171,13 @@ class Api::V1::PurchasesController < ApplicationController
       else
         # Find by purchase_id (original behavior)
         purchase = current_reader.purchases.find(purchase_id)
-        
+
         unless purchase.purchase_status == 'completed'
           return render json: {
             status: { code: 403, message: 'Access denied' }
           }, status: :forbidden
         end
-        
+
         token = generate_reading_token(purchase)
       end
 
@@ -199,7 +197,7 @@ class Api::V1::PurchasesController < ApplicationController
   private
 
   def authenticate_reader!
-    token = request.headers['Authorization']&.split(' ')&.last
+    token = request.headers['Authorization']&.split&.last
 
     unless token
       return render json: {
@@ -245,9 +243,9 @@ class Api::V1::PurchasesController < ApplicationController
   def book_has_content_type?(content_type)
     case content_type
     when 'ebook'
-      @book.ebook_price.present? && @book.ebook_price > 0
+      @book.ebook_price.present? && @book.ebook_price.positive?
     when 'audiobook'
-      @book.audiobook_price.present? && @book.audiobook_price > 0
+      @book.audiobook_price.present? && @book.audiobook_price.positive?
     else
       false
     end

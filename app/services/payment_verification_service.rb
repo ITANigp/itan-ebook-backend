@@ -19,7 +19,7 @@ class PaymentVerificationService
     { success: true, data: build_success_response }
   rescue VerificationError => e
     { success: false, error: e.message, status_code: determine_error_code(e.message) }
-  rescue StandardError => e
+  rescue StandardError
     # Logging removed for sensitive info
     { success: false, error: 'Internal server error', status_code: 500 }
   end
@@ -50,12 +50,7 @@ class PaymentVerificationService
   end
 
   def already_verified?
-    if purchase.purchase_status == 'completed'
-      # Logging removed for sensitive info
-      true
-    else
-      false
-    end
+    purchase.purchase_status == 'completed'
   end
 
   def validate_purchase_state!
@@ -117,7 +112,7 @@ class PaymentVerificationService
     # Logging removed for sensitive info
   end
 
-  def mark_as_failed!(reason)
+  def mark_as_failed!(_reason)
     Purchase.transaction do
       purchase.update!(purchase_status: 'failed')
     end

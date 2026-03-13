@@ -28,10 +28,10 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
     begin
       # First stage authentication with email/password
       author = Author.find_for_authentication(email: params[:author][:email])
-      
+
       if author&.valid_password?(params[:author][:password]) && author.active_for_authentication?
         self.resource = author
-        
+
         # Handle authentication based on 2FA status
         if resource.two_factor_enabled?
           handle_two_factor_authentication
@@ -45,8 +45,8 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
           status: { code: 401, message: 'Invalid email or password' }
         }, status: :unauthorized
       end
-    rescue StandardError => e
-      Rails.logger.error "Authentication error"
+    rescue StandardError
+      Rails.logger.error 'Authentication error'
       render json: {
         status: { code: 401, message: 'Invalid email or password' }
       }, status: :unauthorized
@@ -128,8 +128,8 @@ class Api::V1::Authors::SessionsController < Devise::SessionsController
         return false
       end
       true
-    rescue StandardError => e
-      Rails.logger.error "reCAPTCHA verification error"
+    rescue StandardError
+      Rails.logger.error 'reCAPTCHA verification error'
       render json: {
         status: { code: 500, message: 'Failed to verify reCAPTCHA' }
       }, status: :internal_server_error

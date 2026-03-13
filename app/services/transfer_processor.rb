@@ -19,7 +19,7 @@ class TransferProcessor
       end
 
       data['rates']['NGN']
-    rescue StandardError => e
+    rescue StandardError
       # Logging removed for sensitive info
       nil
     end
@@ -33,6 +33,7 @@ class TransferProcessor
       # Logging removed for sensitive info
       return { success: [], failed: [{ reason: 'Could not fetch exchange rate' }] }
     end
+
     # Logging removed for sensitive info
 
     # Get all approved payments in this batch

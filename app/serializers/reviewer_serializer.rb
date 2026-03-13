@@ -1,5 +1,6 @@
 class ReviewerSerializer
   include JSONAPI::Serializer
+
   attributes :rating, :comment, :updated_at, :created_at
 
   # Add reader name as an attribute

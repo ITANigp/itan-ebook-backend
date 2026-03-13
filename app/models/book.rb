@@ -43,25 +43,25 @@ class Book < ApplicationRecord
   # File size methods
   def ebook_file_size
     return nil unless ebook_file.attached?
-    
+
     ebook_file.blob.byte_size
   end
 
   # Human readable file sizes
   def ebook_file_size_human
     return nil unless ebook_file_size
-    
+
     number_to_human_size(ebook_file_size)
   end
 
   def number_to_human_size(size)
-    units = ['B', 'KB', 'MB', 'GB', 'TB']
+    units = %w[B KB MB GB TB]
     return '0 B' if size.zero?
 
     index = (Math.log(size) / Math.log(1024)).floor
     index = [index, units.length - 1].min
-    
-    size_in_unit = size.to_f / (1024 ** index)
+
+    size_in_unit = size.to_f / (1024**index)
     "#{size_in_unit.round(2)} #{units[index]}"
   end
 
@@ -137,9 +137,9 @@ class Book < ApplicationRecord
   # end
 
   # === Callbacks ===
-before_update :generate_slug_if_approved
-before_update :regenerate_slug_if_title_changed, if: -> { !approved? }
-before_update :lock_slug
+  before_update :generate_slug_if_approved
+  before_update :regenerate_slug_if_title_changed, if: -> { !approved? }
+  before_update :lock_slug
 
   private
 
@@ -167,104 +167,103 @@ before_update :lock_slug
       self.unique_book_id = "BOO#{next_number}"
       self.unique_audio_id = "AOO#{next_number}"
     end
-  end  
+  end
 
   # def audiobook_file_size
   #   return nil unless audiobook_file.attached?
-    
+
   #   audiobook_file.blob.byte_size
   # end
 
   # def cover_image_size
   #   return nil unless cover_image.attached?
-    
+
   #   cover_image.blob.byte_size
   # end
 
   # def audiobook_file_size_human
   #   return nil unless audiobook_file_size
-    
+
   #   number_to_human_size(audiobook_file_size)
   # end
 
   # def cover_image_size_human
   #   return nil unless cover_image_size
-    
+
   #   number_to_human_size(cover_image_size)
   # end
 
 
-# === Slug Logic ===
-def lock_slug
-  return unless slug_changed? && slug_was.present?
+  # === Slug Logic ===
+  def lock_slug
+    return unless slug_changed? && slug_was.present?
 
-  errors.add(:slug, 'cannot be changed once set')
-  throw(:abort)
-end
+    errors.add(:slug, 'cannot be changed once set')
+    throw(:abort)
+  end
 
-def generate_slug_if_approved
-  return unless persisted?
-  return unless will_save_change_to_approval_status? && approved?
-  return if slug.present? # Don't overwrite existing slug
+  def generate_slug_if_approved
+    return unless persisted?
+    return unless will_save_change_to_approval_status? && approved?
+    return if slug.present? # Don't overwrite existing slug
 
-  self.slug = build_unique_slug
-end
+    self.slug = build_unique_slug
+  end
 
-def regenerate_slug_if_title_changed
-  return unless persisted?
-  return unless will_save_change_to_title?
-  return if slug.present? # Prevent changing already locked slug
+  def regenerate_slug_if_title_changed
+    return unless persisted?
+    return unless will_save_change_to_title?
+    return if slug.present? # Prevent changing already locked slug
 
-  self.slug = build_unique_slug
-end
+    self.slug = build_unique_slug
+  end
 
-# def build_unique_slug
-#   begin
-#     # Handle array of category objects
-#     main_category = if categories.is_a?(Array)
-#                       # Get first category object's main value
-#                       categories.first["main"]
-#                     else
-#                       # Fallback for hash format
-#                       categories["main"]
-#                     end
-                    
-#     # Handle if main_category itself is an array
-#     main_category = main_category.is_a?(Array) ? main_category.first : main_category
-    
-#     category_name = main_category.to_s.parameterize
-#     book_name = title.to_s.parameterize
-#     author_name = "#{author.first_name}-#{author.last_name}".parameterize
-#     book_id = unique_book_id.to_s.parameterize
+  # def build_unique_slug
+  #   begin
+  #     # Handle array of category objects
+  #     main_category = if categories.is_a?(Array)
+  #                       # Get first category object's main value
+  #                       categories.first["main"]
+  #                     else
+  #                       # Fallback for hash format
+  #                       categories["main"]
+  #                     end
 
-#     loop do
-#       slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
-#       break slug_candidate unless Book.exists?(slug: slug_candidate)
-#     end
-#   rescue => e
-#     # Rails.logger.error "ERROR IN SLUG GENERATION: #{e.message}"
-#     # Rails.logger.error "CATEGORIES: #{categories.inspect}"
-#     # Fallback to a simple slug without category
-#     "book-#{title.to_s.parameterize}-#{unique_book_id}"
-#   end
-# end
+  #     # Handle if main_category itself is an array
+  #     main_category = main_category.is_a?(Array) ? main_category.first : main_category
 
-def build_unique_slug
-  begin
+  #     category_name = main_category.to_s.parameterize
+  #     book_name = title.to_s.parameterize
+  #     author_name = "#{author.first_name}-#{author.last_name}".parameterize
+  #     book_id = unique_book_id.to_s.parameterize
+
+  #     loop do
+  #       slug_candidate = "#{category_name}-#{book_name}-#{author_name}-#{book_id}"
+  #       break slug_candidate unless Book.exists?(slug: slug_candidate)
+  #     end
+  #   rescue => e
+  #     # Rails.logger.error "ERROR IN SLUG GENERATION: #{e.message}"
+  #     # Rails.logger.error "CATEGORIES: #{categories.inspect}"
+  #     # Fallback to a simple slug without category
+  #     "book-#{title.to_s.parameterize}-#{unique_book_id}"
+  #   end
+  # end
+
+  def build_unique_slug
     # Safely extract category name
-    cat_part = "book"
+    cat_part = 'book'
     if categories.present?
       first_cat = categories.is_a?(Array) ? categories.first : categories
-      cat_name = first_cat.is_a?(Hash) ? first_cat["main"] : first_cat
-      cat_part = cat_name.to_s.parameterize.presence || "book"
+      cat_name = first_cat.is_a?(Hash) ? first_cat['main'] : first_cat
+      cat_part = cat_name.to_s.parameterize.presence || 'book'
     end
-    
+
     book_name = title.to_s.parameterize
     author_name = "#{first_name}-#{last_name}".parameterize # Use book's own name fields
     book_id = unique_book_id.to_s.parameterize
 
     slug_candidate = "#{cat_part}-#{book_name}-#{author_name}-#{book_id}"
-    
+
     # Ensure it's unique
     count = 0
     final_slug = slug_candidate
@@ -273,10 +272,8 @@ def build_unique_slug
       final_slug = "#{slug_candidate}-#{count}"
     end
     final_slug
-  rescue => e
+  rescue StandardError => e
     Rails.logger.error "Slug Generation Failed: #{e.message}"
     "book-#{title.to_s.parameterize}-#{SecureRandom.hex(4)}"
   end
-end
-
 end

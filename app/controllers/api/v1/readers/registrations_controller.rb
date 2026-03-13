@@ -2,26 +2,24 @@ class Api::V1::Readers::RegistrationsController < Devise::RegistrationsControlle
   respond_to :json
 
   def create
-    begin
-      recaptcha_valid = verify_recaptcha(response: params[:recaptcha_token], 
-                                        secret_key: ENV['RECAPTCHA_SECRET_KEY_READER'])
-      if recaptcha_valid
-        super
-      else
-        render json: {
-          status: { code: 422, message: 'reCAPTCHA verification failed. Please try again.' }
-        }, status: :unprocessable_content
-      end
+    recaptcha_valid = verify_recaptcha(response: params[:recaptcha_token],
+                                       secret_key: ENV.fetch('RECAPTCHA_SECRET_KEY_READER', nil))
+    if recaptcha_valid
+      super
+    else
+      render json: {
+        status: { code: 422, message: 'reCAPTCHA verification failed. Please try again.' }
+      }, status: :unprocessable_content
     end
   end
 
   private
 
   def respond_with(resource, _opts = {})
-      if resource.persisted?
+    if resource.persisted?
       serialized = ReaderSerializer.new(resource).serializable_hash[:data]
       token = generate_jwt_token(resource)
-      
+
       render json: {
         status: { code: 200, message: 'Signed up successfully.' },
         data: serialized[:attributes].merge(
@@ -34,14 +32,14 @@ class Api::V1::Readers::RegistrationsController < Devise::RegistrationsControlle
         status: { code: 422, message: 'Reader could not be created.' },
         errors: resource.errors.full_messages
       }, status: :unprocessable_content
-      end
+    end
   end
 
   def sign_up_params
     params.require(:reader).permit(:email, :password, :password_confirmation, :first_name, :last_name)
   end
 
-    def generate_jwt_token(reader)
+  def generate_jwt_token(reader)
     payload = {
       sub: reader.id,
       email: reader.email,

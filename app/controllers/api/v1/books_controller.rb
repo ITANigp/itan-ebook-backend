@@ -33,16 +33,15 @@ class Api::V1::BooksController < ApplicationController
     render_books_json(@book)
   end
 
-
   # GET /api/v1/books/storefront
-def all_storefront
-  books = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
-              .where(approval_status: 'approved')
-              .order(created_at: :desc)
-  
-  # Restart your server after changing the serializer file!
-  render json: BookSummarySerializer.new(books).serializable_hash
-end
+  def all_storefront
+    books = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
+      .where(approval_status: 'approved')
+      .order(created_at: :desc)
+
+    # Restart your server after changing the serializer file!
+    render json: BookSummarySerializer.new(books).serializable_hash
+  end
 
   # /api/v1/books/:id/storefront
   def storefront
@@ -98,7 +97,7 @@ end
 
   def content
     # Get reading token from Authorization header
-    token = request.headers['Authorization']&.split(' ')&.last
+    token = request.headers['Authorization']&.split&.last
 
     return render json: { error: 'Authentication token required' }, status: :unauthorized unless token
 
@@ -197,17 +196,17 @@ end
   # end
 
   def show_by_slug
-  # Eager load to avoid N+1 and include reviews/author
-  book = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
-             .find_by(slug: params[:slug], approval_status: 'approved')
+    # Eager load to avoid N+1 and include reviews/author
+    book = Book.includes(:author, :reviews, :likes, cover_image_attachment: :blob)
+      .find_by(slug: params[:slug], approval_status: 'approved')
 
-  if book
-    # Return the full serializable_hash so the frontend gets "id" and "attributes"
-    render json: BookSummarySerializer.new(book).serializable_hash
-  else
-    render json: { error: "Book not found or not approved" }, status: :not_found
+    if book
+      # Return the full serializable_hash so the frontend gets "id" and "attributes"
+      render json: BookSummarySerializer.new(book).serializable_hash
+    else
+      render json: { error: 'Book not found or not approved' }, status: :not_found
+    end
   end
-end
 
   # def categories
   #   all_categories = Book.where(approval_status: 'approved').pluck(:categories).compact
@@ -247,7 +246,7 @@ end
     }, status: status
   end
 
-  def handle_integrity_error(error)
+  def handle_integrity_error(_error)
     @book.destroy if @book.persisted?
     # Rails.logger.error "S3 Integrity Error: #{error.message}"
     # Rails.logger.error "S3 Integrity Error details: #{error.backtrace.join("\n")}"
@@ -330,19 +329,19 @@ end
   def epub_reader_detected?
     # Check for explicit EPUB request in Accept header
     epub_accept = request.headers['Accept']&.include?('application/epub+zip')
-    
+
     # Check for EPUB reader user agents
     user_agent = request.user_agent&.downcase || ''
-    epub_user_agent = user_agent.include?('epub') || 
+    epub_user_agent = user_agent.include?('epub') ||
                       user_agent.include?('readium') ||
                       user_agent.include?('adobe digital editions') ||
                       user_agent.include?('foliate')
-    
+
     # Check for frontend EPUB viewer (browser-based)
     frontend_request = request.headers['X-EPUB-Reader'] == 'true' ||
                        request.referer&.include?('book-viewer') ||
                        params[:format] == 'epub'
-    
+
     epub_accept || epub_user_agent || frontend_request
   end
 
@@ -351,24 +350,24 @@ end
     response.headers['Access-Control-Allow-Origin'] = request.headers['Origin'] || '*'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     response.headers['Access-Control-Expose-Headers'] = 'Content-Disposition, Content-Type, Content-Length'
-    
+
     # Set appropriate headers for EPUB download
     response.headers['Content-Type'] = 'application/epub+zip'
-    response.headers['Content-Disposition'] = "inline; filename=\"#{book_title.gsub(/[^\w\-_\.]/, '_')}.epub\""
+    response.headers['Content-Disposition'] = "inline; filename=\"#{book_title.gsub(/[^\w\-_.]/, '_')}.epub\""
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
-    
+
     if attachment.service_name == :amazon && Rails.env.production?
       # For S3 in production, redirect to presigned URL with CORS headers
       presigned_url = attachment.url(expires_in: 1.hour, disposition: :inline)
       redirect_to presigned_url, allow_other_host: true
     else
       # For local development or other storage, stream directly
-      send_data attachment.download, 
+      send_data attachment.download,
                 type: 'application/epub+zip',
                 disposition: 'inline',
-                filename: "#{book_title.gsub(/[^\w\-_\.]/, '_')}.epub"
+                filename: "#{book_title.gsub(/[^\w\-_.]/, '_')}.epub"
     end
   end
 

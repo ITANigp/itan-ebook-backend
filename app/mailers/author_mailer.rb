@@ -1,10 +1,11 @@
 class AuthorMailer < Devise::Mailer
   include Devise::Controllers::UrlHelpers
+
   default template_path: 'author_mailer'
   default from: 'no-reply@itan.app', reply_to: 'no-reply@itan.app'
 
   def confirmation_instructions(record, token, opts = {})
-    Rails.logger.info "AuthorMailer confirmation_instructions called"
+    Rails.logger.info 'AuthorMailer confirmation_instructions called'
     @confirmation_url = "#{ENV.fetch('FRONTEND_URL',
                                      nil)}/auth/confirm-email?confirmation_token=#{token}&email=#{record.email}"
     super
@@ -50,7 +51,7 @@ class AuthorMailer < Devise::Mailer
     @frontend_url = ENV.fetch('FRONTEND_URL', 'http://localhost:3002')
     mail(
       to: @author.email,
-      subject: "Welcome to ITAN Global Publishing",
+      subject: 'Welcome to ITAN Global Publishing',
       template_path: 'author_mailer',
       template_name: 'welcome_email'
     )
@@ -67,13 +68,13 @@ class AuthorMailer < Devise::Mailer
   end
 
   def sale_alert(author, book, purchase)
-  @author = author
-  @book = book
-  @purchase = purchase
-  
-  mail(
-    to: @author.email, 
-    subject: "Congratulations! You just sold a copy of #{@book.title} 🎉"
-  )
+    @author = author
+    @book = book
+    @purchase = purchase
+
+    mail(
+      to: @author.email,
+      subject: "Congratulations! You just sold a copy of #{@book.title} 🎉"
+    )
   end
 end

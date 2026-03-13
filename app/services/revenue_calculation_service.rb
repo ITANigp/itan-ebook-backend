@@ -59,14 +59,14 @@ class RevenueCalculationService
       # Logging removed for sensitive info
 
       begin
-        author_revenue_record = AuthorRevenue.create!(
+        AuthorRevenue.create!(
           author_id: @book.author_id,
           purchase_id: @purchase.id,
           amount: author_revenue,
           status: 'pending'
         )
         # Logging removed for sensitive info
-      rescue StandardError => e
+      rescue StandardError
         # Logging removed for sensitive info
       end
     else
@@ -122,10 +122,10 @@ class RevenueCalculationService
           }
         end
       else
-        error_msg = response[:error] || 'Unknown verification error'
+        response[:error] || 'Unknown verification error'
         # Logging removed for sensitive info
       end
-    rescue StandardError => e
+    rescue StandardError
       # Logging removed for sensitive info
     end
 

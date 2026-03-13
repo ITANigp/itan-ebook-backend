@@ -1,5 +1,6 @@
 class PaystackService
   include HTTParty
+
   base_uri 'https://api.paystack.co'
 
   def initialize

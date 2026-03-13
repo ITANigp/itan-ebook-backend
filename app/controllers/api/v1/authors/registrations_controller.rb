@@ -24,20 +24,18 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
         secret_key: ENV.fetch('RECAPTCHA_SECRET_KEY', nil),
         response: params_token # Explicitly pass the token
       )
-
-    rescue StandardError => e
-      Rails.logger.error "reCAPTCHA verification error"
+    rescue StandardError
+      Rails.logger.error 'reCAPTCHA verification error'
     end
 
     if recaptcha_valid
       # Remove captchaToken from params before processing
       params[:author].delete(:captchaToken)
-      
+
       begin
         create_author_with_confirmation_check
-        
-      rescue PG::Error => e
-        Rails.logger.error "Database error during registration"
+      rescue PG::Error
+        Rails.logger.error 'Database error during registration'
         render json: {
           status: { code: '500', message: 'Database connection failed. Please try again.' }
         }, status: :internal_server_error
@@ -59,19 +57,16 @@ class Api::V1::Authors::RegistrationsController < Devise::RegistrationsControlle
   # Simplified method that works with Devise's intended flow
   def create_author_with_confirmation_check
     self.resource = resource_class.new(sign_up_params)
-    
-    if resource.save
-      respond_with(resource, {})
-    else
-      Rails.logger.error "Author creation failed"
-      respond_with(resource, {})
-    end
+
+    Rails.logger.error 'Author creation failed' unless resource.save
+    respond_with(resource, {})
   end
 
   def respond_with(resource, _opts = {})
     if resource.persisted?
       render json: {
-        status: { code: 200, message: 'Author registered successfully. Please check your email for confirmation instructions.' },
+        status: { code: 200,
+                  message: 'Author registered successfully. Please check your email for confirmation instructions.' },
         data: AuthorSerializer.new(resource).serializable_hash[:data][:attributes]
       }
     else

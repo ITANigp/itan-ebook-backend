@@ -158,11 +158,11 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
     #   return
     # end
 
-      # Only allow processing in the first 7 days of the month
+    # Only allow processing in the first 7 days of the month
     unless Date.today.day <= 7
       render json: {
-      error: "Payments can only be processed during the first 7 days of the month (1 - 7)",
-      days_until_processing: Date.today.day <= 7 ? 0 : (Date.today.end_of_month + 7.days - Date.today).to_i
+        error: 'Payments can only be processed during the first 7 days of the month (1 - 7)',
+        days_until_processing: Date.today.day <= 7 ? 0 : (Date.today.end_of_month + 7.days - Date.today).to_i
       }, status: :unprocessable_entity
       return
     end
@@ -320,6 +320,7 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
   # Helper to truncate to 3 decimal places and return as string
   def truncate_to_3dp_string(value)
     return '0.000' if value.nil?
+
     v = value.is_a?(BigDecimal) ? value : BigDecimal(value.to_s)
     truncated = (v * 1000).floor / BigDecimal('1000')
     format('%.3f', truncated)
@@ -345,8 +346,8 @@ class Api::V1::Admin::AuthorRevenuesController < ApplicationController
         .distinct
 
       # Determine batch status based on counts
-      batch_status = if batch.try(:transferred_count) && batch.transferred_count > 0
-                       batch.approved_count > 0 ? 'partially_transferred' : 'transferred'
+      batch_status = if batch.try(:transferred_count) && batch.transferred_count.positive?
+                       batch.approved_count.positive? ? 'partially_transferred' : 'transferred'
                      else
                        'approved'
                      end
